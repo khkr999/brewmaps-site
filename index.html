@@ -88,10 +88,10 @@
       animation: fadeInUp 0.8s ease 0.4s both;
     }
     .phone-mock {
-      width: 200px;
+      width: 160px;
       background: #111;
-      border-radius: 40px;
-      padding: 10px;
+      border-radius: 32px;
+      padding: 8px;
       box-shadow: 0 24px 80px rgba(0,0,0,0.18), inset 0 0 0 1.5px rgba(255,255,255,0.1);
       transform: perspective(800px) rotateY(-5deg);
       transition: transform 0.4s;
@@ -102,79 +102,79 @@
     /* Side buttons */
     .phone-mock::before {
       content: '';
-      position: absolute; left: -2.5px; top: 90px;
-      width: 2.5px; height: 24px;
+      position: absolute; left: -2px; top: 80px;
+      width: 2px; height: 20px;
       background: #222; border-radius: 2px 0 0 2px;
-      box-shadow: 0 34px 0 #222, 0 64px 0 #222;
+      box-shadow: 0 28px 0 #222, 0 52px 0 #222;
     }
     .phone-mock::after {
       content: '';
-      position: absolute; right: -2.5px; top: 120px;
-      width: 2.5px; height: 48px;
+      position: absolute; right: -2px; top: 105px;
+      width: 2px; height: 40px;
       background: #222; border-radius: 0 2px 2px 0;
     }
     .phone-screen {
       background: var(--sand);
-      border-radius: 32px;
+      border-radius: 26px;
       overflow: hidden;
     }
     /* Dynamic Island */
     .phone-island {
-      display: flex; justify-content: center; padding: 8px 0 4px;
+      display: flex; justify-content: center; padding: 6px 0 2px;
     }
     .phone-island-pill {
-      width: 62px; height: 18px;
+      width: 50px; height: 14px;
       background: #111; border-radius: 20px;
     }
     .phone-inner {
-      padding: 4px 12px 10px;
+      padding: 2px 8px 6px;
       font-size: 11px;
     }
     .phone-inner .ps-header {
-      font-size: 14px; font-weight: 700; color: var(--espresso);
-      margin-bottom: 8px;
+      font-size: 11px; font-weight: 700; color: var(--espresso);
+      margin-bottom: 5px;
     }
     .phone-inner .ps-card {
       background: #fff;
-      border-radius: 12px;
-      padding: 10px;
-      margin-bottom: 6px;
+      border-radius: 10px;
+      padding: 7px 8px;
+      margin-bottom: 4px;
       border: 1px solid rgba(0,0,0,0.04);
     }
     .phone-inner .ps-card-name {
-      font-weight: 600; font-size: 12px; color: var(--espresso);
+      font-weight: 600; font-size: 9px; color: var(--espresso);
     }
     .phone-inner .ps-card-sub {
-      font-size: 10px; color: var(--stone); margin-top: 2px;
+      font-size: 7px; color: var(--stone); margin-top: 1px;
     }
     .phone-inner .ps-tag {
       display: inline-block;
       background: rgba(79,168,112,0.1);
       color: var(--forest);
-      padding: 2px 8px;
+      padding: 1px 5px;
       border-radius: 99px;
-      font-size: 9px;
+      font-size: 7px;
       font-weight: 600;
-      margin-top: 6px;
-      margin-right: 3px;
+      margin-top: 3px;
+      margin-right: 2px;
     }
     .phone-inner .ps-match {
       display: inline-block;
       background: rgba(200,145,74,0.12);
       color: var(--caramel);
-      padding: 2px 8px;
+      padding: 1px 5px;
       border-radius: 99px;
-      font-size: 9px;
+      font-size: 7px;
       font-weight: 700;
-      margin-top: 6px;
+      margin-top: 3px;
     }
     /* Home indicator */
     .phone-home {
       display: flex; justify-content: center; padding: 6px 0 4px;
     }
     .phone-home-bar {
-      width: 72px; height: 4px;
-      background: rgba(0,0,0,0.15); border-radius: 4px;
+      width: 56px; height: 3px;
+      background: rgba(0,0,0,0.15); border-radius: 3px;
     }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 6px;
@@ -571,8 +571,8 @@
       .hero-actions { flex-direction: column; align-items: center; }
       .footer-inner { flex-direction: column; text-align: center; }
       .cta-card { padding: 48px 28px; }
-      .hero-phones { gap: 14px; }
-      .phone-mock { width: 160px; border-radius: 32px; }
+      .hero-phones { gap: 10px; }
+      .phone-mock { width: 130px; border-radius: 26px; padding: 6px; }
       .emirates-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
