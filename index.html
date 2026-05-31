@@ -88,40 +88,66 @@
       animation: fadeInUp 0.8s ease 0.4s both;
     }
     .phone-mock {
-      width: 180px;
-      background: #fff;
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.04);
-      padding: 12px;
+      width: 200px;
+      background: #111;
+      border-radius: 40px;
+      padding: 10px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.18), inset 0 0 0 1.5px rgba(255,255,255,0.1);
       transform: perspective(800px) rotateY(-5deg);
       transition: transform 0.4s;
+      position: relative;
     }
     .phone-mock:last-child { transform: perspective(800px) rotateY(5deg); }
-    .phone-mock:hover { transform: perspective(800px) rotateY(0deg) translateY(-4px); }
+    .phone-mock:hover { transform: perspective(800px) rotateY(0deg) translateY(-6px); }
+    /* Side buttons */
+    .phone-mock::before {
+      content: '';
+      position: absolute; left: -2.5px; top: 90px;
+      width: 2.5px; height: 24px;
+      background: #222; border-radius: 2px 0 0 2px;
+      box-shadow: 0 34px 0 #222, 0 64px 0 #222;
+    }
+    .phone-mock::after {
+      content: '';
+      position: absolute; right: -2.5px; top: 120px;
+      width: 2.5px; height: 48px;
+      background: #222; border-radius: 0 2px 2px 0;
+    }
     .phone-screen {
       background: var(--sand);
-      border-radius: 16px;
-      padding: 16px 12px;
+      border-radius: 32px;
+      overflow: hidden;
+    }
+    /* Dynamic Island */
+    .phone-island {
+      display: flex; justify-content: center; padding: 8px 0 4px;
+    }
+    .phone-island-pill {
+      width: 62px; height: 18px;
+      background: #111; border-radius: 20px;
+    }
+    .phone-inner {
+      padding: 4px 12px 10px;
       font-size: 11px;
     }
-    .phone-screen .ps-header {
+    .phone-inner .ps-header {
       font-size: 14px; font-weight: 700; color: var(--espresso);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
-    .phone-screen .ps-card {
+    .phone-inner .ps-card {
       background: #fff;
       border-radius: 12px;
       padding: 10px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       border: 1px solid rgba(0,0,0,0.04);
     }
-    .phone-screen .ps-card-name {
+    .phone-inner .ps-card-name {
       font-weight: 600; font-size: 12px; color: var(--espresso);
     }
-    .phone-screen .ps-card-sub {
+    .phone-inner .ps-card-sub {
       font-size: 10px; color: var(--stone); margin-top: 2px;
     }
-    .phone-screen .ps-tag {
+    .phone-inner .ps-tag {
       display: inline-block;
       background: rgba(79,168,112,0.1);
       color: var(--forest);
@@ -130,9 +156,9 @@
       font-size: 9px;
       font-weight: 600;
       margin-top: 6px;
-      margin-right: 4px;
+      margin-right: 3px;
     }
-    .phone-screen .ps-match {
+    .phone-inner .ps-match {
       display: inline-block;
       background: rgba(200,145,74,0.12);
       color: var(--caramel);
@@ -141,6 +167,14 @@
       font-size: 9px;
       font-weight: 700;
       margin-top: 6px;
+    }
+    /* Home indicator */
+    .phone-home {
+      display: flex; justify-content: center; padding: 6px 0 4px;
+    }
+    .phone-home-bar {
+      width: 72px; height: 4px;
+      background: rgba(0,0,0,0.15); border-radius: 4px;
     }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 6px;
@@ -537,8 +571,8 @@
       .hero-actions { flex-direction: column; align-items: center; }
       .footer-inner { flex-direction: column; text-align: center; }
       .cta-card { padding: 48px 28px; }
-      .hero-phones { gap: 12px; }
-      .phone-mock { width: 150px; }
+      .hero-phones { gap: 14px; }
+      .phone-mock { width: 160px; border-radius: 32px; }
       .emirates-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
@@ -584,47 +618,61 @@
       <div class="hero-phones">
         <div class="phone-mock">
           <div class="phone-screen">
-            <div class="ps-header">&#x2615; Discover</div>
-            <div class="ps-card">
-              <div class="ps-card-name">Stomping Grounds</div>
-              <div class="ps-card-sub">Al Quoz &bull; 1.2 km</div>
-              <span class="ps-tag">Specialty</span>
-              <span class="ps-tag">Cozy</span>
-              <span class="ps-match">92% match</span>
+            <div class="phone-island"><div class="phone-island-pill"></div></div>
+            <div class="phone-inner">
+              <div class="ps-header">&#x2615; Discover</div>
+              <div class="ps-card">
+                <div class="ps-card-name">Stomping Grounds</div>
+                <div class="ps-card-sub">Al Quoz &bull; 1.2 km</div>
+                <span class="ps-tag">Specialty</span>
+                <span class="ps-tag">Cozy</span>
+                <span class="ps-match">92% match</span>
+              </div>
+              <div class="ps-card">
+                <div class="ps-card-name">% Arabica</div>
+                <div class="ps-card-sub">Dubai Mall &bull; 3.4 km</div>
+                <span class="ps-tag">Aesthetic</span>
+                <span class="ps-match">87% match</span>
+              </div>
+              <div class="ps-card">
+                <div class="ps-card-name">Nightjar Coffee</div>
+                <div class="ps-card-sub">Al Wasl &bull; 2.1 km</div>
+                <span class="ps-tag">WiFi</span>
+                <span class="ps-tag">Quiet</span>
+                <span class="ps-match">85% match</span>
+              </div>
             </div>
-            <div class="ps-card">
-              <div class="ps-card-name">% Arabica</div>
-              <div class="ps-card-sub">Dubai Mall &bull; 3.4 km</div>
-              <span class="ps-tag">Aesthetic</span>
-              <span class="ps-match">87% match</span>
-            </div>
-            <div class="ps-card">
-              <div class="ps-card-name">Nightjar Coffee</div>
-              <div class="ps-card-sub">Al Wasl &bull; 2.1 km</div>
-              <span class="ps-tag">WiFi</span>
-              <span class="ps-tag">Quiet</span>
-              <span class="ps-match">85% match</span>
-            </div>
+            <div class="phone-home"><div class="phone-home-bar"></div></div>
           </div>
         </div>
         <div class="phone-mock">
           <div class="phone-screen">
-            <div class="ps-header">&#x1F50D; "cozy wifi spot"</div>
-            <div class="ps-card">
-              <div class="ps-card-name">Common Grounds</div>
-              <div class="ps-card-sub">JLT &bull; Excellent WiFi</div>
-              <span class="ps-tag">Work-Friendly</span>
-              <span class="ps-tag">Cozy</span>
+            <div class="phone-island"><div class="phone-island-pill"></div></div>
+            <div class="phone-inner">
+              <div class="ps-header">&#x1F50D; "cozy wifi spot"</div>
+              <div class="ps-card">
+                <div class="ps-card-name">Common Grounds</div>
+                <div class="ps-card-sub">JLT &bull; Excellent WiFi</div>
+                <span class="ps-tag">Work-Friendly</span>
+                <span class="ps-tag">Cozy</span>
+              </div>
+              <div class="ps-card">
+                <div class="ps-card-name">Cafe Rider</div>
+                <div class="ps-card-sub">Al Quoz &bull; Good WiFi</div>
+                <span class="ps-tag">Hidden Gem</span>
+                <span class="ps-tag">Quiet</span>
+              </div>
+              <div class="ps-card">
+                <div class="ps-card-name">The Sum of Us</div>
+                <div class="ps-card-sub">Al Quoz &bull; Excellent WiFi</div>
+                <span class="ps-tag">Specialty</span>
+                <span class="ps-tag">Outdoor</span>
+              </div>
+              <div style="text-align:center; margin-top:8px; color:var(--forest-mid); font-size:9px; font-weight:600;">
+                &#x2728; AI understood your query
+              </div>
             </div>
-            <div class="ps-card">
-              <div class="ps-card-name">Cafe Rider</div>
-              <div class="ps-card-sub">Al Quoz &bull; Good WiFi</div>
-              <span class="ps-tag">Hidden Gem</span>
-              <span class="ps-tag">Quiet</span>
-            </div>
-            <div style="text-align:center; margin-top:12px; color:var(--stone); font-size:10px;">
-              AI understood: "Looking for a<br>quiet, cozy cafe with WiFi"
-            </div>
+            <div class="phone-home"><div class="phone-home-bar"></div></div>
           </div>
         </div>
       </div>
