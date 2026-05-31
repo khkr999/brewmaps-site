@@ -3,49 +3,673 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BrewMaps – Discover UAE's best cafés</title>
+  <title>BrewMaps – Discover UAE's Best Cafes</title>
+  <meta name="description" content="BrewMaps helps you discover UAE's best cafes, matched to your taste. Personalized recommendations across Dubai, Abu Dhabi, Sharjah, and beyond." />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #FAF6F0;
-      color: #1A1A1A;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 24px;
-      text-align: center;
+
+    :root {
+      --espresso: #1A1A1A;
+      --forest: #2B4D1F;
+      --forest-mid: #4FA870;
+      --caramel: #C8914A;
+      --sand: #FAF6F0;
+      --cream: #FFF8F0;
+      --stone: #888;
     }
-    .logo { font-size: 32px; font-weight: 700; color: #2B4D1F; letter-spacing: -0.5px; }
-    .logo span { color: #C8914A; }
-    .tagline { font-size: 17px; color: #666; margin-top: 12px; line-height: 1.6; }
-    .badge {
-      display: inline-block;
-      margin-top: 32px;
-      background: #2B4D1F;
-      color: #fff;
-      padding: 14px 28px;
+
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--sand);
+      color: var(--espresso);
+      overflow-x: hidden;
+    }
+
+    /* ── Nav ─────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(250, 246, 240, 0.85);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { width: 36px; height: 36px; }
+    .nav-logo span { font-size: 20px; font-weight: 700; color: var(--forest); }
+    .nav-logo span b { color: var(--caramel); font-weight: 700; }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a { font-size: 14px; font-weight: 500; color: var(--stone); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--espresso); }
+    .nav-cta {
+      background: var(--forest); color: #fff !important;
+      padding: 10px 20px; border-radius: 999px;
+      font-weight: 600; font-size: 13px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(43,77,31,0.3); }
+
+    /* ── Hero ────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -50%; right: -30%;
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(79,168,112,0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -30%; left: -20%;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(200,145,74,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero-content {
+      max-width: 680px; text-align: center; position: relative; z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(79,168,112,0.1);
+      color: var(--forest-mid);
+      padding: 8px 16px;
       border-radius: 999px;
-      font-size: 15px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 28px;
+      animation: fadeInUp 0.6s ease;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px;
+      background: var(--forest-mid);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    .hero h1 {
+      font-size: clamp(40px, 7vw, 64px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      color: var(--espresso);
+      margin-bottom: 20px;
+      animation: fadeInUp 0.6s ease 0.1s both;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--forest) 0%, var(--forest-mid) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--stone);
+      max-width: 480px;
+      margin: 0 auto 40px;
+      animation: fadeInUp 0.6s ease 0.2s both;
+    }
+    .hero-actions {
+      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease 0.3s both;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--forest);
+      color: #fff;
+      padding: 16px 32px;
+      border-radius: 999px;
+      font-size: 16px;
       font-weight: 600;
       text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 4px 24px rgba(43,77,31,0.2);
     }
-    .links { margin-top: 48px; display: flex; gap: 24px; }
-    .links a { font-size: 14px; color: #2B4D1F; font-weight: 600; text-decoration: none; }
-    footer { margin-top: 60px; font-size: 12px; color: #aaa; }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(43,77,31,0.3);
+    }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent;
+      color: var(--espresso);
+      padding: 16px 32px;
+      border-radius: 999px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1.5px solid rgba(0,0,0,0.12);
+      transition: all 0.3s;
+    }
+    .btn-secondary:hover {
+      border-color: var(--forest);
+      color: var(--forest);
+    }
+
+    /* ── Stats bar ───────────────────────────────────── */
+    .stats-bar {
+      background: var(--cream);
+      border-top: 1px solid rgba(0,0,0,0.04);
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      padding: 48px 24px;
+    }
+    .stats-inner {
+      max-width: 900px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      text-align: center;
+    }
+    .stat-item h3 {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--forest);
+      letter-spacing: -1px;
+    }
+    .stat-item p {
+      font-size: 14px;
+      color: var(--stone);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* ── Features ─────────────────────────────────────── */
+    .features {
+      padding: 100px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .features-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .features-header h2 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .features-header p {
+      font-size: 17px;
+      color: var(--stone);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .feature-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 20px;
+      padding: 36px 28px;
+      transition: all 0.3s;
+      cursor: default;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+      border-color: rgba(79,168,112,0.2);
+    }
+    .feature-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.2px;
+    }
+    .feature-card p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--stone);
+    }
+
+    /* ── How it works ────────────────────────────────── */
+    .how-it-works {
+      background: var(--espresso);
+      color: #fff;
+      padding: 100px 24px;
+    }
+    .how-inner {
+      max-width: 900px; margin: 0 auto;
+    }
+    .how-inner h2 {
+      text-align: center;
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 64px;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+    }
+    .step { text-align: center; }
+    .step-number {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 2px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 20px; font-weight: 700;
+      color: var(--forest-mid);
+    }
+    .step h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .step p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* ── Vibes section ───────────────────────────────── */
+    .vibes {
+      padding: 100px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .vibes h2 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .vibes > p {
+      font-size: 17px;
+      color: var(--stone);
+      margin-bottom: 48px;
+    }
+    .vibe-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .vibe-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 12px 22px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--espresso);
+      transition: all 0.3s;
+      cursor: default;
+    }
+    .vibe-tag:hover {
+      border-color: var(--forest-mid);
+      background: rgba(79,168,112,0.04);
+      transform: translateY(-2px);
+    }
+
+    /* ── CTA section ─────────────────────────────────── */
+    .cta-section {
+      padding: 100px 24px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--sand) 0%, var(--cream) 100%);
+    }
+    .cta-card {
+      max-width: 600px; margin: 0 auto;
+      background: var(--forest);
+      border-radius: 28px;
+      padding: 60px 40px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute; top: -40%; right: -30%;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .cta-card h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      position: relative;
+      letter-spacing: -0.5px;
+    }
+    .cta-card p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 32px;
+      position: relative;
+    }
+    .btn-light {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #fff;
+      color: var(--forest);
+      padding: 16px 32px;
+      border-radius: 999px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .btn-light:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    }
+
+    /* ── Footer ──────────────────────────────────────── */
+    footer {
+      padding: 40px 24px;
+      text-align: center;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    .footer-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-left { display: flex; align-items: center; gap: 8px; }
+    .footer-left img { width: 24px; height: 24px; }
+    .footer-left span { font-size: 13px; color: var(--stone); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 13px; color: var(--stone); text-decoration: none; font-weight: 500; }
+    .footer-links a:hover { color: var(--espresso); }
+
+    /* ── Animations ──────────────────────────────────── */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .animate-on-scroll.visible {
+      animation: slideUp 0.6s ease forwards;
+    }
+    @keyframes slideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Mobile ──────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .nav-links a:not(.nav-cta) { display: none; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; gap: 36px; }
+      .hero h1 { font-size: 36px; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .cta-card { padding: 48px 28px; }
+    }
   </style>
 </head>
 <body>
-  <div class="logo">Brew<span>Maps</span></div>
-  <p class="tagline">Discover UAE's best cafés,<br>matched to your taste.</p>
-  <a class="badge" href="#">Coming soon to the App Store</a>
-  <div class="links">
-    <a href="privacy.html">Privacy Policy</a>
-    <a href="terms.html">Terms of Service</a>
-    <a href="mailto:hello@brewmaps.app">Contact</a>
-  </div>
-  <footer>© 2025 BrewMaps. Dubai, UAE.</footer>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <img src="logo.png" alt="BrewMaps" />
+        <span>Brew<b>Maps</b></span>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="mailto:hello@brewmaps.app">Contact</a>
+        <a href="#cta" class="nav-cta">Get Early Access</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Launching Summer 2025
+      </div>
+      <h1>Find your <em>perfect cafe</em> in the UAE</h1>
+      <p>BrewMaps learns what you love — vibes, drinks, seating — and matches you with 300+ cafes across Dubai, Abu Dhabi, Sharjah, and beyond.</p>
+      <div class="hero-actions">
+        <a href="#cta" class="btn-primary">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 18.5A6.5 6.5 0 0 1 5.5 12V8a6.5 6.5 0 0 1 13 0v4A6.5 6.5 0 0 1 12 18.5Z"/><path d="M12 18.5V22m-4 0h8"/></svg>
+          Join the Waitlist
+        </a>
+        <a href="#features" class="btn-secondary">
+          Learn More &darr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats-bar">
+    <div class="stats-inner fade-in">
+      <div class="stat-item">
+        <h3>328+</h3>
+        <p>Curated cafes</p>
+      </div>
+      <div class="stat-item">
+        <h3>7</h3>
+        <p>Emirates covered</p>
+      </div>
+      <div class="stat-item">
+        <h3>AI</h3>
+        <p>Powered search</p>
+      </div>
+      <div class="stat-item">
+        <h3>100%</h3>
+        <p>Personalized</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="features-header fade-in">
+      <h2>Built for cafe lovers</h2>
+      <p>Everything you need to discover, save, and share the best cafes in the UAE.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(79,168,112,0.1);">&#x1F50D;</div>
+        <h3>AI-Powered Search</h3>
+        <p>Ask naturally — "quiet cafe with fast WiFi near JBR" — and get instant, intelligent results.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(200,145,74,0.1);">&#x2615;</div>
+        <h3>Taste Matching</h3>
+        <p>A 3-question quiz starts it. Every check-in refines it. Your recommendations get smarter over time.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(139,157,195,0.15);">&#x1F4CD;</div>
+        <h3>Vibe Filtering</h3>
+        <p>Filter by cozy, aesthetic, pet-friendly, outdoor seating, late-night, and more — find your exact mood.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(200,100,100,0.1);">&#x1F4F8;</div>
+        <h3>Community Photos</h3>
+        <p>See real photos from the community. Share your own. Discover cafes through other people's lenses.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(108,198,202,0.12);">&#x1F4E5;</div>
+        <h3>Check-in & Rate</h3>
+        <p>Log your visits, rate drinks, track your streak. Earn BrewPoints and unlock badges.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(200,145,74,0.12);">&#x1F465;</div>
+        <h3>Friends & Feed</h3>
+        <p>Add friends via QR code, see their check-ins, and discover what they're drinking.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how-it-works" id="how">
+    <div class="how-inner">
+      <h2 class="animate-on-scroll">How BrewMaps works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Take the quiz</h3>
+          <p>Answer 3 quick questions about your coffee style, cafe purpose, and deal-breaker priorities.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Discover & visit</h3>
+          <p>Browse personalized recommendations, search by vibe, and find your next favorite spot.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Check in & evolve</h3>
+          <p>Log visits, rate drinks, and watch your taste profile evolve. The more you explore, the better it gets.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vibes -->
+  <section class="vibes">
+    <h2 class="animate-on-scroll">Every vibe. Every mood.</h2>
+    <p class="animate-on-scroll">Whatever you're looking for, we've tagged it.</p>
+    <div class="vibe-tags fade-in">
+      <span class="vibe-tag">&#x1F4BB; Work-Friendly</span>
+      <span class="vibe-tag">&#x1F343; Outdoor Seating</span>
+      <span class="vibe-tag">&#x1F436; Pet Friendly</span>
+      <span class="vibe-tag">&#x2728; Aesthetic</span>
+      <span class="vibe-tag">&#x1F30C; Late Night</span>
+      <span class="vibe-tag">&#x1F48E; Hidden Gem</span>
+      <span class="vibe-tag">&#x1F6CB; Cozy</span>
+      <span class="vibe-tag">&#x2615; Specialty Coffee</span>
+      <span class="vibe-tag">&#x1F4F6; Fast WiFi</span>
+      <span class="vibe-tag">&#x1F3D6; Waterfront</span>
+      <span class="vibe-tag">&#x1F46B; Date Spot</span>
+      <span class="vibe-tag">&#x1F389; Social Buzz</span>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta">
+    <div class="cta-card fade-in">
+      <h2>Be the first to explore</h2>
+      <p>BrewMaps is launching soon on the App Store. Drop your email and we'll let you know the moment it's live.</p>
+      <a href="mailto:hello@brewmaps.app?subject=Early%20Access%20Request&body=Hey!%20I'd%20love%20early%20access%20to%20BrewMaps." class="btn-light">
+        &#x2709; Request Early Access
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-left">
+        <img src="logo.png" alt="BrewMaps" />
+        <span>&copy; 2025 BrewMaps. Dubai, UAE.</span>
+      </div>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="mailto:hello@brewmaps.app">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll animations -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      // If already in viewport on load, show immediately
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add('visible');
+      } else {
+        observer.observe(el);
+      }
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Counter animation for stats
+    function animateCounters() {
+      document.querySelectorAll('.stat-item h3').forEach(el => {
+        const text = el.textContent;
+        const num = parseInt(text);
+        if (isNaN(num)) return;
+        const suffix = text.replace(/\d/g, '');
+        let current = 0;
+        const step = Math.ceil(num / 40);
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= num) {
+            current = num;
+            clearInterval(timer);
+          }
+          el.textContent = current + suffix;
+        }, 30);
+      });
+    }
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    const statsBar = document.querySelector('.stats-bar');
+    if (statsBar) statsObserver.observe(statsBar);
+  </script>
+
 </body>
 </html>
