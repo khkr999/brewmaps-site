@@ -227,30 +227,41 @@ async function loadStats(silent = false) {
   if (isFetching) return;
   isFetching = true;
   if (!silent) document.getElementById('main-content').innerHTML = '<div class="loading"><span class="dot-pulse">Loading</span></div>';
-  try {
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), 25000);
-    const res = await fetch(ENDPOINT + '?t=' + Date.now(), {
-      headers: { 'x-admin-secret': adminSecret },
-      cache: 'no-store',
-      signal: ctrl.signal,
-    });
-    clearTimeout(t);
-    if (res.status === 401) {
-      sessionStorage.removeItem('bm_admin_secret');
-      document.getElementById('dashboard').style.display = 'none';
-      document.getElementById('login-screen').style.display = 'flex';
-      document.getElementById('login-error').textContent = 'Session expired. Please log in again.';
+
+  const maxRetries = 2;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 30000);
+      const res = await fetch(ENDPOINT + '?t=' + Date.now(), {
+        headers: { 'x-admin-secret': adminSecret },
+        cache: 'no-store',
+        signal: ctrl.signal,
+      });
+      clearTimeout(t);
+      if (res.status === 401) {
+        sessionStorage.removeItem('bm_admin_secret');
+        document.getElementById('dashboard').style.display = 'none';
+        document.getElementById('login-screen').style.display = 'flex';
+        document.getElementById('login-error').textContent = 'Session expired. Please log in again.';
+        isFetching = false;
+        return;
+      }
+      rawData = await res.json();
+      document.getElementById('last-fetch').textContent = 'Updated ' + new Date().toLocaleTimeString();
+      render(rawData);
+      isFetching = false;
       return;
+    } catch(e) {
+      if (attempt < maxRetries) {
+        if (!silent) document.getElementById('main-content').innerHTML = '<div class="loading"><span class="dot-pulse">Retrying</span></div>';
+        await new Promise(r => setTimeout(r, 1500));
+        continue;
+      }
+      if (!silent) document.getElementById('main-content').innerHTML = '<div class="loading" style="color:#e74c3c">Failed to load: ' + e.message + ' <button class="refresh-btn" onclick="loadStats()" style="margin-left:12px;background:var(--forest);color:white;padding:8px 16px;">Try Again</button></div>';
     }
-    rawData = await res.json();
-    document.getElementById('last-fetch').textContent = 'Updated ' + new Date().toLocaleTimeString();
-    render(rawData);
-  } catch(e) {
-    if (!silent) document.getElementById('main-content').innerHTML = '<div class="loading" style="color:#e74c3c">Failed to load: ' + e.message + '</div>';
-  } finally {
-    isFetching = false;
   }
+  isFetching = false;
 }
 
 // ── Ban / Unban ───────────────────────────────────────────────────────────────
