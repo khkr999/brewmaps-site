@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrewMaps — Café Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --forest:  #2B4D1F;
+      --forest2: #3a6429;
+      --caramel: #C4956A;
+      --cream:   #FFFDF9;
+      --sand:    #F5F0E8;
+      --stone:   #8a7968;
+      --border:  #e8e0d4;
+      --red:     #e74c3c;
+      --green:   #27ae60;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--sand); color: #2a2218; min-height: 100vh; }
+
+    /* ── Header ── */
+    header {
+      background: var(--forest);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .header-left { display: flex; align-items: center; gap: 20px; }
+    .logo { font-family: 'Playfair Display', serif; font-style: italic; font-size: 20px; color: var(--cream); }
+    .cafe-badge {
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.85);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 999px;
+    }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .header-meta { font-size: 12px; color: rgba(255,255,255,0.4); }
+    .refresh-btn {
+      background: rgba(255,255,255,0.12); border: none; color: white;
+      padding: 7px 14px; border-radius: 8px; font-size: 13px; cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: background .2s;
+    }
+    .refresh-btn:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── Hero cafe info ── */
+    .cafe-hero {
+      background: var(--forest);
+      padding: 0 32px 32px;
+      display: flex;
+      align-items: flex-end;
+      gap: 24px;
+    }
+    .cafe-cover {
+      width: 100px; height: 100px;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 3px solid rgba(255,255,255,0.2);
+      flex-shrink: 0;
+    }
+    .cafe-cover-placeholder {
+      width: 100px; height: 100px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px; flex-shrink: 0;
+    }
+    .cafe-info { flex: 1; }
+    .cafe-name-hero {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px; color: white; margin-bottom: 4px;
+    }
+    .cafe-area-hero { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 10px; }
+    .cafe-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .vibe-tag {
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.8);
+      font-size: 11px; font-weight: 600;
+      padding: 4px 10px; border-radius: 999px;
+    }
+    .google-rating {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.1);
+      padding: 8px 14px; border-radius: 12px;
+      flex-shrink: 0;
+    }
+    .google-rating .stars { color: #f1c40f; font-size: 16px; }
+    .google-rating .rating-val { color: white; font-weight: 700; font-size: 18px; }
+    .google-rating .rating-count { color: rgba(255,255,255,0.5); font-size: 12px; }
+
+    /* ── Main ── */
+    main { max-width: 1100px; margin: 0 auto; padding: 28px 24px; }
+
+    .section-title {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--stone); margin: 32px 0 14px;
+    }
+    .section-title:first-child { margin-top: 0; }
+
+    /* ── KPI grid ── */
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+    .kpi-card {
+      background: var(--cream); border-radius: 16px;
+      padding: 18px 20px; border: 1px solid var(--border);
+      transition: transform .15s;
+    }
+    .kpi-card:hover { transform: translateY(-2px); }
+    .kpi-card.accent { background: var(--forest); border-color: var(--forest); }
+    .kpi-label { font-size: 11px; font-weight: 600; color: var(--stone); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+    .kpi-card.accent .kpi-label { color: rgba(255,255,255,0.6); }
+    .kpi-value { font-size: 30px; font-weight: 700; color: var(--forest); line-height: 1; }
+    .kpi-card.accent .kpi-value { color: white; }
+    .kpi-sub { font-size: 12px; color: var(--stone); margin-top: 5px; }
+    .kpi-card.accent .kpi-sub { color: rgba(255,255,255,0.5); }
+
+    /* ── Chart ── */
+    .chart-card {
+      background: var(--cream); border-radius: 16px;
+      border: 1px solid var(--border); padding: 20px 24px;
+    }
+    .chart-title { font-size: 13px; font-weight: 700; color: var(--forest); margin-bottom: 16px; }
+    .bar-chart { display: flex; align-items: flex-end; gap: 3px; height: 80px; }
+    .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .bar-fill-col {
+      width: 100%; background: var(--forest);
+      border-radius: 4px 4px 0 0;
+      min-height: 3px;
+      transition: height .4s ease;
+    }
+    .bar-fill-col.today { background: var(--caramel); }
+    .bar-date { font-size: 9px; color: var(--stone); white-space: nowrap; }
+    .chart-legend { display: flex; gap: 16px; margin-top: 10px; font-size: 11px; color: var(--stone); }
+    .legend-dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; }
+
+    /* ── Two col ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Drinks + Hours ── */
+    .list-card {
+      background: var(--cream); border-radius: 16px;
+      border: 1px solid var(--border); overflow: hidden;
+    }
+    .list-header {
+      padding: 14px 18px 10px;
+      font-size: 13px; font-weight: 700; color: var(--forest);
+      border-bottom: 1px solid var(--border);
+    }
+    .list-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 18px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .list-row:last-child { border-bottom: none; }
+    .list-name { font-weight: 500; }
+    .list-bar-wrap { flex: 1; margin: 0 14px; }
+    .list-bar-track { background: var(--sand); border-radius: 999px; height: 6px; overflow: hidden; }
+    .list-bar-fill { height: 100%; background: var(--forest); border-radius: 999px; }
+    .list-count { font-size: 12px; color: var(--stone); font-weight: 600; min-width: 24px; text-align: right; }
+    .rank { font-weight: 700; color: var(--stone); font-size: 12px; min-width: 20px; }
+
+    /* ── Hour labels ── */
+    .hour-label { font-size: 12px; color: #2a2218; }
+
+    /* ── Photos grid ── */
+    .photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    @media (max-width: 500px) { .photos-grid { grid-template-columns: repeat(2, 1fr); } }
+    .photo-thumb {
+      aspect-ratio: 1; border-radius: 12px;
+      object-fit: cover; width: 100%;
+      border: 1px solid var(--border);
+    }
+    .photo-card { position: relative; }
+    .photo-likes {
+      position: absolute; bottom: 8px; right: 8px;
+      background: rgba(0,0,0,0.55); color: white;
+      font-size: 11px; font-weight: 600;
+      padding: 3px 8px; border-radius: 999px;
+      display: flex; align-items: center; gap: 4px;
+    }
+
+    /* ── Upgrade banner ── */
+    .upgrade-banner {
+      background: linear-gradient(135deg, var(--forest), var(--forest2));
+      border-radius: 16px; padding: 24px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; margin-top: 32px;
+    }
+    .upgrade-text h3 { color: white; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .upgrade-text p { color: rgba(255,255,255,0.65); font-size: 13px; }
+    .upgrade-btn {
+      background: var(--caramel); color: white; border: none;
+      padding: 12px 24px; border-radius: 12px;
+      font-size: 14px; font-weight: 700;
+      cursor: pointer; white-space: nowrap;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .loading { text-align: center; padding: 80px; color: var(--stone); font-size: 15px; }
+    .last-updated { font-size: 12px; color: var(--stone); text-align: right; margin-top: 24px; padding-bottom: 32px; }
+    .live-dot { display: inline-block; width: 7px; height: 7px; background: #2ecc71; border-radius: 50%; margin-right: 5px; animation: pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo">BrewMaps</div>
+    <div class="cafe-badge" id="header-cafe-name">Loading…</div>
+  </div>
+  <div class="header-right">
+    <div class="header-meta" id="last-fetch"></div>
+    <button class="refresh-btn" onclick="loadStats()">↻ Refresh</button>
+  </div>
+</header>
+
+<div id="cafe-hero" class="cafe-hero"></div>
+
+<main id="main-content">
+  <div class="loading">Loading your dashboard…</div>
+</main>
+
+<script>
+  const ENDPOINT  = 'https://qgzyywxizlhtuwuaonxy.supabase.co/functions/v1/admin-stats';
+  const ADMIN_KEY = 'BrewMaps2026!';
+  const CAFE_ID   = 'ff36e7fb-a1b8-4277-b9d0-cbe07a54dffb'; // Peet's Ajman
+
+  function fmt(n) { return (n ?? 0).toLocaleString(); }
+  function stars(r) { return r ? '★'.repeat(Math.round(r)) + '☆'.repeat(5 - Math.round(r)) : '—'; }
+  function hourLabel(h) {
+    if (h == null) return '?';
+    const ampm = h < 12 ? 'AM' : 'PM';
+    const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+    return `${h12}${ampm}`;
+  }
+  function timeAgo(iso) {
+    const diff = Date.now() - new Date(iso).getTime();
+    const m = Math.floor(diff / 60000);
+    if (m < 1) return 'just now';
+    if (m < 60) return `${m}m ago`;
+    return `${Math.floor(m/60)}h ago`;
+  }
+
+  async function loadStats() {
+    try {
+      const res = await fetch(`${ENDPOINT}?cafeId=${CAFE_ID}`, {
+        headers: { 'x-admin-secret': ADMIN_KEY },
+      });
+      const data = await res.json();
+      render(data);
+      document.getElementById('last-fetch').textContent = 'Updated ' + new Date().toLocaleTimeString();
+    } catch(e) {
+      document.getElementById('main-content').innerHTML =
+        '<div class="loading" style="color:#e74c3c">Failed to load. Check connection.</div>';
+    }
+  }
+
+  function render(d) {
+    const cafe = d.cafe ?? {};
+    const ci   = d.checkins ?? {};
+    const co   = d.community ?? {};
+
+    // Header
+    document.getElementById('header-cafe-name').textContent = cafe.name ?? 'Your Café';
+
+    // Hero
+    const photoUrl = cafe.photo_urls?.[0];
+    document.getElementById('cafe-hero').innerHTML = `
+      ${photoUrl
+        ? `<img class="cafe-cover" src="${photoUrl}" alt="${cafe.name}" />`
+        : `<div class="cafe-cover-placeholder">☕</div>`}
+      <div class="cafe-info">
+        <div class="cafe-name-hero">${cafe.name ?? ''}</div>
+        <div class="cafe-area-hero">📍 ${cafe.area ?? ''}</div>
+        <div class="cafe-tags">
+          ${(cafe.vibe_tags ?? []).slice(0,5).map(t => `<span class="vibe-tag">${t}</span>`).join('')}
+        </div>
+      </div>
+      ${cafe.google_rating ? `
+        <div class="google-rating">
+          <div>
+            <div class="stars">${stars(cafe.google_rating)}</div>
+            <div style="display:flex;align-items:baseline;gap:6px;margin-top:2px">
+              <span class="rating-val">${cafe.google_rating}</span>
+              <span class="rating-count">${fmt(cafe.google_review_count)} reviews</span>
+            </div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px">Google Rating</div>
+          </div>
+        </div>` : ''}
+    `;
+
+    // Daily chart
+    const daily = ci.dailyCheckins ?? [];
+    const maxCount = Math.max(...daily.map(d => d.count), 1);
+    const todayStr = new Date().toISOString().slice(0,10);
+    const showDates = daily.filter((_, i) => i % 5 === 0 || i === daily.length - 1);
+    const bars = daily.map(d => `
+      <div class="bar-col" title="${d.date}: ${d.count} check-ins">
+        <div class="bar-fill-col ${d.date === todayStr ? 'today' : ''}"
+          style="height:${Math.max(Math.round(d.count / maxCount * 72), d.count > 0 ? 3 : 0)}px">
+        </div>
+      </div>`).join('');
+
+    // Top drinks
+    const maxDrink = ci.topDrinks?.[0]?.[1] ?? 1;
+    const drinkRows = (ci.topDrinks ?? []).map(([name, count], i) => `
+      <div class="list-row">
+        <span class="rank">#${i+1}</span>
+        <span class="list-name">${name}</span>
+        <div class="list-bar-wrap">
+          <div class="list-bar-track">
+            <div class="list-bar-fill" style="width:${Math.round(count/maxDrink*100)}%"></div>
+          </div>
+        </div>
+        <span class="list-count">${count}</span>
+      </div>`).join('') || '<div class="list-row" style="color:#999;justify-content:center">No data yet</div>';
+
+    // Peak hours
+    const maxHour = ci.peakHours?.[0]?.count ?? 1;
+    const hourRows = (ci.peakHours ?? []).map((h, i) => `
+      <div class="list-row">
+        <span class="rank">#${i+1}</span>
+        <span class="list-name hour-label">${hourLabel(h.hour)}</span>
+        <div class="list-bar-wrap">
+          <div class="list-bar-track">
+            <div class="list-bar-fill" style="width:${Math.round(h.count/maxHour*100)}%"></div>
+          </div>
+        </div>
+        <span class="list-count">${h.count}</span>
+      </div>`).join('') || '<div class="list-row" style="color:#999;justify-content:center">No data yet</div>';
+
+    // Recent photos
+    const photoGrid = (co.recentPhotos ?? []).map(p => `
+      <div class="photo-card">
+        <img class="photo-thumb" src="${p.photo_url}" />
+        <div class="photo-likes">❤️ ${p.like_count ?? 0}</div>
+      </div>`).join('') || '<div style="color:#999;font-size:13px;padding:16px">No community photos yet</div>';
+
+    // App rating
+    const appRating = ci.avgRating
+      ? `<div class="kpi-value">${ci.avgRating}</div><div class="kpi-sub">out of 5 ★</div>`
+      : `<div class="kpi-value">—</div><div class="kpi-sub">No ratings yet</div>`;
+
+    document.getElementById('main-content').innerHTML = `
+
+      <div class="section-title">📊 Overview</div>
+      <div class="kpi-grid">
+        <div class="kpi-card accent">
+          <div class="kpi-label">Total Check-ins</div>
+          <div class="kpi-value">${fmt(ci.total)}</div>
+          <div class="kpi-sub">All time</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Today</div>
+          <div class="kpi-value">${ci.today ?? 0}</div>
+          <div class="kpi-sub">Check-ins today</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">This Week</div>
+          <div class="kpi-value">${ci.thisWeek ?? 0}</div>
+          <div class="kpi-sub">Last 7 days</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">This Month</div>
+          <div class="kpi-value">${ci.thisMonth ?? 0}</div>
+          <div class="kpi-sub">Last 30 days</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">App Rating</div>
+          ${appRating}
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label"><span class="live-dot"></span>Live Now</div>
+          <div class="kpi-value">${co.livePhotos ?? 0}</div>
+          <div class="kpi-sub">Photos in last 2h</div>
+        </div>
+      </div>
+
+      <div class="section-title">📅 Check-ins — Last 30 Days</div>
+      <div class="chart-card">
+        <div class="chart-title">Daily check-in activity</div>
+        <div class="bar-chart">${bars}</div>
+        <div class="chart-legend">
+          <span><span class="legend-dot" style="background:var(--forest)"></span>Check-ins</span>
+          <span><span class="legend-dot" style="background:var(--caramel)"></span>Today</span>
+        </div>
+      </div>
+
+      <div class="section-title">☕ What People Order · 📸 Community Photos</div>
+      <div class="two-col">
+        <div class="list-card">
+          <div class="list-header">Top Drinks (Last 30 Days)</div>
+          ${drinkRows}
+        </div>
+        <div class="list-card">
+          <div class="list-header">Peak Visit Hours</div>
+          ${hourRows}
+        </div>
+      </div>
+
+      <div class="section-title">📸 Recent Community Photos</div>
+      <div style="background:var(--cream);border-radius:16px;border:1px solid var(--border);padding:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <span style="font-size:13px;font-weight:700;color:var(--forest)">${fmt(co.totalPhotos)} total photos · ${co.photosToday ?? 0} today</span>
+        </div>
+        <div class="photos-grid">${photoGrid}</div>
+      </div>
+
+      <div class="upgrade-banner">
+        <div class="upgrade-text">
+          <h3>You're viewing the BrewMaps Café Dashboard</h3>
+          <p>This is a preview of what's included in the paid plan — 99 AED/month. Pin weekly specials, respond to visitor feedback, and get full analytics for your café.</p>
+        </div>
+        <button class="upgrade-btn" onclick="window.open('https://wa.me/971XXXXXXXXX?text=I want to claim my café on BrewMaps','_blank')">
+          Get Started →
+        </button>
+      </div>
+
+      <div class="last-updated">
+        Generated at ${new Date(d.generatedAt).toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })} (Dubai time)
+      </div>
+    `;
+  }
+
+  loadStats();
+</script>
+</body>
+</html>
