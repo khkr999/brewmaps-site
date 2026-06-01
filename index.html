@@ -167,8 +167,8 @@
       color: var(--stone);
       max-width: 520px;
       margin: 0 auto 44px;
-      animation: fadeInUp 0.7s ease 0.2s both;
       font-weight: 400;
+      min-height: 58px;
     }
     .hero-actions {
       display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
@@ -652,6 +652,109 @@
       50% { opacity: 0.4; transform: scale(0.85); }
     }
 
+    /* Floating orbs — gentle drift */
+    @keyframes float1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -20px) scale(1.05); }
+      66% { transform: translate(-20px, 15px) scale(0.97); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(-25px, 25px) scale(1.03); }
+      66% { transform: translate(15px, -30px) scale(0.95); }
+    }
+    @keyframes float3 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(20px, -15px); }
+    }
+    .hero-orb-1 { animation: float1 12s ease-in-out infinite; }
+    .hero-orb-2 { animation: float2 15s ease-in-out infinite; }
+    .hero-orb-3 { animation: float3 10s ease-in-out infinite; }
+
+    /* Gradient shimmer on hero accent text */
+    @keyframes shimmer {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .hero h1 .accent {
+      background-size: 200% auto;
+      animation: shimmer 6s ease infinite;
+    }
+
+    /* Gentle breathing glow on primary CTA */
+    @keyframes btnGlow {
+      0%, 100% { box-shadow: 0 4px 24px rgba(43,77,31,0.18); }
+      50% { box-shadow: 0 4px 36px rgba(43,77,31,0.35); }
+    }
+    .btn-primary { animation: btnGlow 3s ease-in-out infinite; }
+    .btn-primary:hover { animation: none; }
+
+    /* Nav logo subtle bounce on load */
+    @keyframes logoIn {
+      0% { opacity: 0; transform: translateX(-12px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+    .nav-logo { animation: logoIn 0.6s ease both; }
+
+    /* Vibe tags subtle floating */
+    @keyframes tagFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .vibe-tag:nth-child(odd) { animation: tagFloat 4s ease-in-out infinite; }
+    .vibe-tag:nth-child(even) { animation: tagFloat 4s ease-in-out 1s infinite; }
+    .vibe-tag:hover { animation-play-state: paused; }
+
+    /* Step numbers gentle pulse on hover */
+    @keyframes stepPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(79,168,112,0.3); }
+      50% { box-shadow: 0 0 0 12px rgba(79,168,112,0); }
+    }
+    .step:hover .step-number { animation: stepPulse 1.5s ease infinite; }
+
+    /* Emirate card count tick-up shimmer */
+    @keyframes countGlow {
+      0% { opacity: 0.7; transform: scale(0.95); }
+      50% { opacity: 1; transform: scale(1.02); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .emirate-card.counted .ec-count { animation: countGlow 0.5s ease both; }
+
+    /* CTA card subtle background pulse */
+    @keyframes ctaPulse {
+      0%, 100% { opacity: 0.15; transform: scale(1); }
+      50% { opacity: 0.25; transform: scale(1.1); }
+    }
+    .cta-card::before { animation: ctaPulse 6s ease-in-out infinite; }
+    .cta-card::after { animation: ctaPulse 8s ease-in-out 2s infinite; }
+
+    /* Quote marks fade in */
+    @keyframes quoteIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+      to { opacity: 0.2; transform: translateX(-50%) translateY(0); }
+    }
+    .social-proof.visible blockquote::before {
+      animation: quoteIn 0.8s ease 0.3s both;
+    }
+
+    /* Feature card icon bounce on hover */
+    .feature-card:hover .feature-icon {
+      animation: iconBounce 0.4s ease;
+    }
+    @keyframes iconBounce {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.15); }
+      70% { transform: scale(0.95); }
+      100% { transform: scale(1); }
+    }
+
+    /* Section label dot continuous pulse */
+    .sl-dot { animation: pulse 2s ease-in-out infinite; }
+
+    /* Smooth parallax-like scroll for hero orbs */
+    .hero-orb { transition: transform 0.1s linear; }
+
     .animate-on-scroll {
       opacity: 0;
       transform: translateY(24px);
@@ -1014,6 +1117,77 @@
 
     const statsBar = document.querySelector('.stats-bar');
     if (statsBar) statsObserver.observe(statsBar);
+
+    // Emirate card counter animation (like stats but for coverage section)
+    function animateEmirateCounts() {
+      document.querySelectorAll('.emirate-card .ec-count').forEach(el => {
+        const num = parseInt(el.textContent);
+        if (isNaN(num) || el.dataset.animated) return;
+        el.dataset.animated = 'true';
+        let current = 0;
+        const step = Math.max(1, Math.ceil(num / 40));
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= num) { current = num; clearInterval(timer); el.closest('.emirate-card').classList.add('counted'); }
+          el.textContent = current;
+        }, 30);
+      });
+    }
+
+    const emiratesObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { animateEmirateCounts(); emiratesObserver.unobserve(entry.target); }
+      });
+    }, { threshold: 0.3 });
+
+    const emiratesSection = document.querySelector('.emirates-grid');
+    if (emiratesSection) emiratesObserver.observe(emiratesSection);
+
+    // Parallax orbs on mouse move (desktop only)
+    if (window.matchMedia('(min-width: 768px)').matches) {
+      const orbs = document.querySelectorAll('.hero-orb');
+      document.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 2;
+        const y = (e.clientY / window.innerHeight - 0.5) * 2;
+        orbs.forEach((orb, i) => {
+          const speed = (i + 1) * 12;
+          orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+        });
+      }, { passive: true });
+    }
+
+    // Tilt effect on feature cards (desktop)
+    if (window.matchMedia('(min-width: 768px)').matches) {
+      document.querySelectorAll('.feature-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
+          const y = ((e.clientY - rect.top) / rect.height - 0.5) * 8;
+          card.style.transform = `translateY(-6px) perspective(600px) rotateY(${x}deg) rotateX(${-y}deg)`;
+        }, { passive: true });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+        });
+      });
+    }
+
+    // Typing effect on hero subtitle (runs once on load)
+    (function() {
+      const sub = document.querySelector('.hero .sub');
+      if (!sub) return;
+      const fullText = sub.textContent;
+      sub.textContent = '';
+      sub.style.opacity = '1';
+      let i = 0;
+      function type() {
+        if (i < fullText.length) {
+          sub.textContent += fullText[i];
+          i++;
+          setTimeout(type, 18);
+        }
+      }
+      setTimeout(type, 800);
+    })();
   </script>
 
 </body>
