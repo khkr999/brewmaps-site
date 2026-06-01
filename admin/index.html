@@ -165,17 +165,25 @@
 
 <script>
 const ENDPOINT = 'https://qgzyywxizlhtuwuaonxy.supabase.co/functions/v1/admin-stats';
-let adminSecret = '';
+let adminSecret = sessionStorage.getItem('bm_admin_secret') || '';
 let rawData = null;
 let period = 30;
 let modFilter = 'all';
 
 // ── Login ─────────────────────────────────────────────────────────────────────
 document.getElementById('secret-input').addEventListener('keydown', e => { if(e.key==='Enter') login(); });
+
+// Auto-login if session has the secret
+if (adminSecret) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  loadStats();
+}
 async function login() {
   const val = document.getElementById('secret-input').value.trim();
   if (!val) return;
   adminSecret = val;
+  sessionStorage.setItem('bm_admin_secret', val);
   document.getElementById('login-error').textContent = '';
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
@@ -218,36 +226,46 @@ async function toggleBan(userId, ban) {
   const btn = document.getElementById('ban-btn-' + userId);
   if (btn) { btn.disabled = true; btn.textContent = '…'; }
 
-  const res = await fetch(ENDPOINT, {
-    method: 'POST',
-    headers: { 'x-admin-secret': adminSecret, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action: ban ? 'ban' : 'unban', userId }),
-  });
-  const result = await res.json();
+  try {
+    const res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'x-admin-secret': adminSecret,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ action: ban ? 'ban' : 'unban', userId }),
+    });
 
-  if (result.ok) {
-    // Update rawData in memory immediately so render reflects the change
-    // regardless of any caching on the subsequent GET
+    const result = await res.json();
+
+    if (!result.ok) {
+      alert('Failed: ' + (result.error ?? 'Unknown error'));
+      if (btn) { btn.disabled = false; btn.textContent = ban ? 'Ban' : 'Unban'; }
+      return;
+    }
+
+    // Optimistically update rawData so the UI reflects change immediately
     if (rawData) {
       for (const f of (rawData.flaggedUsers ?? [])) {
-        if (f.user_id === userId && f.profiles) f.profiles.is_banned = ban;
-      }
-      if (ban) {
-        rawData.bannedUsers = rawData.bannedUsers ?? [];
-        const profile = rawData.flaggedUsers?.find(f => f.user_id === userId)?.profiles;
-        if (profile && !rawData.bannedUsers.find(u => u.id === userId)) {
-          rawData.bannedUsers.push({ id: userId, username: profile.username, banned_at: new Date().toISOString(), violation_count: profile.violation_count });
+        if (f.user_id === userId) {
+          if (!f.profiles) f.profiles = {};
+          f.profiles.is_banned = ban;
         }
-      } else {
+      }
+      for (const u of (rawData.bannedUsers ?? [])) {
+        if (u.id === userId) u.is_banned = ban;
+      }
+      if (!ban) {
         rawData.bannedUsers = (rawData.bannedUsers ?? []).filter(u => u.id !== userId);
       }
-      render(rawData);
     }
-    // Then do a full refresh in the background to sync everything
-    loadStats();
-  } else {
+
+    // Reload fresh data from server
+    await loadStats();
+
+  } catch (err) {
+    alert('Error: ' + err.message);
     if (btn) { btn.disabled = false; btn.textContent = ban ? 'Ban' : 'Unban'; }
-    alert('Action failed: ' + (result.error ?? 'Unknown error'));
   }
 }
 
