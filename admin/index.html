@@ -212,21 +212,34 @@ function setModFilter(val) {
 }
 
 // ── Fetch ─────────────────────────────────────────────────────────────────────
-async function loadStats() {
-  document.getElementById('main-content').innerHTML = '<div class="loading"><span class="dot-pulse">Loading</span></div>';
+let isFetching = false;
+async function loadStats(silent = false) {
+  if (isFetching) return;
+  isFetching = true;
+  if (!silent) document.getElementById('main-content').innerHTML = '<div class="loading"><span class="dot-pulse">Loading</span></div>';
   try {
-    const res = await fetch(ENDPOINT + '?t=' + Date.now(), { headers: { 'x-admin-secret': adminSecret }, cache: 'no-store' });
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 10000);
+    const res = await fetch(ENDPOINT + '?t=' + Date.now(), {
+      headers: { 'x-admin-secret': adminSecret },
+      cache: 'no-store',
+      signal: ctrl.signal,
+    });
+    clearTimeout(t);
     if (res.status === 401) {
+      sessionStorage.removeItem('bm_admin_secret');
       document.getElementById('dashboard').style.display = 'none';
       document.getElementById('login-screen').style.display = 'flex';
-      document.getElementById('login-error').textContent = 'Wrong password.';
+      document.getElementById('login-error').textContent = 'Session expired. Please log in again.';
       return;
     }
     rawData = await res.json();
     document.getElementById('last-fetch').textContent = 'Updated ' + new Date().toLocaleTimeString();
     render(rawData);
   } catch(e) {
-    document.getElementById('main-content').innerHTML = '<div class="loading" style="color:#e74c3c">Failed to load.</div>';
+    if (!silent) document.getElementById('main-content').innerHTML = '<div class="loading" style="color:#e74c3c">Failed to load: ' + e.message + '</div>';
+  } finally {
+    isFetching = false;
   }
 }
 
@@ -241,6 +254,8 @@ async function toggleBan(userId, ban) {
       if (btn) { btn.disabled = false; btn.textContent = ban ? 'Ban' : 'Unban'; }
       return;
     }
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
     const res = await fetch(ENDPOINT, {
       method: 'POST',
       headers: {
@@ -248,7 +263,9 @@ async function toggleBan(userId, ban) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ action: ban ? 'ban' : 'unban', userId }),
+      signal: controller.signal,
     });
+    clearTimeout(timeout);
 
     const result = await res.json();
 
@@ -274,8 +291,8 @@ async function toggleBan(userId, ban) {
       }
     }
 
-    // Reload fresh data from server
-    await loadStats();
+    // Reload fresh data from server (silent = no loading spinner flash)
+    await loadStats(true);
 
   } catch (err) {
     showBanError('Exception: ' + err.message);
