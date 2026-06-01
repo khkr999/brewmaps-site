@@ -7,206 +7,120 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --forest:  #2B4D1F;
-      --forest2: #3a6429;
-      --caramel: #C4956A;
-      --cream:   #FFFDF9;
-      --sand:    #F5F0E8;
-      --stone:   #8a7968;
-      --border:  #e8e0d4;
-      --red:     #e74c3c;
-      --green:   #27ae60;
+      --forest:#2B4D1F; --forest2:#3a6429; --caramel:#C4956A;
+      --cream:#FFFDF9; --sand:#F5F0E8; --stone:#8a7968;
+      --border:#e8e0d4; --red:#e74c3c;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: var(--sand); color: #2a2218; min-height: 100vh; }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Inter',sans-serif;background:var(--sand);color:#2a2218;min-height:100vh;}
 
-    /* ── Header ── */
-    header {
-      background: var(--forest);
-      padding: 0 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-    }
-    .header-left { display: flex; align-items: center; gap: 20px; }
-    .logo { font-family: 'Playfair Display', serif; font-style: italic; font-size: 20px; color: var(--cream); }
-    .cafe-badge {
-      background: rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.85);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 5px 14px;
-      border-radius: 999px;
-    }
-    .header-right { display: flex; align-items: center; gap: 12px; }
-    .header-meta { font-size: 12px; color: rgba(255,255,255,0.4); }
-    .refresh-btn {
-      background: rgba(255,255,255,0.12); border: none; color: white;
-      padding: 7px 14px; border-radius: 8px; font-size: 13px; cursor: pointer;
-      font-family: 'Inter', sans-serif; transition: background .2s;
-    }
-    .refresh-btn:hover { background: rgba(255,255,255,0.2); }
+    /* Header */
+    header{background:var(--forest);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:64px;}
+    .logo{font-family:'Playfair Display',serif;font-style:italic;font-size:20px;color:var(--cream);}
+    .cafe-badge{background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.85);font-size:13px;font-weight:500;padding:5px 14px;border-radius:999px;}
+    .header-left{display:flex;align-items:center;gap:16px;}
+    .header-right{display:flex;align-items:center;gap:12px;}
+    .header-meta{font-size:12px;color:rgba(255,255,255,0.4);}
+    .refresh-btn{background:rgba(255,255,255,0.12);border:none;color:white;padding:7px 14px;border-radius:8px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;}
+    .refresh-btn:hover{background:rgba(255,255,255,0.22);}
 
-    /* ── Hero cafe info ── */
-    .cafe-hero {
-      background: var(--forest);
-      padding: 0 32px 32px;
-      display: flex;
-      align-items: flex-end;
-      gap: 24px;
-    }
-    .cafe-cover {
-      width: 100px; height: 100px;
-      border-radius: 16px;
-      object-fit: cover;
-      border: 3px solid rgba(255,255,255,0.2);
-      flex-shrink: 0;
-    }
-    .cafe-cover-placeholder {
-      width: 100px; height: 100px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.1);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 36px; flex-shrink: 0;
-    }
-    .cafe-info { flex: 1; }
-    .cafe-name-hero {
-      font-family: 'Playfair Display', serif;
-      font-size: 26px; color: white; margin-bottom: 4px;
-    }
-    .cafe-area-hero { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 10px; }
-    .cafe-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .vibe-tag {
-      background: rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.8);
-      font-size: 11px; font-weight: 600;
-      padding: 4px 10px; border-radius: 999px;
-    }
-    .google-rating {
-      display: flex; align-items: center; gap: 6px;
-      background: rgba(255,255,255,0.1);
-      padding: 8px 14px; border-radius: 12px;
-      flex-shrink: 0;
-    }
-    .google-rating .stars { color: #f1c40f; font-size: 16px; }
-    .google-rating .rating-val { color: white; font-weight: 700; font-size: 18px; }
-    .google-rating .rating-count { color: rgba(255,255,255,0.5); font-size: 12px; }
+    /* Hero */
+    .cafe-hero{background:var(--forest);padding:0 32px 28px;display:flex;align-items:flex-end;gap:20px;}
+    .cafe-cover{width:90px;height:90px;border-radius:14px;object-fit:cover;border:3px solid rgba(255,255,255,0.2);flex-shrink:0;}
+    .cafe-cover-ph{width:90px;height:90px;border-radius:14px;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0;}
+    .cafe-info{flex:1;}
+    .cafe-name-hero{font-family:'Playfair Display',serif;font-size:24px;color:white;margin-bottom:3px;}
+    .cafe-area-hero{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:8px;}
+    .cafe-tags{display:flex;flex-wrap:wrap;gap:6px;}
+    .vibe-tag{background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.8);font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;}
+    .google-rating{background:rgba(255,255,255,0.1);padding:10px 16px;border-radius:12px;text-align:center;flex-shrink:0;}
+    .g-stars{color:#f1c40f;font-size:14px;}
+    .g-val{color:white;font-weight:700;font-size:20px;margin:2px 0;}
+    .g-count{color:rgba(255,255,255,0.45);font-size:11px;}
 
-    /* ── Main ── */
-    main { max-width: 1100px; margin: 0 auto; padding: 28px 24px; }
+    /* Filters bar */
+    .filters-bar{background:var(--cream);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+    .filter-group{display:flex;align-items:center;gap:8px;}
+    .filter-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--stone);}
+    .filter-pills{display:flex;gap:6px;}
+    .pill{padding:6px 14px;border-radius:999px;font-size:12px;font-weight:600;border:1.5px solid var(--border);background:var(--sand);color:var(--stone);cursor:pointer;transition:all .15s;}
+    .pill:hover{border-color:var(--forest);color:var(--forest);}
+    .pill.active{background:var(--forest);color:white;border-color:var(--forest);}
 
-    .section-title {
-      font-size: 11px; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase;
-      color: var(--stone); margin: 32px 0 14px;
-    }
-    .section-title:first-child { margin-top: 0; }
+    main{max-width:1100px;margin:0 auto;padding:24px 24px;}
+    .section-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--stone);margin:28px 0 12px;}
+    .section-title:first-child{margin-top:0;}
 
-    /* ── KPI grid ── */
-    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
-    .kpi-card {
-      background: var(--cream); border-radius: 16px;
-      padding: 18px 20px; border: 1px solid var(--border);
-      transition: transform .15s;
-    }
-    .kpi-card:hover { transform: translateY(-2px); }
-    .kpi-card.accent { background: var(--forest); border-color: var(--forest); }
-    .kpi-label { font-size: 11px; font-weight: 600; color: var(--stone); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
-    .kpi-card.accent .kpi-label { color: rgba(255,255,255,0.6); }
-    .kpi-value { font-size: 30px; font-weight: 700; color: var(--forest); line-height: 1; }
-    .kpi-card.accent .kpi-value { color: white; }
-    .kpi-sub { font-size: 12px; color: var(--stone); margin-top: 5px; }
-    .kpi-card.accent .kpi-sub { color: rgba(255,255,255,0.5); }
+    /* KPI grid */
+    .kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;}
+    .kpi-card{background:var(--cream);border-radius:16px;padding:18px 20px;border:1px solid var(--border);transition:transform .15s;}
+    .kpi-card:hover{transform:translateY(-2px);}
+    .kpi-card.accent{background:var(--forest);border-color:var(--forest);}
+    .kpi-label{font-size:11px;font-weight:600;color:var(--stone);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+    .kpi-card.accent .kpi-label{color:rgba(255,255,255,0.6);}
+    .kpi-value{font-size:30px;font-weight:700;color:var(--forest);line-height:1;}
+    .kpi-card.accent .kpi-value{color:white;}
+    .kpi-sub{font-size:12px;color:var(--stone);margin-top:5px;}
+    .kpi-card.accent .kpi-sub{color:rgba(255,255,255,0.5);}
+    .delta{font-size:11px;font-weight:600;margin-top:4px;}
+    .delta.up{color:#27ae60;} .delta.down{color:var(--red);}
 
-    /* ── Chart ── */
-    .chart-card {
-      background: var(--cream); border-radius: 16px;
-      border: 1px solid var(--border); padding: 20px 24px;
-    }
-    .chart-title { font-size: 13px; font-weight: 700; color: var(--forest); margin-bottom: 16px; }
-    .bar-chart { display: flex; align-items: flex-end; gap: 3px; height: 80px; }
-    .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-    .bar-fill-col {
-      width: 100%; background: var(--forest);
-      border-radius: 4px 4px 0 0;
-      min-height: 3px;
-      transition: height .4s ease;
-    }
-    .bar-fill-col.today { background: var(--caramel); }
-    .bar-date { font-size: 9px; color: var(--stone); white-space: nowrap; }
-    .chart-legend { display: flex; gap: 16px; margin-top: 10px; font-size: 11px; color: var(--stone); }
-    .legend-dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; }
+    /* Chart */
+    .chart-card{background:var(--cream);border-radius:16px;border:1px solid var(--border);padding:20px 24px;}
+    .chart-title{font-size:13px;font-weight:700;color:var(--forest);margin-bottom:14px;}
+    .bar-chart{display:flex;align-items:flex-end;gap:3px;height:90px;}
+    .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:default;}
+    .bar-col:hover .bar-fill-col{opacity:.75;}
+    .bar-fill-col{width:100%;background:var(--forest);border-radius:4px 4px 0 0;min-height:3px;transition:height .4s ease;}
+    .bar-fill-col.today{background:var(--caramel);}
+    .bar-fill-col.zero{background:var(--border);}
+    .chart-labels{display:flex;margin-top:6px;}
+    .chart-label-col{flex:1;text-align:center;font-size:9px;color:var(--stone);}
+    .chart-legend{display:flex;gap:14px;margin-top:8px;font-size:11px;color:var(--stone);}
+    .legend-dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;}
 
-    /* ── Two col ── */
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+    /* Two col */
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    @media(max-width:680px){.two-col{grid-template-columns:1fr;}}
 
-    /* ── Drinks + Hours ── */
-    .list-card {
-      background: var(--cream); border-radius: 16px;
-      border: 1px solid var(--border); overflow: hidden;
-    }
-    .list-header {
-      padding: 14px 18px 10px;
-      font-size: 13px; font-weight: 700; color: var(--forest);
-      border-bottom: 1px solid var(--border);
-    }
-    .list-row {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 11px 18px;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
-    }
-    .list-row:last-child { border-bottom: none; }
-    .list-name { font-weight: 500; }
-    .list-bar-wrap { flex: 1; margin: 0 14px; }
-    .list-bar-track { background: var(--sand); border-radius: 999px; height: 6px; overflow: hidden; }
-    .list-bar-fill { height: 100%; background: var(--forest); border-radius: 999px; }
-    .list-count { font-size: 12px; color: var(--stone); font-weight: 600; min-width: 24px; text-align: right; }
-    .rank { font-weight: 700; color: var(--stone); font-size: 12px; min-width: 20px; }
+    /* List cards */
+    .list-card{background:var(--cream);border-radius:16px;border:1px solid var(--border);overflow:hidden;}
+    .list-header{padding:14px 18px 10px;font-size:13px;font-weight:700;color:var(--forest);border-bottom:1px solid var(--border);}
+    .list-row{display:flex;align-items:center;padding:11px 18px;border-bottom:1px solid var(--border);font-size:13px;}
+    .list-row:last-child{border-bottom:none;}
+    .rank{font-weight:700;color:var(--stone);font-size:12px;min-width:22px;}
+    .list-name{font-weight:500;flex:0 0 auto;margin-right:12px;}
+    .list-bar-wrap{flex:1;}
+    .list-bar-track{background:var(--sand);border-radius:999px;height:6px;overflow:hidden;}
+    .list-bar-fill{height:100%;background:var(--forest);border-radius:999px;transition:width .4s ease;}
+    .list-count{font-size:12px;color:var(--stone);font-weight:600;min-width:24px;text-align:right;margin-left:12px;}
+    .empty-row{padding:20px 18px;color:#999;font-size:13px;text-align:center;}
 
-    /* ── Hour labels ── */
-    .hour-label { font-size: 12px; color: #2a2218; }
+    /* Photos */
+    .photos-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+    .photos-stat{font-size:13px;font-weight:700;color:var(--forest);}
+    .photos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+    @media(max-width:500px){.photos-grid{grid-template-columns:repeat(2,1fr);}}
+    .photo-card{position:relative;cursor:pointer;}
+    .photo-thumb{aspect-ratio:1;border-radius:12px;object-fit:cover;width:100%;border:1px solid var(--border);transition:opacity .2s;}
+    .photo-card:hover .photo-thumb{opacity:.85;}
+    .photo-meta{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.55);color:white;font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;display:flex;align-items:center;gap:4px;}
+    .photo-tag{position:absolute;top:8px;left:8px;background:rgba(43,77,31,0.85);color:white;font-size:10px;font-weight:600;padding:2px 7px;border-radius:999px;}
+    .photo-time{position:absolute;bottom:8px;left:8px;background:rgba(0,0,0,0.45);color:rgba(255,255,255,0.8);font-size:10px;padding:2px 7px;border-radius:999px;}
+    .no-photos{padding:32px;text-align:center;color:#999;font-size:13px;}
 
-    /* ── Photos grid ── */
-    .photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    @media (max-width: 500px) { .photos-grid { grid-template-columns: repeat(2, 1fr); } }
-    .photo-thumb {
-      aspect-ratio: 1; border-radius: 12px;
-      object-fit: cover; width: 100%;
-      border: 1px solid var(--border);
-    }
-    .photo-card { position: relative; }
-    .photo-likes {
-      position: absolute; bottom: 8px; right: 8px;
-      background: rgba(0,0,0,0.55); color: white;
-      font-size: 11px; font-weight: 600;
-      padding: 3px 8px; border-radius: 999px;
-      display: flex; align-items: center; gap: 4px;
-    }
+    /* CTA */
+    .cta-banner{background:linear-gradient(135deg,var(--forest),var(--forest2));border-radius:16px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:28px;}
+    .cta-text h3{color:white;font-size:15px;font-weight:700;margin-bottom:4px;}
+    .cta-text p{color:rgba(255,255,255,0.65);font-size:13px;}
+    .cta-btn{background:var(--caramel);color:white;border:none;padding:12px 22px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Inter',sans-serif;}
 
-    /* ── Upgrade banner ── */
-    .upgrade-banner {
-      background: linear-gradient(135deg, var(--forest), var(--forest2));
-      border-radius: 16px; padding: 24px 28px;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 16px; margin-top: 32px;
-    }
-    .upgrade-text h3 { color: white; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-    .upgrade-text p { color: rgba(255,255,255,0.65); font-size: 13px; }
-    .upgrade-btn {
-      background: var(--caramel); color: white; border: none;
-      padding: 12px 24px; border-radius: 12px;
-      font-size: 14px; font-weight: 700;
-      cursor: pointer; white-space: nowrap;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .loading { text-align: center; padding: 80px; color: var(--stone); font-size: 15px; }
-    .last-updated { font-size: 12px; color: var(--stone); text-align: right; margin-top: 24px; padding-bottom: 32px; }
-    .live-dot { display: inline-block; width: 7px; height: 7px; background: #2ecc71; border-radius: 50%; margin-right: 5px; animation: pulse 1.5s ease-in-out infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .loading{text-align:center;padding:80px;color:var(--stone);font-size:15px;}
+    .last-updated{font-size:12px;color:var(--stone);text-align:right;margin-top:20px;padding-bottom:28px;}
+    .live-dot{display:inline-block;width:7px;height:7px;background:#2ecc71;border-radius:50%;margin-right:5px;animation:pulse 1.5s ease-in-out infinite;}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .tooltip{position:relative;}
+    .tooltip:hover::after{content:attr(data-tip);position:absolute;bottom:120%;left:50%;transform:translateX(-50%);background:#333;color:#fff;font-size:11px;padding:4px 8px;border-radius:6px;white-space:nowrap;pointer-events:none;z-index:10;}
   </style>
 </head>
 <body>
@@ -218,219 +132,346 @@
   </div>
   <div class="header-right">
     <div class="header-meta" id="last-fetch"></div>
-    <button class="refresh-btn" onclick="loadStats()">↻ Refresh</button>
+    <button class="refresh-btn" onclick="fetchAndRender()">↻ Refresh</button>
   </div>
 </header>
 
 <div id="cafe-hero" class="cafe-hero"></div>
+
+<!-- Filters bar -->
+<div class="filters-bar">
+  <div class="filter-group">
+    <span class="filter-label">Period</span>
+    <div class="filter-pills" id="pills-period">
+      <button class="pill" data-val="7" onclick="setPeriod(7)">7 days</button>
+      <button class="pill active" data-val="30" onclick="setPeriod(30)">30 days</button>
+      <button class="pill" data-val="90" onclick="setPeriod(90)">90 days</button>
+      <button class="pill" data-val="all" onclick="setPeriod('all')">All time</button>
+    </div>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Photos</span>
+    <div class="filter-pills" id="pills-photo">
+      <button class="pill active" data-val="all" onclick="setPhotoFilter('all')">All</button>
+      <button class="pill" data-val="drink" onclick="setPhotoFilter('drink')">Drinks</button>
+      <button class="pill" data-val="interior" onclick="setPhotoFilter('interior')">Inside</button>
+      <button class="pill" data-val="exterior" onclick="setPhotoFilter('exterior')">Outside</button>
+    </div>
+  </div>
+</div>
 
 <main id="main-content">
   <div class="loading">Loading your dashboard…</div>
 </main>
 
 <script>
-  const ENDPOINT  = 'https://qgzyywxizlhtuwuaonxy.supabase.co/functions/v1/admin-stats';
-  const ADMIN_KEY = 'BrewMaps2026!';
-  const CAFE_ID   = 'ff36e7fb-a1b8-4277-b9d0-cbe07a54dffb'; // Peet's Ajman
+const ENDPOINT  = 'https://qgzyywxizlhtuwuaonxy.supabase.co/functions/v1/admin-stats';
+const ADMIN_KEY = 'BrewMaps2026!';
+const CAFE_ID   = 'ff36e7fb-a1b8-4277-b9d0-cbe07a54dffb';
 
-  function fmt(n) { return (n ?? 0).toLocaleString(); }
-  function stars(r) { return r ? '★'.repeat(Math.round(r)) + '☆'.repeat(5 - Math.round(r)) : '—'; }
-  function hourLabel(h) {
-    if (h == null) return '?';
-    const ampm = h < 12 ? 'AM' : 'PM';
-    const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
-    return `${h12}${ampm}`;
-  }
-  function timeAgo(iso) {
-    const diff = Date.now() - new Date(iso).getTime();
-    const m = Math.floor(diff / 60000);
-    if (m < 1) return 'just now';
-    if (m < 60) return `${m}m ago`;
-    return `${Math.floor(m/60)}h ago`;
-  }
+let rawData    = null;
+let period     = 30;
+let photoFilter = 'all';
 
-  async function loadStats() {
-    try {
-      const res = await fetch(`${ENDPOINT}?cafeId=${CAFE_ID}`, {
-        headers: { 'x-admin-secret': ADMIN_KEY },
-      });
-      const data = await res.json();
-      render(data);
-      document.getElementById('last-fetch').textContent = 'Updated ' + new Date().toLocaleTimeString();
-    } catch(e) {
-      document.getElementById('main-content').innerHTML =
-        '<div class="loading" style="color:#e74c3c">Failed to load. Check connection.</div>';
+// ── Filters ──────────────────────────────────────────────────────────────────
+function setPeriod(val) {
+  period = val;
+  document.querySelectorAll('#pills-period .pill').forEach(p =>
+    p.classList.toggle('active', p.dataset.val == val));
+  if (rawData) renderFromCache();
+}
+function setPhotoFilter(val) {
+  photoFilter = val;
+  document.querySelectorAll('#pills-photo .pill').forEach(p =>
+    p.classList.toggle('active', p.dataset.val === val));
+  if (rawData) renderFromCache();
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function fmt(n) { return (n ?? 0).toLocaleString(); }
+function hourLabel(h) {
+  if (h == null) return '?';
+  const ap = h < 12 ? 'AM' : 'PM';
+  const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+  return `${h12}${ap}`;
+}
+function timeAgo(iso) {
+  const m = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+  if (m < 1) return 'just now';
+  if (m < 60) return `${m}m ago`;
+  if (m < 1440) return `${Math.floor(m/60)}h ago`;
+  return `${Math.floor(m/1440)}d ago`;
+}
+function categoryLabel(cat) {
+  return { drink: '☕ Drink', interior: '🏠 Inside', exterior: '🏪 Outside' }[cat] ?? cat;
+}
+function cutoffDate(p) {
+  if (p === 'all') return null;
+  const d = new Date(); d.setDate(d.getDate() - Number(p));
+  return d;
+}
+function filterByPeriod(rows, dateKey = 'created_at') {
+  const cutoff = cutoffDate(period);
+  if (!cutoff) return rows;
+  return rows.filter(r => new Date(r[dateKey]) >= cutoff);
+}
+
+// ── Fetch ─────────────────────────────────────────────────────────────────────
+async function fetchAndRender() {
+  document.getElementById('main-content').innerHTML = '<div class="loading">Loading…</div>';
+  try {
+    const res = await fetch(`${ENDPOINT}?cafeId=${CAFE_ID}`, {
+      headers: { 'x-admin-secret': ADMIN_KEY },
+    });
+    rawData = await res.json();
+    document.getElementById('last-fetch').textContent = 'Updated ' + new Date().toLocaleTimeString();
+    renderFromCache();
+  } catch(e) {
+    document.getElementById('main-content').innerHTML =
+      '<div class="loading" style="color:#e74c3c">Failed to load.</div>';
+  }
+}
+
+function renderFromCache() {
+  if (!rawData) return;
+  const d  = rawData;
+  const cafe = d.cafe ?? {};
+
+  // ── Header & Hero ──────────────────────────────────────────────────────────
+  document.getElementById('header-cafe-name').textContent = cafe.name ?? 'Your Café';
+
+  const photo = cafe.photo_urls?.[0];
+  document.getElementById('cafe-hero').innerHTML = `
+    ${photo
+      ? `<img class="cafe-cover" src="${photo}" alt="${cafe.name}">`
+      : `<div class="cafe-cover-ph">☕</div>`}
+    <div class="cafe-info">
+      <div class="cafe-name-hero">${cafe.name ?? ''}</div>
+      <div class="cafe-area-hero">📍 ${cafe.area ?? ''}</div>
+      <div class="cafe-tags">${(cafe.vibe_tags ?? []).slice(0,5).map(t=>`<span class="vibe-tag">${t}</span>`).join('')}</div>
+    </div>
+    ${cafe.google_rating ? `
+      <div class="google-rating">
+        <div class="g-stars">${'★'.repeat(Math.round(cafe.google_rating))}${'☆'.repeat(5-Math.round(cafe.google_rating))}</div>
+        <div class="g-val">${cafe.google_rating}</div>
+        <div class="g-count">${fmt(cafe.google_review_count)} Google reviews</div>
+      </div>` : ''}
+  `;
+
+  // ── Filter check-in data by period ────────────────────────────────────────
+  const allCheckins  = d.checkins?.dailyCheckins ?? [];   // [{date, count}] 90 days
+  const allDrinks    = d.checkins?.allDrinks ?? [];        // [{drink_name}]
+  const allHours     = d.checkins?.allHours ?? [];         // [{visit_hour}]
+  const allRatings   = d.checkins?.allRatings ?? [];       // [{rating}]
+  const allPhotos    = d.community?.allPhotos ?? [];       // [{photo_url, created_at, like_count, category}]
+
+  // Period cutoff for daily array
+  const cutoff = cutoffDate(period);
+  const todayStr = new Date().toISOString().slice(0,10);
+  const filteredDaily = cutoff
+    ? allCheckins.filter(r => new Date(r.date) >= cutoff)
+    : allCheckins;
+
+  const totalInPeriod = filteredDaily.reduce((s, r) => s + r.count, 0);
+  const todayCount    = allCheckins.find(r => r.date === todayStr)?.count ?? 0;
+
+  // Previous period delta
+  const prevCutoff = cutoff ? new Date(cutoff.getTime() - (period === 'all' ? 0 : Number(period) * 86400000)) : null;
+  const prevDaily  = prevCutoff && cutoff
+    ? allCheckins.filter(r => new Date(r.date) >= prevCutoff && new Date(r.date) < cutoff)
+    : [];
+  const prevTotal  = prevDaily.reduce((s, r) => s + r.count, 0);
+  const delta      = prevTotal > 0 ? Math.round((totalInPeriod - prevTotal) / prevTotal * 100) : null;
+
+  // Drinks filtered
+  const drinkMap = {};
+  for (const r of (d.checkins?.allDrinks ?? [])) {
+    if (!r.date || !cutoff || new Date(r.date) >= cutoff) {
+      const name = r.drink_name?.trim();
+      if (name) drinkMap[name] = (drinkMap[name] ?? 0) + 1;
     }
   }
+  const topDrinks = Object.entries(drinkMap).sort((a,b)=>b[1]-a[1]).slice(0,5);
 
-  function render(d) {
-    const cafe = d.cafe ?? {};
-    const ci   = d.checkins ?? {};
-    const co   = d.community ?? {};
-
-    // Header
-    document.getElementById('header-cafe-name').textContent = cafe.name ?? 'Your Café';
-
-    // Hero
-    const photoUrl = cafe.photo_urls?.[0];
-    document.getElementById('cafe-hero').innerHTML = `
-      ${photoUrl
-        ? `<img class="cafe-cover" src="${photoUrl}" alt="${cafe.name}" />`
-        : `<div class="cafe-cover-placeholder">☕</div>`}
-      <div class="cafe-info">
-        <div class="cafe-name-hero">${cafe.name ?? ''}</div>
-        <div class="cafe-area-hero">📍 ${cafe.area ?? ''}</div>
-        <div class="cafe-tags">
-          ${(cafe.vibe_tags ?? []).slice(0,5).map(t => `<span class="vibe-tag">${t}</span>`).join('')}
-        </div>
-      </div>
-      ${cafe.google_rating ? `
-        <div class="google-rating">
-          <div>
-            <div class="stars">${stars(cafe.google_rating)}</div>
-            <div style="display:flex;align-items:baseline;gap:6px;margin-top:2px">
-              <span class="rating-val">${cafe.google_rating}</span>
-              <span class="rating-count">${fmt(cafe.google_review_count)} reviews</span>
-            </div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px">Google Rating</div>
-          </div>
-        </div>` : ''}
-    `;
-
-    // Daily chart
-    const daily = ci.dailyCheckins ?? [];
-    const maxCount = Math.max(...daily.map(d => d.count), 1);
-    const todayStr = new Date().toISOString().slice(0,10);
-    const showDates = daily.filter((_, i) => i % 5 === 0 || i === daily.length - 1);
-    const bars = daily.map(d => `
-      <div class="bar-col" title="${d.date}: ${d.count} check-ins">
-        <div class="bar-fill-col ${d.date === todayStr ? 'today' : ''}"
-          style="height:${Math.max(Math.round(d.count / maxCount * 72), d.count > 0 ? 3 : 0)}px">
-        </div>
-      </div>`).join('');
-
-    // Top drinks
-    const maxDrink = ci.topDrinks?.[0]?.[1] ?? 1;
-    const drinkRows = (ci.topDrinks ?? []).map(([name, count], i) => `
-      <div class="list-row">
-        <span class="rank">#${i+1}</span>
-        <span class="list-name">${name}</span>
-        <div class="list-bar-wrap">
-          <div class="list-bar-track">
-            <div class="list-bar-fill" style="width:${Math.round(count/maxDrink*100)}%"></div>
-          </div>
-        </div>
-        <span class="list-count">${count}</span>
-      </div>`).join('') || '<div class="list-row" style="color:#999;justify-content:center">No data yet</div>';
-
-    // Peak hours
-    const maxHour = ci.peakHours?.[0]?.count ?? 1;
-    const hourRows = (ci.peakHours ?? []).map((h, i) => `
-      <div class="list-row">
-        <span class="rank">#${i+1}</span>
-        <span class="list-name hour-label">${hourLabel(h.hour)}</span>
-        <div class="list-bar-wrap">
-          <div class="list-bar-track">
-            <div class="list-bar-fill" style="width:${Math.round(h.count/maxHour*100)}%"></div>
-          </div>
-        </div>
-        <span class="list-count">${h.count}</span>
-      </div>`).join('') || '<div class="list-row" style="color:#999;justify-content:center">No data yet</div>';
-
-    // Recent photos
-    const photoGrid = (co.recentPhotos ?? []).map(p => `
-      <div class="photo-card">
-        <img class="photo-thumb" src="${p.photo_url}" />
-        <div class="photo-likes">❤️ ${p.like_count ?? 0}</div>
-      </div>`).join('') || '<div style="color:#999;font-size:13px;padding:16px">No community photos yet</div>';
-
-    // App rating
-    const appRating = ci.avgRating
-      ? `<div class="kpi-value">${ci.avgRating}</div><div class="kpi-sub">out of 5 ★</div>`
-      : `<div class="kpi-value">—</div><div class="kpi-sub">No ratings yet</div>`;
-
-    document.getElementById('main-content').innerHTML = `
-
-      <div class="section-title">📊 Overview</div>
-      <div class="kpi-grid">
-        <div class="kpi-card accent">
-          <div class="kpi-label">Total Check-ins</div>
-          <div class="kpi-value">${fmt(ci.total)}</div>
-          <div class="kpi-sub">All time</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Today</div>
-          <div class="kpi-value">${ci.today ?? 0}</div>
-          <div class="kpi-sub">Check-ins today</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">This Week</div>
-          <div class="kpi-value">${ci.thisWeek ?? 0}</div>
-          <div class="kpi-sub">Last 7 days</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">This Month</div>
-          <div class="kpi-value">${ci.thisMonth ?? 0}</div>
-          <div class="kpi-sub">Last 30 days</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">App Rating</div>
-          ${appRating}
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label"><span class="live-dot"></span>Live Now</div>
-          <div class="kpi-value">${co.livePhotos ?? 0}</div>
-          <div class="kpi-sub">Photos in last 2h</div>
-        </div>
-      </div>
-
-      <div class="section-title">📅 Check-ins — Last 30 Days</div>
-      <div class="chart-card">
-        <div class="chart-title">Daily check-in activity</div>
-        <div class="bar-chart">${bars}</div>
-        <div class="chart-legend">
-          <span><span class="legend-dot" style="background:var(--forest)"></span>Check-ins</span>
-          <span><span class="legend-dot" style="background:var(--caramel)"></span>Today</span>
-        </div>
-      </div>
-
-      <div class="section-title">☕ What People Order · 📸 Community Photos</div>
-      <div class="two-col">
-        <div class="list-card">
-          <div class="list-header">Top Drinks (Last 30 Days)</div>
-          ${drinkRows}
-        </div>
-        <div class="list-card">
-          <div class="list-header">Peak Visit Hours</div>
-          ${hourRows}
-        </div>
-      </div>
-
-      <div class="section-title">📸 Recent Community Photos</div>
-      <div style="background:var(--cream);border-radius:16px;border:1px solid var(--border);padding:16px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-          <span style="font-size:13px;font-weight:700;color:var(--forest)">${fmt(co.totalPhotos)} total photos · ${co.photosToday ?? 0} today</span>
-        </div>
-        <div class="photos-grid">${photoGrid}</div>
-      </div>
-
-      <div class="upgrade-banner">
-        <div class="upgrade-text">
-          <h3>You're viewing the BrewMaps Café Dashboard</h3>
-          <p>This is a preview of what's included in the paid plan — 99 AED/month. Pin weekly specials, respond to visitor feedback, and get full analytics for your café.</p>
-        </div>
-        <button class="upgrade-btn" onclick="window.open('https://wa.me/971XXXXXXXXX?text=I want to claim my café on BrewMaps','_blank')">
-          Get Started →
-        </button>
-      </div>
-
-      <div class="last-updated">
-        Generated at ${new Date(d.generatedAt).toLocaleString('en-AE', { timeZone: 'Asia/Dubai' })} (Dubai time)
-      </div>
-    `;
+  // Hours filtered
+  const hourMap = {};
+  for (const r of (d.checkins?.allHours ?? [])) {
+    if (!r.date || !cutoff || new Date(r.date) >= cutoff) {
+      if (r.visit_hour != null) hourMap[r.visit_hour] = (hourMap[r.visit_hour] ?? 0) + 1;
+    }
   }
+  const peakHours = Object.entries(hourMap).sort((a,b)=>Number(b[1])-Number(a[1])).slice(0,5);
 
-  loadStats();
+  // Avg rating filtered
+  const filteredRatings = (d.checkins?.allRatings ?? [])
+    .filter(r => !cutoff || !r.date || new Date(r.date) >= cutoff)
+    .map(r => r.rating).filter(Boolean);
+  const avgRating = filteredRatings.length > 0
+    ? (filteredRatings.reduce((a,b)=>a+b,0)/filteredRatings.length).toFixed(1)
+    : null;
+
+  // Photos filtered by period + category
+  const filteredPhotos = allPhotos.filter(p => {
+    const inPeriod = !cutoff || new Date(p.created_at) >= cutoff;
+    const matchCat = photoFilter === 'all' || p.category === photoFilter;
+    return inPeriod && matchCat;
+  });
+  const photosToday = allPhotos.filter(p =>
+    p.created_at.slice(0,10) === todayStr &&
+    (photoFilter === 'all' || p.category === photoFilter)
+  ).length;
+  const livePhotos = allPhotos.filter(p =>
+    Date.now() - new Date(p.created_at).getTime() < 2 * 3600000 &&
+    (photoFilter === 'all' || p.category === photoFilter)
+  ).length;
+
+  // ── Build chart ────────────────────────────────────────────────────────────
+  const maxCount = Math.max(...filteredDaily.map(r=>r.count), 1);
+  // Show label every Nth bar to avoid overlap
+  const n = filteredDaily.length;
+  const step = n <= 7 ? 1 : n <= 30 ? 5 : 15;
+  const bars = filteredDaily.map((r, i) => {
+    const h = Math.max(Math.round(r.count/maxCount*80), r.count > 0 ? 4 : 0);
+    const isToday = r.date === todayStr;
+    const cls = isToday ? 'today' : r.count === 0 ? 'zero' : '';
+    const showLabel = i === 0 || i === n-1 || i % step === 0;
+    const labelStr = showLabel ? r.date.slice(5) : '';
+    return `<div class="bar-col tooltip" data-tip="${r.date}: ${r.count} check-ins">
+      <div class="bar-fill-col ${cls}" style="height:${h}px"></div>
+    </div>`;
+  }).join('');
+
+  // Label row (sparse)
+  const labels = filteredDaily.map((r, i) => {
+    const show = i === 0 || i === n-1 || i % step === 0;
+    return `<div class="chart-label-col">${show ? r.date.slice(5) : ''}</div>`;
+  }).join('');
+
+  // ── Drinks rows ────────────────────────────────────────────────────────────
+  const maxDrink = topDrinks[0]?.[1] ?? 1;
+  const drinkRows = topDrinks.length ? topDrinks.map(([name, count], i) => `
+    <div class="list-row">
+      <span class="rank">#${i+1}</span>
+      <span class="list-name">${name}</span>
+      <div class="list-bar-wrap"><div class="list-bar-track">
+        <div class="list-bar-fill" style="width:${Math.round(count/maxDrink*100)}%"></div>
+      </div></div>
+      <span class="list-count">${count}</span>
+    </div>`).join('')
+    : `<div class="empty-row">No check-in data for this period</div>`;
+
+  // ── Hour rows ──────────────────────────────────────────────────────────────
+  const maxHour = peakHours[0]?.[1] ?? 1;
+  const hourRows = peakHours.length ? peakHours.map(([h, count], i) => `
+    <div class="list-row">
+      <span class="rank">#${i+1}</span>
+      <span class="list-name">${hourLabel(Number(h))}</span>
+      <div class="list-bar-wrap"><div class="list-bar-track">
+        <div class="list-bar-fill" style="width:${Math.round(Number(count)/maxHour*100)}%"></div>
+      </div></div>
+      <span class="list-count">${count}</span>
+    </div>`).join('')
+    : `<div class="empty-row">No visit hour data yet</div>`;
+
+  // ── Photo grid ─────────────────────────────────────────────────────────────
+  const photoGrid = filteredPhotos.length
+    ? filteredPhotos.slice(0,9).map(p => `
+      <div class="photo-card">
+        <img class="photo-thumb" src="${p.photo_url}" loading="lazy">
+        <span class="photo-tag">${categoryLabel(p.category)}</span>
+        <span class="photo-time">${timeAgo(p.created_at)}</span>
+        <div class="photo-meta">❤️ ${p.like_count ?? 0}</div>
+      </div>`).join('')
+    : `<div class="no-photos">No photos for this filter</div>`;
+
+  const deltaHtml = delta !== null
+    ? `<div class="delta ${delta >= 0 ? 'up' : 'down'}">${delta >= 0 ? '▲' : '▼'} ${Math.abs(delta)}% vs prev period</div>`
+    : '';
+
+  const periodLabel = period === 'all' ? 'All time' : `Last ${period} days`;
+
+  document.getElementById('main-content').innerHTML = `
+
+    <div class="section-title">📊 Overview · ${periodLabel}</div>
+    <div class="kpi-grid">
+      <div class="kpi-card accent">
+        <div class="kpi-label">Check-ins</div>
+        <div class="kpi-value">${fmt(totalInPeriod)}</div>
+        <div class="kpi-sub">${periodLabel}</div>
+        ${deltaHtml}
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Today</div>
+        <div class="kpi-value">${todayCount}</div>
+        <div class="kpi-sub">Check-ins today</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">App Rating</div>
+        <div class="kpi-value">${avgRating ?? '—'}</div>
+        <div class="kpi-sub">${filteredRatings.length} ratings${avgRating ? ' ★' : ''}</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Community Photos</div>
+        <div class="kpi-value">${filteredPhotos.length}</div>
+        <div class="kpi-sub">${photosToday} today</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label"><span class="live-dot"></span>Live Now</div>
+        <div class="kpi-value">${livePhotos}</div>
+        <div class="kpi-sub">Photos last 2h</div>
+      </div>
+    </div>
+
+    <div class="section-title">📅 Check-in Activity</div>
+    <div class="chart-card">
+      <div class="chart-title">Daily check-ins · ${periodLabel}</div>
+      <div class="bar-chart">${bars}</div>
+      <div class="chart-labels">${labels}</div>
+      <div class="chart-legend">
+        <span><span class="legend-dot" style="background:var(--forest)"></span>Check-ins</span>
+        <span><span class="legend-dot" style="background:var(--caramel)"></span>Today</span>
+        <span><span class="legend-dot" style="background:var(--border)"></span>No activity</span>
+      </div>
+    </div>
+
+    <div class="section-title">☕ Top Drinks · ⏰ Peak Hours</div>
+    <div class="two-col">
+      <div class="list-card">
+        <div class="list-header">What people ordered · ${periodLabel}</div>
+        ${drinkRows}
+      </div>
+      <div class="list-card">
+        <div class="list-header">When people visit · ${periodLabel}</div>
+        ${hourRows}
+      </div>
+    </div>
+
+    <div class="section-title">📸 Community Photos</div>
+    <div style="background:var(--cream);border-radius:16px;border:1px solid var(--border);padding:18px 20px;">
+      <div class="photos-toolbar">
+        <span class="photos-stat">${filteredPhotos.length} photo${filteredPhotos.length!==1?'s':''} · ${photosToday} today</span>
+      </div>
+      <div class="photos-grid">${photoGrid}</div>
+      ${filteredPhotos.length > 9 ? `<div style="text-align:center;margin-top:14px;font-size:13px;color:var(--stone)">Showing 9 of ${filteredPhotos.length}</div>` : ''}
+    </div>
+
+    <div class="cta-banner">
+      <div class="cta-text">
+        <h3>Want to claim this dashboard for your café?</h3>
+        <p>Pin weekly specials, respond to visitor feedback, and get full analytics. Contact BrewMaps to get started.</p>
+      </div>
+      <button class="cta-btn" onclick="window.open('https://wa.me/971509999999?text=I want to claim my café on BrewMaps','_blank')">
+        Contact Us →
+      </button>
+    </div>
+
+    <div class="last-updated">
+      Generated at ${new Date(d.generatedAt).toLocaleString('en-AE',{timeZone:'Asia/Dubai'})} (Dubai time)
+    </div>
+  `;
+}
+
+fetchAndRender();
 </script>
 </body>
 </html>
