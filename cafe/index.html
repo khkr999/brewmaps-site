@@ -14,6 +14,21 @@
     *{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:'Inter',sans-serif;background:var(--sand);color:#2a2218;min-height:100vh;}
 
+    /* ── Login / Change password screens ── */
+    .auth-screen{display:none;align-items:center;justify-content:center;min-height:100vh;background:var(--forest);}
+    .auth-screen.active{display:flex;}
+    .auth-card{background:var(--cream);border-radius:20px;padding:44px 40px;width:360px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,0.3);}
+    .auth-logo{font-family:'Playfair Display',serif;font-style:italic;font-size:28px;color:var(--forest);margin-bottom:4px;}
+    .auth-sub{font-size:13px;color:var(--stone);margin-bottom:28px;}
+    .auth-input{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;font-family:'Inter',sans-serif;background:var(--sand);outline:none;transition:border-color .2s;margin-bottom:10px;}
+    .auth-input:focus{border-color:var(--forest);}
+    .auth-btn{width:100%;padding:13px;background:var(--forest);color:white;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s;margin-top:4px;}
+    .auth-btn:hover{background:var(--forest2);}
+    .auth-error{color:var(--red);font-size:12px;margin-top:8px;min-height:18px;}
+    .auth-hint{font-size:12px;color:var(--stone);margin-top:12px;}
+    .logout-btn{background:none;border:none;color:rgba(255,255,255,0.5);font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;padding:4px 8px;border-radius:6px;}
+    .logout-btn:hover{color:white;}
+
     /* Header */
     header{background:var(--forest);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:64px;}
     .logo{font-family:'Playfair Display',serif;font-style:italic;font-size:20px;color:var(--cream);}
@@ -125,6 +140,34 @@
 </head>
 <body>
 
+<!-- ── Login screen ── -->
+<div class="auth-screen" id="login-screen">
+  <div class="auth-card">
+    <div class="auth-logo">BrewMaps</div>
+    <div class="auth-sub">Café Owner Dashboard</div>
+    <input class="auth-input" id="login-user" type="text" placeholder="Username" autocomplete="username" />
+    <input class="auth-input" id="login-pass" type="password" placeholder="Password" autocomplete="current-password" />
+    <button class="auth-btn" onclick="handleLogin()">Sign In</button>
+    <div class="auth-error" id="login-error"></div>
+  </div>
+</div>
+
+<!-- ── Change password screen ── -->
+<div class="auth-screen" id="change-screen">
+  <div class="auth-card">
+    <div class="auth-logo">BrewMaps</div>
+    <div class="auth-sub">Welcome! Please set your own password.</div>
+    <input class="auth-input" id="new-pass" type="password" placeholder="New password" autocomplete="new-password" />
+    <input class="auth-input" id="confirm-pass" type="password" placeholder="Confirm password" autocomplete="new-password" />
+    <button class="auth-btn" onclick="handleChangePassword()">Set Password</button>
+    <div class="auth-error" id="change-error"></div>
+    <div class="auth-hint">You only need to do this once.</div>
+  </div>
+</div>
+
+<!-- ── Dashboard ── -->
+<div id="dashboard" style="display:none">
+
 <header>
   <div class="header-left">
     <div class="logo">BrewMaps</div>
@@ -133,6 +176,7 @@
   <div class="header-right">
     <div class="header-meta" id="last-fetch"></div>
     <button class="refresh-btn" onclick="fetchAndRender()">↻ Refresh</button>
+    <button class="logout-btn" onclick="handleLogout()">Sign out</button>
   </div>
 </header>
 
@@ -471,7 +515,92 @@ function renderFromCache() {
   `;
 }
 
-fetchAndRender();
+// ── Auth ─────────────────────────────────────────────────────────────────────
+const DEFAULT_USER = 'peets';
+const DEFAULT_PASS = 'Peets2026';
+const STORE_KEY    = 'bm_cafe_pass';
+const SESSION_KEY  = 'bm_cafe_session';
+
+function getPassword() {
+  return localStorage.getItem(STORE_KEY) || DEFAULT_PASS;
+}
+function isLoggedIn() {
+  return sessionStorage.getItem(SESSION_KEY) === '1';
+}
+function showScreen(id) {
+  ['login-screen','change-screen','dashboard'].forEach(s => {
+    const el = document.getElementById(s);
+    if (s === 'dashboard') el.style.display = s === id ? 'block' : 'none';
+    else el.classList.toggle('active', s === id);
+  });
+}
+
+function handleLogin() {
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  document.getElementById('login-error').textContent = '';
+
+  if (user !== DEFAULT_USER || pass !== getPassword()) {
+    document.getElementById('login-error').textContent = 'Incorrect username or password.';
+    return;
+  }
+
+  // First login with default password → force change
+  if (!localStorage.getItem(STORE_KEY)) {
+    sessionStorage.setItem(SESSION_KEY, '1');
+    showScreen('change-screen');
+    return;
+  }
+
+  sessionStorage.setItem(SESSION_KEY, '1');
+  showScreen('dashboard');
+  fetchAndRender();
+}
+
+function handleChangePassword() {
+  const np = document.getElementById('new-pass').value;
+  const cp = document.getElementById('confirm-pass').value;
+  document.getElementById('change-error').textContent = '';
+
+  if (np.length < 6) {
+    document.getElementById('change-error').textContent = 'Password must be at least 6 characters.';
+    return;
+  }
+  if (np !== cp) {
+    document.getElementById('change-error').textContent = 'Passwords do not match.';
+    return;
+  }
+
+  localStorage.setItem(STORE_KEY, np);
+  showScreen('dashboard');
+  fetchAndRender();
+}
+
+function handleLogout() {
+  sessionStorage.removeItem(SESSION_KEY);
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+  showScreen('login-screen');
+}
+
+// Enter key support
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const active = document.querySelector('.auth-screen.active');
+  if (!active) return;
+  if (active.id === 'login-screen') handleLogin();
+  if (active.id === 'change-screen') handleChangePassword();
+});
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+if (isLoggedIn()) {
+  showScreen('dashboard');
+  fetchAndRender();
+} else {
+  showScreen('login-screen');
+}
 </script>
+
+</div> <!-- end #dashboard -->
 </body>
 </html>
