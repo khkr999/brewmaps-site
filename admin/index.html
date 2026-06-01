@@ -198,7 +198,7 @@ function setModFilter(val) {
 async function loadStats() {
   document.getElementById('main-content').innerHTML = '<div class="loading"><span class="dot-pulse">Loading</span></div>';
   try {
-    const res = await fetch(ENDPOINT, { headers: { 'x-admin-secret': adminSecret } });
+    const res = await fetch(ENDPOINT + '?t=' + Date.now(), { headers: { 'x-admin-secret': adminSecret }, cache: 'no-store' });
     if (res.status === 401) {
       document.getElementById('dashboard').style.display = 'none';
       document.getElementById('login-screen').style.display = 'flex';
