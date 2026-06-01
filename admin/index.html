@@ -219,7 +219,7 @@ async function loadStats(silent = false) {
   if (!silent) document.getElementById('main-content').innerHTML = '<div class="loading"><span class="dot-pulse">Loading</span></div>';
   try {
     const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), 10000);
+    const t = setTimeout(() => ctrl.abort(), 25000);
     const res = await fetch(ENDPOINT + '?t=' + Date.now(), {
       headers: { 'x-admin-secret': adminSecret },
       cache: 'no-store',
