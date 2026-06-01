@@ -92,6 +92,16 @@
     .ban-btn.grey:hover:not(:disabled){background:#d0c8be;}
     .banned-badge{font-size:11px;font-weight:700;color:var(--red);background:#fde8e8;padding:2px 8px;border-radius:999px;}
     .empty-state{padding:28px;text-align:center;color:#999;font-size:13px;}
+    .mod-row.clickable{cursor:pointer;}
+    .mod-row.clickable:hover{background:var(--sand);}
+    .violation-list{display:none;padding:0 18px 14px 66px;}
+    .violation-list.open{display:block;}
+    .viol-item{font-size:12px;color:#444;padding:6px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;}
+    .viol-item:last-child{border-bottom:none;}
+    .viol-content{color:var(--stone);font-style:italic;max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .viol-reason{font-weight:600;font-size:11px;color:var(--red);white-space:nowrap;}
+    .viol-time{font-size:11px;color:var(--stone);white-space:nowrap;}
+    .expand-hint{font-size:11px;color:var(--stone);margin-left:6px;}
 
     /* Bar chart */
     .bar-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
@@ -300,6 +310,11 @@ async function toggleBan(userId, ban) {
   }
 }
 
+function toggleViolations(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('open');
+}
+
 function showBanError(msg) {
   let el = document.getElementById('ban-error-bar');
   if (!el) {
@@ -364,21 +379,30 @@ function render(d) {
   }
   const flaggedList = Object.values(userMap).sort((a,b) => b.count - a.count);
 
-  const flaggedRows = flaggedList.length ? flaggedList.map(u => `
-    <div class="mod-row">
+  const flaggedRows = flaggedList.length ? flaggedList.map(u => {
+    const violItems = u.flags.map(f => `
+      <div class="viol-item">
+        <span class="viol-content">"${(f.content ?? '').slice(0, 80)}"</span>
+        <span class="viol-reason">${f.reason ?? 'unknown'}</span>
+        <span class="viol-time">${timeAgo(f.created_at)}</span>
+      </div>`).join('');
+    return `
+    <div class="mod-row clickable" onclick="toggleViolations('viol-${u.id}')">
       <div class="mod-avatar">${initial(u.username)}</div>
       <div class="mod-info">
-        <div class="mod-name">@${u.username ?? 'unknown'}</div>
+        <div class="mod-name">@${u.username ?? 'unknown'}<span class="expand-hint">▸ click for details</span></div>
         <div class="mod-detail">${u.count} violation${u.count>1?'s':''} · Last: ${timeAgo(u.flags[0].created_at)}</div>
         <span class="mod-reason reason-${u.flags[0].reason?.split(' ')[0] ?? 'other'}">${u.flags[0].reason ?? 'unknown'}</span>
         ${u.is_banned ? '<span class="banned-badge" style="margin-left:6px">BANNED</span>' : ''}
       </div>
-      <div class="mod-actions">
+      <div class="mod-actions" onclick="event.stopPropagation()">
         ${u.is_banned
           ? `<button id="ban-btn-${u.id}" class="ban-btn grey" data-ban-user="${u.id}" data-ban-action="unban">Unban</button>`
           : `<button id="ban-btn-${u.id}" class="ban-btn red" data-ban-user="${u.id}" data-ban-action="ban">Ban</button>`}
       </div>
-    </div>`).join('')
+    </div>
+    <div class="violation-list" id="viol-${u.id}">${violItems}</div>`;
+  }).join('')
     : '<div class="empty-state">No flagged users 🎉</div>';
 
   const reportRows = reports.length ? reports.map(r => `
