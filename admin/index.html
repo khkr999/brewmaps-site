@@ -190,6 +190,15 @@ async function login() {
   await loadStats();
 }
 
+// ── Event delegation for ban/unban buttons (avoids inline onclick CSP issues) ─
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('[data-ban-user]');
+  if (!btn) return;
+  const userId = btn.dataset.banUser;
+  const action = btn.dataset.banAction; // 'ban' or 'unban'
+  toggleBan(userId, action === 'ban');
+});
+
 // ── Filters ───────────────────────────────────────────────────────────────────
 function setPeriod(val) {
   period = val;
@@ -332,8 +341,8 @@ function render(d) {
       </div>
       <div class="mod-actions">
         ${u.is_banned
-          ? `<button id="ban-btn-${u.id}" class="ban-btn grey" onclick="toggleBan('${u.id}',false)">Unban</button>`
-          : `<button id="ban-btn-${u.id}" class="ban-btn red" onclick="toggleBan('${u.id}',true)">Ban</button>`}
+          ? `<button id="ban-btn-${u.id}" class="ban-btn grey" data-ban-user="${u.id}" data-ban-action="unban">Unban</button>`
+          : `<button id="ban-btn-${u.id}" class="ban-btn red" data-ban-user="${u.id}" data-ban-action="ban">Ban</button>`}
       </div>
     </div>`).join('')
     : '<div class="empty-state">No flagged users 🎉</div>';
@@ -357,7 +366,7 @@ function render(d) {
         <div class="mod-detail">Banned ${timeAgo(u.banned_at)} · ${u.violation_count ?? 0} violations</div>
       </div>
       <div class="mod-actions">
-        <button id="ban-btn-${u.id}" class="ban-btn grey" onclick="toggleBan('${u.id}',false)">Unban</button>
+        <button id="ban-btn-${u.id}" class="ban-btn grey" data-ban-user="${u.id}" data-ban-action="unban">Unban</button>
       </div>
     </div>`).join('')
     : '<div class="empty-state">No banned users</div>';
