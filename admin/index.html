@@ -236,6 +236,11 @@ async function toggleBan(userId, ban) {
   if (btn) { btn.disabled = true; btn.textContent = '…'; }
 
   try {
+    if (!adminSecret) {
+      showBanError('Not logged in — adminSecret is empty. Please refresh and log in again.');
+      if (btn) { btn.disabled = false; btn.textContent = ban ? 'Ban' : 'Unban'; }
+      return;
+    }
     const res = await fetch(ENDPOINT, {
       method: 'POST',
       headers: {
@@ -248,7 +253,7 @@ async function toggleBan(userId, ban) {
     const result = await res.json();
 
     if (!result.ok) {
-      alert('Failed: ' + (result.error ?? 'Unknown error'));
+      showBanError('Server error: ' + (result.error ?? JSON.stringify(result)));
       if (btn) { btn.disabled = false; btn.textContent = ban ? 'Ban' : 'Unban'; }
       return;
     }
@@ -273,9 +278,21 @@ async function toggleBan(userId, ban) {
     await loadStats();
 
   } catch (err) {
-    alert('Error: ' + err.message);
+    showBanError('Exception: ' + err.message);
     if (btn) { btn.disabled = false; btn.textContent = ban ? 'Ban' : 'Unban'; }
   }
+}
+
+function showBanError(msg) {
+  let el = document.getElementById('ban-error-bar');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'ban-error-bar';
+    el.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#e74c3c;color:white;padding:12px 24px;font-size:14px;font-weight:600;z-index:9999;cursor:pointer;';
+    el.onclick = () => el.remove();
+    document.body.appendChild(el);
+  }
+  el.textContent = '⚠ ' + msg + '  (click to dismiss)';
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
