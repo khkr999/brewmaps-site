@@ -61,6 +61,8 @@
     .pill{padding:6px 14px;border-radius:999px;font-size:12px;font-weight:600;border:1.5px solid var(--border);background:var(--sand);color:var(--stone);cursor:pointer;transition:all .15s;}
     .pill:hover{border-color:var(--forest);color:var(--forest);}
     .pill.active{background:var(--forest);color:white;border-color:var(--forest);}
+    .filter-select{padding:6px 32px 6px 12px;border-radius:999px;font-size:12px;font-weight:600;border:1.5px solid var(--border);background:var(--sand);color:var(--stone);cursor:pointer;appearance:none;font-family:'Inter',sans-serif;outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a7968' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;transition:border-color .15s;}
+    .filter-select:focus,.filter-select:hover{border-color:var(--forest);color:var(--forest);}
 
     main{max-width:1100px;margin:0 auto;padding:24px 24px;}
     .section-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--stone);margin:28px 0 12px;}
@@ -202,6 +204,12 @@
       <button class="pill" data-val="exterior" onclick="setPhotoFilter('exterior')">Outside</button>
     </div>
   </div>
+  <div class="filter-group">
+    <span class="filter-label">Drink</span>
+    <select class="filter-select" id="drink-select" onchange="setDrinkFilter(this.value)">
+      <option value="all">All drinks</option>
+    </select>
+  </div>
 </div>
 
 <main id="main-content">
@@ -213,9 +221,10 @@ const ENDPOINT  = 'https://qgzyywxizlhtuwuaonxy.supabase.co/functions/v1/admin-s
 const ADMIN_KEY = 'BrewMaps2026!';
 const CAFE_ID   = 'ff36e7fb-a1b8-4277-b9d0-cbe07a54dffb';
 
-let rawData    = null;
-let period     = 30;
+let rawData     = null;
+let period      = 30;
 let photoFilter = 'all';
+let drinkFilter = 'all';
 
 // ── Filters ──────────────────────────────────────────────────────────────────
 function setPeriod(val) {
@@ -229,6 +238,19 @@ function setPhotoFilter(val) {
   document.querySelectorAll('#pills-photo .pill').forEach(p =>
     p.classList.toggle('active', p.dataset.val === val));
   if (rawData) renderFromCache();
+}
+function setDrinkFilter(val) {
+  drinkFilter = val;
+  if (rawData) renderFromCache();
+}
+function populateDrinkDropdown(allDrinks) {
+  const select = document.getElementById('drink-select');
+  const names = [...new Set(allDrinks.map(r => r.drink_name?.trim()).filter(Boolean))].sort();
+  // Keep current selection if still valid
+  const current = select.value;
+  select.innerHTML = '<option value="all">All drinks</option>' +
+    names.map(n => `<option value="${n}" ${n === current ? 'selected' : ''}>${n}</option>`).join('');
+  if (!names.includes(current)) { select.value = 'all'; drinkFilter = 'all'; }
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -269,6 +291,7 @@ async function fetchAndRender() {
     });
     rawData = await res.json();
     document.getElementById('last-fetch').textContent = 'Updated ' + new Date().toLocaleTimeString();
+    populateDrinkDropdown(rawData.checkins?.allDrinks ?? []);
     renderFromCache();
   } catch(e) {
     document.getElementById('main-content').innerHTML =
@@ -312,12 +335,26 @@ function renderFromCache() {
   // Period cutoff for daily array
   const cutoff = cutoffDate(period);
   const todayStr = new Date().toISOString().slice(0,10);
-  const filteredDaily = cutoff
-    ? allCheckins.filter(r => new Date(r.date) >= cutoff)
-    : allCheckins;
+
+  // When a specific drink is selected, rebuild daily counts from raw drink rows
+  let filteredDaily;
+  if (drinkFilter !== 'all') {
+    const drinkRows = (d.checkins?.allDrinks ?? []).filter(r =>
+      r.drink_name?.trim() === drinkFilter && (!cutoff || new Date(r.created_at) >= cutoff)
+    );
+    const dm = {};
+    for (const r of drinkRows) { const day = r.created_at.slice(0,10); dm[day] = (dm[day]??0)+1; }
+    filteredDaily = allCheckins
+      .filter(r => !cutoff || new Date(r.date) >= cutoff)
+      .map(r => ({ date: r.date, count: dm[r.date] ?? 0 }));
+  } else {
+    filteredDaily = cutoff
+      ? allCheckins.filter(r => new Date(r.date) >= cutoff)
+      : allCheckins;
+  }
 
   const totalInPeriod = filteredDaily.reduce((s, r) => s + r.count, 0);
-  const todayCount    = allCheckins.find(r => r.date === todayStr)?.count ?? 0;
+  const todayCount    = filteredDaily.find(r => r.date === todayStr)?.count ?? 0;
 
   // Previous period delta
   const prevCutoff = cutoff ? new Date(cutoff.getTime() - (period === 'all' ? 0 : Number(period) * 86400000)) : null;
@@ -337,11 +374,25 @@ function renderFromCache() {
   }
   const topDrinks = Object.entries(drinkMap).sort((a,b)=>b[1]-a[1]).slice(0,5);
 
-  // Hours filtered
+  // Hours filtered by period + drink
+  // Need to join hours with drinks by created_at when drinkFilter active
   const hourMap = {};
-  for (const r of (d.checkins?.allHours ?? [])) {
-    if (!r.date || !cutoff || new Date(r.date) >= cutoff) {
-      if (r.visit_hour != null) hourMap[r.visit_hour] = (hourMap[r.visit_hour] ?? 0) + 1;
+  if (drinkFilter !== 'all') {
+    // Get checkin timestamps for selected drink in period
+    const drinkTimes = new Set(
+      (d.checkins?.allDrinks ?? [])
+        .filter(r => r.drink_name?.trim() === drinkFilter && (!cutoff || new Date(r.created_at) >= cutoff))
+        .map(r => r.created_at.slice(0,16)) // minute precision
+    );
+    for (const r of (d.checkins?.allHours ?? [])) {
+      if (drinkTimes.has(r.created_at?.slice(0,16)) && r.visit_hour != null)
+        hourMap[r.visit_hour] = (hourMap[r.visit_hour] ?? 0) + 1;
+    }
+  } else {
+    for (const r of (d.checkins?.allHours ?? [])) {
+      if (!cutoff || new Date(r.created_at) >= cutoff) {
+        if (r.visit_hour != null) hourMap[r.visit_hour] = (hourMap[r.visit_hour] ?? 0) + 1;
+      }
     }
   }
   const peakHours = Object.entries(hourMap).sort((a,b)=>Number(b[1])-Number(a[1])).slice(0,5);
@@ -468,7 +519,7 @@ function renderFromCache() {
 
     <div class="section-title">📅 Check-in Activity</div>
     <div class="chart-card">
-      <div class="chart-title">Daily check-ins · ${periodLabel}</div>
+      <div class="chart-title">Daily check-ins · ${periodLabel}${drinkFilter !== 'all' ? ` · ${drinkFilter}` : ''}</div>
       <div class="bar-chart">${bars}</div>
       <div class="chart-labels">${labels}</div>
       <div class="chart-legend">
