@@ -537,6 +537,40 @@ function render(d) {
       </div>
     </div>
 
+    <div class="section-title">📊 Engagement Rates</div>
+    <div class="kpi-grid">
+      <div class="kpi-card accent">
+        <div class="kpi-label">Check-in Rate</div>
+        <div class="kpi-value">${d.engagement?.checkinRate ?? 0}%</div>
+        <div class="kpi-sub">Active users / total users</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Avg Check-ins / User</div>
+        <div class="kpi-value">${d.engagement?.avgCheckinsPerUser ?? 0}</div>
+        <div class="kpi-sub">All time</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Community Rate</div>
+        <div class="kpi-value">${d.engagement?.communityRate ?? 0}</div>
+        <div class="kpi-sub">Actions / active user</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Avg Saves / User</div>
+        <div class="kpi-value">${d.engagement?.saveRate ?? 0}</div>
+        <div class="kpi-sub">All time</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Total Likes</div>
+        <div class="kpi-value">${fmt(d.community.totalLikes ?? 0)}</div>
+        <div class="kpi-sub">All time</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Total Comments</div>
+        <div class="kpi-value">${fmt(d.community.totalComments ?? 0)}</div>
+        <div class="kpi-sub">All time</div>
+      </div>
+    </div>
+
     <div class="section-title">☕ Platform</div>
     <div class="kpi-grid">
       <div class="kpi-card">
