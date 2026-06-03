@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "4MG7ZS53AK.app.brewmaps.ios",
+        "paths": [
+          "/c/*",
+          "/list/*"
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": ["4MG7ZS53AK.app.brewmaps.ios"]
+  }
+}

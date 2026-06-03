@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <title>BrewMaps</title>
+
+  <!-- Open Graph / WhatsApp / iMessage preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BrewMaps" />
+  <meta property="og:title" id="og-title" content="A café on BrewMaps" />
+  <meta property="og:description" id="og-desc" content="Discover cafés by vibe in the UAE." />
+  <meta property="og:image" id="og-image" content="https://brewmaps.app/logo.png" />
+  <meta property="og:url" id="og-url" content="https://brewmaps.app" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Native app smart banner (iOS / Android) -->
+  <meta name="apple-itunes-app" content="app-id=6775899450" />
+
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #FAF6F0;
+      color: #1F1A14;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 520px; margin: 0 auto; padding: 0 0 100px; }
+
+    /* Nav */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 20px; background: rgba(250, 246, 240, 0.9);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #2B4D1F; }
+    .nav-logo img { width: 28px; height: 28px; border-radius: 6px; }
+
+    /* Hero photo */
+    .hero {
+      width: 100%; aspect-ratio: 4 / 3;
+      background: #2B4D1F; object-fit: cover;
+      display: block;
+    }
+
+    /* Card */
+    .body { padding: 20px; }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px; line-height: 1.1; color: #1F1A14;
+      margin-bottom: 6px;
+    }
+    .area { color: #6B6357; font-size: 15px; margin-bottom: 16px; }
+
+    .stats {
+      display: flex; gap: 12px; margin-bottom: 20px;
+    }
+    .stat {
+      flex: 1; background: #fff; border-radius: 14px;
+      padding: 12px; text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .stat-val { font-weight: 700; font-size: 17px; color: #1F1A14; }
+    .stat-label { font-size: 11px; color: #6B6357; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
+    .chip {
+      background: #2B4D1F1A; color: #2B4D1F;
+      padding: 6px 12px; border-radius: 999px;
+      font-size: 13px; font-weight: 500;
+    }
+
+    .section-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
+      color: #6B6357; font-weight: 600; margin-bottom: 8px;
+    }
+    .summary {
+      background: #fff; border-radius: 14px; padding: 16px;
+      line-height: 1.55; color: #3D362E; margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    /* CTAs */
+    .cta-stack { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+    .cta-primary {
+      background: #2B4D1F; color: #fff;
+      padding: 16px; border-radius: 14px;
+      text-decoration: none; text-align: center;
+      font-weight: 600; font-size: 16px;
+      box-shadow: 0 4px 12px rgba(43,77,31,0.25);
+      transition: transform 0.15s;
+    }
+    .cta-primary:active { transform: scale(0.98); }
+    .cta-secondary {
+      background: transparent; color: #2B4D1F;
+      padding: 14px; border-radius: 14px;
+      text-decoration: none; text-align: center;
+      font-weight: 600; font-size: 15px;
+      border: 1.5px solid #2B4D1F33;
+    }
+
+    /* Loading / error */
+    .loader {
+      display: flex; align-items: center; justify-content: center;
+      padding: 80px 20px; color: #6B6357;
+    }
+    .err { padding: 40px 20px; text-align: center; color: #6B6357; }
+    .err h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: #1F1A14; margin-bottom: 8px; }
+
+    /* Bottom install banner — sticky on mobile */
+    .install-banner {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fff; padding: 14px 20px;
+      box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
+      display: flex; align-items: center; gap: 12px;
+      max-width: 520px; margin: 0 auto;
+    }
+    .install-banner img { width: 36px; height: 36px; border-radius: 8px; }
+    .install-banner-text { flex: 1; }
+    .install-banner-text .t { font-weight: 600; font-size: 14px; color: #1F1A14; }
+    .install-banner-text .s { font-size: 12px; color: #6B6357; margin-top: 1px; }
+    .install-banner a {
+      background: #2B4D1F; color: #fff;
+      padding: 10px 16px; border-radius: 10px;
+      text-decoration: none; font-size: 14px; font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <a href="/" class="nav-logo">
+        <img src="/logo.png" alt="BrewMaps" />
+        <span>BrewMaps</span>
+      </a>
+      <a href="https://testflight.apple.com/join/RSG69RCq" style="font-size: 14px; color: #2B4D1F; font-weight: 600; text-decoration: none;">Get the app</a>
+    </div>
+
+    <div id="content">
+      <div class="loader">Loading café…</div>
+    </div>
+  </div>
+
+  <div class="install-banner" id="install-banner" style="display: none;">
+    <img src="/logo.png" alt="BrewMaps" />
+    <div class="install-banner-text">
+      <div class="t">Open in BrewMaps</div>
+      <div class="s">For check-ins, photos & more</div>
+    </div>
+    <a href="https://testflight.apple.com/join/RSG69RCq">Get app</a>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://qgzyywxizlhtuwuaonxy.supabase.co';
+    const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFnenl5d3hpemxodHV3dWFvbnh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMDI0NDMsImV4cCI6MjA5NDU3ODQ0M30.auFn0Nz_PTziNezXMQKXzd5jmlre3CZUR47emeXpHz8';
+
+    function getCafeId() {
+      // Path form: /c/{id}
+      const m = location.pathname.match(/\/c\/([a-f0-9-]+)/i);
+      if (m) return m[1];
+      // Query form: /c/?id={id} or /c/index.html?id={id}
+      return new URLSearchParams(location.search).get('id');
+    }
+
+    async function loadCafe() {
+      const id = getCafeId();
+      if (!id) { renderError("Couldn't find this café."); return; }
+
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/cafes?id=eq.${id}&select=id,name,area,address,vibe_tags,best_for,summary,photo_urls,google_rating,google_review_count,price_range,wifi_quality,noise_level,pet_friendly`, {
+          headers: { apikey: ANON_KEY, Authorization: `Bearer ${ANON_KEY}` },
+        });
+        const rows = await res.json();
+        if (!rows?.length) { renderError("This café isn't on BrewMaps yet."); return; }
+        renderCafe(rows[0]);
+      } catch (e) {
+        renderError("Couldn't load this café. Try again.");
+      }
+    }
+
+    function renderCafe(c) {
+      const photo = c.photo_urls?.[0] || '';
+      const vibes = (c.vibe_tags || []).slice(0, 5);
+      const bestFor = (c.best_for || []).slice(0, 3);
+      const priceLabel = c.price_range ? '$'.repeat(c.price_range) : '';
+
+      // Update OG meta for shared link previews
+      document.getElementById('og-title').setAttribute('content', `${c.name} — BrewMaps`);
+      document.getElementById('og-desc').setAttribute('content', c.summary || `A café in ${c.area} on BrewMaps.`);
+      if (photo) document.getElementById('og-image').setAttribute('content', photo);
+      document.getElementById('og-url').setAttribute('content', `https://brewmaps.app/c/${c.id}`);
+      document.title = `${c.name} — BrewMaps`;
+
+      const html = `
+        ${photo ? `<img src="${photo}" class="hero" alt="${escapeHtml(c.name)}" />` : '<div class="hero"></div>'}
+        <div class="body">
+          <h1>${escapeHtml(c.name)}</h1>
+          <div class="area">${escapeHtml(c.area || '')}${priceLabel ? ' · ' + priceLabel : ''}</div>
+
+          <div class="stats">
+            ${c.google_rating ? `
+              <div class="stat">
+                <div class="stat-val">★ ${Number(c.google_rating).toFixed(1)}</div>
+                <div class="stat-label">${c.google_review_count || 0} reviews</div>
+              </div>` : ''}
+            ${c.wifi_quality && c.wifi_quality !== 'none' ? `
+              <div class="stat">
+                <div class="stat-val">${capitalize(c.wifi_quality)}</div>
+                <div class="stat-label">WiFi</div>
+              </div>` : ''}
+            ${c.noise_level ? `
+              <div class="stat">
+                <div class="stat-val">${capitalize(c.noise_level)}</div>
+                <div class="stat-label">Vibe</div>
+              </div>` : ''}
+          </div>
+
+          ${vibes.length ? `
+            <div class="chips">
+              ${vibes.map(v => `<div class="chip">${escapeHtml(v)}</div>`).join('')}
+              ${c.pet_friendly ? '<div class="chip">🐾 Pet friendly</div>' : ''}
+            </div>` : ''}
+
+          ${c.summary ? `
+            <div class="section-label">About</div>
+            <div class="summary">${escapeHtml(c.summary)}</div>` : ''}
+
+          ${bestFor.length ? `
+            <div class="section-label">Best for</div>
+            <div class="chips" style="margin-bottom: 24px">
+              ${bestFor.map(b => `<div class="chip" style="background:#C4956A1A;color:#8B5A2B">${escapeHtml(b)}</div>`).join('')}
+            </div>` : ''}
+
+          <div class="cta-stack">
+            <a href="brewmaps://c/${c.id}" class="cta-primary">Open in BrewMaps</a>
+            <a href="https://testflight.apple.com/join/RSG69RCq" class="cta-secondary">Don't have the app? Get it</a>
+          </div>
+        </div>
+      `;
+      document.getElementById('content').innerHTML = html;
+      document.getElementById('install-banner').style.display = 'flex';
+    }
+
+    function renderError(msg) {
+      document.getElementById('content').innerHTML = `
+        <div class="err">
+          <h2>${escapeHtml(msg)}</h2>
+          <p style="margin-top: 16px">Browse 343 cafés across the UAE on BrewMaps.</p>
+          <div class="cta-stack" style="max-width: 280px; margin: 24px auto 0">
+            <a href="https://testflight.apple.com/join/RSG69RCq" class="cta-primary">Get BrewMaps</a>
+          </div>
+        </div>
+      `;
+    }
+
+    function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+    function capitalize(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+
+    loadCafe();
+  </script>
+</body>
+</html>
