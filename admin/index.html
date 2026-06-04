@@ -183,6 +183,7 @@ let rawData = null;
 let period = 30;
 let modFilter = 'all';
 let userSearch = '';
+let failedExpanded = false;
 
 // ── Login ─────────────────────────────────────────────────────────────────────
 document.getElementById('secret-input').addEventListener('keydown', e => { if(e.key==='Enter') login(); });
@@ -357,6 +358,10 @@ function timeAgo(iso) {
 }
 function initial(username) { return (username||'?')[0].toUpperCase(); }
 function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function toggleFailedPhotos() {
+  failedExpanded = !failedExpanded;
+  if (rawData) render(rawData);
+}
 function setUserSearch(v) {
   userSearch = v;
   if (rawData) render(rawData);
@@ -575,7 +580,30 @@ function render(d) {
         <div class="kpi-value">${banned.length}</div>
         <div class="kpi-sub">Active bans</div>
       </div>
+      <div
+        class="kpi-card ${(d.failedPhotos?.count ?? 0) > 0 ? 'warn' : ''}"
+        onclick="toggleFailedPhotos()"
+        style="cursor:pointer;user-select:none"
+        title="Click to see top rejection reasons"
+      >
+        <div class="kpi-label">Failed Photos <span style="font-size:11px;opacity:.6">${failedExpanded ? '▾' : '▸'}</span></div>
+        <div class="kpi-value">${d.failedPhotos?.count ?? 0}</div>
+        <div class="kpi-sub">Rejected by moderation</div>
+      </div>
     </div>
+
+    ${failedExpanded ? `
+    <div class="table-card" style="margin-top:-4px;padding:14px 16px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--stone);margin-bottom:10px">TOP REJECTION REASONS</div>
+      ${(d.failedPhotos?.topReasons ?? []).length
+        ? (d.failedPhotos.topReasons).map((r, i) => `
+          <div style="display:flex;align-items:center;gap:12px;padding:9px 0;${i > 0 ? 'border-top:1px solid var(--border)' : ''}">
+            <div style="font-weight:800;color:var(--forest);min-width:24px">#${i + 1}</div>
+            <div style="flex:1;font-size:14px;line-height:1.35">${escapeHtml(r.reason)}</div>
+            <div style="font-weight:700;color:var(--stone);font-size:13px;white-space:nowrap">${r.count}×</div>
+          </div>`).join('')
+        : '<div class="empty-state" style="padding:10px 0">No photo rejections recorded yet</div>'}
+    </div>` : ''}
 
     <div class="section-title">📊 Engagement Rates</div>
     <div class="kpi-grid">
