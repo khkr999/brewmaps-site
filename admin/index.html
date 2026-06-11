@@ -529,6 +529,11 @@ function render(d) {
   const topSearchRows = (A.top_searches || []).map((s, i) => `
     <tr><td class="rank">#${i + 1}</td><td>${(s.q || '').replace(/</g, '&lt;')}</td><td><span class="count-badge">${s.n}</span></td></tr>`).join('')
     || '<tr><td colspan="3" class="empty-state">No searches yet</td></tr>';
+  const ctr = A.ctr || {};
+  const ctrLabel = (k) => k === 'discovery_search' ? 'Search results' : k === 'discovery_browse' ? 'Browse / filters' : k;
+  const ctrCards = Object.entries(ctr).map(([ctx, v]) => `
+    <div class="kpi-card"><div class="kpi-label">${ctrLabel(ctx)} CTR</div><div class="kpi-value">${v.ctr}%</div><div class="kpi-sub">${v.taps} taps / ${v.impressions} seen</div></div>`).join('')
+    || '<div class="kpi-card"><div class="kpi-label">Card CTR</div><div class="kpi-value">—</div><div class="kpi-sub">no data yet</div></div>';
 
   document.getElementById('main-content').innerHTML = `
 
@@ -548,6 +553,9 @@ function render(d) {
 
     <div class="section-title">🫗 Activation Funnel · 30 days</div>
     <div class="table-card" style="padding:16px 18px">${funnelRows}</div>
+
+    <div class="section-title">👆 Card Click-Through · 30 days</div>
+    <div class="kpi-grid">${ctrCards}</div>
 
     <div class="section-title">🔎 Top Searches · 30 days</div>
     <div class="table-card">
