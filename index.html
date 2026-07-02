@@ -573,6 +573,7 @@
       width: 500px; height: 500px;
       background: radial-gradient(circle, rgba(79,168,112,0.15) 0%, transparent 70%);
       border-radius: 50%;
+      pointer-events: none;
     }
     .cta-card::after {
       content: '';
@@ -580,6 +581,7 @@
       width: 400px; height: 400px;
       background: radial-gradient(circle, rgba(200,145,74,0.08) 0%, transparent 70%);
       border-radius: 50%;
+      pointer-events: none;
     }
     .cta-card .section-label {
       color: var(--caramel-light);
@@ -624,6 +626,7 @@
     .ea-form {
       display: flex; gap: 10px; justify-content: center; align-items: stretch;
       max-width: 520px; margin: 0 auto;
+      position: relative; z-index: 1;
     }
     .ea-form input {
       flex: 1; min-width: 0;
