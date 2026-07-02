@@ -621,6 +621,35 @@
       transform: translateY(-2px);
       box-shadow: 0 8px 32px rgba(0,0,0,0.15);
     }
+    .ea-form {
+      display: flex; gap: 10px; justify-content: center; align-items: stretch;
+      max-width: 520px; margin: 0 auto;
+    }
+    .ea-form input {
+      flex: 1; min-width: 0;
+      padding: 16px 22px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(255,255,255,0.35);
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-size: 16px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .ea-form input::placeholder { color: rgba(255,255,255,0.6); }
+    .ea-form input:focus { border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.18); }
+    .ea-form .btn-light { border: none; cursor: pointer; font-family: inherit; white-space: nowrap; padding: 16px 28px; }
+    .ea-form .btn-light:disabled { opacity: 0.6; cursor: default; transform: none; }
+    .ea-msg {
+      margin-top: 16px; font-size: 15px; min-height: 22px;
+      color: rgba(255,255,255,0.92); font-weight: 600; letter-spacing: 0.2px;
+    }
+    .ea-msg.err { color: #FFCDB8; }
+    @media (max-width: 560px) {
+      .ea-form { flex-direction: column; }
+      .ea-form .btn-light { justify-content: center; }
+    }
 
     /* ── Footer ──────────────────────────────────────── */
     footer {
@@ -1034,9 +1063,11 @@
       <div class="section-label"><span class="sl-dot"></span> Early access</div>
       <h2>Be the first to explore</h2>
       <p>BrewMaps is launching soon on the App Store. Get notified the moment it's live.</p>
-      <a href="mailto:hello@brewmaps.app?subject=Early%20Access%20Request&body=Hey!%20I'd%20love%20early%20access%20to%20BrewMaps." class="btn-light">
-        &#x2709; Request Early Access
-      </a>
+      <form class="ea-form" id="eaForm" novalidate>
+        <input type="email" id="eaEmail" placeholder="your@email.com" autocomplete="email" inputmode="email" required />
+        <button type="submit" class="btn-light" id="eaBtn">Notify Me</button>
+      </form>
+      <div class="ea-msg" id="eaMsg"></div>
     </div>
   </section>
 
@@ -1185,6 +1216,56 @@
         }
       }
       setTimeout(type, 800);
+    })();
+
+    // Early-access signup — writes to Supabase (anon INSERT-only table)
+    (function () {
+      const SUPABASE_URL = 'https://qgzyywxizlhtuwuaonxy.supabase.co';
+      const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFnenl5d3hpemxodHV3dWFvbnh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMDI0NDMsImV4cCI6MjA5NDU3ODQ0M30.auFn0Nz_PTziNezXMQKXzd5jmlre3CZUR47emeXpHz8';
+      const form = document.getElementById('eaForm');
+      const input = document.getElementById('eaEmail');
+      const btn = document.getElementById('eaBtn');
+      const msg = document.getElementById('eaMsg');
+      if (!form) return;
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const email = (input.value || '').trim().toLowerCase();
+        msg.classList.remove('err');
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)) {
+          msg.textContent = 'Please enter a valid email.';
+          msg.classList.add('err');
+          return;
+        }
+        btn.disabled = true;
+        btn.textContent = 'Adding you…';
+        try {
+          const res = await fetch(SUPABASE_URL + '/rest/v1/early_access_signups', {
+            method: 'POST',
+            headers: {
+              'apikey': ANON_KEY,
+              'Authorization': 'Bearer ' + ANON_KEY,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal',
+            },
+            body: JSON.stringify({ email: email, source: 'landing' }),
+          });
+          if (res.ok || res.status === 409) {
+            // 409 = duplicate email — treat as already on the list
+            form.style.display = 'none';
+            msg.textContent = res.status === 409
+              ? "You're already on the list — see you at launch ☕"
+              : "You're on the list — see you at launch ☕";
+          } else {
+            throw new Error('HTTP ' + res.status);
+          }
+        } catch (err) {
+          msg.textContent = "Couldn't sign you up — check your connection and try again.";
+          msg.classList.add('err');
+          btn.disabled = false;
+          btn.textContent = 'Notify Me';
+        }
+      });
     })();
   </script>
 
