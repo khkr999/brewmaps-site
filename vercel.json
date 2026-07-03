@@ -5,5 +5,15 @@
       "destination": "https://apps.apple.com/ae/app/id6775899450",
       "permanent": false
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/c/:id",
+      "destination": "/c/index.html"
+    },
+    {
+      "source": "/list/:slug",
+      "destination": "/list/index.html"
+    }
   ]
 }
