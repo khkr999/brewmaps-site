@@ -666,7 +666,13 @@ document.addEventListener('keydown', e => {
 });
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
-if (isLoggedIn()) {
+// Public demo (DEMO_ANON): no login — prospects land straight on the dashboard.
+// The auth screens stay in the file for the future real (multi-tenant) version.
+if (DEMO_ANON) {
+  document.querySelector('.logout-btn')?.remove();
+  showScreen('dashboard');
+  fetchAndRender();
+} else if (isLoggedIn()) {
   showScreen('dashboard');
   fetchAndRender();
 } else {
