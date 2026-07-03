@@ -308,15 +308,15 @@ function anonymizeDemo(d) {
   d.cafe = Object.assign({}, d.cafe, {
     name: 'Your Café',
     area: 'Your neighbourhood',
-    photo_urls: ['samples/s1.jpg'],
+    photo_urls: ['/cafe/samples/s1.jpg'],
   });
   const day = 86400000, now = Date.now();
   d.community = d.community ?? {};
   d.community.allPhotos = [
-    { photo_url: 'samples/s2.jpg', created_at: new Date(now - 2*day).toISOString(),  like_count: 6, category: 'drink' },
-    { photo_url: 'samples/s3.jpg', created_at: new Date(now - 5*day).toISOString(),  like_count: 3, category: 'drink' },
-    { photo_url: 'samples/s4.jpg', created_at: new Date(now - 9*day).toISOString(),  like_count: 8, category: 'interior' },
-    { photo_url: 'samples/s5.jpg', created_at: new Date(now - 16*day).toISOString(), like_count: 2, category: 'interior' },
+    { photo_url: '/cafe/samples/s2.jpg', created_at: new Date(now - 2*day).toISOString(),  like_count: 6, category: 'drink' },
+    { photo_url: '/cafe/samples/s3.jpg', created_at: new Date(now - 5*day).toISOString(),  like_count: 3, category: 'drink' },
+    { photo_url: '/cafe/samples/s4.jpg', created_at: new Date(now - 9*day).toISOString(),  like_count: 8, category: 'interior' },
+    { photo_url: '/cafe/samples/s5.jpg', created_at: new Date(now - 16*day).toISOString(), like_count: 2, category: 'interior' },
   ];
 }
 
