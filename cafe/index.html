@@ -589,8 +589,8 @@ function renderFromCache() {
 }
 
 // ── Auth ─────────────────────────────────────────────────────────────────────
-const DEFAULT_USER = 'peets';
-const DEFAULT_PASS = 'Peets2026';
+const DEFAULT_USER = 'cafe';
+const DEFAULT_PASS = 'pass@123';
 const STORE_KEY    = 'bm_cafe_pass';
 const SESSION_KEY  = 'bm_cafe_session';
 
@@ -613,13 +613,15 @@ function handleLogin() {
   const pass = document.getElementById('login-pass').value;
   document.getElementById('login-error').textContent = '';
 
-  if (user !== DEFAULT_USER || pass !== getPassword()) {
+  const expected = DEMO_ANON ? DEFAULT_PASS : getPassword();
+  if (user !== DEFAULT_USER || pass !== expected) {
     document.getElementById('login-error').textContent = 'Incorrect username or password.';
     return;
   }
 
-  // First login with default password → force change
-  if (!localStorage.getItem(STORE_KEY)) {
+  // First login with default password → force change (real version only;
+  // the shared demo credentials must keep working for every visitor)
+  if (!DEMO_ANON && !localStorage.getItem(STORE_KEY)) {
     sessionStorage.setItem(SESSION_KEY, '1');
     showScreen('change-screen');
     return;
@@ -668,11 +670,7 @@ document.addEventListener('keydown', e => {
 // ── Boot ──────────────────────────────────────────────────────────────────────
 // Public demo (DEMO_ANON): no login — prospects land straight on the dashboard.
 // The auth screens stay in the file for the future real (multi-tenant) version.
-if (DEMO_ANON) {
-  document.querySelector('.logout-btn')?.remove();
-  showScreen('dashboard');
-  fetchAndRender();
-} else if (isLoggedIn()) {
+if (isLoggedIn()) {
   showScreen('dashboard');
   fetchAndRender();
 } else {
