@@ -202,7 +202,7 @@ async function login() {
   document.getElementById('login-error').textContent = '';
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
-  await loadStats();
+  await loadStats(false, true);
 }
 
 // ── Event delegation for ban/unban buttons (avoids inline onclick CSP issues) ─
@@ -232,7 +232,7 @@ function setModFilter(val) {
 
 // ── Fetch ─────────────────────────────────────────────────────────────────────
 let isFetching = false;
-async function loadStats(silent = false) {
+async function loadStats(silent = false, fromLogin = false) {
   if (isFetching) return;
   isFetching = true;
   if (!silent) document.getElementById('main-content').innerHTML = '<div class="loading"><span class="dot-pulse">Loading</span></div>';
@@ -252,7 +252,11 @@ async function loadStats(silent = false) {
         sessionStorage.removeItem('bm_admin_secret');
         document.getElementById('dashboard').style.display = 'none';
         document.getElementById('login-screen').style.display = 'flex';
-        document.getElementById('login-error').textContent = 'Session expired. Please log in again.';
+        document.getElementById('login-error').textContent = fromLogin
+          ? 'Incorrect password.'
+          : 'Session expired. Please log in again.';
+        document.getElementById('secret-input').value = '';
+        document.getElementById('secret-input').focus();
         isFetching = false;
         return;
       }
