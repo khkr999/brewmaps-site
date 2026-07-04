@@ -545,7 +545,7 @@ function render(d) {
       <div class="kpi-card"><div class="kpi-label">Active 30d</div><div class="kpi-value">${act.mau}</div><div class="kpi-sub">MAU</div></div>
       <div class="kpi-card"><div class="kpi-label">Day-1 Retention</div><div class="kpi-value">${ret.d1_rate}%</div><div class="kpi-sub">${ret.d1_cohort} new users</div></div>
       <div class="kpi-card"><div class="kpi-label">Day-7 Retention</div><div class="kpi-value">${ret.d7_rate}%</div><div class="kpi-sub">${ret.d7_cohort} new users</div></div>
-      <div class="kpi-card"><div class="kpi-label">Events 7d</div><div class="kpi-value">${fmt(events7Total)}</div><div class="kpi-sub">${fmt(A.total_events || 0)} all-time</div></div>
+      <div class="kpi-card"><div class="kpi-label">Events 7d</div><div class="kpi-value">${fmt(events7Total)}</div><div class="kpi-sub">${fmt(A.total_events || 0)} since launch</div></div>
     </div>
 
     <div class="section-title">📊 Daily Active Users · 14 days</div>
@@ -568,7 +568,7 @@ function render(d) {
       <div class="kpi-card accent">
         <div class="kpi-label">Total Users</div>
         <div class="kpi-value">${fmt(d.users.total)}</div>
-        <div class="kpi-sub">All time</div>
+        <div class="kpi-sub">Since launch · real users</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">New Today</div>
@@ -602,7 +602,7 @@ function render(d) {
       <div class="kpi-card accent">
         <div class="kpi-label">Total</div>
         <div class="kpi-value">${fmt(d.checkins.total)}</div>
-        <div class="kpi-sub">All time</div>
+        <div class="kpi-sub">Since launch · real users</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Today</div>
@@ -626,7 +626,7 @@ function render(d) {
       <div class="kpi-card accent">
         <div class="kpi-label">Total Photos</div>
         <div class="kpi-value">${fmt(d.community.totalPosts)}</div>
-        <div class="kpi-sub">All time approved</div>
+        <div class="kpi-sub">Since launch · approved</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Posted Today</div>
@@ -683,7 +683,7 @@ function render(d) {
       <div class="kpi-card">
         <div class="kpi-label">Avg Check-ins / User</div>
         <div class="kpi-value">${d.engagement?.avgCheckinsPerUser ?? 0}</div>
-        <div class="kpi-sub">All time</div>
+        <div class="kpi-sub">Since launch · real users</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Community Rate</div>
@@ -693,17 +693,17 @@ function render(d) {
       <div class="kpi-card">
         <div class="kpi-label">Avg Saves / User</div>
         <div class="kpi-value">${d.engagement?.saveRate ?? 0}</div>
-        <div class="kpi-sub">All time</div>
+        <div class="kpi-sub">Since launch · real users</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Total Likes</div>
         <div class="kpi-value">${fmt(d.community.totalLikes ?? 0)}</div>
-        <div class="kpi-sub">All time</div>
+        <div class="kpi-sub">Since launch · real users</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Total Comments</div>
         <div class="kpi-value">${fmt(d.community.totalComments ?? 0)}</div>
-        <div class="kpi-sub">All time</div>
+        <div class="kpi-sub">Since launch · real users</div>
       </div>
     </div>
 
