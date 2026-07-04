@@ -218,7 +218,7 @@
 
 <script>
 const ENDPOINT  = 'https://qgzyywxizlhtuwuaonxy.supabase.co/functions/v1/admin-stats';
-const ADMIN_KEY = 'BrewMaps2026!';
+const CAFE_KEY  = 'demo_227db88f628cc8090bd51618'; // read-only demo key — café-mode stats only, safe to be public
 const CAFE_ID   = 'ff36e7fb-a1b8-4277-b9d0-cbe07a54dffb';
 
 let rawData     = null;
@@ -287,7 +287,7 @@ async function fetchAndRender() {
   document.getElementById('main-content').innerHTML = '<div class="loading">Loading…</div>';
   try {
     const res = await fetch(`${ENDPOINT}?cafeId=${CAFE_ID}`, {
-      headers: { 'x-admin-secret': ADMIN_KEY },
+      headers: { 'x-admin-secret': CAFE_KEY },
     });
     rawData = await res.json();
     document.getElementById('last-fetch').textContent = 'Updated ' + new Date().toLocaleTimeString();
