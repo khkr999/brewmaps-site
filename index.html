@@ -1288,5 +1288,21 @@
     })();
   </script>
 
+  <!-- Track App Store download-button clicks (Meta Pixel) -->
+  <script>
+    (function () {
+      var links = document.querySelectorAll('a[href*="id6775899450"]');
+      links.forEach(function (a) {
+        a.addEventListener('click', function () {
+          if (window.fbq) {
+            fbq('trackCustom', 'AppStoreClick');
+            fbq('track', 'Lead');   // standard event → shows as a column in Ads Manager + optimizable
+          }
+          // no preventDefault — the link proceeds to the App Store (sendBeacon survives navigation)
+        });
+      });
+    })();
+  </script>
+
 </body>
 </html>
