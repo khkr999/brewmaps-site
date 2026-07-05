@@ -542,8 +542,16 @@ function render(d) {
   const topSearchRows = (A.top_searches || []).map((s, i) => {
     const users = (s.users || []).filter(Boolean);
     const who = users.slice(0, 3).join(', ') + (users.length > 3 ? ` +${users.length - 3} more` : '');
+    let when = '';
+    if (s.last_at) {
+      when = new Date(s.last_at).toLocaleString('en-AE', {
+        timeZone: 'Asia/Dubai', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit',
+      });
+      if (s.n > 1) when = 'last ' + when;
+    }
+    const meta = [who ? '👤 ' + who : '', when ? '🕐 ' + when : ''].filter(Boolean).join(' · ');
     return `
-    <tr><td class="rank">#${i + 1}</td><td>${(s.q || '').replace(/</g, '&lt;')}${who ? `<div style="font-size:11px;color:var(--stone);margin-top:2px">👤 ${who.replace(/</g, '&lt;')}</div>` : ''}</td><td><span class="count-badge">${s.n}</span></td></tr>`;
+    <tr><td class="rank">#${i + 1}</td><td>${(s.q || '').replace(/</g, '&lt;')}${meta ? `<div style="font-size:11px;color:var(--stone);margin-top:2px">${meta.replace(/</g, '&lt;')}</div>` : ''}</td><td><span class="count-badge">${s.n}</span></td></tr>`;
   }).join('')
     || '<tr><td colspan="3" class="empty-state">No searches yet</td></tr>';
   const ctr = A.ctr || {};
