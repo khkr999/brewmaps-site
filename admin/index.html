@@ -539,8 +539,12 @@ function render(d) {
       <div class="bar-track"><div class="bar-fill" style="width:${Math.round(val / fnMax * 100)}%"></div></div>
     </div>`).join('');
   const events7Total = Object.values(e7).reduce((s, n) => s + (n || 0), 0);
-  const topSearchRows = (A.top_searches || []).map((s, i) => `
-    <tr><td class="rank">#${i + 1}</td><td>${(s.q || '').replace(/</g, '&lt;')}</td><td><span class="count-badge">${s.n}</span></td></tr>`).join('')
+  const topSearchRows = (A.top_searches || []).map((s, i) => {
+    const users = (s.users || []).filter(Boolean);
+    const who = users.slice(0, 3).join(', ') + (users.length > 3 ? ` +${users.length - 3} more` : '');
+    return `
+    <tr><td class="rank">#${i + 1}</td><td>${(s.q || '').replace(/</g, '&lt;')}${who ? `<div style="font-size:11px;color:var(--stone);margin-top:2px">👤 ${who.replace(/</g, '&lt;')}</div>` : ''}</td><td><span class="count-badge">${s.n}</span></td></tr>`;
+  }).join('')
     || '<tr><td colspan="3" class="empty-state">No searches yet</td></tr>';
   const ctr = A.ctr || {};
   const ctrLabel = (k) => k === 'discovery_search' ? 'Search results' : k === 'discovery_browse' ? 'Browse / filters' : k;
