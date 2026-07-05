@@ -218,6 +218,15 @@ document.addEventListener('click', function(e) {
   toggleBan(userId, action === 'ban');
 }, true);
 
+// ── Manual install count (Acquisition panel) → persists + recomputes funnel ──
+document.addEventListener('change', function(e) {
+  if (!e.target || e.target.id !== 'install-input') return;
+  const v = e.target.value.trim();
+  if (v === '') localStorage.removeItem('bm_manual_installs');
+  else localStorage.setItem('bm_manual_installs', String(Math.max(0, parseInt(v, 10) || 0)));
+  if (rawData) render(rawData);
+}, true);
+
 // ── Filters ───────────────────────────────────────────────────────────────────
 function setPeriod(val) {
   period = val;
@@ -539,7 +548,50 @@ function render(d) {
     <div class="kpi-card"><div class="kpi-label">${ctrLabel(ctx)} CTR</div><div class="kpi-value">${v.ctr}%</div><div class="kpi-sub">${v.taps} taps / ${v.impressions} seen</div></div>`).join('')
     || '<div class="kpi-card"><div class="kpi-label">Card CTR</div><div class="kpi-value">—</div><div class="kpi-sub">no data yet</div></div>';
 
+  // ── Acquisition / Marketing (Meta Ads insights + manual installs) ───────────
+  const acq = d.acquisition || { connected: false };
+  const manualInstalls = parseInt(localStorage.getItem('bm_manual_installs') || '', 10);
+  const hasInstalls = Number.isFinite(manualInstalls) && manualInstalls > 0;
+  let acquisitionSection = '';
+  if (!acq.connected) {
+    acquisitionSection = `
+    <div class="section-title">📣 Acquisition · Meta Ads</div>
+    <div class="table-card"><div class="empty-state" style="padding:20px;line-height:1.5">
+      Not connected yet. Add a Meta <b>System User token</b> with <code>ads_read</code> as the
+      <code>META_ADS_TOKEN</code> secret to see live ad spend, reach, and download-clicks here.
+    </div></div>`;
+  } else if (acq.error) {
+    acquisitionSection = `
+    <div class="section-title">📣 Acquisition · Meta Ads</div>
+    <div class="table-card"><div class="empty-state" style="padding:20px;color:var(--red);line-height:1.5">
+      Meta API error: ${String(acq.error).replace(/</g,'&lt;')}<br>
+      <span style="color:var(--stone)">Token may be expired or missing ads_read on the ad account.</span>
+    </div></div>`;
+  } else {
+    const cur = acq.currency || 'AED';
+    const money = (n) => cur + ' ' + (n ?? 0).toLocaleString(undefined, { maximumFractionDigits: 2 });
+    const costPerInstall = hasInstalls && acq.spend ? Math.round(acq.spend / manualInstalls * 100) / 100 : null;
+    const clickToInstall = hasInstalls && acq.leads ? Math.round(manualInstalls / acq.leads * 1000) / 10 : null;
+    acquisitionSection = `
+    <div class="section-title">📣 Acquisition · Meta Ads · Last 30 days</div>
+    <div class="kpi-grid">
+      <div class="kpi-card accent"><div class="kpi-label">Ad Spend</div><div class="kpi-value">${money(acq.spend)}</div><div class="kpi-sub">last 30 days</div></div>
+      <div class="kpi-card"><div class="kpi-label">Reach</div><div class="kpi-value">${fmt(acq.reach)}</div><div class="kpi-sub">${fmt(acq.impressions)} impressions</div></div>
+      <div class="kpi-card"><div class="kpi-label">Landing-Page Views</div><div class="kpi-value">${fmt(acq.landingPageViews)}</div><div class="kpi-sub">${acq.ctr}% CTR</div></div>
+      <div class="kpi-card"><div class="kpi-label">Download Clicks</div><div class="kpi-value">${fmt(acq.leads)}</div><div class="kpi-sub">tapped “Download”</div></div>
+      <div class="kpi-card"><div class="kpi-label">Cost / Download Click</div><div class="kpi-value">${acq.leads ? money(acq.costPerLead) : '—'}</div><div class="kpi-sub">spend ÷ clicks</div></div>
+      <div class="kpi-card"><div class="kpi-label">Installs</div>
+        <div class="kpi-value"><input id="install-input" type="number" min="0" value="${hasInstalls ? manualInstalls : ''}" placeholder="—" style="width:96px;font-size:28px;font-weight:700;color:var(--forest);border:none;border-bottom:2px dashed var(--border);background:transparent;outline:none;font-family:inherit;padding:0"></div>
+        <div class="kpi-sub">type from App Store Connect</div>
+      </div>
+      <div class="kpi-card"><div class="kpi-label">Cost / Install</div><div class="kpi-value">${costPerInstall != null ? money(costPerInstall) : '—'}</div><div class="kpi-sub">${hasInstalls ? 'spend ÷ installs' : 'enter installs →'}</div></div>
+      <div class="kpi-card"><div class="kpi-label">Click → Install</div><div class="kpi-value">${clickToInstall != null ? clickToInstall + '%' : '—'}</div><div class="kpi-sub">installs ÷ clicks</div></div>
+    </div>`;
+  }
+
   document.getElementById('main-content').innerHTML = `
+
+    ${acquisitionSection}
 
     <div class="section-title">📈 Product Analytics</div>
     ${hasAnalytics ? `
