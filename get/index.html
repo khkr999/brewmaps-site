@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get BrewMaps — UAE Café Finder</title>
+  <meta name="description" content="467 cafés across the UAE, matched to your taste. Download BrewMaps free on the App Store." />
+  <link rel="icon" type="image/png" href="/logo.png" />
+
+  <!-- Open Graph (rich preview for shares) -->
+  <meta property="og:title" content="Get BrewMaps — UAE Café Finder" />
+  <meta property="og:description" content="467 cafés across the UAE, matched to your taste. Free on the App Store." />
+  <meta property="og:image" content="https://brewmaps.app/logo.png" />
+  <meta property="og:url" content="https://brewmaps.app/get" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --espresso: #1A1A1A;
+      --forest: #2B4D1F;
+      --forest-light: #3A6B29;
+      --caramel: #C8914A;
+      --caramel-light: #E5B87A;
+      --sand: #FAF6F0;
+      --cream: #FFF8F0;
+      --warm-white: #FFFDF9;
+      --stone: #7A7A7A;
+      --border: rgba(0,0,0,0.06);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--warm-white);
+      color: var(--espresso);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .serif { font-family: 'Playfair Display', Georgia, serif; }
+
+    /* ambient warmth */
+    .bg-orb {
+      position: fixed; border-radius: 50%; filter: blur(80px);
+      opacity: 0.5; z-index: 0; pointer-events: none;
+    }
+    .orb-1 { width: 480px; height: 480px; background: radial-gradient(circle, rgba(200,145,74,0.28), transparent 70%); top: -160px; right: -140px; }
+    .orb-2 { width: 420px; height: 420px; background: radial-gradient(circle, rgba(43,77,31,0.18), transparent 70%); bottom: -160px; left: -120px; }
+
+    .wrap {
+      position: relative; z-index: 1;
+      flex: 1;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 48px 28px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+    }
+
+    .brand { display: flex; align-items: center; gap: 11px; margin-bottom: 44px; }
+    .brand img { width: 40px; height: 40px; border-radius: 11px; box-shadow: 0 4px 16px rgba(43,77,31,0.16); }
+    .brand span { font-weight: 700; font-size: 20px; letter-spacing: -0.02em; color: var(--forest); }
+
+    .kicker {
+      font-size: 12.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--caramel); margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 8vw, 52px);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      color: var(--forest);
+      margin-bottom: 20px;
+    }
+    h1 em { font-style: italic; color: var(--caramel); }
+
+    .sub {
+      font-size: clamp(16px, 4.2vw, 18.5px);
+      line-height: 1.55;
+      color: var(--stone);
+      max-width: 440px;
+      margin-bottom: 40px;
+    }
+
+    /* App Store button */
+    .store-btn {
+      display: inline-flex; align-items: center; gap: 13px;
+      background: var(--espresso); color: #fff;
+      padding: 16px 30px; border-radius: 16px;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(26,26,26,0.22);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .store-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(26,26,26,0.28); }
+    .store-btn:active { transform: translateY(0); }
+    .store-btn svg { width: 30px; height: 30px; flex-shrink: 0; }
+    .store-btn .txt { text-align: left; line-height: 1.15; }
+    .store-btn .txt small { display: block; font-size: 11px; font-weight: 400; opacity: 0.82; letter-spacing: 0.01em; }
+    .store-btn .txt b { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
+
+    .trust {
+      margin-top: 30px;
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 10px 18px;
+    }
+    .trust .pill {
+      font-size: 13.5px; font-weight: 500; color: var(--forest);
+      background: var(--sand); border: 1px solid var(--border);
+      padding: 7px 15px; border-radius: 100px;
+    }
+
+    .emirates {
+      margin-top: 34px; font-size: 13px; color: var(--stone-light, #B0A89E);
+      letter-spacing: 0.02em;
+    }
+
+    footer {
+      position: relative; z-index: 1;
+      text-align: center; padding: 22px; font-size: 12.5px; color: #B0A89E;
+    }
+    footer a { color: var(--stone); text-decoration: none; }
+    footer a:hover { color: var(--forest); }
+    footer .dot { margin: 0 8px; opacity: 0.5; }
+
+    @media (max-width: 480px) {
+      .wrap { padding: 40px 22px 32px; }
+      .brand { margin-bottom: 34px; }
+    }
+  </style>
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1337828844531472');
+  fbq('track', 'PageView');
+  fbq('trackCustom', 'InstallPageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1337828844531472&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+</head>
+<body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+
+  <main class="wrap">
+    <div class="brand">
+      <img src="/logo.png" alt="BrewMaps" />
+      <span>BrewMaps</span>
+    </div>
+
+    <div class="kicker">The UAE's Café Finder</div>
+    <h1 class="serif">Find your kind of <em>café.</em></h1>
+    <p class="sub">467 cafés across all 7 emirates — matched to your taste, not just the nearest one. Free on the App Store.</p>
+
+    <a class="store-btn" id="installBtn"
+       href="https://apps.apple.com/ae/app/brewmaps-uae-caf%C3%A9-finder/id6775899450">
+      <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+        <path d="M17.05 12.7c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.75 2.28-1.6 2.78-.41 6.89 1.15 9.14.76 1.1 1.67 2.34 2.86 2.29 1.15-.05 1.58-.74 2.97-.74 1.39 0 1.78.74 3 .72 1.24-.02 2.02-1.12 2.78-2.23.88-1.28 1.24-2.52 1.26-2.58-.03-.01-2.41-.93-2.43-3.68zM14.77 5.9c.64-.77 1.07-1.85.95-2.9-.92.04-2.03.61-2.69 1.38-.59.68-1.11 1.77-.97 2.81 1.02.08 2.07-.52 2.71-1.29z"/>
+      </svg>
+      <span class="txt">
+        <small>Download on the</small>
+        <b>App Store</b>
+      </span>
+    </a>
+
+    <div class="trust">
+      <span class="pill">467 cafés</span>
+      <span class="pill">7 emirates</span>
+      <span class="pill">Matched to your taste</span>
+      <span class="pill">Free</span>
+    </div>
+
+    <div class="emirates">Dubai · Abu Dhabi · Sharjah · Ajman · Al Ain · Fujairah · RAK</div>
+  </main>
+
+  <footer>
+    <a href="/">brewmaps.app</a>
+    <span class="dot">·</span>
+    <a href="/privacy.html">Privacy</a>
+    <span class="dot">·</span>
+    <a href="/terms.html">Terms</a>
+  </footer>
+
+  <script>
+    // Fire download-intent events, then let the link navigate to the App Store.
+    document.getElementById('installBtn').addEventListener('click', function () {
+      if (window.fbq) {
+        fbq('trackCustom', 'AppStoreClick');
+        fbq('track', 'Lead');            // standard event → optimizable + shows as a column in Ads Manager
+      }
+      // no preventDefault — navigation to the App Store proceeds normally (sendBeacon survives it)
+    });
+  </script>
+</body>
+</html>
