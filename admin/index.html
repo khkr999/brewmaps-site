@@ -588,8 +588,19 @@ function render(d) {
         <div style="display:flex;gap:2px">${dayCells}</div>
       </div>`;
   };
+  // Duplication tripwire: dispatch dups = a queue row POSTed to Expo >1 time
+  // (the July-23 flood class); anchor doubles = a real user got the same anchor
+  // twice in one Dubai day. Both should ALWAYS be zero.
+  const paDup = (PA && PA.dup) || { dispatch_dups_7d: 0, anchor_doubles_7d: 0 };
+  const paDupBad = (paDup.dispatch_dups_7d > 0 || paDup.anchor_doubles_7d > 0);
+  const paDupBanner = paDupBad ? `
+    <div style="background:#FDE8E8;border:1.5px solid #E02424;color:#9B1C1C;border-radius:10px;padding:12px 14px;margin-bottom:10px;font-weight:700">
+      🚨 DUPLICATE PUSH DETECTED (7d): ${paDup.dispatch_dups_7d} notification(s) sent more than once,
+      ${paDup.anchor_doubles_7d} user(s) got a double anchor push. Do NOT run bulk sends until diagnosed.
+    </div>` : '';
   const pushAnchorsHtml = PA ? `
     <div class="section-title">📬 Push Anchors · delivery &amp; opens</div>
+    ${paDupBanner}
     <div style="display:flex;gap:12px;flex-wrap:wrap">
       ${paCard('daily_pick', 'Morning · Daily Pick (9am)', '☀️')}
       ${paCard('tonight_spot', 'Night · Tonight’s Spot (8pm)', '🌙')}
@@ -597,6 +608,7 @@ function render(d) {
     <div style="font-size:11px;color:var(--stone);margin:6px 2px 14px">
       Real users only · delivered % = sent &divide; current push-on users (${PA.eligible_now || 0})
       · night anchor first ran 24 Jul · open tracking starts 24 Jul
+      ${paDupBad ? '' : '· ✓ no duplicate sends detected (7d)'}
     </div>` : '';
 
   document.getElementById('main-content').innerHTML = `
