@@ -110,6 +110,88 @@
     .list-bar-wrap{flex:1;}
     .list-bar-track{background:var(--sand);border-radius:999px;height:6px;overflow:hidden;}
     .list-bar-fill{height:100%;background:var(--forest);border-radius:999px;transition:width .4s ease;}
+
+    /* ── Market intelligence ─────────────────────────────────────────────────
+       Catalogue-derived, so it is fully populated on day one regardless of
+       BrewMaps user volume — and it is the part a café's own POS cannot
+       reproduce, because it requires the neighbours' menus. Leads the page. */
+    .intel-hero{background:linear-gradient(135deg,var(--forest),var(--forest2));border-radius:18px;padding:26px 28px;color:#fff;margin-bottom:14px;}
+    .intel-hero-top{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px;}
+    .intel-rank{font-family:'Playfair Display',serif;font-size:44px;line-height:1;font-weight:700;}
+    .intel-rank-of{font-size:15px;opacity:.75;}
+    .intel-hero-sub{font-size:13px;opacity:.85;line-height:1.55;max-width:640px;}
+    .intel-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+    .intel-chip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:5px 12px;font-size:12px;font-weight:500;}
+    .intel-chip b{font-weight:700;}
+
+    .bench-row{display:grid;grid-template-columns:118px 74px 1fr 96px;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);}
+    .bench-row:last-child{border-bottom:none;}
+    .bench-drink{font-size:13px;font-weight:600;}
+    .bench-mine{font-size:13px;font-weight:700;text-align:right;}
+    .bench-mine.none{font-weight:500;color:var(--stone);font-size:11px;}
+    /* Scale track: a café's price plotted against the neighbourhood p25–p75 band.
+       Reads at a glance without the owner parsing four numbers. */
+    .bench-scale{position:relative;height:22px;}
+    /* --sand on the cream card is all but invisible, so a price sitting outside
+       the typical band (the most important case to notice) rendered as a marker
+       floating in space. --border keeps the full scale readable. */
+    .bench-axis{position:absolute;top:10px;left:0;right:0;height:3px;background:var(--border);border-radius:999px;}
+    /* The band is the whole point of the chart — at .16 alpha over --sand it was
+       invisible on screen. Solid caramel tint reads at a glance. */
+    .bench-band{position:absolute;top:7px;height:9px;background:#e3d3bf;border-radius:999px;}
+    .bench-med{position:absolute;top:4px;width:2px;height:15px;background:var(--stone);border-radius:2px;}
+    .bench-you{position:absolute;top:2px;width:13px;height:19px;border-radius:5px;background:var(--forest);border:2.5px solid var(--cream);box-shadow:0 1px 4px rgba(0,0,0,.22);transform:translateX(-50%);}
+    .bench-you.high{background:var(--caramel);}
+    .bench-verdict{font-size:11px;text-align:right;color:var(--stone);font-weight:600;}
+    .bench-verdict.below{color:var(--forest);}
+    .bench-verdict.above{color:#a8703c;}
+    .bench-legend{display:flex;gap:16px;font-size:11px;color:var(--stone);margin-top:12px;flex-wrap:wrap;}
+    .bench-legend i{font-style:normal;display:inline-flex;align-items:center;gap:5px;}
+    .legend-dot{width:9px;height:9px;border-radius:3px;background:var(--forest);display:inline-block;}
+    .legend-band{width:16px;height:8px;border-radius:999px;background:#e3d3bf;display:inline-block;}
+    .legend-med{width:2px;height:11px;background:var(--stone);display:inline-block;}
+
+    .gap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;}
+    .gap-card{background:var(--sand);border:1px solid var(--border);border-radius:12px;padding:13px 15px;}
+    .gap-name{font-size:14px;font-weight:700;margin-bottom:3px;}
+    .gap-sub{font-size:11.5px;color:var(--stone);line-height:1.4;}
+    .gap-sub b{color:var(--forest);font-weight:700;}
+
+    .vibe-cmp{display:flex;gap:8px;flex-wrap:wrap;}
+    .vibe-pill{border-radius:999px;padding:6px 13px;font-size:12px;font-weight:600;border:1px solid var(--border);background:var(--sand);color:var(--stone);}
+    .vibe-pill.mine{background:var(--forest);color:#fff;border-color:var(--forest);}
+    .vibe-pill .n{opacity:.65;font-weight:500;margin-left:4px;}
+
+    /* On a phone the three fixed columns (118+74+96) consume the whole width and
+       the scale track collapses to ~3px — the comparison chart, which is the
+       reason this section exists, becomes invisible on the device an owner
+       actually holds. Stack instead: name + price, full-width scale, verdict. */
+    /* Pre-existing header/hero breakage on phones: the top bar overflowed
+       (Sign out clipped off-screen), the café name wrapped mid-word and the
+       rating card pushed past the edge. Owners will open this on a phone in
+       front of you, so it is the first impression. */
+    @media (max-width:620px){
+      .topbar{flex-wrap:wrap;gap:10px;padding:14px 18px;}
+      .header-meta{display:none;}
+      .cafe-hero{flex-wrap:wrap;align-items:center;padding:0 18px 22px;gap:14px;}
+      .cafe-cover{width:64px;height:64px;}
+      .cafe-info{flex:1 1 180px;min-width:0;}
+      .cafe-name-hero{font-size:24px;line-height:1.15;}
+      .google-rating{flex:1 1 100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 14px;}
+      .google-rating .g-count{font-size:11px;}
+      .filter-bar{padding:12px 18px;gap:14px;}
+
+      .bench-row{grid-template-columns:1fr auto;grid-template-areas:"drink mine" "scale scale" "verdict verdict";gap:6px 10px;padding:13px 0;}
+      .bench-drink{grid-area:drink;}
+      .bench-mine{grid-area:mine;}
+      .bench-scale{grid-area:scale;}
+      .bench-verdict{grid-area:verdict;text-align:left;}
+      .intel-rank{font-size:36px;}
+      .intel-hero{padding:22px 20px;}
+    }
+
+    .intel-note{font-size:11.5px;color:var(--stone);margin-top:10px;line-height:1.55;}
+    .soft-note{background:var(--sand);border:1px dashed var(--border);border-radius:12px;padding:14px 16px;font-size:12.5px;color:var(--stone);line-height:1.6;}
     .list-count{font-size:12px;color:var(--stone);font-weight:600;min-width:24px;text-align:right;margin-left:12px;}
     .empty-row{padding:20px 18px;color:#999;font-size:13px;text-align:center;}
 
@@ -310,6 +392,13 @@ function anonymizeDemo(d) {
     area: 'Your neighbourhood',
     photo_urls: ['/cafe/samples/s1.jpg'],
   });
+  // marketIntel carries its own copy of the café identity — mask it too, or the
+  // demo leaks the real café's name straight back out through the intel header.
+  if (d.marketIntel?.cafe) {
+    d.marketIntel.cafe = Object.assign({}, d.marketIntel.cafe, {
+      name: 'Your Café', area: 'Your neighbourhood',
+    });
+  }
   const day = 86400000, now = Date.now();
   d.community = d.community ?? {};
   d.community.allPhotos = [
@@ -318,6 +407,125 @@ function anonymizeDemo(d) {
     { photo_url: '/cafe/samples/s4.jpg', created_at: new Date(now - 9*day).toISOString(),  like_count: 8, category: 'interior' },
     { photo_url: '/cafe/samples/s5.jpg', created_at: new Date(now - 16*day).toISOString(), like_count: 2, category: 'interior' },
   ];
+}
+
+// ── Market intelligence renderers ────────────────────────────────────────────
+// Everything below is derived from the café catalogue (its own menu + the
+// neighbours'), NOT from BrewMaps usage. It is therefore complete on day one and
+// does not get thinner when user numbers are small. It is also the answer to
+// "why do I need your analytics, we have our own analyst": their analyst knows
+// everything about the people who walked in; none of this is visible from inside
+// a single shop.
+
+function ordinal(n) {
+  const s = ['th','st','nd','rd'], v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+function renderIntelHero(mi) {
+  const c = mi.cafe, n = mi.neighbourhood;
+  if (!n.rating_rank || !n.rating_pool) return '';
+  // Rank 1 deserves a sentence, not a percentile. "You're in the top 9%" is
+  // technically what 1-of-11 computes to, and it reads like a consolation prize.
+  const top = Math.round(n.rating_rank / n.rating_pool * 100);
+  const standing =
+    n.rating_rank === 1 ? 'you are the highest-rated café among them'
+    : n.rating_rank <= 3 ? `you are among the three highest-rated`
+    : `you rank in the top ${top}% on Google rating`;
+  const chips = [];
+  if (c.rating) chips.push(`<span class="intel-chip">Your rating <b>${c.rating}★</b></span>`);
+  if (n.avg_rating) chips.push(`<span class="intel-chip">Area average <b>${n.avg_rating}★</b></span>`);
+  if (c.menu_items) chips.push(`<span class="intel-chip"><b>${c.menu_items}</b> drinks listed</span>`);
+  if (n.cards_accepting != null && n.count)
+    chips.push(`<span class="intel-chip">Esaad/Fazaa: <b>${n.cards_accepting} of ${n.count}</b> nearby</span>`);
+  // Say the real radius. When it has widened to 20-40km for a sparse emirate,
+  // calling that "your neighbourhood" would be a lie the owner can check.
+  // rating_pool counts this café too, so say "you and the N around you" — the
+  // earlier wording put 11 in the headline and 10 in the sentence below it.
+  return `
+    <div class="intel-hero">
+      <div class="intel-hero-top">
+        <span class="intel-rank">${ordinal(n.rating_rank)}</span>
+        <span class="intel-rank-of">of ${n.rating_pool} cafés by rating</span>
+      </div>
+      <div class="intel-hero-sub">
+        Of you and the ${n.count} cafés within ${n.radius_km} km, ${standing}.
+        Everything below compares you with those cafés — their menus, their prices, their vibe.
+      </div>
+      <div class="intel-chips">${chips.join('')}</div>
+    </div>`;
+}
+
+function renderBenchmarks(mi) {
+  const rows = (mi.price_benchmarks || []).filter(b => b.my_price != null);
+  if (!rows.length) return '';
+  return rows.map(b => {
+    // Plot on a scale padded around the p25–p75 band so the marker never clips.
+    const lo0 = Math.min(b.area_p25, b.my_price), hi0 = Math.max(b.area_p75, b.my_price);
+    const pad = Math.max((hi0 - lo0) * 0.35, 2);
+    const lo = lo0 - pad, hi = hi0 + pad, span = hi - lo || 1;
+    const pos = v => Math.max(0, Math.min(100, (v - lo) / span * 100));
+    const above = b.my_price > b.area_median;
+    const diff = Math.round(Math.abs(b.my_price - b.area_median) * 100) / 100;
+    const verdict = diff < 0.5
+      ? { cls: '', text: 'at area price' }
+      : above
+        ? { cls: 'above', text: `+${diff} AED above` }
+        : { cls: 'below', text: `−${diff} AED below` };
+    return `
+      <div class="bench-row">
+        <span class="bench-drink">${b.drink}</span>
+        <span class="bench-mine">${b.my_price} AED</span>
+        <div class="bench-scale" title="Area median ${b.area_median} AED · typical ${b.area_p25}–${b.area_p75} · ${b.sample} cafés">
+          <div class="bench-axis"></div>
+          <div class="bench-band" style="left:${pos(b.area_p25)}%;width:${Math.max(pos(b.area_p75)-pos(b.area_p25),1.5)}%"></div>
+          <div class="bench-med" style="left:${pos(b.area_median)}%"></div>
+          <div class="bench-you ${above ? 'high' : ''}" style="left:${pos(b.my_price)}%"></div>
+        </div>
+        <span class="bench-verdict ${verdict.cls}">${verdict.text}</span>
+      </div>`;
+  }).join('') + `
+    <div class="bench-legend">
+      <i><span class="legend-dot"></span> your price</i>
+      <i><span class="legend-band"></span> what most nearby cafés charge</i>
+      <i><span class="legend-med"></span> area median</i>
+    </div>`;
+}
+
+function renderGaps(mi) {
+  const gaps = mi.menu_gaps || [];
+  if (!gaps.length) return '';
+  // Pair each gap with the neighbourhood price where we have one, so it reads as
+  // a costed opportunity rather than a scolding.
+  const priced = Object.fromEntries((mi.price_benchmarks || []).map(b => [b.drink, b]));
+  return `<div class="gap-grid">` + gaps.map(g => {
+    const p = priced[g.drink];
+    return `
+      <div class="gap-card">
+        <div class="gap-name">${g.drink}</div>
+        <div class="gap-sub"><b>${g.neighbours_serving} of ${g.neighbour_total}</b> cafés near you serve it${
+          p ? ` · they charge around <b>${p.area_median} AED</b>` : ''}</div>
+      </div>`;
+  }).join('') + `</div>`;
+}
+
+function renderVibes(mi, cafe) {
+  const area = mi.area_vibes || [];
+  if (!area.length) return '';
+  const mine = new Set((cafe.vibe_tags || []).map(t => String(t).toLowerCase()));
+  const pills = area.map(v =>
+    `<span class="vibe-pill ${mine.has(String(v.tag).toLowerCase()) ? 'mine' : ''}">${v.tag}<span class="n">${v.n}</span></span>`
+  ).join('');
+  const shared = area.filter(v => mine.has(String(v.tag).toLowerCase())).length;
+  return `
+    <div class="vibe-cmp">${pills}</div>
+    <div class="intel-note">
+      Filled pills are how BrewMaps describes <b>you</b>; the number is how many nearby cafés share that trait.
+      ${shared === 0
+        ? 'You share none of the area’s common traits — that is either a niche worth owning or a mismatch worth knowing.'
+        : `You match ${shared} of the area’s ${area.length} most common traits.`}
+      These come from what reviewers actually say, and they decide which searches you surface in.
+    </div>`;
 }
 
 function renderFromCache() {
@@ -507,9 +715,54 @@ function renderFromCache() {
 
   const periodLabel = period === 'all' ? 'All time' : `Last ${period} days`;
 
-  document.getElementById('main-content').innerHTML = `
+  // ── Market intelligence blocks ─────────────────────────────────────────────
+  // Rendered ABOVE the usage numbers on purpose. These are complete from day one
+  // and answer the question an owner actually has ("how do I compare?"), whereas
+  // the BrewMaps usage figures below grow with the app. Each block hides itself
+  // when its data is too thin to be honest, so a sparse café degrades to a
+  // shorter page rather than a broken one.
+  const mi         = d.marketIntel;
+  const heroHtml   = mi ? renderIntelHero(mi) : '';
+  const benchHtml  = mi ? renderBenchmarks(mi) : '';
+  const gapsHtml   = mi ? renderGaps(mi) : '';
+  const vibesHtml  = mi ? renderVibes(mi, cafe) : '';
+  const nbCount    = mi?.neighbourhood?.count ?? 0;
 
-    <div class="section-title">📊 Overview · ${periodLabel}</div>
+  const intelSection = !mi ? '' : `
+    <div class="section-title">🗺️ Your position in the neighbourhood</div>
+    ${heroHtml}
+
+    ${benchHtml ? `
+      <div class="section-title">💰 What you charge vs the cafés around you</div>
+      <div class="card">${benchHtml}</div>
+      <div class="intel-note">
+        Built from the live menus of ${nbCount} nearby cafés. Prices are what each café publishes,
+        taken as one figure per café so a long menu can’t skew the comparison.
+        <b>This is the number your own reports can’t produce</b> — it needs everyone else’s menu, not yours.
+      </div>` : `
+      <div class="section-title">💰 Price comparison</div>
+      <div class="soft-note">
+        Not enough published menus near you yet to compare prices fairly — we only show a benchmark
+        when at least three nearby cafés list the same drink. It fills in as the area’s menus are added.
+      </div>`}
+
+    ${gapsHtml ? `
+      <div class="section-title">📋 On their menus, not yours</div>
+      ${gapsHtml}
+      <div class="intel-note">
+        Drinks your neighbours sell that we don’t find on your menu. Sometimes that’s a deliberate choice —
+        and sometimes it’s just missing from your listing, in which case tell us and we’ll fix it today.
+      </div>` : ''}
+
+    ${vibesHtml ? `
+      <div class="section-title">✨ How your area reads</div>
+      <div class="card">${vibesHtml}</div>` : ''}
+  `;
+
+  document.getElementById('main-content').innerHTML = `
+    ${intelSection}
+
+    <div class="section-title">📊 On BrewMaps · ${periodLabel}</div>
     <div class="kpi-grid">
       <div class="kpi-card accent">
         <div class="kpi-label">Check-ins</div>
@@ -518,9 +771,9 @@ function renderFromCache() {
         ${deltaHtml}
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Today</div>
-        <div class="kpi-value">${todayCount}</div>
-        <div class="kpi-sub">Check-ins today</div>
+        <div class="kpi-label">Saved by</div>
+        <div class="kpi-value">${fmt(d.saves ?? 0)}</div>
+        <div class="kpi-sub">People who bookmarked you</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">App Rating</div>
@@ -537,6 +790,11 @@ function renderFromCache() {
         <div class="kpi-value">${livePhotos}</div>
         <div class="kpi-sub">Photos last 2h</div>
       </div>
+    </div>
+    <div class="intel-note">
+      These are BrewMaps visits only — people who checked in through the app, not your total footfall.
+      BrewMaps launched in July 2026, so the numbers here are small and growing; the neighbourhood
+      comparison above is complete today regardless.
     </div>
 
     <div class="section-title">📅 Check-in Activity</div>
