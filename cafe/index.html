@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Without these the browser holds an old copy of this page for days, so a
+       deploy silently doesn't reach you (and you demo a stale dashboard to a
+       café). The admin dashboard already carries them for the same reason. -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>BrewMaps — Café Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
@@ -378,6 +384,11 @@ async function fetchAndRender() {
     });
     rawData = await res.json();
     document.getElementById('last-fetch').textContent = 'Updated ' + new Date().toLocaleTimeString();
+    // Anonymise/sample BEFORE building the dropdown. Otherwise the dropdown is
+    // populated from the raw server rows (the real café's drinks) while the
+    // charts show sample drinks — so choosing a drink filters to nothing and
+    // the filter looks broken.
+    anonymizeDemo(rawData);
     populateDrinkDropdown(rawData.checkins?.allDrinks ?? []);
     renderFromCache();
   } catch(e) {
@@ -446,6 +457,9 @@ function buildSampleActivity(d) {
 
   const rnd = seeded(20260727);
   const day = 86400000, now = Date.now();
+  // Volume tuned so the charts read as a busy café rather than a trickle:
+  // ~14 check-ins/day average. High, but this is a preview of what an active
+  // café looks like, and it is labelled as such.
   const DRINKS = [
     ['Flat White', 22], ['Spanish Latte', 18], ['Cappuccino', 15],
     ['Iced Latte', 12], ['V60 Pour Over', 9], ['Matcha Latte', 8],
@@ -472,9 +486,9 @@ function buildSampleActivity(d) {
     const key = date.toISOString().slice(0, 10);
     const dow = date.getDay();                       // 5=Fri, 6=Sat in the UAE weekend
     const weekend = dow === 5 || dow === 6;
-    const growth = 1 + (89 - i) / 89 * 0.35;         // gentle upward trend
-    const base = (weekend ? 9 : 5) * growth;
-    const count = Math.max(0, Math.round(base + (rnd() - 0.5) * 4));
+    const growth = 1 + (89 - i) / 89 * 0.45;         // gentle upward trend
+    const base = (weekend ? 21 : 12) * growth;
+    const count = Math.max(1, Math.round(base + (rnd() - 0.5) * 7));
     dailyCheckins.push({ date: key, count });
     for (let k = 0; k < count; k++) {
       // Spread within the day so period filters and hour charts stay consistent
@@ -490,14 +504,29 @@ function buildSampleActivity(d) {
     total: dailyCheckins.reduce((s, r) => s + r.count, 0),
     dailyCheckins, allDrinks, allHours, allRatings,
   };
-  d.saves = 63;
-  // Give the photo grid a couple of very recent items so "Live now" isn't 0.
-  const p = d.community?.allPhotos ?? [];
-  d.community = { allPhotos: [
-    { photo_url: '/cafe/samples/s2.jpg', created_at: new Date(now - 40*60000).toISOString(), like_count: 11, category: 'drink' },
-    { photo_url: '/cafe/samples/s3.jpg', created_at: new Date(now - 5*3600000).toISOString(), like_count: 7,  category: 'drink' },
-    ...p.slice(2),
-  ] };
+  d.saves = 184;
+
+  // A community wall with 4 photos looks abandoned. Cycle the 4 sample images
+  // across ~26 posts, two of them inside the last 2h so "Live now" isn't 0.
+  const IMGS = ['/cafe/samples/s2.jpg','/cafe/samples/s3.jpg','/cafe/samples/s4.jpg','/cafe/samples/s5.jpg'];
+  const CATS = ['drink','drink','interior','exterior'];
+  const photos = [
+    { photo_url: IMGS[0], created_at: new Date(now - 35*60000).toISOString(),      like_count: 14, category: 'drink' },
+    { photo_url: IMGS[1], created_at: new Date(now - 95*60000).toISOString(),      like_count: 9,  category: 'drink' },
+  ];
+  for (let k = 0; k < 24; k++) {
+    // Spread across ~11 weeks. (Careful: this is HOURS — an earlier version used
+    // k * 3.4 here, which put all 26 photos inside 4 days and made the photo
+    // count identical for 7d, 30d and 90d.)
+    const ageH = 6 + k * 80 + rnd() * 40;
+    photos.push({
+      photo_url: IMGS[k % 4],
+      created_at: new Date(now - ageH * 3600000).toISOString(),
+      like_count: Math.round(2 + rnd() * 16),
+      category: CATS[k % 4],
+    });
+  }
+  d.community = { allPhotos: photos };
 }
 
 // ── Market intelligence renderers ────────────────────────────────────────────
