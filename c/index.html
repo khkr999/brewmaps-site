@@ -85,6 +85,37 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
 
+    /* Rate panel — shown when a café's table QR is scanned (?rate=1).
+       A scan from inside the café is the one moment we get, so the page has to
+       say what to do next instead of showing a profile and hoping. */
+    .rate-panel {
+      background: #2B4D1F; color: #FFFDF9;
+      border-radius: 16px; padding: 20px; margin: 4px 0 22px;
+    }
+    /* Shorter hero on a rate scan so the panel is visible without scrolling —
+       at 4/3 the ask started below the fold. */
+    .rate-mode .hero { aspect-ratio: 16 / 9; }
+    .rate-mode .container { padding-bottom: 40px; }
+    .rate-panel h2 {
+      font-size: 21px; font-weight: 700; margin-bottom: 5px; letter-spacing: -0.01em;
+    }
+    .rate-panel p { font-size: 13.5px; opacity: 0.82; line-height: 1.5; }
+    .rate-btn {
+      display: block; margin-top: 15px; background: #C4956A; color: #2B4D1F;
+      padding: 15px; border-radius: 12px; text-align: center;
+      font-weight: 700; font-size: 16px; text-decoration: none;
+    }
+    .rate-btn:active { transform: scale(0.98); }
+    /* The two-step is the whole point: iOS cannot carry the café through an App
+       Store install, so a fresh install lands on onboarding, not here. Telling
+       people to scan again is unglamorous and it is what makes the loop close. */
+    .rate-steps {
+      margin-top: 14px; padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.18);
+      font-size: 12.5px; line-height: 1.65; opacity: 0.8;
+    }
+    .rate-steps b { opacity: 1; font-weight: 700; }
+
     /* CTAs */
     .cta-stack { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
     .cta-primary {
@@ -159,6 +190,13 @@
     const SUPABASE_URL = 'https://qgzyywxizlhtuwuaonxy.supabase.co';
     const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFnenl5d3hpemxodHV3dWFvbnh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMDI0NDMsImV4cCI6MjA5NDU3ODQ0M30.auFn0Nz_PTziNezXMQKXzd5jmlre3CZUR47emeXpHz8';
 
+    // ?rate=1 marks a scan from the café's own table card, as opposed to a link
+    // someone shared. Same page, but it leads with the action instead of a
+    // profile — the customer is sitting in the café with a drink in front of
+    // them and roughly twenty seconds of patience.
+    const RATE_MODE = new URLSearchParams(location.search).get('rate') === '1';
+    if (RATE_MODE) document.documentElement.classList.add('rate-mode');
+
     function getCafeId() {
       // Path form: /c/{id}
       const m = location.pathname.match(/\/c\/([a-f0-9-]+)/i);
@@ -202,6 +240,18 @@
           <h1>${escapeHtml(c.name)}</h1>
           <div class="area">${escapeHtml(c.area || '')}${priceLabel ? ' · ' + priceLabel : ''}</div>
 
+          ${RATE_MODE ? `
+            <div class="rate-panel">
+              <h2>How was your coffee?</h2>
+              <p>Rate what you ordered — it takes a few seconds, and it helps ${escapeHtml(c.name)} see what people actually love.</p>
+              <a href="#" class="rate-btn" id="rate-open">Rate it in BrewMaps</a>
+              <div class="rate-steps">
+                <b>Don’t have the app yet?</b><br>
+                1. Tap above to get BrewMaps (it’s free)<br>
+                2. Come back and <b>scan this code again</b> — it opens straight here
+              </div>
+            </div>` : ''}
+
           <div class="stats">
             ${c.google_rating ? `
               <div class="stat">
@@ -243,14 +293,38 @@
         </div>
       `;
       document.getElementById('content').innerHTML = html;
-      document.getElementById('install-banner').style.display = 'flex';
+      // In rate mode the panel already carries both actions, and the sticky
+      // banner sat on top of step 2 ("scan this code again") — the one line the
+      // whole loop depends on. Suppress it rather than duplicate the CTA.
+      document.getElementById('install-banner').style.display = RATE_MODE ? 'none' : 'flex';
+
+      // One button, both audiences: try to open the app, and if nothing takes
+      // over the tab within 1.4s assume it isn't installed and send them to the
+      // App Store. Same pattern as the /list page. Cancelled on visibilitychange
+      // because the app opening hides the tab — without that check, someone who
+      // DOES have the app gets dumped in the App Store on their way back.
+      const rateBtn = document.getElementById('rate-open');
+      if (rateBtn) {
+        rateBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          let bailed = false;
+          const onHide = () => { bailed = true; };
+          document.addEventListener('visibilitychange', onHide, { once: true });
+          const t = setTimeout(() => {
+            document.removeEventListener('visibilitychange', onHide);
+            if (!bailed && !document.hidden) location.href = '/download';
+          }, 1400);
+          window.location.href = `brewmaps://c/${c.id}`;
+          void t;
+        });
+      }
     }
 
     function renderError(msg) {
       document.getElementById('content').innerHTML = `
         <div class="err">
           <h2>${escapeHtml(msg)}</h2>
-          <p style="margin-top: 16px">Browse 343 cafés across the UAE on BrewMaps.</p>
+          <p style="margin-top: 16px">Browse 460+ cafés across the UAE on BrewMaps.</p>
           <div class="cta-stack" style="max-width: 280px; margin: 24px auto 0">
             <a href="/download" class="cta-primary">Get BrewMaps</a>
           </div>
