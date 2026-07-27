@@ -190,6 +190,11 @@
       .intel-hero{padding:22px 20px;}
     }
 
+    /* Small, but never hidden: the badge is what separates a normal SaaS demo
+       from showing a café invented foot traffic. */
+    .sample-badge{display:inline-block;background:var(--caramel);color:#fff;border-radius:999px;
+      padding:2px 9px;font-size:9.5px;letter-spacing:.08em;font-weight:700;margin-left:8px;vertical-align:middle;}
+
     .intel-note{font-size:11.5px;color:var(--stone);margin-top:10px;line-height:1.55;}
     .soft-note{background:var(--sand);border:1px dashed var(--border);border-radius:12px;padding:14px 16px;font-size:12.5px;color:var(--stone);line-height:1.6;}
     .list-count{font-size:12px;color:var(--stone);font-weight:600;min-width:24px;text-align:right;margin-left:12px;}
@@ -407,6 +412,92 @@ function anonymizeDemo(d) {
     { photo_url: '/cafe/samples/s4.jpg', created_at: new Date(now - 9*day).toISOString(),  like_count: 8, category: 'interior' },
     { photo_url: '/cafe/samples/s5.jpg', created_at: new Date(now - 16*day).toISOString(), like_count: 2, category: 'interior' },
   ];
+  buildSampleActivity(d);
+}
+
+// ── Sample activity (DEMO PAGE ONLY) ─────────────────────────────────────────
+// The demo café's real BrewMaps usage is 1 check-in in 30 days, which shows a
+// prospect nothing about what the dashboard DOES. So the public demo fills the
+// usage sections with a plausible month of activity.
+//
+// TWO RULES, both deliberate:
+//   1. It is LABELLED. The section header and note both say "sample". A café
+//      must never be shown invented foot traffic they could mistake for their
+//      own — when they later claim the dashboard and the real number appears,
+//      that gap is how you lose the account, not just the sale.
+//   2. It NEVER runs for a real café. This is inside the DEMO_ANON branch, so a
+//      logged-in owner viewing their own dashboard always sees their own data.
+//
+// The market-intelligence sections above are NOT touched — rank, prices and
+// menu gaps are real for every café in the catalogue and need no help.
+const DEMO_SAMPLE_ACTIVITY = true;
+
+// Seeded PRNG: the numbers must be identical on every refresh. A prospect who
+// reloads and sees different "real" figures has caught you.
+function seeded(seed) {
+  let s = seed;
+  return () => { s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; };
+}
+
+function buildSampleActivity(d) {
+  if (!DEMO_SAMPLE_ACTIVITY || d.__sampled) return;
+  d.__sampled = true;
+  d.__isSample = true;
+
+  const rnd = seeded(20260727);
+  const day = 86400000, now = Date.now();
+  const DRINKS = [
+    ['Flat White', 22], ['Spanish Latte', 18], ['Cappuccino', 15],
+    ['Iced Latte', 12], ['V60 Pour Over', 9], ['Matcha Latte', 8],
+    ['Cortado', 7], ['Cold Brew', 5], ['Americano', 4],
+  ];
+  const totalW = DRINKS.reduce((s, [, w]) => s + w, 0);
+  const pickDrink = () => {
+    let r = rnd() * totalW;
+    for (const [n, w] of DRINKS) { if ((r -= w) <= 0) return n; }
+    return DRINKS[0][0];
+  };
+  // Morning rush and an after-work peak — the shape a café owner recognises.
+  const HOURS = [[8,14],[9,16],[10,13],[11,9],[12,8],[13,7],[14,6],[15,7],[16,9],[17,13],[18,12],[19,9],[20,6]];
+  const hourW = HOURS.reduce((s, [, w]) => s + w, 0);
+  const pickHour = () => {
+    let r = rnd() * hourW;
+    for (const [h, w] of HOURS) { if ((r -= w) <= 0) return h; }
+    return 9;
+  };
+
+  const dailyCheckins = [], allDrinks = [], allHours = [], allRatings = [];
+  for (let i = 89; i >= 0; i--) {
+    const date = new Date(now - i * day);
+    const key = date.toISOString().slice(0, 10);
+    const dow = date.getDay();                       // 5=Fri, 6=Sat in the UAE weekend
+    const weekend = dow === 5 || dow === 6;
+    const growth = 1 + (89 - i) / 89 * 0.35;         // gentle upward trend
+    const base = (weekend ? 9 : 5) * growth;
+    const count = Math.max(0, Math.round(base + (rnd() - 0.5) * 4));
+    dailyCheckins.push({ date: key, count });
+    for (let k = 0; k < count; k++) {
+      // Spread within the day so period filters and hour charts stay consistent
+      const ts = new Date(date); ts.setHours(pickHour(), Math.floor(rnd() * 60), 0, 0);
+      const iso = ts.toISOString();
+      allDrinks.push({ drink_name: pickDrink(), created_at: iso });
+      allHours.push({ visit_hour: ts.getHours(), created_at: iso });
+      allRatings.push({ rating: rnd() < 0.62 ? 5 : rnd() < 0.85 ? 4 : 3, created_at: iso });
+    }
+  }
+
+  d.checkins = {
+    total: dailyCheckins.reduce((s, r) => s + r.count, 0),
+    dailyCheckins, allDrinks, allHours, allRatings,
+  };
+  d.saves = 63;
+  // Give the photo grid a couple of very recent items so "Live now" isn't 0.
+  const p = d.community?.allPhotos ?? [];
+  d.community = { allPhotos: [
+    { photo_url: '/cafe/samples/s2.jpg', created_at: new Date(now - 40*60000).toISOString(), like_count: 11, category: 'drink' },
+    { photo_url: '/cafe/samples/s3.jpg', created_at: new Date(now - 5*3600000).toISOString(), like_count: 7,  category: 'drink' },
+    ...p.slice(2),
+  ] };
 }
 
 // ── Market intelligence renderers ────────────────────────────────────────────
@@ -597,7 +688,11 @@ function renderFromCache() {
   // Drinks filtered
   const drinkMap = {};
   for (const r of (d.checkins?.allDrinks ?? [])) {
-    if (!r.date || !cutoff || new Date(r.date) >= cutoff) {
+    // These rows carry `created_at`, not `date`. Reading r.date made `!r.date`
+    // always true, so the period filter never applied and Top Drinks silently
+    // showed all 90 days while the KPI above showed 30. Invisible while a café
+    // had 5 check-ins; wrong for any café that gets busy.
+    if (!cutoff || new Date(r.created_at) >= cutoff) {
       const name = r.drink_name?.trim();
       if (name) drinkMap[name] = (drinkMap[name] ?? 0) + 1;
     }
@@ -629,7 +724,7 @@ function renderFromCache() {
 
   // Avg rating filtered
   const filteredRatings = (d.checkins?.allRatings ?? [])
-    .filter(r => !cutoff || !r.date || new Date(r.date) >= cutoff)
+    .filter(r => !cutoff || !r.created_at || new Date(r.created_at) >= cutoff)  // same r.date bug as Top Drinks
     .map(r => r.rating).filter(Boolean);
   const avgRating = filteredRatings.length > 0
     ? (filteredRatings.reduce((a,b)=>a+b,0)/filteredRatings.length).toFixed(1)
@@ -762,7 +857,8 @@ function renderFromCache() {
   document.getElementById('main-content').innerHTML = `
     ${intelSection}
 
-    <div class="section-title">📊 On BrewMaps · ${periodLabel}</div>
+    <div class="section-title">📊 On BrewMaps · ${periodLabel}${
+      d.__isSample ? ' <span class="sample-badge">Sample</span>' : ''}</div>
     <div class="kpi-grid">
       <div class="kpi-card accent">
         <div class="kpi-label">Check-ins</div>
@@ -792,9 +888,13 @@ function renderFromCache() {
       </div>
     </div>
     <div class="intel-note">
-      These are BrewMaps visits only — people who checked in through the app, not your total footfall.
-      BrewMaps launched in July 2026, so the numbers here are small and growing; the neighbourhood
-      comparison above is complete today regardless.
+      ${d.__isSample
+        ? `<b>This section shows sample activity</b> so you can see how the dashboard reads for a busy café.
+           Once your café is claimed it fills with your own visits, drinks and photos.
+           Everything above — your ranking, prices and menu comparison — is <b>real data about your café</b>, not a sample.`
+        : `These are BrewMaps visits only — people who checked in through the app, not your total footfall.
+           BrewMaps launched in July 2026, so the numbers here are small and growing; the neighbourhood
+           comparison above is complete today regardless.`}
     </div>
 
     <div class="section-title">📅 Check-in Activity</div>
