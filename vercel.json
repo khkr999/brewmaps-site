@@ -15,5 +15,13 @@
       "source": "/list/:slug",
       "destination": "/list/index.html"
     }
+  ],
+  "headers": [
+    {
+      "source": "/(cafe|admin)(/.*)?",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate, max-age=0" }
+      ]
+    }
   ]
 }
