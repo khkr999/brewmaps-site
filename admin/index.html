@@ -519,8 +519,15 @@ function render(d) {
       <div style="font-size:8px;color:var(--stone)">${(x.date || '').slice(5)}</div>
     </div>`;
   }).join('');
+  // Onboarding is the TRUE top of the funnel — it fires pre-auth, once per
+  // install, so it counts everyone who finished the intro whether or not they
+  // ever made an account. It is therefore larger than every step below it and
+  // has to come first, or its bar renders above the step before it.
+  // The 'App opens' step was REMOVED: it counted distinct signed-in users over
+  // 30 days, which is the same number already shown as ACTIVE 30D / MAU in the
+  // cards above, and it duplicated 'Signed in' to within a rounding of one.
+  // The gap that matters is the first one — onboarding → signed in.
   const fnSteps = [
-    ['📲 App opens', fn.app_open || 0],
     ['🎬 Onboarding done', fn.onboarding_completed || 0],
     ['🔑 Signed in', fn.signed_in || 0],
     ['✅ Checked in', fn.checkin_created || 0],
