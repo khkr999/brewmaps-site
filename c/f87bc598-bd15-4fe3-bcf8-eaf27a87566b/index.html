@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <title>Boon Coffee Roasters Golden Mile - Palm Jumeirah — Café in Palm Jumeirah, Dubai | BrewMaps</title>
+  <meta name="description" content="Boon Coffee Roasters Golden Mile - Palm Jumeirah in Palm Jumeirah, Dubai. ★4.7 (30 reviews). Specialty Coffee, Social, Aesthetic. Menu with prices — Flat White 22 AED, Cortado 20 AED, Spanish Latte 24 AED." />
+  <link rel="canonical" href="https://www.brewmaps.app/c/f87bc598-bd15-4fe3-bcf8-eaf27a87566b" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BrewMaps" />
+  <meta property="og:title" content="Boon Coffee Roasters Golden Mile - Palm Jumeirah — Café in Palm Jumeirah, Dubai | BrewMaps" />
+  <meta property="og:description" content="Boon Coffee Roasters Golden Mile - Palm Jumeirah in Palm Jumeirah, Dubai. ★4.7 (30 reviews). Specialty Coffee, Social, Aesthetic. Menu with prices — Flat White 22 AED, Cortado 20 AED, Spanish Latte 24 AED." />
+  <meta property="og:image" content="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJXdOr6J1rXz4RDtB7J1ydWJI/0.jpg" />
+  <meta property="og:url" content="https://www.brewmaps.app/c/f87bc598-bd15-4fe3-bcf8-eaf27a87566b" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="apple-itunes-app" content="app-id=6775899450" />
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #FAF6F0;
+      color: #1F1A14;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 520px; margin: 0 auto; padding: 0 0 100px; }
+
+    /* Nav */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 20px; background: rgba(250, 246, 240, 0.9);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #2B4D1F; }
+    .nav-logo img { width: 28px; height: 28px; border-radius: 6px; }
+
+    /* Hero photo */
+    .hero {
+      width: 100%; aspect-ratio: 4 / 3;
+      background: #2B4D1F; object-fit: cover;
+      display: block;
+    }
+
+    /* Card */
+    .body { padding: 20px; }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px; line-height: 1.1; color: #1F1A14;
+      margin-bottom: 6px;
+    }
+    .area { color: #6B6357; font-size: 15px; margin-bottom: 16px; }
+
+    .stats {
+      display: flex; gap: 12px; margin-bottom: 20px;
+    }
+    .stat {
+      flex: 1; background: #fff; border-radius: 14px;
+      padding: 12px; text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .stat-val { font-weight: 700; font-size: 17px; color: #1F1A14; }
+    .stat-label { font-size: 11px; color: #6B6357; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
+    .chip {
+      background: #2B4D1F1A; color: #2B4D1F;
+      padding: 6px 12px; border-radius: 999px;
+      font-size: 13px; font-weight: 500;
+    }
+
+    .section-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
+      color: #6B6357; font-weight: 600; margin-bottom: 8px;
+    }
+    .summary {
+      background: #fff; border-radius: 14px; padding: 16px;
+      line-height: 1.55; color: #3D362E; margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    /* Rate panel — shown when a café's table QR is scanned (?rate=1).
+       A scan from inside the café is the one moment we get, so the page has to
+       say what to do next instead of showing a profile and hoping. */
+    .rate-panel {
+      background: #2B4D1F; color: #FFFDF9;
+      border-radius: 16px; padding: 20px; margin: 4px 0 22px;
+    }
+    /* Shorter hero on a rate scan so the panel is visible without scrolling —
+       at 4/3 the ask started below the fold. */
+    .rate-mode .hero { aspect-ratio: 16 / 9; }
+    .rate-mode .container { padding-bottom: 40px; }
+    .rate-panel h2 {
+      font-size: 21px; font-weight: 700; margin-bottom: 5px; letter-spacing: -0.01em;
+    }
+    .rate-panel p { font-size: 13.5px; opacity: 0.82; line-height: 1.5; }
+    .rate-btn {
+      display: block; margin-top: 15px; background: #C4956A; color: #2B4D1F;
+      padding: 15px; border-radius: 12px; text-align: center;
+      font-weight: 700; font-size: 16px; text-decoration: none;
+    }
+    .rate-btn:active { transform: scale(0.98); }
+    /* The two-step is the whole point: iOS cannot carry the café through an App
+       Store install, so a fresh install lands on onboarding, not here. Telling
+       people to scan again is unglamorous and it is what makes the loop close. */
+    .rate-steps {
+      margin-top: 14px; padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.18);
+      font-size: 12.5px; line-height: 1.65; opacity: 0.8;
+    }
+    .rate-steps b { opacity: 1; font-weight: 700; }
+
+    /* CTAs */
+    .cta-stack { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+    .cta-primary {
+      background: #2B4D1F; color: #fff;
+      padding: 16px; border-radius: 14px;
+      text-decoration: none; text-align: center;
+      font-weight: 600; font-size: 16px;
+      box-shadow: 0 4px 12px rgba(43,77,31,0.25);
+      transition: transform 0.15s;
+    }
+    .cta-primary:active { transform: scale(0.98); }
+    .cta-secondary {
+      background: transparent; color: #2B4D1F;
+      padding: 14px; border-radius: 14px;
+      text-decoration: none; text-align: center;
+      font-weight: 600; font-size: 15px;
+      border: 1.5px solid #2B4D1F33;
+    }
+
+    /* Loading / error */
+    .loader {
+      display: flex; align-items: center; justify-content: center;
+      padding: 80px 20px; color: #6B6357;
+    }
+    .err { padding: 40px 20px; text-align: center; color: #6B6357; }
+    .err h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: #1F1A14; margin-bottom: 8px; }
+
+    /* Bottom install banner — sticky on mobile */
+    .install-banner {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fff; padding: 14px 20px;
+      box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
+      display: flex; align-items: center; gap: 12px;
+      max-width: 520px; margin: 0 auto;
+    }
+    .install-banner img { width: 36px; height: 36px; border-radius: 8px; }
+    .install-banner-text { flex: 1; }
+    .install-banner-text .t { font-weight: 600; font-size: 14px; color: #1F1A14; }
+    .install-banner-text .s { font-size: 12px; color: #6B6357; margin-top: 1px; }
+    .install-banner a {
+      background: #2B4D1F; color: #fff;
+      padding: 10px 16px; border-radius: 10px;
+      text-decoration: none; font-size: 14px; font-weight: 600;
+    }
+  
+    .menu { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .menu-row { display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-bottom:1px solid #F0EBE3; font-size:14.5px; }
+    .menu-row:last-child { border-bottom:none; }
+    .menu-name { color:#3D362E; }
+    .menu-price { color:#2B4D1F; font-weight:600; white-space:nowrap; }
+    .menu-cat { font-size:11px; text-transform:uppercase; letter-spacing:0.8px; color:#6B6357; font-weight:600; padding:14px 0 4px; }
+    .amen { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
+    .amen-item { background:#fff; border-radius:10px; padding:9px 12px; font-size:13px; color:#3D362E; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .cards-row { display:flex; gap:6px; margin-bottom:18px; }
+    .card-pill { display:flex; align-items:center; gap:6px; padding:6px 11px; border-radius:999px; font-size:12.5px; font-weight:600; }
+    .hours { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .hours-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid #F0EBE3; font-size:14px; }
+    .hours-row:last-child { border-bottom:none; }
+    .hours-day { color:#6B6357; }
+    .nearby { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+    .nearby a { background:#fff; border:1px solid #E8E1D7; color:#2B4D1F; padding:7px 12px; border-radius:999px; font-size:13px; text-decoration:none; font-weight:500; }
+    .crumb { font-size:12.5px; color:#6B6357; padding:0 20px 4px; }
+    .crumb a { color:#2B4D1F; text-decoration:none; }
+</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CafeOrCoffeeShop","name":"Boon Coffee Roasters Golden Mile - Palm Jumeirah","address":{"@type":"PostalAddress","streetAddress":"Golden Mile 2, Building 2 - Palm Jumeirah - دبي - United Arab Emirates","addressLocality":"Palm Jumeirah","addressRegion":"Dubai","addressCountry":"AE"},"geo":{"@type":"GeoCoordinates","latitude":25.1064659,"longitude":55.1481911},"image":"https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJXdOr6J1rXz4RDtB7J1ydWJI/0.jpg","url":"https://www.brewmaps.app/c/f87bc598-bd15-4fe3-bcf8-eaf27a87566b","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.7","reviewCount":30},"servesCuisine":"Coffee","priceRange":"$$","hasMenu":{"@type":"Menu","hasMenuSection":[{"@type":"MenuSection","name":"Hot Coffee","hasMenuItem":[{"@type":"MenuItem","name":"Americano","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Macchiato","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Espresso (Double)","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Cappuccino","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Cafe Latte","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Flat White","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Cortado","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Piccolo","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Spanish Latte","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Dirty Chai Latte","offers":{"@type":"Offer","price":26,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"White Chocolate Mocha","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Caramel Latte","offers":{"@type":"Offer","price":26,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Hazelnut Latte","offers":{"@type":"Offer","price":26,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Vanilla Latte","offers":{"@type":"Offer","price":26,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Iced Coffee","hasMenuItem":[{"@type":"MenuItem","name":"Iced Americano","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Latte","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Spanish Latte","offers":{"@type":"Offer","price":26,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Caramel Latte","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Hazelnut Latte","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Vanilla Latte","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Manual Brew","hasMenuItem":[{"@type":"MenuItem","name":"Cold Brew","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Cold Brew With Boba","offers":{"@type":"Offer","price":32,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"V60","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Chemex","offers":{"@type":"Offer","price":30,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"French Press","offers":{"@type":"Offer","price":34,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Aeropress","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Signature","hasMenuItem":[{"@type":"MenuItem","name":"Classic Espresso","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Sparkling Espresso (Single, Double Or Quad)","offers":{"@type":"Offer","price":30,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Caramel Macchiato","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Tea","hasMenuItem":[{"@type":"MenuItem","name":"Red Tea","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Lemongrass","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Chamomile","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Peppermint","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Earl Grey","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Non-Coffee","hasMenuItem":[{"@type":"MenuItem","name":"Hot Chocolate Milk","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Chocolate Milk","offers":{"@type":"Offer","price":26,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Boon Sparkling","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Sparkling Water","offers":{"@type":"Offer","price":14,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Still Water","offers":{"@type":"Offer","price":10,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Mocktails","hasMenuItem":[{"@type":"MenuItem","name":"Blueberry Lemonade","offers":{"@type":"Offer","price":26,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Classic Lemonade","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Other","hasMenuItem":[{"@type":"MenuItem","name":"Double Chocolate","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Strawberry Banana","offers":{"@type":"Offer","price":34,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Blue Majik","offers":{"@type":"Offer","price":34,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Mean Green","offers":{"@type":"Offer","price":34,"priceCurrency":"AED"}}]}]}}</script>
+  
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <a href="/" class="nav-logo"><img src="/logo.png" alt="BrewMaps" /><span>BrewMaps</span></a>
+      <a href="/download" style="font-size:14px;color:#2B4D1F;font-weight:600;text-decoration:none">Get the app</a>
+    </div>
+
+    <div class="crumb"><a href="/">BrewMaps</a> › <a href="/area/palm-jumeirah/">Palm Jumeirah</a> › Boon Coffee Roasters Golden Mile - Palm Jumeirah</div>
+    <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJXdOr6J1rXz4RDtB7J1ydWJI/0.jpg" class="hero" alt="Boon Coffee Roasters Golden Mile - Palm Jumeirah" />
+    <div class="body">
+      <h1>Boon Coffee Roasters Golden Mile - Palm Jumeirah</h1>
+      <div class="area">Palm Jumeirah, Dubai · $$</div>
+
+      
+
+      <div class="stats">
+        <div class="stat"><div class="stat-val">★ 4.7</div><div class="stat-label">30 reviews</div></div>
+        <div class="stat"><div class="stat-val">Good</div><div class="stat-label">WiFi</div></div>
+        <div class="stat"><div class="stat-val">Lively</div><div class="stat-label">Vibe</div></div>
+      </div>
+
+      <div class="chips"><div class="chip">Specialty Coffee</div><div class="chip">Social</div><div class="chip">Aesthetic</div><div class="chip">Family Friendly</div></div>
+      <div class="section-label">About</div><div class="summary">Boon Coffee Roasters Golden Mile on Palm Jumeirah offers specialty coffee with excellent taste and a welcoming atmosphere. The baristas, particularly April and Abdul, are known for their friendly service and drink recommendations. A go-to spot for quality coffee and staff who genuinely brighten customers&#39; days.</div>
+
+      <div class="section-label">Menu &amp; prices</div><div class="menu">
+        
+          <div class="menu-cat">Hot Coffee</div>
+          <div class="menu-row"><span class="menu-name">Americano</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">Macchiato</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">Espresso (Double)</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Cappuccino</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">Cafe Latte</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">Flat White</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">Cortado</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">Piccolo</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Spanish Latte</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">Dirty Chai Latte</span><span class="menu-price">26 AED</span></div><div class="menu-row"><span class="menu-name">White Chocolate Mocha</span><span class="menu-price">28 AED</span></div><div class="menu-row"><span class="menu-name">Caramel Latte</span><span class="menu-price">26 AED</span></div><div class="menu-row"><span class="menu-name">Hazelnut Latte</span><span class="menu-price">26 AED</span></div><div class="menu-row"><span class="menu-name">Vanilla Latte</span><span class="menu-price">26 AED</span></div>
+        
+          <div class="menu-cat">Iced Coffee</div>
+          <div class="menu-row"><span class="menu-name">Iced Americano</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">Iced Latte</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">Iced Spanish Latte</span><span class="menu-price">26 AED</span></div><div class="menu-row"><span class="menu-name">Iced Caramel Latte</span><span class="menu-price">28 AED</span></div><div class="menu-row"><span class="menu-name">Iced Hazelnut Latte</span><span class="menu-price">28 AED</span></div><div class="menu-row"><span class="menu-name">Iced Vanilla Latte</span><span class="menu-price">28 AED</span></div>
+        
+          <div class="menu-cat">Manual Brew</div>
+          <div class="menu-row"><span class="menu-name">Cold Brew</span><span class="menu-price">28 AED</span></div><div class="menu-row"><span class="menu-name">Cold Brew With Boba</span><span class="menu-price">32 AED</span></div><div class="menu-row"><span class="menu-name">V60</span><span class="menu-price">28 AED</span></div><div class="menu-row"><span class="menu-name">Chemex</span><span class="menu-price">30 AED</span></div><div class="menu-row"><span class="menu-name">French Press</span><span class="menu-price">34 AED</span></div><div class="menu-row"><span class="menu-name">Aeropress</span><span class="menu-price">28 AED</span></div>
+        
+          <div class="menu-cat">Signature</div>
+          <div class="menu-row"><span class="menu-name">Classic Espresso</span><span class="menu-price">28 AED</span></div><div class="menu-row"><span class="menu-name">Sparkling Espresso (Single, Double Or Quad)</span><span class="menu-price">30 AED</span></div><div class="menu-row"><span class="menu-name">Caramel Macchiato</span><span class="menu-price">28 AED</span></div>
+        
+          <div class="menu-cat">Tea</div>
+          <div class="menu-row"><span class="menu-name">Red Tea</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Lemongrass</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Chamomile</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Peppermint</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Earl Grey</span><span class="menu-price">18 AED</span></div>
+        
+          <div class="menu-cat">Non-Coffee</div>
+          <div class="menu-row"><span class="menu-name">Hot Chocolate Milk</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">Iced Chocolate Milk</span><span class="menu-price">26 AED</span></div><div class="menu-row"><span class="menu-name">Boon Sparkling</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Sparkling Water</span><span class="menu-price">14 AED</span></div><div class="menu-row"><span class="menu-name">Still Water</span><span class="menu-price">10 AED</span></div>
+        
+          <div class="menu-cat">Mocktails</div>
+          <div class="menu-row"><span class="menu-name">Blueberry Lemonade</span><span class="menu-price">26 AED</span></div><div class="menu-row"><span class="menu-name">Classic Lemonade</span><span class="menu-price">24 AED</span></div>
+        
+          <div class="menu-cat">Other</div>
+          <div class="menu-row"><span class="menu-name">Double Chocolate</span><span class="menu-price">28 AED</span></div><div class="menu-row"><span class="menu-name">Strawberry Banana</span><span class="menu-price">34 AED</span></div><div class="menu-row"><span class="menu-name">Blue Majik</span><span class="menu-price">34 AED</span></div><div class="menu-row"><span class="menu-name">Mean Green</span><span class="menu-price">34 AED</span></div>
+        
+      </div>
+
+      <div class="section-label">Amenities</div><div class="amen"><div class="amen-item">📶 Good WiFi</div><div class="amen-item">🔊 Lively</div><div class="amen-item">🔌 Power outlets</div><div class="amen-item">🅿️ True</div><div class="amen-item">🪑 Indoor</div><div class="amen-item">🪑 Outdoor</div></div>
+
+      <div class="section-label">Opening hours</div><div class="hours">
+        <div class="hours-row"><span class="hours-day">Monday</span><span>7am-10pm</span></div><div class="hours-row"><span class="hours-day">Tuesday</span><span>7am-10pm</span></div><div class="hours-row"><span class="hours-day">Wednesday</span><span>7am-10pm</span></div><div class="hours-row"><span class="hours-day">Thursday</span><span>7am-10pm</span></div><div class="hours-row"><span class="hours-day">Friday</span><span>7am-10pm</span></div><div class="hours-row"><span class="hours-day">Saturday</span><span>7am-10pm</span></div><div class="hours-row"><span class="hours-day">Sunday</span><span>7am-10pm</span></div>
+      </div>
+
+      <div class="section-label">More cafés in Palm Jumeirah</div><div class="nearby">
+        <a href="/c/cb08369a-ee42-4bf5-b06b-9e015ceb70cf/">Bakerist The Palm - European Restaurant, French Bakery &amp; Cafe</a><a href="/c/9c9de418-970b-4c3b-afda-c355dff464e5/">Risen Café and Artisanal Bakery, Palm Jumeirah</a><a href="/c/e86d04f0-74ce-447d-9e59-c90125b514c3/">Café De Palma, Palm Jumeirah</a><a href="/c/4e86af26-b424-4e67-b028-4c2a4a863153/">Roasters Specialty Coffee House Palm Jumeirah Mall</a><a href="/c/28cdf599-6594-4c1f-9483-8ec8ee409fd0/">Mokha 1450 Coffee Lounge</a><a href="/c/bbef7384-6ff0-4109-842e-d5fb31408d54/">% ARABICA DUBAI ROASTERY</a><a href="/c/e222281f-8680-4e27-b07c-42c04bfb660e/">Summer Soul Boutique - West Beach</a>
+      </div><div style="margin:6px 0 24px"><a href="/area/palm-jumeirah/" style="font-size:13px;color:#2B4D1F;font-weight:600;text-decoration:none">See all cafés in Palm Jumeirah →</a></div>
+
+      <div class="cta-stack">
+        <a href="brewmaps://c/f87bc598-bd15-4fe3-bcf8-eaf27a87566b" class="cta-primary" id="open-app">Open in BrewMaps</a>
+        <a href="/download" class="cta-secondary">Don't have the app? Get it</a>
+      </div>
+    </div>
+
+  <div class="install-banner" id="install-banner">
+    <img src="/logo.png" alt="BrewMaps" />
+    <div class="install-banner-text"><div class="t">Open in BrewMaps</div><div class="s">For check-ins, photos &amp; more</div></div>
+    <a href="/download">Get app</a>
+  </div>
+
+  <script>
+    // ?rate=1 = scanned from the café's own table card. Keeps the behaviour the
+    // old JS page had; everything else on this page is now static HTML.
+    if (new URLSearchParams(location.search).get('rate') === '1') {
+      document.documentElement.classList.add('rate-mode');
+      var b = document.getElementById('install-banner'); if (b) b.style.display = 'none';
+    }
+    document.getElementById('open-app').addEventListener('click', function (e) {
+      e.preventDefault();
+      var bailed = false, onHide = function () { bailed = true; };
+      document.addEventListener('visibilitychange', onHide, { once: true });
+      setTimeout(function () {
+        document.removeEventListener('visibilitychange', onHide);
+        if (!bailed && !document.hidden) location.href = '/download';
+      }, 1400);
+      window.location.href = 'brewmaps://c/f87bc598-bd15-4fe3-bcf8-eaf27a87566b';
+    });
+  </script>
+  </div>
+</body>
+</html>

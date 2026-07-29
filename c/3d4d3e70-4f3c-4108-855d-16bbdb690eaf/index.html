@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <title>Nile Cafe — Café in Al Nahyan, Abu Dhabi | BrewMaps</title>
+  <meta name="description" content="Nile Cafe in Al Nahyan, Abu Dhabi. ★4.8 (146 reviews). Cozy, Specialty Coffee, Study Friendly. Menu with prices — Spanish Latte 22 AED, Café Latte 22 AED, Americano 20 AED." />
+  <link rel="canonical" href="https://www.brewmaps.app/c/3d4d3e70-4f3c-4108-855d-16bbdb690eaf" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BrewMaps" />
+  <meta property="og:title" content="Nile Cafe — Café in Al Nahyan, Abu Dhabi | BrewMaps" />
+  <meta property="og:description" content="Nile Cafe in Al Nahyan, Abu Dhabi. ★4.8 (146 reviews). Cozy, Specialty Coffee, Study Friendly. Menu with prices — Spanish Latte 22 AED, Café Latte 22 AED, Americano 20 AED." />
+  <meta property="og:image" content="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJh919UaJnXj4Rg0Qzx9b_XNs/0.jpg" />
+  <meta property="og:url" content="https://www.brewmaps.app/c/3d4d3e70-4f3c-4108-855d-16bbdb690eaf" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="apple-itunes-app" content="app-id=6775899450" />
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #FAF6F0;
+      color: #1F1A14;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 520px; margin: 0 auto; padding: 0 0 100px; }
+
+    /* Nav */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 20px; background: rgba(250, 246, 240, 0.9);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #2B4D1F; }
+    .nav-logo img { width: 28px; height: 28px; border-radius: 6px; }
+
+    /* Hero photo */
+    .hero {
+      width: 100%; aspect-ratio: 4 / 3;
+      background: #2B4D1F; object-fit: cover;
+      display: block;
+    }
+
+    /* Card */
+    .body { padding: 20px; }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px; line-height: 1.1; color: #1F1A14;
+      margin-bottom: 6px;
+    }
+    .area { color: #6B6357; font-size: 15px; margin-bottom: 16px; }
+
+    .stats {
+      display: flex; gap: 12px; margin-bottom: 20px;
+    }
+    .stat {
+      flex: 1; background: #fff; border-radius: 14px;
+      padding: 12px; text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .stat-val { font-weight: 700; font-size: 17px; color: #1F1A14; }
+    .stat-label { font-size: 11px; color: #6B6357; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
+    .chip {
+      background: #2B4D1F1A; color: #2B4D1F;
+      padding: 6px 12px; border-radius: 999px;
+      font-size: 13px; font-weight: 500;
+    }
+
+    .section-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
+      color: #6B6357; font-weight: 600; margin-bottom: 8px;
+    }
+    .summary {
+      background: #fff; border-radius: 14px; padding: 16px;
+      line-height: 1.55; color: #3D362E; margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    /* Rate panel — shown when a café's table QR is scanned (?rate=1).
+       A scan from inside the café is the one moment we get, so the page has to
+       say what to do next instead of showing a profile and hoping. */
+    .rate-panel {
+      background: #2B4D1F; color: #FFFDF9;
+      border-radius: 16px; padding: 20px; margin: 4px 0 22px;
+    }
+    /* Shorter hero on a rate scan so the panel is visible without scrolling —
+       at 4/3 the ask started below the fold. */
+    .rate-mode .hero { aspect-ratio: 16 / 9; }
+    .rate-mode .container { padding-bottom: 40px; }
+    .rate-panel h2 {
+      font-size: 21px; font-weight: 700; margin-bottom: 5px; letter-spacing: -0.01em;
+    }
+    .rate-panel p { font-size: 13.5px; opacity: 0.82; line-height: 1.5; }
+    .rate-btn {
+      display: block; margin-top: 15px; background: #C4956A; color: #2B4D1F;
+      padding: 15px; border-radius: 12px; text-align: center;
+      font-weight: 700; font-size: 16px; text-decoration: none;
+    }
+    .rate-btn:active { transform: scale(0.98); }
+    /* The two-step is the whole point: iOS cannot carry the café through an App
+       Store install, so a fresh install lands on onboarding, not here. Telling
+       people to scan again is unglamorous and it is what makes the loop close. */
+    .rate-steps {
+      margin-top: 14px; padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.18);
+      font-size: 12.5px; line-height: 1.65; opacity: 0.8;
+    }
+    .rate-steps b { opacity: 1; font-weight: 700; }
+
+    /* CTAs */
+    .cta-stack { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+    .cta-primary {
+      background: #2B4D1F; color: #fff;
+      padding: 16px; border-radius: 14px;
+      text-decoration: none; text-align: center;
+      font-weight: 600; font-size: 16px;
+      box-shadow: 0 4px 12px rgba(43,77,31,0.25);
+      transition: transform 0.15s;
+    }
+    .cta-primary:active { transform: scale(0.98); }
+    .cta-secondary {
+      background: transparent; color: #2B4D1F;
+      padding: 14px; border-radius: 14px;
+      text-decoration: none; text-align: center;
+      font-weight: 600; font-size: 15px;
+      border: 1.5px solid #2B4D1F33;
+    }
+
+    /* Loading / error */
+    .loader {
+      display: flex; align-items: center; justify-content: center;
+      padding: 80px 20px; color: #6B6357;
+    }
+    .err { padding: 40px 20px; text-align: center; color: #6B6357; }
+    .err h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: #1F1A14; margin-bottom: 8px; }
+
+    /* Bottom install banner — sticky on mobile */
+    .install-banner {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fff; padding: 14px 20px;
+      box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
+      display: flex; align-items: center; gap: 12px;
+      max-width: 520px; margin: 0 auto;
+    }
+    .install-banner img { width: 36px; height: 36px; border-radius: 8px; }
+    .install-banner-text { flex: 1; }
+    .install-banner-text .t { font-weight: 600; font-size: 14px; color: #1F1A14; }
+    .install-banner-text .s { font-size: 12px; color: #6B6357; margin-top: 1px; }
+    .install-banner a {
+      background: #2B4D1F; color: #fff;
+      padding: 10px 16px; border-radius: 10px;
+      text-decoration: none; font-size: 14px; font-weight: 600;
+    }
+  
+    .menu { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .menu-row { display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-bottom:1px solid #F0EBE3; font-size:14.5px; }
+    .menu-row:last-child { border-bottom:none; }
+    .menu-name { color:#3D362E; }
+    .menu-price { color:#2B4D1F; font-weight:600; white-space:nowrap; }
+    .menu-cat { font-size:11px; text-transform:uppercase; letter-spacing:0.8px; color:#6B6357; font-weight:600; padding:14px 0 4px; }
+    .amen { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
+    .amen-item { background:#fff; border-radius:10px; padding:9px 12px; font-size:13px; color:#3D362E; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .cards-row { display:flex; gap:6px; margin-bottom:18px; }
+    .card-pill { display:flex; align-items:center; gap:6px; padding:6px 11px; border-radius:999px; font-size:12.5px; font-weight:600; }
+    .hours { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .hours-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid #F0EBE3; font-size:14px; }
+    .hours-row:last-child { border-bottom:none; }
+    .hours-day { color:#6B6357; }
+    .nearby { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+    .nearby a { background:#fff; border:1px solid #E8E1D7; color:#2B4D1F; padding:7px 12px; border-radius:999px; font-size:13px; text-decoration:none; font-weight:500; }
+    .crumb { font-size:12.5px; color:#6B6357; padding:0 20px 4px; }
+    .crumb a { color:#2B4D1F; text-decoration:none; }
+</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CafeOrCoffeeShop","name":"Nile Cafe","address":{"@type":"PostalAddress","streetAddress":"25 شارع قَرْن بُو حِدْرِيَّة - Al Nahyan - E20 02 - Abu Dhabi - United Arab Emirates","addressLocality":"Al Nahyan","addressRegion":"Abu Dhabi","addressCountry":"AE"},"geo":{"@type":"GeoCoordinates","latitude":24.4626584,"longitude":54.3845044},"image":"https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJh919UaJnXj4Rg0Qzx9b_XNs/0.jpg","url":"https://www.brewmaps.app/c/3d4d3e70-4f3c-4108-855d-16bbdb690eaf","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":146},"servesCuisine":"Coffee","priceRange":"$$","hasMenu":{"@type":"Menu","hasMenuSection":[{"@type":"MenuSection","name":"Hot Coffee","hasMenuItem":[{"@type":"MenuItem","name":"Espresso - Single","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Espresso - Double","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Espresso Macchiato","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Espresso Raspberry","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Espresso Peach","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Espresso Tonic","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Affogato","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Nescafe","offers":{"@type":"Offer","price":12,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Turkish Coffee","offers":{"@type":"Offer","price":15,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Americano","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Café Latte","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Spanish Latte","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Pistachio","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Lotus","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Kobaya","offers":{"@type":"Offer","price":5,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Mug","offers":{"@type":"Offer","price":8,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Pot S","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Pot M","offers":{"@type":"Offer","price":40,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Pot L","offers":{"@type":"Offer","price":60,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"يا جميل يا سادة","offers":{"@type":"Offer","price":11,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"سكــر ممتنعــة","offers":{"@type":"Offer","price":13,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"وادي حلفا (نسبرسيـــسو)","offers":{"@type":"Offer","price":13,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"ود مدني (دوبــو مدجســـــــــــي)","offers":{"@type":"Offer","price":15,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"لوتس بس","offers":{"@type":"Offer","price":15,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"أوريــو بس","offers":{"@type":"Offer","price":16,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"نوتيلا بس","offers":{"@type":"Offer","price":16,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"شوكولاتة بيضاء بس","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"بستاشيــو بس","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"سنكــــــــات (فنشـــــــــــــــــــا عســـــــلي)","offers":{"@type":"Offer","price":19,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"سكر ممتلئة","offers":{"@type":"Offer","price":11,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"وامي دلقا (بيس اسبريسو)","offers":{"@type":"Offer","price":13,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"ود مدني (دوبل اسبريسو)","offers":{"@type":"Offer","price":13,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"أوريو بس","offers":{"@type":"Offer","price":15,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"نوتيك بس","offers":{"@type":"Offer","price":16,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"بيستاشيو بس","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"سنكات (هشتاشو اسبريسو)","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"اسبانش (هشتاشو دوبل)","offers":{"@type":"Offer","price":19,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"القاش (اوربيوش شوكولاتة بيضاء)","offers":{"@type":"Offer","price":19,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"سر الوعى (اوربيوش شوكولاتة بيضاء)","offers":{"@type":"Offer","price":19,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"الحمر (رامين شوكولاتة بيضاء)","offers":{"@type":"Offer","price":19,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Manual Brew","hasMenuItem":[{"@type":"MenuItem","name":"V60","offers":{"@type":"Offer","price":30,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Aeropress","offers":{"@type":"Offer","price":30,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Chemex","offers":{"@type":"Offer","price":30,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Tea","hasMenuItem":[{"@type":"MenuItem","name":"Shai Sada","offers":{"@type":"Offer","price":7,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Shai Akhdar","offers":{"@type":"Offer","price":7,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Shai Laban Bodra","offers":{"@type":"Offer","price":8,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Shai Haleeb","offers":{"@type":"Offer","price":8,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Red Hibiscus","offers":{"@type":"Offer","price":10,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"White Hibiscus","offers":{"@type":"Offer","price":10,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"تبــــــوت وقــشــطـــة","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Non-Coffee","hasMenuItem":[{"@type":"MenuItem","name":"Ovalteine","offers":{"@type":"Offer","price":10,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"راتايلو","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"فيـــــــرو روشـــــيــــــــه","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"البـــــــــــــقــــــــراولة","offers":{"@type":"Offer","price":30,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Signature","hasMenuItem":[{"@type":"MenuItem","name":"Doctor Coffee","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Rose Latte","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Saffron Latte","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Pistachio Latte","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Lotus Latte","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Sudanese Latte","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"نابل كاجيفا (بـــــــــــــل الي بـــــــــــــسبت بيـــــــه-م)","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Mocktails","hasMenuItem":[{"@type":"MenuItem","name":"Lemon Mint","offers":{"@type":"Offer","price":15,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Nile Breeze","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Strawberry Mojito","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Mastiha Water Lemonade (Greece)","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Juices & Smoothies","hasMenuItem":[{"@type":"MenuItem","name":"Orange","offers":{"@type":"Offer","price":15,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Strawberry","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Other","hasMenuItem":[{"@type":"MenuItem","name":"Passion Fruit","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Virgin","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Nile Lagoon","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Kandaka","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Ergamenes","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Ta-Seti","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Tamarind","offers":{"@type":"Offer","price":10,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Boabab","offers":{"@type":"Offer","price":12,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Hilo Mor","offers":{"@type":"Offer","price":12,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Mix","offers":{"@type":"Offer","price":15,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Abre Cola","offers":{"@type":"Offer","price":15,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Nuts Blend","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Nile","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Rafaeallo","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Ferrero Roche","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Suksuk","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"صغير","offers":{"@type":"Offer","price":10,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"وسط","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"كبير","offers":{"@type":"Offer","price":30,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"تيوت وقشطة","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"رافايلو","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"فيروزو روشيه","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"البتراوية","offers":{"@type":"Offer","price":30,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Soft Drinks","hasMenuItem":[{"@type":"MenuItem","name":"Soft Drinks","offers":{"@type":"Offer","price":5,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Water","hasMenuItem":[{"@type":"MenuItem","name":"Sparkling Moya (Italy)","offers":{"@type":"Offer","price":7,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Sparkling Moya (England)","offers":{"@type":"Offer","price":8,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Mastiha Water (Greece)","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Mastiha Water Cherry (Greece)","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Iced Coffee","hasMenuItem":[{"@type":"MenuItem","name":"Café Shakerato","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"ســـــــارا (فنشـــــــــــــــــــا عوكــــــــــــــلا)","offers":{"@type":"Offer","price":19,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"الفــــــاش (أوريـــــــــــــو-شوكولاتة بيضاء)","offers":{"@type":"Offer","price":19,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"سر الوى (أوريــــــــــو-شوكولاتة بيضاء)","offers":{"@type":"Offer","price":19,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"الدســــــــــــر (رامبل-شـــــــو-شوكولاتة بيضاء)","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"البلابيطة (بيستاشيو-شوكولاتة بيضاء)","offers":{"@type":"Offer","price":21,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"مــــــــــروي (بستاشيو-شوكولاتة بيضاء)","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"النيل الأبيض (أوريــــــو-بـــس-شوكولاتة بيضاء)","offers":{"@type":"Offer","price":23,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"النيل الأزرق (بــــــولـــــيــــــــوانيس-شوكولاتة بيضاء)","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"الفيلـــــــســــــــن (بستاشيو-أوريـــس-شوكولاتة بيضاء)","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Shakes","hasMenuItem":[{"@type":"MenuItem","name":"Strawberry Shake","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Pistachio Shake","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Lotus Shake","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Nuts Blend Shake","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Nile Shake","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Rafaeallo Shake","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Ferrero Roche Shake","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}}]}]}}</script>
+  
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <a href="/" class="nav-logo"><img src="/logo.png" alt="BrewMaps" /><span>BrewMaps</span></a>
+      <a href="/download" style="font-size:14px;color:#2B4D1F;font-weight:600;text-decoration:none">Get the app</a>
+    </div>
+
+    <div class="crumb"><a href="/">BrewMaps</a> › <a href="/area/al-nahyan/">Al Nahyan</a> › Nile Cafe</div>
+    <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJh919UaJnXj4Rg0Qzx9b_XNs/0.jpg" class="hero" alt="Nile Cafe" />
+    <div class="body">
+      <h1>Nile Cafe</h1>
+      <div class="area">Al Nahyan, Abu Dhabi · $$</div>
+
+      
+
+      <div class="stats">
+        <div class="stat"><div class="stat-val">★ 4.8</div><div class="stat-label">146 reviews</div></div>
+        <div class="stat"><div class="stat-val">Good</div><div class="stat-label">WiFi</div></div>
+        <div class="stat"><div class="stat-val">Quiet</div><div class="stat-label">Vibe</div></div>
+      </div>
+
+      <div class="chips"><div class="chip">Cozy</div><div class="chip">Specialty Coffee</div><div class="chip">Study Friendly</div><div class="chip">Hidden Gem</div></div>
+      <div class="section-label">About</div><div class="summary">Nile Cafe is a charming Abu Dhabi spot that blends traditional Sudanese hospitality with modern café culture. Known for fresh, natural coffee that rivals chain cafés, it offers a cozy, welcoming atmosphere perfect for work or relaxation alongside authentic desserts and beverages.</div>
+
+      <div class="section-label">Menu &amp; prices</div><div class="menu">
+        
+          <div class="menu-cat">Hot Coffee</div>
+          <div class="menu-row"><span class="menu-name">Espresso - Single</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Espresso - Double</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Espresso Macchiato</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">Espresso Raspberry</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">Espresso Peach</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">Espresso Tonic</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">Affogato</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Nescafe</span><span class="menu-price">12 AED</span></div><div class="menu-row"><span class="menu-name">Turkish Coffee</span><span class="menu-price">15 AED</span></div><div class="menu-row"><span class="menu-name">Americano</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">Café Latte</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">Spanish Latte</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">Pistachio</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Lotus</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Kobaya</span><span class="menu-price">5 AED</span></div><div class="menu-row"><span class="menu-name">Mug</span><span class="menu-price">8 AED</span></div><div class="menu-row"><span class="menu-name">Pot S</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Pot M</span><span class="menu-price">40 AED</span></div><div class="menu-row"><span class="menu-name">Pot L</span><span class="menu-price">60 AED</span></div><div class="menu-row"><span class="menu-name">يا جميل يا سادة</span><span class="menu-price">11 AED</span></div><div class="menu-row"><span class="menu-name">سكــر ممتنعــة</span><span class="menu-price">13 AED</span></div><div class="menu-row"><span class="menu-name">وادي حلفا (نسبرسيـــسو)</span><span class="menu-price">13 AED</span></div><div class="menu-row"><span class="menu-name">ود مدني (دوبــو مدجســـــــــــي)</span><span class="menu-price">15 AED</span></div><div class="menu-row"><span class="menu-name">لوتس بس</span><span class="menu-price">15 AED</span></div><div class="menu-row"><span class="menu-name">أوريــو بس</span><span class="menu-price">16 AED</span></div><div class="menu-row"><span class="menu-name">نوتيلا بس</span><span class="menu-price">16 AED</span></div><div class="menu-row"><span class="menu-name">شوكولاتة بيضاء بس</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">بستاشيــو بس</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">سنكــــــــات (فنشـــــــــــــــــــا عســـــــلي)</span><span class="menu-price">19 AED</span></div><div class="menu-row"><span class="menu-name">سكر ممتلئة</span><span class="menu-price">11 AED</span></div><div class="menu-row"><span class="menu-name">وامي دلقا (بيس اسبريسو)</span><span class="menu-price">13 AED</span></div><div class="menu-row"><span class="menu-name">ود مدني (دوبل اسبريسو)</span><span class="menu-price">13 AED</span></div><div class="menu-row"><span class="menu-name">أوريو بس</span><span class="menu-price">15 AED</span></div><div class="menu-row"><span class="menu-name">نوتيك بس</span><span class="menu-price">16 AED</span></div><div class="menu-row"><span class="menu-name">بيستاشيو بس</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">سنكات (هشتاشو اسبريسو)</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">اسبانش (هشتاشو دوبل)</span><span class="menu-price">19 AED</span></div><div class="menu-row"><span class="menu-name">القاش (اوربيوش شوكولاتة بيضاء)</span><span class="menu-price">19 AED</span></div><div class="menu-row"><span class="menu-name">سر الوعى (اوربيوش شوكولاتة بيضاء)</span><span class="menu-price">19 AED</span></div><div class="menu-row"><span class="menu-name">الحمر (رامين شوكولاتة بيضاء)</span><span class="menu-price">19 AED</span></div><div class="menu-row"><span class="menu-name">المسلمية (مديه شوكولاتة بيضاء)</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">مروي (بيستاشيو شوكولاتة بيضاء)</span><span class="menu-price">21 AED</span></div><div class="menu-row"><span class="menu-name">النيل الأبيض (اوربيوبس شوكولاتة بيضاء)</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">النيل الأزرق (رومانيوبس شوكولاتة بيضاء)</span><span class="menu-price">23 AED</span></div><div class="menu-row"><span class="menu-name">النيلين (بيستاشيو لوتس شوكولاتة بيضاء)</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">نابل كناية (ريل الحق بستاشو ليمو)</span><span class="menu-price">25 AED</span></div>
+        
+          <div class="menu-cat">Manual Brew</div>
+          <div class="menu-row"><span class="menu-name">V60</span><span class="menu-price">30 AED</span></div><div class="menu-row"><span class="menu-name">Aeropress</span><span class="menu-price">30 AED</span></div><div class="menu-row"><span class="menu-name">Chemex</span><span class="menu-price">30 AED</span></div>
+        
+          <div class="menu-cat">Tea</div>
+          <div class="menu-row"><span class="menu-name">Shai Sada</span><span class="menu-price">7 AED</span></div><div class="menu-row"><span class="menu-name">Shai Akhdar</span><span class="menu-price">7 AED</span></div><div class="menu-row"><span class="menu-name">Shai Laban Bodra</span><span class="menu-price">8 AED</span></div><div class="menu-row"><span class="menu-name">Shai Haleeb</span><span class="menu-price">8 AED</span></div><div class="menu-row"><span class="menu-name">Red Hibiscus</span><span class="menu-price">10 AED</span></div><div class="menu-row"><span class="menu-name">White Hibiscus</span><span class="menu-price">10 AED</span></div><div class="menu-row"><span class="menu-name">تبــــــوت وقــشــطـــة</span><span class="menu-price">20 AED</span></div>
+        
+          <div class="menu-cat">Non-Coffee</div>
+          <div class="menu-row"><span class="menu-name">Ovalteine</span><span class="menu-price">10 AED</span></div><div class="menu-row"><span class="menu-name">راتايلو</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">فيـــــــرو روشـــــيــــــــه</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">البـــــــــــــقــــــــراولة</span><span class="menu-price">30 AED</span></div>
+        
+          <div class="menu-cat">Signature</div>
+          <div class="menu-row"><span class="menu-name">Doctor Coffee</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">Rose Latte</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">Saffron Latte</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">Pistachio Latte</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">Lotus Latte</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">Sudanese Latte</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">نابل كاجيفا (بـــــــــــــل الي بـــــــــــــسبت بيـــــــه-م)</span><span class="menu-price">25 AED</span></div>
+        
+          <div class="menu-cat">Mocktails</div>
+          <div class="menu-row"><span class="menu-name">Lemon Mint</span><span class="menu-price">15 AED</span></div><div class="menu-row"><span class="menu-name">Nile Breeze</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Strawberry Mojito</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">Mastiha Water Lemonade (Greece)</span><span class="menu-price">22 AED</span></div>
+        
+          <div class="menu-cat">Juices &amp; Smoothies</div>
+          <div class="menu-row"><span class="menu-name">Orange</span><span class="menu-price">15 AED</span></div><div class="menu-row"><span class="menu-name">Strawberry</span><span class="menu-price">25 AED</span></div>
+        
+          <div class="menu-cat">Other</div>
+          <div class="menu-row"><span class="menu-name">Passion Fruit</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">Virgin</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Nile Lagoon</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">Kandaka</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">Ergamenes</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">Ta-Seti</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">Tamarind</span><span class="menu-price">10 AED</span></div><div class="menu-row"><span class="menu-name">Boabab</span><span class="menu-price">12 AED</span></div><div class="menu-row"><span class="menu-name">Hilo Mor</span><span class="menu-price">12 AED</span></div><div class="menu-row"><span class="menu-name">Mix</span><span class="menu-price">15 AED</span></div><div class="menu-row"><span class="menu-name">Abre Cola</span><span class="menu-price">15 AED</span></div><div class="menu-row"><span class="menu-name">Nuts Blend</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Nile</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Rafaeallo</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Ferrero Roche</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Suksuk</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">صغير</span><span class="menu-price">10 AED</span></div><div class="menu-row"><span class="menu-name">وسط</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">كبير</span><span class="menu-price">30 AED</span></div><div class="menu-row"><span class="menu-name">تيوت وقشطة</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">رافايلو</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">فيروزو روشيه</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">البتراوية</span><span class="menu-price">30 AED</span></div>
+        
+          <div class="menu-cat">Soft Drinks</div>
+          <div class="menu-row"><span class="menu-name">Soft Drinks</span><span class="menu-price">5 AED</span></div>
+        
+          <div class="menu-cat">Water</div>
+          <div class="menu-row"><span class="menu-name">Sparkling Moya (Italy)</span><span class="menu-price">7 AED</span></div><div class="menu-row"><span class="menu-name">Sparkling Moya (England)</span><span class="menu-price">8 AED</span></div><div class="menu-row"><span class="menu-name">Mastiha Water (Greece)</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">Mastiha Water Cherry (Greece)</span><span class="menu-price">22 AED</span></div>
+        
+          <div class="menu-cat">Iced Coffee</div>
+          <div class="menu-row"><span class="menu-name">Café Shakerato</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">ســـــــارا (فنشـــــــــــــــــــا عوكــــــــــــــلا)</span><span class="menu-price">19 AED</span></div><div class="menu-row"><span class="menu-name">الفــــــاش (أوريـــــــــــــو-شوكولاتة بيضاء)</span><span class="menu-price">19 AED</span></div><div class="menu-row"><span class="menu-name">سر الوى (أوريــــــــــو-شوكولاتة بيضاء)</span><span class="menu-price">19 AED</span></div><div class="menu-row"><span class="menu-name">الدســــــــــــر (رامبل-شـــــــو-شوكولاتة بيضاء)</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">البلابيطة (بيستاشيو-شوكولاتة بيضاء)</span><span class="menu-price">21 AED</span></div><div class="menu-row"><span class="menu-name">مــــــــــروي (بستاشيو-شوكولاتة بيضاء)</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">النيل الأبيض (أوريــــــو-بـــس-شوكولاتة بيضاء)</span><span class="menu-price">23 AED</span></div><div class="menu-row"><span class="menu-name">النيل الأزرق (بــــــولـــــيــــــــوانيس-شوكولاتة بيضاء)</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">الفيلـــــــســــــــن (بستاشيو-أوريـــس-شوكولاتة بيضاء)</span><span class="menu-price">25 AED</span></div>
+        
+          <div class="menu-cat">Shakes</div>
+          <div class="menu-row"><span class="menu-name">Strawberry Shake</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Pistachio Shake</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Lotus Shake</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Nuts Blend Shake</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Nile Shake</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Rafaeallo Shake</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Ferrero Roche Shake</span><span class="menu-price">25 AED</span></div>
+        
+      </div>
+
+      <div class="section-label">Amenities</div><div class="amen"><div class="amen-item">📶 Good WiFi</div><div class="amen-item">🔊 Quiet</div><div class="amen-item">🔌 Power outlets</div><div class="amen-item">🅿️ True</div><div class="amen-item">🪑 Indoor</div></div>
+
+      <div class="section-label">Opening hours</div><div class="hours">
+        <div class="hours-row"><span class="hours-day">Monday</span><span>9am-12am</span></div><div class="hours-row"><span class="hours-day">Tuesday</span><span>9am-12am</span></div><div class="hours-row"><span class="hours-day">Wednesday</span><span>9am-12am</span></div><div class="hours-row"><span class="hours-day">Thursday</span><span>9am-12am</span></div><div class="hours-row"><span class="hours-day">Friday</span><span>9am-12am</span></div><div class="hours-row"><span class="hours-day">Saturday</span><span>9am-12am</span></div><div class="hours-row"><span class="hours-day">Sunday</span><span>9am-12am</span></div>
+      </div>
+
+      
+
+      <div class="cta-stack">
+        <a href="brewmaps://c/3d4d3e70-4f3c-4108-855d-16bbdb690eaf" class="cta-primary" id="open-app">Open in BrewMaps</a>
+        <a href="/download" class="cta-secondary">Don't have the app? Get it</a>
+      </div>
+    </div>
+
+  <div class="install-banner" id="install-banner">
+    <img src="/logo.png" alt="BrewMaps" />
+    <div class="install-banner-text"><div class="t">Open in BrewMaps</div><div class="s">For check-ins, photos &amp; more</div></div>
+    <a href="/download">Get app</a>
+  </div>
+
+  <script>
+    // ?rate=1 = scanned from the café's own table card. Keeps the behaviour the
+    // old JS page had; everything else on this page is now static HTML.
+    if (new URLSearchParams(location.search).get('rate') === '1') {
+      document.documentElement.classList.add('rate-mode');
+      var b = document.getElementById('install-banner'); if (b) b.style.display = 'none';
+    }
+    document.getElementById('open-app').addEventListener('click', function (e) {
+      e.preventDefault();
+      var bailed = false, onHide = function () { bailed = true; };
+      document.addEventListener('visibilitychange', onHide, { once: true });
+      setTimeout(function () {
+        document.removeEventListener('visibilitychange', onHide);
+        if (!bailed && !document.hidden) location.href = '/download';
+      }, 1400);
+      window.location.href = 'brewmaps://c/3d4d3e70-4f3c-4108-855d-16bbdb690eaf';
+    });
+  </script>
+  </div>
+</body>
+</html>

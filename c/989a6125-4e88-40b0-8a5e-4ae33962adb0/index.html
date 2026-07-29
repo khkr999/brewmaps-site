@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <title>IGNITE Specialty Coffee — Café in Ajman city, Ajman | BrewMaps</title>
+  <meta name="description" content="IGNITE Specialty Coffee in Ajman city, Ajman. ★4.6 (118 reviews). Specialty Coffee, Aesthetic, Social. Menu with prices — Flat White 23 AED, Cortado 21 AED, Spanish Latte 26 AED." />
+  <link rel="canonical" href="https://www.brewmaps.app/c/989a6125-4e88-40b0-8a5e-4ae33962adb0" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BrewMaps" />
+  <meta property="og:title" content="IGNITE Specialty Coffee — Café in Ajman city, Ajman | BrewMaps" />
+  <meta property="og:description" content="IGNITE Specialty Coffee in Ajman city, Ajman. ★4.6 (118 reviews). Specialty Coffee, Aesthetic, Social. Menu with prices — Flat White 23 AED, Cortado 21 AED, Spanish Latte 26 AED." />
+  <meta property="og:image" content="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJYZSM9mFfXz4RpRV2OvmAtxM/0.jpg" />
+  <meta property="og:url" content="https://www.brewmaps.app/c/989a6125-4e88-40b0-8a5e-4ae33962adb0" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="apple-itunes-app" content="app-id=6775899450" />
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #FAF6F0;
+      color: #1F1A14;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 520px; margin: 0 auto; padding: 0 0 100px; }
+
+    /* Nav */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 20px; background: rgba(250, 246, 240, 0.9);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #2B4D1F; }
+    .nav-logo img { width: 28px; height: 28px; border-radius: 6px; }
+
+    /* Hero photo */
+    .hero {
+      width: 100%; aspect-ratio: 4 / 3;
+      background: #2B4D1F; object-fit: cover;
+      display: block;
+    }
+
+    /* Card */
+    .body { padding: 20px; }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px; line-height: 1.1; color: #1F1A14;
+      margin-bottom: 6px;
+    }
+    .area { color: #6B6357; font-size: 15px; margin-bottom: 16px; }
+
+    .stats {
+      display: flex; gap: 12px; margin-bottom: 20px;
+    }
+    .stat {
+      flex: 1; background: #fff; border-radius: 14px;
+      padding: 12px; text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .stat-val { font-weight: 700; font-size: 17px; color: #1F1A14; }
+    .stat-label { font-size: 11px; color: #6B6357; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
+    .chip {
+      background: #2B4D1F1A; color: #2B4D1F;
+      padding: 6px 12px; border-radius: 999px;
+      font-size: 13px; font-weight: 500;
+    }
+
+    .section-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
+      color: #6B6357; font-weight: 600; margin-bottom: 8px;
+    }
+    .summary {
+      background: #fff; border-radius: 14px; padding: 16px;
+      line-height: 1.55; color: #3D362E; margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    /* Rate panel — shown when a café's table QR is scanned (?rate=1).
+       A scan from inside the café is the one moment we get, so the page has to
+       say what to do next instead of showing a profile and hoping. */
+    .rate-panel {
+      background: #2B4D1F; color: #FFFDF9;
+      border-radius: 16px; padding: 20px; margin: 4px 0 22px;
+    }
+    /* Shorter hero on a rate scan so the panel is visible without scrolling —
+       at 4/3 the ask started below the fold. */
+    .rate-mode .hero { aspect-ratio: 16 / 9; }
+    .rate-mode .container { padding-bottom: 40px; }
+    .rate-panel h2 {
+      font-size: 21px; font-weight: 700; margin-bottom: 5px; letter-spacing: -0.01em;
+    }
+    .rate-panel p { font-size: 13.5px; opacity: 0.82; line-height: 1.5; }
+    .rate-btn {
+      display: block; margin-top: 15px; background: #C4956A; color: #2B4D1F;
+      padding: 15px; border-radius: 12px; text-align: center;
+      font-weight: 700; font-size: 16px; text-decoration: none;
+    }
+    .rate-btn:active { transform: scale(0.98); }
+    /* The two-step is the whole point: iOS cannot carry the café through an App
+       Store install, so a fresh install lands on onboarding, not here. Telling
+       people to scan again is unglamorous and it is what makes the loop close. */
+    .rate-steps {
+      margin-top: 14px; padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.18);
+      font-size: 12.5px; line-height: 1.65; opacity: 0.8;
+    }
+    .rate-steps b { opacity: 1; font-weight: 700; }
+
+    /* CTAs */
+    .cta-stack { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+    .cta-primary {
+      background: #2B4D1F; color: #fff;
+      padding: 16px; border-radius: 14px;
+      text-decoration: none; text-align: center;
+      font-weight: 600; font-size: 16px;
+      box-shadow: 0 4px 12px rgba(43,77,31,0.25);
+      transition: transform 0.15s;
+    }
+    .cta-primary:active { transform: scale(0.98); }
+    .cta-secondary {
+      background: transparent; color: #2B4D1F;
+      padding: 14px; border-radius: 14px;
+      text-decoration: none; text-align: center;
+      font-weight: 600; font-size: 15px;
+      border: 1.5px solid #2B4D1F33;
+    }
+
+    /* Loading / error */
+    .loader {
+      display: flex; align-items: center; justify-content: center;
+      padding: 80px 20px; color: #6B6357;
+    }
+    .err { padding: 40px 20px; text-align: center; color: #6B6357; }
+    .err h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: #1F1A14; margin-bottom: 8px; }
+
+    /* Bottom install banner — sticky on mobile */
+    .install-banner {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fff; padding: 14px 20px;
+      box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
+      display: flex; align-items: center; gap: 12px;
+      max-width: 520px; margin: 0 auto;
+    }
+    .install-banner img { width: 36px; height: 36px; border-radius: 8px; }
+    .install-banner-text { flex: 1; }
+    .install-banner-text .t { font-weight: 600; font-size: 14px; color: #1F1A14; }
+    .install-banner-text .s { font-size: 12px; color: #6B6357; margin-top: 1px; }
+    .install-banner a {
+      background: #2B4D1F; color: #fff;
+      padding: 10px 16px; border-radius: 10px;
+      text-decoration: none; font-size: 14px; font-weight: 600;
+    }
+  
+    .menu { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .menu-row { display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-bottom:1px solid #F0EBE3; font-size:14.5px; }
+    .menu-row:last-child { border-bottom:none; }
+    .menu-name { color:#3D362E; }
+    .menu-price { color:#2B4D1F; font-weight:600; white-space:nowrap; }
+    .menu-cat { font-size:11px; text-transform:uppercase; letter-spacing:0.8px; color:#6B6357; font-weight:600; padding:14px 0 4px; }
+    .amen { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
+    .amen-item { background:#fff; border-radius:10px; padding:9px 12px; font-size:13px; color:#3D362E; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .cards-row { display:flex; gap:6px; margin-bottom:18px; }
+    .card-pill { display:flex; align-items:center; gap:6px; padding:6px 11px; border-radius:999px; font-size:12.5px; font-weight:600; }
+    .hours { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .hours-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid #F0EBE3; font-size:14px; }
+    .hours-row:last-child { border-bottom:none; }
+    .hours-day { color:#6B6357; }
+    .nearby { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+    .nearby a { background:#fff; border:1px solid #E8E1D7; color:#2B4D1F; padding:7px 12px; border-radius:999px; font-size:13px; text-decoration:none; font-weight:500; }
+    .crumb { font-size:12.5px; color:#6B6357; padding:0 20px 4px; }
+    .crumb a { color:#2B4D1F; text-decoration:none; }
+</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CafeOrCoffeeShop","name":"IGNITE Specialty Coffee","address":{"@type":"PostalAddress","streetAddress":"Al Jerf 2 - Ajman - United Arab Emirates","addressLocality":"Ajman city","addressRegion":"Ajman","addressCountry":"AE"},"geo":{"@type":"GeoCoordinates","latitude":25.4008183,"longitude":55.4977309},"image":"https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJYZSM9mFfXz4RpRV2OvmAtxM/0.jpg","url":"https://www.brewmaps.app/c/989a6125-4e88-40b0-8a5e-4ae33962adb0","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.6","reviewCount":118},"servesCuisine":"Coffee","priceRange":"$$","hasMenu":{"@type":"Menu","hasMenuSection":[{"@type":"MenuSection","name":"Hot Coffee","hasMenuItem":[{"@type":"MenuItem","name":"Mocha","offers":{"@type":"Offer","price":5.95,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Latte","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Macchiato","offers":{"@type":"Offer","price":19,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Cappuccino","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Espresso","offers":{"@type":"Offer","price":16,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Americano","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Piccolo","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Cortado","offers":{"@type":"Offer","price":21,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Flat White","offers":{"@type":"Offer","price":23,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Spanish Latte","offers":{"@type":"Offer","price":26,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Arabic Coffee","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Iced Coffee","hasMenuItem":[{"@type":"MenuItem","name":"Cold Brew","offers":{"@type":"Offer","price":21,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Nitro Cold Brew","offers":{"@type":"Offer","price":5.95,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso - Vanilla Bean","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso - Mint Chocolate Chip","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso - Coconut","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso - Mocha","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso - Oreo","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso - Vanilla","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso - Toffee Mocha","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso - Snickers","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso - White Chocolate","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso - Butterfinger","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso - Caramel Meltdown","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso - Reeses","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Cold Brew Lemonade","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso Vanilla Bean","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso Mint Chocolate Chip","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso Coconut","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso Mocha","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso Oreo","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso Vanilla Blended","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso Toffee Mocha","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso Snickers","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso Mocha Blended","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso White Chocolate","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso Butterfinger","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso Caramel Meltdown","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Frozen Espresso Reeses","offers":{"@type":"Offer","price":7.75,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Tea","hasMenuItem":[{"@type":"MenuItem","name":"Chai","offers":{"@type":"Offer","price":6.25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Hibiscus","offers":{"@type":"Offer","price":23,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Matcha","hasMenuItem":[{"@type":"MenuItem","name":"Matcha","offers":{"@type":"Offer","price":6.25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Classic Matcha","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Non-Coffee","hasMenuItem":[{"@type":"MenuItem","name":"Red Bull","offers":{"@type":"Offer","price":8.25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Lotus","offers":{"@type":"Offer","price":7.45,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Strawberry Smoothie","offers":{"@type":"Offer","price":8.45,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Lemon Hibiscus Smoothie","offers":{"@type":"Offer","price":8.45,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Peach Smoothie","offers":{"@type":"Offer","price":8.45,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Mango Smoothie","offers":{"@type":"Offer","price":8.45,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Berry Smoothie","offers":{"@type":"Offer","price":8.45,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Tropical Smoothie","offers":{"@type":"Offer","price":8.45,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Replenish Refresher","offers":{"@type":"Offer","price":5.95,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Revive Refresher","offers":{"@type":"Offer","price":5.95,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Restore Refresher","offers":{"@type":"Offer","price":5.95,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Hot Chocolate","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Orange Juice","offers":{"@type":"Offer","price":19,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Manual Brew","hasMenuItem":[{"@type":"MenuItem","name":"V60","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Signature","hasMenuItem":[{"@type":"MenuItem","name":"Sand Latte","offers":{"@type":"Offer","price":29,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Juices & Smoothies","hasMenuItem":[{"@type":"MenuItem","name":"Acai Green Shake","offers":{"@type":"Offer","price":37,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Acai Smoothie","offers":{"@type":"Offer","price":37,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Orang Juice","offers":{"@type":"Offer","price":19,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Mocktails","hasMenuItem":[{"@type":"MenuItem","name":"Lemon Breeze","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Strawberry Breeze","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Passion Breeze","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Pina Colada","offers":{"@type":"Offer","price":27,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Water","hasMenuItem":[{"@type":"MenuItem","name":"Water","offers":{"@type":"Offer","price":9,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Other","hasMenuItem":[{"@type":"MenuItem","name":"Replenish","offers":{"@type":"Offer","price":7.95,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Revive","offers":{"@type":"Offer","price":7.95,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Restore","offers":{"@type":"Offer","price":7.95,"priceCurrency":"AED"}}]}]}}</script>
+  
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <a href="/" class="nav-logo"><img src="/logo.png" alt="BrewMaps" /><span>BrewMaps</span></a>
+      <a href="/download" style="font-size:14px;color:#2B4D1F;font-weight:600;text-decoration:none">Get the app</a>
+    </div>
+
+    <div class="crumb"><a href="/">BrewMaps</a> › <a href="/area/ajman-city/">Ajman city</a> › IGNITE Specialty Coffee</div>
+    <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJYZSM9mFfXz4RpRV2OvmAtxM/0.jpg" class="hero" alt="IGNITE Specialty Coffee" />
+    <div class="body">
+      <h1>IGNITE Specialty Coffee</h1>
+      <div class="area">Ajman city, Ajman · $$</div>
+
+      
+
+      <div class="stats">
+        <div class="stat"><div class="stat-val">★ 4.6</div><div class="stat-label">118 reviews</div></div>
+        <div class="stat"><div class="stat-val">Basic</div><div class="stat-label">WiFi</div></div>
+        <div class="stat"><div class="stat-val">Quiet</div><div class="stat-label">Vibe</div></div>
+      </div>
+
+      <div class="chips"><div class="chip">Specialty Coffee</div><div class="chip">Aesthetic</div><div class="chip">Social</div><div class="chip">Hidden Gem</div></div>
+      <div class="section-label">About</div><div class="summary">IGNITE Specialty Coffee in Ajman is a dedicated specialty coffee shop known for high-quality single-origin beans and expertly crafted espresso-based drinks. The baristas are skilled and personalized, with customers particularly praising their V60 pour-overs and flavor recommendations. With friendly staff and a nice interior, it&#39;s a standout destination for serious coffee enthusiasts.</div>
+
+      <div class="section-label">Menu &amp; prices</div><div class="menu">
+        
+          <div class="menu-cat">Hot Coffee</div>
+          <div class="menu-row"><span class="menu-name">Mocha</span><span class="menu-price">5.95 AED</span></div><div class="menu-row"><span class="menu-name">Latte</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">Macchiato</span><span class="menu-price">19 AED</span></div><div class="menu-row"><span class="menu-name">Cappuccino</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">Espresso</span><span class="menu-price">16 AED</span></div><div class="menu-row"><span class="menu-name">Americano</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Piccolo</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">Cortado</span><span class="menu-price">21 AED</span></div><div class="menu-row"><span class="menu-name">Flat White</span><span class="menu-price">23 AED</span></div><div class="menu-row"><span class="menu-name">Spanish Latte</span><span class="menu-price">26 AED</span></div><div class="menu-row"><span class="menu-name">Arabic Coffee</span><span class="menu-price">20 AED</span></div>
+        
+          <div class="menu-cat">Iced Coffee</div>
+          <div class="menu-row"><span class="menu-name">Cold Brew</span><span class="menu-price">21 AED</span></div><div class="menu-row"><span class="menu-name">Nitro Cold Brew</span><span class="menu-price">5.95 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso - Vanilla Bean</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso - Mint Chocolate Chip</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso - Coconut</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso - Mocha</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso - Oreo</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso - Vanilla</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso - Toffee Mocha</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso - Snickers</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso - White Chocolate</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso - Butterfinger</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso - Caramel Meltdown</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso - Reeses</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Cold Brew Lemonade</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso Vanilla Bean</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso Mint Chocolate Chip</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso Coconut</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso Mocha</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso Oreo</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso Vanilla Blended</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso Toffee Mocha</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso Snickers</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso Mocha Blended</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso White Chocolate</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso Butterfinger</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso Caramel Meltdown</span><span class="menu-price">7.75 AED</span></div><div class="menu-row"><span class="menu-name">Frozen Espresso Reeses</span><span class="menu-price">7.75 AED</span></div>
+        
+          <div class="menu-cat">Tea</div>
+          <div class="menu-row"><span class="menu-name">Chai</span><span class="menu-price">6.25 AED</span></div><div class="menu-row"><span class="menu-name">Hibiscus</span><span class="menu-price">23 AED</span></div>
+        
+          <div class="menu-cat">Matcha</div>
+          <div class="menu-row"><span class="menu-name">Matcha</span><span class="menu-price">6.25 AED</span></div><div class="menu-row"><span class="menu-name">Classic Matcha</span><span class="menu-price">25 AED</span></div>
+        
+          <div class="menu-cat">Non-Coffee</div>
+          <div class="menu-row"><span class="menu-name">Red Bull</span><span class="menu-price">8.25 AED</span></div><div class="menu-row"><span class="menu-name">Lotus</span><span class="menu-price">7.45 AED</span></div><div class="menu-row"><span class="menu-name">Strawberry Smoothie</span><span class="menu-price">8.45 AED</span></div><div class="menu-row"><span class="menu-name">Lemon Hibiscus Smoothie</span><span class="menu-price">8.45 AED</span></div><div class="menu-row"><span class="menu-name">Peach Smoothie</span><span class="menu-price">8.45 AED</span></div><div class="menu-row"><span class="menu-name">Mango Smoothie</span><span class="menu-price">8.45 AED</span></div><div class="menu-row"><span class="menu-name">Berry Smoothie</span><span class="menu-price">8.45 AED</span></div><div class="menu-row"><span class="menu-name">Tropical Smoothie</span><span class="menu-price">8.45 AED</span></div><div class="menu-row"><span class="menu-name">Replenish Refresher</span><span class="menu-price">5.95 AED</span></div><div class="menu-row"><span class="menu-name">Revive Refresher</span><span class="menu-price">5.95 AED</span></div><div class="menu-row"><span class="menu-name">Restore Refresher</span><span class="menu-price">5.95 AED</span></div><div class="menu-row"><span class="menu-name">Hot Chocolate</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Orange Juice</span><span class="menu-price">19 AED</span></div>
+        
+          <div class="menu-cat">Manual Brew</div>
+          <div class="menu-row"><span class="menu-name">V60</span><span class="menu-price">28 AED</span></div>
+        
+          <div class="menu-cat">Signature</div>
+          <div class="menu-row"><span class="menu-name">Sand Latte</span><span class="menu-price">29 AED</span></div>
+        
+          <div class="menu-cat">Juices &amp; Smoothies</div>
+          <div class="menu-row"><span class="menu-name">Acai Green Shake</span><span class="menu-price">37 AED</span></div><div class="menu-row"><span class="menu-name">Acai Smoothie</span><span class="menu-price">37 AED</span></div><div class="menu-row"><span class="menu-name">Orang Juice</span><span class="menu-price">19 AED</span></div>
+        
+          <div class="menu-cat">Mocktails</div>
+          <div class="menu-row"><span class="menu-name">Lemon Breeze</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">Strawberry Breeze</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Passion Breeze</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Pina Colada</span><span class="menu-price">27 AED</span></div>
+        
+          <div class="menu-cat">Water</div>
+          <div class="menu-row"><span class="menu-name">Water</span><span class="menu-price">9 AED</span></div>
+        
+          <div class="menu-cat">Other</div>
+          <div class="menu-row"><span class="menu-name">Replenish</span><span class="menu-price">7.95 AED</span></div><div class="menu-row"><span class="menu-name">Revive</span><span class="menu-price">7.95 AED</span></div><div class="menu-row"><span class="menu-name">Restore</span><span class="menu-price">7.95 AED</span></div>
+        
+      </div>
+
+      <div class="section-label">Amenities</div><div class="amen"><div class="amen-item">📶 Basic WiFi</div><div class="amen-item">🔊 Quiet</div><div class="amen-item">🔌 Power outlets</div><div class="amen-item">🅿️ True</div><div class="amen-item">🪑 Indoor</div></div>
+
+      <div class="section-label">Opening hours</div><div class="hours">
+        <div class="hours-row"><span class="hours-day">Monday</span><span>9am-12am</span></div><div class="hours-row"><span class="hours-day">Tuesday</span><span>9am-12am</span></div><div class="hours-row"><span class="hours-day">Wednesday</span><span>9am-12am</span></div><div class="hours-row"><span class="hours-day">Thursday</span><span>9am-12am</span></div><div class="hours-row"><span class="hours-day">Friday</span><span>9am-12am</span></div><div class="hours-row"><span class="hours-day">Saturday</span><span>9am-12am</span></div><div class="hours-row"><span class="hours-day">Sunday</span><span>9am-12am</span></div>
+      </div>
+
+      <div class="section-label">More cafés in Ajman city</div><div class="nearby">
+        <a href="/c/dded70e5-8c82-425d-a4de-e7eefe7cd8a7/">District 7 Cafe</a><a href="/c/3d9f3615-317a-4f7f-bb49-1e953ad4d6d2/">Bebax Coffee</a><a href="/c/1072539a-6dd8-4bb8-9e4e-0b849b55b005/">Beanery Specialty Coffee</a><a href="/c/f751a33d-cfcd-4cbc-be18-498e214b3bfa/">One Degree Cafe</a><a href="/c/07cca3b4-8c11-483d-a3da-3aadbe258a43/">The Palm Roastery</a>
+      </div><div style="margin:6px 0 24px"><a href="/area/ajman-city/" style="font-size:13px;color:#2B4D1F;font-weight:600;text-decoration:none">See all cafés in Ajman city →</a></div>
+
+      <div class="cta-stack">
+        <a href="brewmaps://c/989a6125-4e88-40b0-8a5e-4ae33962adb0" class="cta-primary" id="open-app">Open in BrewMaps</a>
+        <a href="/download" class="cta-secondary">Don't have the app? Get it</a>
+      </div>
+    </div>
+
+  <div class="install-banner" id="install-banner">
+    <img src="/logo.png" alt="BrewMaps" />
+    <div class="install-banner-text"><div class="t">Open in BrewMaps</div><div class="s">For check-ins, photos &amp; more</div></div>
+    <a href="/download">Get app</a>
+  </div>
+
+  <script>
+    // ?rate=1 = scanned from the café's own table card. Keeps the behaviour the
+    // old JS page had; everything else on this page is now static HTML.
+    if (new URLSearchParams(location.search).get('rate') === '1') {
+      document.documentElement.classList.add('rate-mode');
+      var b = document.getElementById('install-banner'); if (b) b.style.display = 'none';
+    }
+    document.getElementById('open-app').addEventListener('click', function (e) {
+      e.preventDefault();
+      var bailed = false, onHide = function () { bailed = true; };
+      document.addEventListener('visibilitychange', onHide, { once: true });
+      setTimeout(function () {
+        document.removeEventListener('visibilitychange', onHide);
+        if (!bailed && !document.hidden) location.href = '/download';
+      }, 1400);
+      window.location.href = 'brewmaps://c/989a6125-4e88-40b0-8a5e-4ae33962adb0';
+    });
+  </script>
+  </div>
+</body>
+</html>

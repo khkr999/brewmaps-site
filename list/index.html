@@ -167,7 +167,7 @@
       <div class="t">Open in BrewMaps</div>
       <div class="s">Save these cafés to your library</div>
     </div>
-    <a href="/download">Get app</a>
+    <a id="banner-open" href="/download">Open</a>
   </div>
 
   <script>
@@ -263,6 +263,26 @@
         </div>
       `;
       document.getElementById('install-banner').style.display = 'flex';
+
+      // Sticky "Open" button: try to open the app via its deep link; if the app
+      // isn't installed (page still visible after a beat), fall back to the store.
+      // Handles both "has the app" (opens it) and "doesn't" (App Store) from one button.
+      var bannerOpen = document.getElementById('banner-open');
+      if (bannerOpen) {
+        var deepLink = 'brewmaps://list/' + c.slug;
+        bannerOpen.setAttribute('href', deepLink);
+        bannerOpen.addEventListener('click', function (e) {
+          e.preventDefault();
+          var fell = setTimeout(function () {
+            if (!document.hidden) window.location.href = '/download';
+          }, 1400);
+          // If the app opens, this tab is backgrounded → cancel the store fallback.
+          document.addEventListener('visibilitychange', function () {
+            if (document.hidden) clearTimeout(fell);
+          }, { once: true });
+          window.location.href = deepLink;
+        });
+      }
     }
 
     function renderError(msg) {

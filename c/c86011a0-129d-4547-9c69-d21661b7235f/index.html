@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <title>Sprinkles Cafe — Café in Al Rumaila, Ajman | BrewMaps</title>
+  <meta name="description" content="Sprinkles Cafe in Al Rumaila, Ajman. ★4.0 (61 reviews). Family Friendly, Cozy. Menu with prices — Spanish Latte 13 AED, Cappuccino 10 AED, Coffee Latte 10 AED." />
+  <link rel="canonical" href="https://www.brewmaps.app/c/c86011a0-129d-4547-9c69-d21661b7235f" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BrewMaps" />
+  <meta property="og:title" content="Sprinkles Cafe — Café in Al Rumaila, Ajman | BrewMaps" />
+  <meta property="og:description" content="Sprinkles Cafe in Al Rumaila, Ajman. ★4.0 (61 reviews). Family Friendly, Cozy. Menu with prices — Spanish Latte 13 AED, Cappuccino 10 AED, Coffee Latte 10 AED." />
+  <meta property="og:image" content="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJz0-wkQFZXz4RaNqQxMtbU2Q/0.jpg" />
+  <meta property="og:url" content="https://www.brewmaps.app/c/c86011a0-129d-4547-9c69-d21661b7235f" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="apple-itunes-app" content="app-id=6775899450" />
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #FAF6F0;
+      color: #1F1A14;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 520px; margin: 0 auto; padding: 0 0 100px; }
+
+    /* Nav */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 20px; background: rgba(250, 246, 240, 0.9);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #2B4D1F; }
+    .nav-logo img { width: 28px; height: 28px; border-radius: 6px; }
+
+    /* Hero photo */
+    .hero {
+      width: 100%; aspect-ratio: 4 / 3;
+      background: #2B4D1F; object-fit: cover;
+      display: block;
+    }
+
+    /* Card */
+    .body { padding: 20px; }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px; line-height: 1.1; color: #1F1A14;
+      margin-bottom: 6px;
+    }
+    .area { color: #6B6357; font-size: 15px; margin-bottom: 16px; }
+
+    .stats {
+      display: flex; gap: 12px; margin-bottom: 20px;
+    }
+    .stat {
+      flex: 1; background: #fff; border-radius: 14px;
+      padding: 12px; text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .stat-val { font-weight: 700; font-size: 17px; color: #1F1A14; }
+    .stat-label { font-size: 11px; color: #6B6357; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
+    .chip {
+      background: #2B4D1F1A; color: #2B4D1F;
+      padding: 6px 12px; border-radius: 999px;
+      font-size: 13px; font-weight: 500;
+    }
+
+    .section-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
+      color: #6B6357; font-weight: 600; margin-bottom: 8px;
+    }
+    .summary {
+      background: #fff; border-radius: 14px; padding: 16px;
+      line-height: 1.55; color: #3D362E; margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    /* Rate panel — shown when a café's table QR is scanned (?rate=1).
+       A scan from inside the café is the one moment we get, so the page has to
+       say what to do next instead of showing a profile and hoping. */
+    .rate-panel {
+      background: #2B4D1F; color: #FFFDF9;
+      border-radius: 16px; padding: 20px; margin: 4px 0 22px;
+    }
+    /* Shorter hero on a rate scan so the panel is visible without scrolling —
+       at 4/3 the ask started below the fold. */
+    .rate-mode .hero { aspect-ratio: 16 / 9; }
+    .rate-mode .container { padding-bottom: 40px; }
+    .rate-panel h2 {
+      font-size: 21px; font-weight: 700; margin-bottom: 5px; letter-spacing: -0.01em;
+    }
+    .rate-panel p { font-size: 13.5px; opacity: 0.82; line-height: 1.5; }
+    .rate-btn {
+      display: block; margin-top: 15px; background: #C4956A; color: #2B4D1F;
+      padding: 15px; border-radius: 12px; text-align: center;
+      font-weight: 700; font-size: 16px; text-decoration: none;
+    }
+    .rate-btn:active { transform: scale(0.98); }
+    /* The two-step is the whole point: iOS cannot carry the café through an App
+       Store install, so a fresh install lands on onboarding, not here. Telling
+       people to scan again is unglamorous and it is what makes the loop close. */
+    .rate-steps {
+      margin-top: 14px; padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.18);
+      font-size: 12.5px; line-height: 1.65; opacity: 0.8;
+    }
+    .rate-steps b { opacity: 1; font-weight: 700; }
+
+    /* CTAs */
+    .cta-stack { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+    .cta-primary {
+      background: #2B4D1F; color: #fff;
+      padding: 16px; border-radius: 14px;
+      text-decoration: none; text-align: center;
+      font-weight: 600; font-size: 16px;
+      box-shadow: 0 4px 12px rgba(43,77,31,0.25);
+      transition: transform 0.15s;
+    }
+    .cta-primary:active { transform: scale(0.98); }
+    .cta-secondary {
+      background: transparent; color: #2B4D1F;
+      padding: 14px; border-radius: 14px;
+      text-decoration: none; text-align: center;
+      font-weight: 600; font-size: 15px;
+      border: 1.5px solid #2B4D1F33;
+    }
+
+    /* Loading / error */
+    .loader {
+      display: flex; align-items: center; justify-content: center;
+      padding: 80px 20px; color: #6B6357;
+    }
+    .err { padding: 40px 20px; text-align: center; color: #6B6357; }
+    .err h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: #1F1A14; margin-bottom: 8px; }
+
+    /* Bottom install banner — sticky on mobile */
+    .install-banner {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fff; padding: 14px 20px;
+      box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
+      display: flex; align-items: center; gap: 12px;
+      max-width: 520px; margin: 0 auto;
+    }
+    .install-banner img { width: 36px; height: 36px; border-radius: 8px; }
+    .install-banner-text { flex: 1; }
+    .install-banner-text .t { font-weight: 600; font-size: 14px; color: #1F1A14; }
+    .install-banner-text .s { font-size: 12px; color: #6B6357; margin-top: 1px; }
+    .install-banner a {
+      background: #2B4D1F; color: #fff;
+      padding: 10px 16px; border-radius: 10px;
+      text-decoration: none; font-size: 14px; font-weight: 600;
+    }
+  
+    .menu { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .menu-row { display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-bottom:1px solid #F0EBE3; font-size:14.5px; }
+    .menu-row:last-child { border-bottom:none; }
+    .menu-name { color:#3D362E; }
+    .menu-price { color:#2B4D1F; font-weight:600; white-space:nowrap; }
+    .menu-cat { font-size:11px; text-transform:uppercase; letter-spacing:0.8px; color:#6B6357; font-weight:600; padding:14px 0 4px; }
+    .amen { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
+    .amen-item { background:#fff; border-radius:10px; padding:9px 12px; font-size:13px; color:#3D362E; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .cards-row { display:flex; gap:6px; margin-bottom:18px; }
+    .card-pill { display:flex; align-items:center; gap:6px; padding:6px 11px; border-radius:999px; font-size:12.5px; font-weight:600; }
+    .hours { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .hours-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid #F0EBE3; font-size:14px; }
+    .hours-row:last-child { border-bottom:none; }
+    .hours-day { color:#6B6357; }
+    .nearby { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+    .nearby a { background:#fff; border:1px solid #E8E1D7; color:#2B4D1F; padding:7px 12px; border-radius:999px; font-size:13px; text-decoration:none; font-weight:500; }
+    .crumb { font-size:12.5px; color:#6B6357; padding:0 20px 4px; }
+    .crumb a { color:#2B4D1F; text-decoration:none; }
+</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CafeOrCoffeeShop","name":"Sprinkles Cafe","address":{"@type":"PostalAddress","streetAddress":"Badr St - 3 Al Nuaimia - Ajman - United Arab Emirates","addressLocality":"Al Rumaila","addressRegion":"Ajman","addressCountry":"AE"},"geo":{"@type":"GeoCoordinates","latitude":25.3891033,"longitude":55.4389727},"image":"https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJz0-wkQFZXz4RaNqQxMtbU2Q/0.jpg","url":"https://www.brewmaps.app/c/c86011a0-129d-4547-9c69-d21661b7235f","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.0","reviewCount":61},"servesCuisine":"Coffee","priceRange":"$","hasMenu":{"@type":"Menu","hasMenuSection":[{"@type":"MenuSection","name":"Hot Coffee","hasMenuItem":[{"@type":"MenuItem","name":"Americano","offers":{"@type":"Offer","price":8,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Espresso","offers":{"@type":"Offer","price":7,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Cappuccino","offers":{"@type":"Offer","price":10,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Coffee Latte","offers":{"@type":"Offer","price":10,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Hot Chocolate","offers":{"@type":"Offer","price":10,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Macchiato","offers":{"@type":"Offer","price":7,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Spanish Latte","offers":{"@type":"Offer","price":13,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Pistachio Spanish Latte","offers":{"@type":"Offer","price":7,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Coffee Mocha","offers":{"@type":"Offer","price":6,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Tea","hasMenuItem":[{"@type":"MenuItem","name":"Chai Latte","offers":{"@type":"Offer","price":8,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Chai Masala Latte","offers":{"@type":"Offer","price":10,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Ginger Lemon Tea","offers":{"@type":"Offer","price":5,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Morrocan Tea","offers":{"@type":"Offer","price":5,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"English Breakfast Tea","offers":{"@type":"Offer","price":5,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Green Tea","offers":{"@type":"Offer","price":5,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Cold Coffee","hasMenuItem":[{"@type":"MenuItem","name":"Iced Americano","offers":{"@type":"Offer","price":8,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Latte","offers":{"@type":"Offer","price":10,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Spanish Latte","offers":{"@type":"Offer","price":12,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Pistachio Spanish Latte","offers":{"@type":"Offer","price":13,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Shakes","hasMenuItem":[{"@type":"MenuItem","name":"Frappuccino","offers":{"@type":"Offer","price":11,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Cafe Latte Frappe","offers":{"@type":"Offer","price":10,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Americano Frappe","offers":{"@type":"Offer","price":12,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Caramel Macchiato Frappe","offers":{"@type":"Offer","price":12,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Avocado Milk Shake","offers":{"@type":"Offer","price":14,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Mango Milk Shake","offers":{"@type":"Offer","price":14,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Oreo Chocolate Milk Shake","offers":{"@type":"Offer","price":14,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Strawberry Milk Shake","offers":{"@type":"Offer","price":14,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Juices & Smoothies","hasMenuItem":[{"@type":"MenuItem","name":"Fruit Punch","offers":{"@type":"Offer","price":12,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Mocktails","hasMenuItem":[{"@type":"MenuItem","name":"Pinacolada","offers":{"@type":"Offer","price":16,"priceCurrency":"AED"}}]}]}}</script>
+  
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <a href="/" class="nav-logo"><img src="/logo.png" alt="BrewMaps" /><span>BrewMaps</span></a>
+      <a href="/download" style="font-size:14px;color:#2B4D1F;font-weight:600;text-decoration:none">Get the app</a>
+    </div>
+
+    <div class="crumb"><a href="/">BrewMaps</a> › <a href="/area/al-rumaila/">Al Rumaila</a> › Sprinkles Cafe</div>
+    <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJz0-wkQFZXz4RaNqQxMtbU2Q/0.jpg" class="hero" alt="Sprinkles Cafe" />
+    <div class="body">
+      <h1>Sprinkles Cafe</h1>
+      <div class="area">Al Rumaila, Ajman · $</div>
+
+      
+
+      <div class="stats">
+        <div class="stat"><div class="stat-val">★ 4.0</div><div class="stat-label">61 reviews</div></div>
+        <div class="stat"><div class="stat-val">Basic</div><div class="stat-label">WiFi</div></div>
+        <div class="stat"><div class="stat-val">Lively</div><div class="stat-label">Vibe</div></div>
+      </div>
+
+      <div class="chips"><div class="chip">Family Friendly</div><div class="chip">Cozy</div></div>
+      <div class="section-label">About</div><div class="summary">Sprinkles Cafe is a family-oriented café located in a supermarket mall hallway, conveniently positioned next to a kids&#39; trampoline play area. It offers comfortable seating with good-tasting food at affordable prices and practical amenities like charging ports at tables.</div>
+
+      <div class="section-label">Menu &amp; prices</div><div class="menu">
+        
+          <div class="menu-cat">Hot Coffee</div>
+          <div class="menu-row"><span class="menu-name">Americano</span><span class="menu-price">8 AED</span></div><div class="menu-row"><span class="menu-name">Espresso</span><span class="menu-price">7 AED</span></div><div class="menu-row"><span class="menu-name">Cappuccino</span><span class="menu-price">10 AED</span></div><div class="menu-row"><span class="menu-name">Coffee Latte</span><span class="menu-price">10 AED</span></div><div class="menu-row"><span class="menu-name">Hot Chocolate</span><span class="menu-price">10 AED</span></div><div class="menu-row"><span class="menu-name">Macchiato</span><span class="menu-price">7 AED</span></div><div class="menu-row"><span class="menu-name">Spanish Latte</span><span class="menu-price">13 AED</span></div><div class="menu-row"><span class="menu-name">Pistachio Spanish Latte</span><span class="menu-price">7 AED</span></div><div class="menu-row"><span class="menu-name">Coffee Mocha</span><span class="menu-price">6 AED</span></div>
+        
+          <div class="menu-cat">Tea</div>
+          <div class="menu-row"><span class="menu-name">Chai Latte</span><span class="menu-price">8 AED</span></div><div class="menu-row"><span class="menu-name">Chai Masala Latte</span><span class="menu-price">10 AED</span></div><div class="menu-row"><span class="menu-name">Ginger Lemon Tea</span><span class="menu-price">5 AED</span></div><div class="menu-row"><span class="menu-name">Morrocan Tea</span><span class="menu-price">5 AED</span></div><div class="menu-row"><span class="menu-name">English Breakfast Tea</span><span class="menu-price">5 AED</span></div><div class="menu-row"><span class="menu-name">Green Tea</span><span class="menu-price">5 AED</span></div>
+        
+          <div class="menu-cat">Cold Coffee</div>
+          <div class="menu-row"><span class="menu-name">Iced Americano</span><span class="menu-price">8 AED</span></div><div class="menu-row"><span class="menu-name">Iced Latte</span><span class="menu-price">10 AED</span></div><div class="menu-row"><span class="menu-name">Iced Spanish Latte</span><span class="menu-price">12 AED</span></div><div class="menu-row"><span class="menu-name">Iced Pistachio Spanish Latte</span><span class="menu-price">13 AED</span></div>
+        
+          <div class="menu-cat">Shakes</div>
+          <div class="menu-row"><span class="menu-name">Frappuccino</span><span class="menu-price">11 AED</span></div><div class="menu-row"><span class="menu-name">Cafe Latte Frappe</span><span class="menu-price">10 AED</span></div><div class="menu-row"><span class="menu-name">Americano Frappe</span><span class="menu-price">12 AED</span></div><div class="menu-row"><span class="menu-name">Caramel Macchiato Frappe</span><span class="menu-price">12 AED</span></div><div class="menu-row"><span class="menu-name">Avocado Milk Shake</span><span class="menu-price">14 AED</span></div><div class="menu-row"><span class="menu-name">Mango Milk Shake</span><span class="menu-price">14 AED</span></div><div class="menu-row"><span class="menu-name">Oreo Chocolate Milk Shake</span><span class="menu-price">14 AED</span></div><div class="menu-row"><span class="menu-name">Strawberry Milk Shake</span><span class="menu-price">14 AED</span></div>
+        
+          <div class="menu-cat">Juices &amp; Smoothies</div>
+          <div class="menu-row"><span class="menu-name">Fruit Punch</span><span class="menu-price">12 AED</span></div>
+        
+          <div class="menu-cat">Mocktails</div>
+          <div class="menu-row"><span class="menu-name">Pinacolada</span><span class="menu-price">16 AED</span></div>
+        
+      </div>
+
+      <div class="section-label">Amenities</div><div class="amen"><div class="amen-item">📶 Basic WiFi</div><div class="amen-item">🔊 Lively</div><div class="amen-item">🔌 Power outlets</div><div class="amen-item">🅿️ True</div><div class="amen-item">🪑 Indoor</div></div>
+
+      <div class="section-label">Opening hours</div><div class="hours">
+        <div class="hours-row"><span class="hours-day">Monday</span><span>10am-11pm</span></div><div class="hours-row"><span class="hours-day">Tuesday</span><span>10am-11pm</span></div><div class="hours-row"><span class="hours-day">Wednesday</span><span>10am-11pm</span></div><div class="hours-row"><span class="hours-day">Thursday</span><span>10am-11pm</span></div><div class="hours-row"><span class="hours-day">Friday</span><span>10am-11pm</span></div><div class="hours-row"><span class="hours-day">Saturday</span><span>10am-11pm</span></div><div class="hours-row"><span class="hours-day">Sunday</span><span>10am-10pm</span></div>
+      </div>
+
+      <div class="section-label">More cafés in Al Rumaila</div><div class="nearby">
+        <a href="/c/0bfe4487-567d-4bf3-9b03-cdb76751ff50/">Available Cafe</a><a href="/c/614f22bc-9fb4-4ce6-9795-acb86c1f931f/">Maillard coffee &amp; roastery</a>
+      </div><div style="margin:6px 0 24px"><a href="/area/al-rumaila/" style="font-size:13px;color:#2B4D1F;font-weight:600;text-decoration:none">See all cafés in Al Rumaila →</a></div>
+
+      <div class="cta-stack">
+        <a href="brewmaps://c/c86011a0-129d-4547-9c69-d21661b7235f" class="cta-primary" id="open-app">Open in BrewMaps</a>
+        <a href="/download" class="cta-secondary">Don't have the app? Get it</a>
+      </div>
+    </div>
+
+  <div class="install-banner" id="install-banner">
+    <img src="/logo.png" alt="BrewMaps" />
+    <div class="install-banner-text"><div class="t">Open in BrewMaps</div><div class="s">For check-ins, photos &amp; more</div></div>
+    <a href="/download">Get app</a>
+  </div>
+
+  <script>
+    // ?rate=1 = scanned from the café's own table card. Keeps the behaviour the
+    // old JS page had; everything else on this page is now static HTML.
+    if (new URLSearchParams(location.search).get('rate') === '1') {
+      document.documentElement.classList.add('rate-mode');
+      var b = document.getElementById('install-banner'); if (b) b.style.display = 'none';
+    }
+    document.getElementById('open-app').addEventListener('click', function (e) {
+      e.preventDefault();
+      var bailed = false, onHide = function () { bailed = true; };
+      document.addEventListener('visibilitychange', onHide, { once: true });
+      setTimeout(function () {
+        document.removeEventListener('visibilitychange', onHide);
+        if (!bailed && !document.hidden) location.href = '/download';
+      }, 1400);
+      window.location.href = 'brewmaps://c/c86011a0-129d-4547-9c69-d21661b7235f';
+    });
+  </script>
+  </div>
+</body>
+</html>

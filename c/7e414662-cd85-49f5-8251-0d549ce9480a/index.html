@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <title>JOE &amp; THE JUICE — Café in Al Maryah Island, Abu Dhabi | BrewMaps</title>
+  <meta name="description" content="JOE &amp; THE JUICE in Al Maryah Island, Abu Dhabi. ★4.8 (354 reviews). Social, Family Friendly, Specialty Coffee. Menu with prices — Flat White 24 AED, Cortado 20 AED, Spanish Latte 31 AED." />
+  <link rel="canonical" href="https://www.brewmaps.app/c/7e414662-cd85-49f5-8251-0d549ce9480a" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="BrewMaps" />
+  <meta property="og:title" content="JOE &amp; THE JUICE — Café in Al Maryah Island, Abu Dhabi | BrewMaps" />
+  <meta property="og:description" content="JOE &amp; THE JUICE in Al Maryah Island, Abu Dhabi. ★4.8 (354 reviews). Social, Family Friendly, Specialty Coffee. Menu with prices — Flat White 24 AED, Cortado 20 AED, Spanish Latte 31 AED." />
+  <meta property="og:image" content="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJGxWQW_lnXj4RoUgW6dBQxsM/0.jpg" />
+  <meta property="og:url" content="https://www.brewmaps.app/c/7e414662-cd85-49f5-8251-0d549ce9480a" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="apple-itunes-app" content="app-id=6775899450" />
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #FAF6F0;
+      color: #1F1A14;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 520px; margin: 0 auto; padding: 0 0 100px; }
+
+    /* Nav */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 20px; background: rgba(250, 246, 240, 0.9);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #2B4D1F; }
+    .nav-logo img { width: 28px; height: 28px; border-radius: 6px; }
+
+    /* Hero photo */
+    .hero {
+      width: 100%; aspect-ratio: 4 / 3;
+      background: #2B4D1F; object-fit: cover;
+      display: block;
+    }
+
+    /* Card */
+    .body { padding: 20px; }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 30px; line-height: 1.1; color: #1F1A14;
+      margin-bottom: 6px;
+    }
+    .area { color: #6B6357; font-size: 15px; margin-bottom: 16px; }
+
+    .stats {
+      display: flex; gap: 12px; margin-bottom: 20px;
+    }
+    .stat {
+      flex: 1; background: #fff; border-radius: 14px;
+      padding: 12px; text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .stat-val { font-weight: 700; font-size: 17px; color: #1F1A14; }
+    .stat-label { font-size: 11px; color: #6B6357; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
+    .chip {
+      background: #2B4D1F1A; color: #2B4D1F;
+      padding: 6px 12px; border-radius: 999px;
+      font-size: 13px; font-weight: 500;
+    }
+
+    .section-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
+      color: #6B6357; font-weight: 600; margin-bottom: 8px;
+    }
+    .summary {
+      background: #fff; border-radius: 14px; padding: 16px;
+      line-height: 1.55; color: #3D362E; margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    /* Rate panel — shown when a café's table QR is scanned (?rate=1).
+       A scan from inside the café is the one moment we get, so the page has to
+       say what to do next instead of showing a profile and hoping. */
+    .rate-panel {
+      background: #2B4D1F; color: #FFFDF9;
+      border-radius: 16px; padding: 20px; margin: 4px 0 22px;
+    }
+    /* Shorter hero on a rate scan so the panel is visible without scrolling —
+       at 4/3 the ask started below the fold. */
+    .rate-mode .hero { aspect-ratio: 16 / 9; }
+    .rate-mode .container { padding-bottom: 40px; }
+    .rate-panel h2 {
+      font-size: 21px; font-weight: 700; margin-bottom: 5px; letter-spacing: -0.01em;
+    }
+    .rate-panel p { font-size: 13.5px; opacity: 0.82; line-height: 1.5; }
+    .rate-btn {
+      display: block; margin-top: 15px; background: #C4956A; color: #2B4D1F;
+      padding: 15px; border-radius: 12px; text-align: center;
+      font-weight: 700; font-size: 16px; text-decoration: none;
+    }
+    .rate-btn:active { transform: scale(0.98); }
+    /* The two-step is the whole point: iOS cannot carry the café through an App
+       Store install, so a fresh install lands on onboarding, not here. Telling
+       people to scan again is unglamorous and it is what makes the loop close. */
+    .rate-steps {
+      margin-top: 14px; padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.18);
+      font-size: 12.5px; line-height: 1.65; opacity: 0.8;
+    }
+    .rate-steps b { opacity: 1; font-weight: 700; }
+
+    /* CTAs */
+    .cta-stack { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+    .cta-primary {
+      background: #2B4D1F; color: #fff;
+      padding: 16px; border-radius: 14px;
+      text-decoration: none; text-align: center;
+      font-weight: 600; font-size: 16px;
+      box-shadow: 0 4px 12px rgba(43,77,31,0.25);
+      transition: transform 0.15s;
+    }
+    .cta-primary:active { transform: scale(0.98); }
+    .cta-secondary {
+      background: transparent; color: #2B4D1F;
+      padding: 14px; border-radius: 14px;
+      text-decoration: none; text-align: center;
+      font-weight: 600; font-size: 15px;
+      border: 1.5px solid #2B4D1F33;
+    }
+
+    /* Loading / error */
+    .loader {
+      display: flex; align-items: center; justify-content: center;
+      padding: 80px 20px; color: #6B6357;
+    }
+    .err { padding: 40px 20px; text-align: center; color: #6B6357; }
+    .err h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: #1F1A14; margin-bottom: 8px; }
+
+    /* Bottom install banner — sticky on mobile */
+    .install-banner {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fff; padding: 14px 20px;
+      box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
+      display: flex; align-items: center; gap: 12px;
+      max-width: 520px; margin: 0 auto;
+    }
+    .install-banner img { width: 36px; height: 36px; border-radius: 8px; }
+    .install-banner-text { flex: 1; }
+    .install-banner-text .t { font-weight: 600; font-size: 14px; color: #1F1A14; }
+    .install-banner-text .s { font-size: 12px; color: #6B6357; margin-top: 1px; }
+    .install-banner a {
+      background: #2B4D1F; color: #fff;
+      padding: 10px 16px; border-radius: 10px;
+      text-decoration: none; font-size: 14px; font-weight: 600;
+    }
+  
+    .menu { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .menu-row { display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-bottom:1px solid #F0EBE3; font-size:14.5px; }
+    .menu-row:last-child { border-bottom:none; }
+    .menu-name { color:#3D362E; }
+    .menu-price { color:#2B4D1F; font-weight:600; white-space:nowrap; }
+    .menu-cat { font-size:11px; text-transform:uppercase; letter-spacing:0.8px; color:#6B6357; font-weight:600; padding:14px 0 4px; }
+    .amen { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
+    .amen-item { background:#fff; border-radius:10px; padding:9px 12px; font-size:13px; color:#3D362E; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .cards-row { display:flex; gap:6px; margin-bottom:18px; }
+    .card-pill { display:flex; align-items:center; gap:6px; padding:6px 11px; border-radius:999px; font-size:12.5px; font-weight:600; }
+    .hours { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .hours-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid #F0EBE3; font-size:14px; }
+    .hours-row:last-child { border-bottom:none; }
+    .hours-day { color:#6B6357; }
+    .nearby { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+    .nearby a { background:#fff; border:1px solid #E8E1D7; color:#2B4D1F; padding:7px 12px; border-radius:999px; font-size:13px; text-decoration:none; font-weight:500; }
+    .crumb { font-size:12.5px; color:#6B6357; padding:0 20px 4px; }
+    .crumb a { color:#2B4D1F; text-decoration:none; }
+</style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CafeOrCoffeeShop","name":"JOE & THE JUICE","address":{"@type":"PostalAddress","streetAddress":"The Galleria - Al Maryah Island - MI10 - Abu Dhabi - United Arab Emirates","addressLocality":"Al Maryah Island","addressRegion":"Abu Dhabi","addressCountry":"AE"},"geo":{"@type":"GeoCoordinates","latitude":24.5016839,"longitude":54.3901646},"image":"https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJGxWQW_lnXj4RoUgW6dBQxsM/0.jpg","url":"https://www.brewmaps.app/c/7e414662-cd85-49f5-8251-0d549ce9480a","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":354},"servesCuisine":"Coffee","priceRange":"$$$","hasMenu":{"@type":"Menu","hasMenuSection":[{"@type":"MenuSection","name":"Hot Coffee","hasMenuItem":[{"@type":"MenuItem","name":"Single/Dbl Espresso","offers":{"@type":"Offer","price":16,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Americano","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Drip Coffee","offers":{"@type":"Offer","price":19,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Macchiato","offers":{"@type":"Offer","price":19,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Cortado","offers":{"@type":"Offer","price":20,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Flat White","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Latte","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Joe's Vanilla Latte","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Spanish Latte","offers":{"@type":"Offer","price":31,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Cappuccino","offers":{"@type":"Offer","price":29,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Hot Mocha","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"White Mocha","offers":{"@type":"Offer","price":26,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Pink Latte 16oz","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Yellow Latte 12oz","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Grey Macchiato 4oz","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Mocha","offers":{"@type":"Offer","price":26,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Double Espresso","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Single Espresso","offers":{"@type":"Offer","price":15,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Espresso","offers":{"@type":"Offer","price":16,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Single/Pic Espresso","offers":{"@type":"Offer","price":16,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Cafe Latte","offers":{"@type":"Offer","price":19,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Joe's Latte","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Matcha","hasMenuItem":[{"@type":"MenuItem","name":"Matcha Macchiato Latte","offers":{"@type":"Offer","price":26,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Matcha Latte","offers":{"@type":"Offer","price":26,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Matcha Latte","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Vanilla Matcha Latte","offers":{"@type":"Offer","price":26,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Vanilla Matcha Latte","offers":{"@type":"Offer","price":26,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Non-Coffee","hasMenuItem":[{"@type":"MenuItem","name":"Hot Chocolate","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Tea","hasMenuItem":[{"@type":"MenuItem","name":"English Breakfast Tea","offers":{"@type":"Offer","price":16,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Vanilla Rooibos Tea","offers":{"@type":"Offer","price":16,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Green Mandarin Tea","offers":{"@type":"Offer","price":16,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"White Temple Tea","offers":{"@type":"Offer","price":16,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Iced Coffee","hasMenuItem":[{"@type":"MenuItem","name":"Iced Drip Coffee","offers":{"@type":"Offer","price":19,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Americano","offers":{"@type":"Offer","price":21,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Latte","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Vanilla Latte","offers":{"@type":"Offer","price":26,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Spanish Latte","offers":{"@type":"Offer","price":35,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Mocha","offers":{"@type":"Offer","price":24,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Vanilla Iced Latte","offers":{"@type":"Offer","price":27,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Vanilla Iced Spanish Latte","offers":{"@type":"Offer","price":27,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Vanilla Iced Americano","offers":{"@type":"Offer","price":25,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iced Cappuccino","offers":{"@type":"Offer","price":22,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Spanish Iced Latte","offers":{"@type":"Offer","price":27,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Joe's Iced Latte","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Signature","hasMenuItem":[{"@type":"MenuItem","name":"Muscle Up","offers":{"@type":"Offer","price":45,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Big Brain Energy","offers":{"@type":"Offer","price":45,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Trust Your Gut","offers":{"@type":"Offer","price":45,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Pinktaya","offers":{"@type":"Offer","price":48,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Beets & Berries","offers":{"@type":"Offer","price":45,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Peanutter","offers":{"@type":"Offer","price":45,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Unicorn Tears","offers":{"@type":"Offer","price":45,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Chocolate Flex","offers":{"@type":"Offer","price":45,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Herb Tonic","offers":{"@type":"Offer","price":47,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Joe's Green Mile","offers":{"@type":"Offer","price":47,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Green Shield","offers":{"@type":"Offer","price":47,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Joe's Identity","offers":{"@type":"Offer","price":47,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Other","hasMenuItem":[{"@type":"MenuItem","name":"Go Away Doc","offers":{"@type":"Offer","price":37,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Prince of Green","offers":{"@type":"Offer","price":37,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Joe's AMG","offers":{"@type":"Offer","price":29.95,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Iron Man","offers":{"@type":"Offer","price":37,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Pick Me Up","offers":{"@type":"Offer","price":37,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Stress Down","offers":{"@type":"Offer","price":37,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Hell of a Nerve","offers":{"@type":"Offer","price":37,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Green Haven","offers":{"@type":"Offer","price":37,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Juices & Smoothies","hasMenuItem":[{"@type":"MenuItem","name":"Sports Juice","offers":{"@type":"Offer","price":37,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Soft Drinks","hasMenuItem":[{"@type":"MenuItem","name":"Green Tonic","offers":{"@type":"Offer","price":37,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Wellness Shots","hasMenuItem":[{"@type":"MenuItem","name":"Energizer","offers":{"@type":"Offer","price":29.95,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Ginger Shot","offers":{"@type":"Offer","price":14,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Turmeric Shot","offers":{"@type":"Offer","price":14,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Shakes","hasMenuItem":[{"@type":"MenuItem","name":"Power Shake","offers":{"@type":"Offer","price":29.95,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Avo Shake","offers":{"@type":"Offer","price":29.95,"priceCurrency":"AED"}}]}]}}</script>
+  
+</head>
+<body>
+  <div class="container">
+    <div class="nav">
+      <a href="/" class="nav-logo"><img src="/logo.png" alt="BrewMaps" /><span>BrewMaps</span></a>
+      <a href="/download" style="font-size:14px;color:#2B4D1F;font-weight:600;text-decoration:none">Get the app</a>
+    </div>
+
+    <div class="crumb"><a href="/">BrewMaps</a> › <a href="/area/al-maryah-island/">Al Maryah Island</a> › JOE &amp; THE JUICE</div>
+    <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJGxWQW_lnXj4RoUgW6dBQxsM/0.jpg" class="hero" alt="JOE &amp; THE JUICE" />
+    <div class="body">
+      <h1>JOE &amp; THE JUICE</h1>
+      <div class="area">Al Maryah Island, Abu Dhabi · $$$</div>
+
+      
+
+      <div class="stats">
+        <div class="stat"><div class="stat-val">★ 4.8</div><div class="stat-label">354 reviews</div></div>
+        <div class="stat"><div class="stat-val">Basic</div><div class="stat-label">WiFi</div></div>
+        <div class="stat"><div class="stat-val">Lively</div><div class="stat-label">Vibe</div></div>
+      </div>
+
+      <div class="chips"><div class="chip">Social</div><div class="chip">Family Friendly</div><div class="chip">Specialty Coffee</div></div>
+      <div class="section-label">About</div><div class="summary">JOE &amp; THE JUICE is a vibrant juice and sandwich shop in Abu Dhabi offering quality specialty coffee alongside fresh juices and signature sandwiches. Known for balanced hot lattes, creative options like the Tunacado sandwich and Matcha Cloud drink, plus excellent service. Popular lunch destination with good quality offerings though prices can be steep during peak hours.</div>
+
+      <div class="section-label">Menu &amp; prices</div><div class="menu">
+        
+          <div class="menu-cat">Hot Coffee</div>
+          <div class="menu-row"><span class="menu-name">Single/Dbl Espresso</span><span class="menu-price">16 AED</span></div><div class="menu-row"><span class="menu-name">Americano</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">Drip Coffee</span><span class="menu-price">19 AED</span></div><div class="menu-row"><span class="menu-name">Macchiato</span><span class="menu-price">19 AED</span></div><div class="menu-row"><span class="menu-name">Cortado</span><span class="menu-price">20 AED</span></div><div class="menu-row"><span class="menu-name">Flat White</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">Latte</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">Joe&#39;s Vanilla Latte</span><span class="menu-price">28 AED</span></div><div class="menu-row"><span class="menu-name">Spanish Latte</span><span class="menu-price">31 AED</span></div><div class="menu-row"><span class="menu-name">Cappuccino</span><span class="menu-price">29 AED</span></div><div class="menu-row"><span class="menu-name">Hot Mocha</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">White Mocha</span><span class="menu-price">26 AED</span></div><div class="menu-row"><span class="menu-name">Pink Latte 16oz</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">Yellow Latte 12oz</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">Grey Macchiato 4oz</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Mocha</span><span class="menu-price">26 AED</span></div><div class="menu-row"><span class="menu-name">Double Espresso</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Single Espresso</span><span class="menu-price">15 AED</span></div><div class="menu-row"><span class="menu-name">Espresso</span><span class="menu-price">16 AED</span></div><div class="menu-row"><span class="menu-name">Single/Pic Espresso</span><span class="menu-price">16 AED</span></div><div class="menu-row"><span class="menu-name">Cafe Latte</span><span class="menu-price">19 AED</span></div><div class="menu-row"><span class="menu-name">Joe&#39;s Latte</span><span class="menu-price">24 AED</span></div>
+        
+          <div class="menu-cat">Matcha</div>
+          <div class="menu-row"><span class="menu-name">Matcha Macchiato Latte</span><span class="menu-price">26 AED</span></div><div class="menu-row"><span class="menu-name">Matcha Latte</span><span class="menu-price">26 AED</span></div><div class="menu-row"><span class="menu-name">Iced Matcha Latte</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">Iced Vanilla Matcha Latte</span><span class="menu-price">26 AED</span></div><div class="menu-row"><span class="menu-name">Vanilla Matcha Latte</span><span class="menu-price">26 AED</span></div>
+        
+          <div class="menu-cat">Non-Coffee</div>
+          <div class="menu-row"><span class="menu-name">Hot Chocolate</span><span class="menu-price">25 AED</span></div>
+        
+          <div class="menu-cat">Tea</div>
+          <div class="menu-row"><span class="menu-name">English Breakfast Tea</span><span class="menu-price">16 AED</span></div><div class="menu-row"><span class="menu-name">Vanilla Rooibos Tea</span><span class="menu-price">16 AED</span></div><div class="menu-row"><span class="menu-name">Green Mandarin Tea</span><span class="menu-price">16 AED</span></div><div class="menu-row"><span class="menu-name">White Temple Tea</span><span class="menu-price">16 AED</span></div>
+        
+          <div class="menu-cat">Iced Coffee</div>
+          <div class="menu-row"><span class="menu-name">Iced Drip Coffee</span><span class="menu-price">19 AED</span></div><div class="menu-row"><span class="menu-name">Iced Americano</span><span class="menu-price">21 AED</span></div><div class="menu-row"><span class="menu-name">Iced Latte</span><span class="menu-price">28 AED</span></div><div class="menu-row"><span class="menu-name">Iced Vanilla Latte</span><span class="menu-price">26 AED</span></div><div class="menu-row"><span class="menu-name">Iced Spanish Latte</span><span class="menu-price">35 AED</span></div><div class="menu-row"><span class="menu-name">Iced Mocha</span><span class="menu-price">24 AED</span></div><div class="menu-row"><span class="menu-name">Vanilla Iced Latte</span><span class="menu-price">27 AED</span></div><div class="menu-row"><span class="menu-name">Vanilla Iced Spanish Latte</span><span class="menu-price">27 AED</span></div><div class="menu-row"><span class="menu-name">Vanilla Iced Americano</span><span class="menu-price">25 AED</span></div><div class="menu-row"><span class="menu-name">Iced Cappuccino</span><span class="menu-price">22 AED</span></div><div class="menu-row"><span class="menu-name">Spanish Iced Latte</span><span class="menu-price">27 AED</span></div><div class="menu-row"><span class="menu-name">Joe&#39;s Iced Latte</span><span class="menu-price">28 AED</span></div>
+        
+          <div class="menu-cat">Signature</div>
+          <div class="menu-row"><span class="menu-name">Muscle Up</span><span class="menu-price">45 AED</span></div><div class="menu-row"><span class="menu-name">Big Brain Energy</span><span class="menu-price">45 AED</span></div><div class="menu-row"><span class="menu-name">Trust Your Gut</span><span class="menu-price">45 AED</span></div><div class="menu-row"><span class="menu-name">Pinktaya</span><span class="menu-price">48 AED</span></div><div class="menu-row"><span class="menu-name">Beets &amp; Berries</span><span class="menu-price">45 AED</span></div><div class="menu-row"><span class="menu-name">Peanutter</span><span class="menu-price">45 AED</span></div><div class="menu-row"><span class="menu-name">Unicorn Tears</span><span class="menu-price">45 AED</span></div><div class="menu-row"><span class="menu-name">Chocolate Flex</span><span class="menu-price">45 AED</span></div><div class="menu-row"><span class="menu-name">Herb Tonic</span><span class="menu-price">47 AED</span></div><div class="menu-row"><span class="menu-name">Joe&#39;s Green Mile</span><span class="menu-price">47 AED</span></div><div class="menu-row"><span class="menu-name">Green Shield</span><span class="menu-price">47 AED</span></div><div class="menu-row"><span class="menu-name">Joe&#39;s Identity</span><span class="menu-price">47 AED</span></div>
+        
+          <div class="menu-cat">Other</div>
+          <div class="menu-row"><span class="menu-name">Go Away Doc</span><span class="menu-price">37 AED</span></div><div class="menu-row"><span class="menu-name">Prince of Green</span><span class="menu-price">37 AED</span></div><div class="menu-row"><span class="menu-name">Joe&#39;s AMG</span><span class="menu-price">29.95 AED</span></div><div class="menu-row"><span class="menu-name">Iron Man</span><span class="menu-price">37 AED</span></div><div class="menu-row"><span class="menu-name">Pick Me Up</span><span class="menu-price">37 AED</span></div><div class="menu-row"><span class="menu-name">Stress Down</span><span class="menu-price">37 AED</span></div><div class="menu-row"><span class="menu-name">Hell of a Nerve</span><span class="menu-price">37 AED</span></div><div class="menu-row"><span class="menu-name">Green Haven</span><span class="menu-price">37 AED</span></div>
+        
+          <div class="menu-cat">Juices &amp; Smoothies</div>
+          <div class="menu-row"><span class="menu-name">Sports Juice</span><span class="menu-price">37 AED</span></div>
+        
+          <div class="menu-cat">Soft Drinks</div>
+          <div class="menu-row"><span class="menu-name">Green Tonic</span><span class="menu-price">37 AED</span></div>
+        
+          <div class="menu-cat">Wellness Shots</div>
+          <div class="menu-row"><span class="menu-name">Energizer</span><span class="menu-price">29.95 AED</span></div><div class="menu-row"><span class="menu-name">Ginger Shot</span><span class="menu-price">14 AED</span></div><div class="menu-row"><span class="menu-name">Turmeric Shot</span><span class="menu-price">14 AED</span></div>
+        
+          <div class="menu-cat">Shakes</div>
+          <div class="menu-row"><span class="menu-name">Power Shake</span><span class="menu-price">29.95 AED</span></div><div class="menu-row"><span class="menu-name">Avo Shake</span><span class="menu-price">29.95 AED</span></div>
+        
+      </div>
+
+      <div class="section-label">Amenities</div><div class="amen"><div class="amen-item">📶 Basic WiFi</div><div class="amen-item">🔊 Lively</div><div class="amen-item">🔌 Power outlets</div><div class="amen-item">🅿️ True</div><div class="amen-item">🪑 Indoor</div></div>
+
+      <div class="section-label">Opening hours</div><div class="hours">
+        <div class="hours-row"><span class="hours-day">Monday</span><span>8am-11pm</span></div><div class="hours-row"><span class="hours-day">Tuesday</span><span>8am-11pm</span></div><div class="hours-row"><span class="hours-day">Wednesday</span><span>8am-11pm</span></div><div class="hours-row"><span class="hours-day">Thursday</span><span>8am-11pm</span></div><div class="hours-row"><span class="hours-day">Friday</span><span>8am-12am</span></div><div class="hours-row"><span class="hours-day">Saturday</span><span>8am-12am</span></div><div class="hours-row"><span class="hours-day">Sunday</span><span>8am-11pm</span></div>
+      </div>
+
+      <div class="section-label">More cafés in Al Maryah Island</div><div class="nearby">
+        <a href="/c/571ab00d-fd5d-40ec-8cd6-e72ec2e2ae2a/">Shot Specialty Cafe</a><a href="/c/4ec9f1a7-7543-4ce7-964b-2df5682d77d2/">The Coffee - Al Maryah</a><a href="/c/33f464ad-6ec6-4c8f-a28a-3caab79b8057/">Bacha Coffee Galleria Mall</a><a href="/c/22be8c5f-4e44-4bde-a0a7-898fc1cf7f91/">Draft coffee and co</a>
+      </div><div style="margin:6px 0 24px"><a href="/area/al-maryah-island/" style="font-size:13px;color:#2B4D1F;font-weight:600;text-decoration:none">See all cafés in Al Maryah Island →</a></div>
+
+      <div class="cta-stack">
+        <a href="brewmaps://c/7e414662-cd85-49f5-8251-0d549ce9480a" class="cta-primary" id="open-app">Open in BrewMaps</a>
+        <a href="/download" class="cta-secondary">Don't have the app? Get it</a>
+      </div>
+    </div>
+
+  <div class="install-banner" id="install-banner">
+    <img src="/logo.png" alt="BrewMaps" />
+    <div class="install-banner-text"><div class="t">Open in BrewMaps</div><div class="s">For check-ins, photos &amp; more</div></div>
+    <a href="/download">Get app</a>
+  </div>
+
+  <script>
+    // ?rate=1 = scanned from the café's own table card. Keeps the behaviour the
+    // old JS page had; everything else on this page is now static HTML.
+    if (new URLSearchParams(location.search).get('rate') === '1') {
+      document.documentElement.classList.add('rate-mode');
+      var b = document.getElementById('install-banner'); if (b) b.style.display = 'none';
+    }
+    document.getElementById('open-app').addEventListener('click', function (e) {
+      e.preventDefault();
+      var bailed = false, onHide = function () { bailed = true; };
+      document.addEventListener('visibilitychange', onHide, { once: true });
+      setTimeout(function () {
+        document.removeEventListener('visibilitychange', onHide);
+        if (!bailed && !document.hidden) location.href = '/download';
+      }, 1400);
+      window.location.href = 'brewmaps://c/7e414662-cd85-49f5-8251-0d549ce9480a';
+    });
+  </script>
+  </div>
+</body>
+</html>
