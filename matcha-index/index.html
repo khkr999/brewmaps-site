@@ -202,26 +202,25 @@ tr:last-child td{border-bottom:0}
 </ul>
 </div>
 
-<h2>What this replaces</h2>
-<p class="sub">The honest version: none of this is impossible to find. It's a question of what finding it costs.</p>
+<h2>What you would otherwise have to assemble</h2>
+<p class="sub">None of this is impossible to find. The information exists in fragments — the work is locating it, structuring it, validating it, and keeping it current.</p>
 
 <div class="card">
 <table class="cmp">
-<thead><tr><th>Where you'd look</th><th>Café list</th><th>Menu items</th><th>Prices</th></tr></thead>
+<thead><tr><th>Work required</th><th>On your own</th><th>Here</th></tr></thead>
 <tbody>
-<tr><td>Google Maps</td><td class="y">yes</td><td class="p">unstructured, inconsistent</td><td class="p">not systematically comparable</td></tr>
-<tr><td>Delivery platforms</td><td class="p">some</td><td class="p">some</td><td class="p">delivery, 10–20% above dine-in</td></tr>
-<tr><td>Instagram</td><td class="y">yes</td><td class="p">images only</td><td class="p">not searchable</td></tr>
-<tr><td>Café websites</td><td class="n">no</td><td class="p">some</td><td class="p">some</td></tr>
-<tr class="us"><td><b>BrewMaps catalogue</b></td><td class="y">505</td><td class="y">9,780</td><td class="y">dine-in, as listed</td></tr>
+<tr><td>Build the café universe</td><td class="p">Search maps, social media and individual sites</td><td class="y">505-café UAE catalogue</td></tr>
+<tr><td>Find published menus</td><td class="p">Check websites, PDFs, images and delivery listings one by one</td><td class="y">9,780 structured items</td></tr>
+<tr><td>Compare prices</td><td class="p">Read and standardise inconsistent formats by hand</td><td class="y">Comparable listed prices</td></tr>
+<tr><td>Identify prospects</td><td class="p">Review and filter every café individually</td><td class="y">283 qualified records</td></tr>
+<tr><td>Keep it current</td><td class="p">Repeat the research periodically</td><td class="y">Quarterly refresh and change tracking</td></tr>
 </tbody></table>
 </div>
 
 <div class="card">
-  <div class="find"><span class="dot"></span><div><b>It took four approaches to build.</b> Reading menu boards out of café photographs recovered <b>3%</b>. Published menus, image extraction and vision transcription got most of the rest, and the remainder was entered and validated by hand.</div></div>
-  <div class="find"><span class="dot"></span><div><b>97 of 505 cafés (19%) publish no menu anywhere we could find.</b> No website, no delivery listing, no legible photo. For those, the price exists only on a wall — which is why any desk-based approach has a ceiling.</div></div>
-  <div class="find"><span class="dot"></span><div><b>At five minutes a café, checking all 505 is about 42 hours</b> — and five minutes is optimistic, because it assumes you find the menu on the first try. Roughly a fifth of that time returns nothing at all. Your own hourly cost decides what that is worth — we won't presume it.</div></div>
-  <div class="find"><span class="dot"></span><div><b>And it decays.</b> Menus change and venues open and close, so a static list becomes progressively less reliable without periodic refreshes.</div></div>
+  <div class="find"><span class="dot"></span><div><b>At five minutes a café, checking all 505 is roughly 42 hours</b> — before any cleaning, standardising or analysis, and five minutes assumes you find the menu on the first try. Your own hourly cost decides what that is worth; we won't presume it.</div></div>
+  <div class="find"><span class="dot"></span><div><b>97 cafés (19%) publish no menu we could locate.</b> No site, no delivery listing, no legible photograph. That is a natural ceiling on any desk-based research, however much time you spend.</div></div>
+  <div class="find"><span class="dot"></span><div><b>And it decays.</b> Menus change and venues open or close, so a static list becomes progressively less reliable without regular refreshes.</div></div>
 </div>
 
 <h2 id="suppliers">For suppliers</h2>
@@ -233,10 +232,11 @@ tr:last-child td{border-bottom:0}
     <p>Today's data, one-off. Non-exclusive.</p>
     <ul>
       <li><b>283 cafés</b> with a real drinks menu, each flagged <b>serves matcha: yes / no</b></li>
-      <li>The <b>171 who do</b> — with the exact menu item and price they charge</li>
-      <li>The <b>112 who don't</b> — your prospect list, scored and tiered</li>
-      <li>Café name, area, emirate, menu size, specialty score, prospect tier. CSV.</li>
-      <li class="defn"><b>Specialty score (0–5)</b> counts how many of these appear on the menu: Spanish latte, pistachio drinks, a manual brew method (V60, Chemex, Aeropress), cold brew, cortado. <b>Prospect tier</b> is A at 4.6★ with 300+ reviews, B at 4.4★ with 100+, C otherwise.</li>
+      <li><b>171</b> that list matcha, with the menu item as written</li>
+      <li><b>127</b> of those publish a readable price — the rest list it without one</li>
+      <li><b>112</b> that don't list it at all — your prospect list, with a menu-fit score</li>
+      <li>Café name, area, emirate, menu size, menu-fit score. CSV.</li>
+      <li class="defn"><b>Menu-fit score (0–5)</b> counts how many adjacent premium categories a café already sells: Spanish latte, pistachio drinks, a manual brew method (V60, Chemex, Aeropress), cold brew, cortado. It is derived only from the café's own menu — no ratings, no review counts, no popularity signal, because those measure consumer traffic rather than whether a café would stock a category.</li>
     </ul>
   </div>
 
@@ -246,14 +246,14 @@ tr:last-child td{border-bottom:0}
     <ul>
       <li>Four full refreshes a year — not four copies of the same file</li>
       <li><b>Item-level change detection:</b> which cafés added matcha since last quarter, which dropped it, which moved price and by how much</li>
-      <li><b>New venues</b> flagged as they enter the catalogue, with their opening prices</li>
+      <li>Newly identified venues included in each quarterly refresh, with opening menu prices where available</li>
       <li>Prospect scoring recalculated each quarter, so cafés that converted leave the list and new ones enter it</li>
       <li>A short written summary of what moved in the category and where</li>
     </ul>
     <p class="tier-note">The snapshot is a point in time. This tracks which cafés add or remove matcha between quarters, so outreach is prioritised on current menu signals rather than a stale list.</p>
   </div>
 
-  <a class="price-pill" href="mailto:hello@brewmaps.app?subject=Matcha%20Index%20—%20supplier%20enquiry">Enquire — hello@brewmaps.app</a>
+  <a class="price-pill" href="mailto:hello@brewmaps.app?subject=Matcha%20Snapshot%20enquiry">Request the AED 750 Snapshot</a>
   <p class="tier-foot">Category exclusivity can be arranged separately — ask.</p>
 </div>
 
