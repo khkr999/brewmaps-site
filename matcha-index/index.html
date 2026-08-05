@@ -117,9 +117,9 @@ tr:last-child td{border-bottom:0}
 
 <h2>What stands out</h2>
 <div class="card">
-  <div class="find"><span class="dot"></span><div><b>Ajman is the cheapest emirate</b> at a median of AED 25 — about 17% below the AED 30 that Dubai, Abu Dhabi and Sharjah all share. The striking part is how flat the rest of the country is: pricing barely moves between emirates.</div></div>
+  <div class="find"><span class="dot"></span><div><b>Ajman records the lowest median at AED 25</b>, about 17% below the AED 30 shared by Dubai, Abu Dhabi and Sharjah — though that figure rests on only 5 priced cafés. The more solid finding is that Dubai, Abu Dhabi and Sharjah land on the same AED 30 median, on much larger samples.</div></div>
   <div class="find"><span class="dot"></span><div><b>Khalifa City is the priciest area we measured</b> (AED 35), while <b>Downtown is the cheapest</b> (AED 24) — a difference of AED 11 in median listed price. Both figures come from 4 and 4 cafés respectively — small samples, so read them as indicative.</div></div>
-  <div class="find"><span class="dot"></span><div><b>Flavoured matcha carries a 20% premium.</b> A plain matcha latte runs AED 28; strawberry and coconut versions sit near AED 32.</div></div>
+  <div class="find"><span class="dot"></span><div><b>Flavoured variants list higher.</b> strawberry matcha at AED 32, coco matcha at AED 35, against AED 28 for a plain matcha latte — on 5 and 5 listings respectively, so read it as a signal rather than a rate.</div></div>
   <div class="find"><span class="dot"></span><div><b>Matcha is no longer a niche order.</b> It appears on the menu of 189 cafés — and the single most common listing, <i>matcha latte</i>, appears 81 times.</div></div>
 </div>
 
@@ -190,7 +190,8 @@ tr:last-child td{border-bottom:0}
 <div class="card method">
 <ul>
 <li>Source: published café menus in the BrewMaps catalogue, collected through image extraction, vision transcription and manual entry. Not delivery-platform prices, which typically run 10–20% above dine-in.</li>
-<li>Coverage: 189 cafés list matcha; 137 publish a price we could read. Percentiles use those 345 priced items.</li>
+<li><b>Coverage:</b> 189 cafés list matcha; 137 publish at least one readable price.</li>
+<li><b>Which figure uses what:</b> the headline median, the middle 50%, and every emirate and area comparison use <b>one median price per café</b>, across those 137 cafés. The variant table is the exception — it uses the 345 underlying priced listings, because a variant is a property of the listing, not the café.</li>
 <li><b>Exclusions:</b> 21 items across 5 cafés fell outside a plausibility band of AED 12–60 and were excluded pending verification. They are held back rather than corrected by guesswork.</li>
 <li><b>One price per café, not per listing.</b> A café's median matcha price is computed first, then emirate and area figures are the median of those café-level prices — so a café with a long menu doesn't outweigh one with a short menu.</li>
 <li>Medians are used throughout rather than averages, so a single mispriced listing cannot move a figure.</li>
@@ -208,19 +209,19 @@ tr:last-child td{border-bottom:0}
 <table class="cmp">
 <thead><tr><th>Where you'd look</th><th>Café list</th><th>Menu items</th><th>Prices</th></tr></thead>
 <tbody>
-<tr><td>Google Maps</td><td class="y">yes</td><td class="n">no</td><td class="n">no</td></tr>
+<tr><td>Google Maps</td><td class="y">yes</td><td class="p">unstructured, inconsistent</td><td class="p">not systematically comparable</td></tr>
 <tr><td>Delivery platforms</td><td class="p">some</td><td class="p">some</td><td class="p">delivery, 10–20% above dine-in</td></tr>
 <tr><td>Instagram</td><td class="y">yes</td><td class="p">images only</td><td class="p">not searchable</td></tr>
 <tr><td>Café websites</td><td class="n">no</td><td class="p">some</td><td class="p">some</td></tr>
-<tr class="us"><td><b>This index</b></td><td class="y">505</td><td class="y">9,780</td><td class="y">dine-in, as listed</td></tr>
+<tr class="us"><td><b>BrewMaps catalogue</b></td><td class="y">505</td><td class="y">9,780</td><td class="y">dine-in, as listed</td></tr>
 </tbody></table>
 </div>
 
 <div class="card">
-  <div class="find"><span class="dot"></span><div><b>We tried four ways to get this.</b> Reading menu boards out of café photos recovered <b>3%</b>. Scraping the delivery platforms was blocked outright. Paid image search with vision transcription got to roughly <b>60%</b>. The rest was entered by hand.</div></div>
+  <div class="find"><span class="dot"></span><div><b>It took four approaches to build.</b> Reading menu boards out of café photographs recovered <b>3%</b>. Published menus, image extraction and vision transcription got most of the rest, and the remainder was entered and validated by hand.</div></div>
   <div class="find"><span class="dot"></span><div><b>97 of 505 cafés (19%) publish no menu anywhere we could find.</b> No website, no delivery listing, no legible photo. For those, the price exists only on a wall — which is why any desk-based approach has a ceiling.</div></div>
-  <div class="find"><span class="dot"></span><div><b>At five minutes a café, checking all 505 is about 42 hours</b> — and five minutes is optimistic, because it assumes you find the menu on the first try. Roughly a fifth of that time returns nothing at all. Price your own hour against that; we won't do it for you.</div></div>
-  <div class="find"><span class="dot"></span><div><b>And it decays.</b> Menus change, cafés open and close. A list assembled by hand in August is materially wrong by November.</div></div>
+  <div class="find"><span class="dot"></span><div><b>At five minutes a café, checking all 505 is about 42 hours</b> — and five minutes is optimistic, because it assumes you find the menu on the first try. Roughly a fifth of that time returns nothing at all. Your own hourly cost decides what that is worth — we won't presume it.</div></div>
+  <div class="find"><span class="dot"></span><div><b>And it decays.</b> Menus change and venues open and close, so a static list becomes progressively less reliable without periodic refreshes.</div></div>
 </div>
 
 <h2 id="suppliers">For suppliers</h2>
@@ -235,6 +236,7 @@ tr:last-child td{border-bottom:0}
       <li>The <b>171 who do</b> — with the exact menu item and price they charge</li>
       <li>The <b>112 who don't</b> — your prospect list, scored and tiered</li>
       <li>Café name, area, emirate, menu size, specialty score, prospect tier. CSV.</li>
+      <li class="defn"><b>Specialty score (0–5)</b> counts how many of these appear on the menu: Spanish latte, pistachio drinks, a manual brew method (V60, Chemex, Aeropress), cold brew, cortado. <b>Prospect tier</b> is A at 4.6★ with 300+ reviews, B at 4.4★ with 100+, C otherwise.</li>
     </ul>
   </div>
 
@@ -242,10 +244,11 @@ tr:last-child td{border-bottom:0}
     <div class="tier-head"><h3>Quarterly Market Monitor</h3><span class="tier-price">AED 15,000<span class="per">/year</span></span></div>
     <p>The same file, maintained — so your team is working from current menus, not a photograph.</p>
     <ul>
-      <li>Everything in Snapshot, refreshed <b>every quarter</b></li>
-      <li><b>Change alerts</b> — which cafés added matcha since last quarter, which dropped it, which moved price</li>
-      <li><b>New openings</b> flagged as they enter the catalogue</li>
-      <li>The prospect list re-scored each quarter, so your team always has a current call sheet</li>
+      <li>Four full refreshes a year — not four copies of the same file</li>
+      <li><b>Item-level change detection:</b> which cafés added matcha since last quarter, which dropped it, which moved price and by how much</li>
+      <li><b>New venues</b> flagged as they enter the catalogue, with their opening prices</li>
+      <li>Prospect scoring recalculated each quarter, so cafés that converted leave the list and new ones enter it</li>
+      <li>A short written summary of what moved in the category and where</li>
     </ul>
     <p class="tier-note">The snapshot is a point in time. This tracks which cafés add or remove matcha between quarters, so outreach is prioritised on current menu signals rather than a stale list.</p>
   </div>
@@ -255,7 +258,7 @@ tr:last-child td{border-bottom:0}
 </div>
 
 <div class="foot">
-<p>Published by <a href="/">BrewMaps</a>, a UAE specialty café catalogue. We track menus and prices across 505 cafés in all seven emirates.</p>
+<p>Published by <a href="/">BrewMaps</a>, a UAE specialty café catalogue. We track menus and prices across 505 cafés throughout the UAE.</p>
 <p style="margin-top:8px">Questions or a correction: <a href="mailto:hello@brewmaps.app">hello@brewmaps.app</a></p>
 </div>
 
