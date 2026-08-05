@@ -63,6 +63,13 @@ tr:last-child td{border-bottom:0}
 .cover-note{margin-top:10px;padding-top:10px;border-top:1px solid #F0EAE1;color:#5A524A;font-size:13.5px}
 .supp-teaser{background:#F4EFE6;border:1px solid #E6DFD5;border-radius:12px;padding:13px 15px;font-size:14px;margin:16px 0 0}
 .supp-teaser a{color:#2B4D1F;font-weight:600;white-space:nowrap}
+.cmp td,.cmp th{font-size:14px}
+.cmp .y{color:#2B4D1F;font-weight:600}
+.cmp .n{color:#B4453C}
+.cmp .p{color:#8A8078;font-size:13px}
+.cmp .us td{background:#F4EFE6}
+.cmp td:not(:first-child){text-align:right}
+.cmp th:not(:first-child){text-align:right}
 .method{font-size:14px;color:#5A524A}
 .method li{margin:7px 0 7px 18px}
 .cta{background:#2B4D1F;color:#FFFDF9;border-radius:18px;padding:26px 22px;margin:40px 0 0}
@@ -192,6 +199,28 @@ tr:last-child td{border-bottom:0}
 <li>Al Ain is included within Abu Dhabi, of which it is part. Umm Al Quwain has no café in the catalogue and is therefore absent.</li>
 <li>Prices are a point-in-time snapshot from 4 August 2026 and change without notice. Sizes and grades vary between venues.</li>
 </ul>
+</div>
+
+<h2>What this replaces</h2>
+<p class="sub">The honest version: none of this is impossible to find. It's a question of what finding it costs.</p>
+
+<div class="card">
+<table class="cmp">
+<thead><tr><th>Where you'd look</th><th>Café list</th><th>Menu items</th><th>Prices</th></tr></thead>
+<tbody>
+<tr><td>Google Maps</td><td class="y">yes</td><td class="n">no</td><td class="n">no</td></tr>
+<tr><td>Delivery platforms</td><td class="p">some</td><td class="p">some</td><td class="p">delivery, 10–20% above dine-in</td></tr>
+<tr><td>Instagram</td><td class="y">yes</td><td class="p">images only</td><td class="p">not searchable</td></tr>
+<tr><td>Café websites</td><td class="n">no</td><td class="p">some</td><td class="p">some</td></tr>
+<tr class="us"><td><b>This index</b></td><td class="y">505</td><td class="y">9,780</td><td class="y">dine-in, as listed</td></tr>
+</tbody></table>
+</div>
+
+<div class="card">
+  <div class="find"><span class="dot"></span><div><b>We tried four ways to get this.</b> Reading menu boards out of café photos recovered <b>3%</b>. Scraping the delivery platforms was blocked outright. Paid image search with vision transcription got to roughly <b>60%</b>. The rest was entered by hand.</div></div>
+  <div class="find"><span class="dot"></span><div><b>97 of 505 cafés (19%) publish no menu anywhere we could find.</b> No website, no delivery listing, no legible photo. For those, the price exists only on a wall — which is why any desk-based approach has a ceiling.</div></div>
+  <div class="find"><span class="dot"></span><div><b>At five minutes a café, checking all 505 is about 42 hours</b> — and five minutes is optimistic, because it assumes you find the menu on the first try. Roughly a fifth of that time returns nothing at all. Price your own hour against that; we won't do it for you.</div></div>
+  <div class="find"><span class="dot"></span><div><b>And it decays.</b> Menus change, cafés open and close. A list assembled by hand in August is materially wrong by November.</div></div>
 </div>
 
 <h2 id="suppliers">For suppliers</h2>
