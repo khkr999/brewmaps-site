@@ -324,7 +324,7 @@
       document.getElementById('content').innerHTML = `
         <div class="err">
           <h2>${escapeHtml(msg)}</h2>
-          <p style="margin-top: 16px">Browse 800+ cafés across the UAE on BrewMaps.</p>
+          <p style="margin-top: 16px">Browse <span data-live="total-rounded">800+</span> cafés across the UAE on BrewMaps.</p>
           <div class="cta-stack" style="max-width: 280px; margin: 24px auto 0">
             <a href="/download" class="cta-primary">Get BrewMaps</a>
           </div>
@@ -336,6 +336,22 @@
     function capitalize(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
 
     loadCafe();
-  </script>
+  
+    // Live café counts — brewmaps.app never drifts from the catalogue. Static numbers are the first paint;
+    // this overwrites them with public.site_cafe_counts() (counts only, migration 170).
+    (function () {
+      var K = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFnenl5d3hpemxodHV3dWFvbnh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMDI0NDMsImV4cCI6MjA5NDU3ODQ0M30.auFn0Nz_PTziNezXMQKXzd5jmlre3CZUR47emeXpHz8';
+      fetch('https://qgzyywxizlhtuwuaonxy.supabase.co/rest/v1/rpc/site_cafe_counts', { method: 'POST', headers: { apikey: K, Authorization: 'Bearer ' + K, 'Content-Type': 'application/json' }, body: '{}' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (c) {
+          if (!c || !c.total) return;
+          var set = function (sel, v) { document.querySelectorAll(sel).forEach(function (el) { el.textContent = v; }); };
+          set('[data-live="total"]', c.total);
+          set('[data-live="total-rounded"]', (Math.floor(c.total / 100) * 100) + '+');
+          set('[data-live="dubai"]', c.dubai); set('[data-live="abu_dhabi"]', c.abu_dhabi);
+          set('[data-live="sharjah"]', c.sharjah); set('[data-live="other"]', c.other);
+        }).catch(function () {});
+    })();
+</script>
 </body>
 </html>

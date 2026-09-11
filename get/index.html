@@ -169,7 +169,7 @@
 
     <div class="kicker">The UAE's Café Finder</div>
     <h1 class="serif">Find your kind of <em>café.</em></h1>
-    <p class="sub">812 cafés across all 7 emirates — matched to your taste, not just the nearest one. Free on the App Store.</p>
+    <p class="sub"><span data-live="total">812</span> cafés across all 7 emirates — matched to your taste, not just the nearest one. Free on the App Store.</p>
 
     <a class="store-btn" id="installBtn"
        href="https://apps.apple.com/ae/app/brewmaps-uae-caf%C3%A9-finder/id6775899450">
@@ -183,7 +183,7 @@
     </a>
 
     <div class="trust">
-      <span class="pill">812 cafés</span>
+      <span class="pill"><span data-live="total">812</span> cafés</span>
       <span class="pill">7 emirates</span>
       <span class="pill">Matched to your taste</span>
       <span class="pill">Free</span>
@@ -209,6 +209,22 @@
       }
       // no preventDefault — navigation to the App Store proceeds normally (sendBeacon survives it)
     });
-  </script>
+  
+    // Live café counts — brewmaps.app never drifts from the catalogue. Static numbers are the first paint;
+    // this overwrites them with public.site_cafe_counts() (counts only, migration 170).
+    (function () {
+      var K = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFnenl5d3hpemxodHV3dWFvbnh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMDI0NDMsImV4cCI6MjA5NDU3ODQ0M30.auFn0Nz_PTziNezXMQKXzd5jmlre3CZUR47emeXpHz8';
+      fetch('https://qgzyywxizlhtuwuaonxy.supabase.co/rest/v1/rpc/site_cafe_counts', { method: 'POST', headers: { apikey: K, Authorization: 'Bearer ' + K, 'Content-Type': 'application/json' }, body: '{}' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (c) {
+          if (!c || !c.total) return;
+          var set = function (sel, v) { document.querySelectorAll(sel).forEach(function (el) { el.textContent = v; }); };
+          set('[data-live="total"]', c.total);
+          set('[data-live="total-rounded"]', (Math.floor(c.total / 100) * 100) + '+');
+          set('[data-live="dubai"]', c.dubai); set('[data-live="abu_dhabi"]', c.abu_dhabi);
+          set('[data-live="sharjah"]', c.sharjah); set('[data-live="other"]', c.other);
+        }).catch(function () {});
+    })();
+</script>
 </body>
 </html>
