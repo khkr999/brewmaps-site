@@ -12,3 +12,6 @@ body{width:1080px;height:1350px;position:relative;overflow:hidden;font-family:"D
 .print img{width:100%;height:100%;object-fit:cover;display:block;}
 .mosaic{position:absolute;display:grid;overflow:hidden;}
 .mosaic img{width:100%;height:100%;object-fit:cover;display:block;}
+.ph{position:absolute;overflow:hidden;}
+.ph img{width:100%;height:100%;object-fit:cover;display:block;}
+.rule{position:absolute;height:1px;}

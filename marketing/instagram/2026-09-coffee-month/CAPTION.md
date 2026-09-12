@@ -31,7 +31,12 @@ Four slides. A collage of six coffee photos from a BrewMaps calendar under the h
 
 | # | Role | Treatment |
 |---|---|---|
-| 1 | Hook | Night green, five real cup photos as scattered prints, headline sunk into the dark |
-| 2 | Stats | Warm sand, three oversized numerals interlocked with prints, no KPI columns |
-| 3 | Reward | Near-black with a soft mint field, the BrewPoints number as the largest element in the carousel |
-| 4 | Share | Deep green, the real September calendar inside viewfinder marks |
+| 1 | Hook | One full-bleed café photograph, hard horizontal edge, headline on solid green below |
+| 2 | Stats | Warm sand. Three numerals on hairline rules in one column, full-height photo column right |
+| 3 | Reward | Near-black with a soft mint field. Pure typography, the largest element in the carousel |
+| 4 | Share | Deep green, the real September calendar at native tile size inside screenshot marks |
+
+Photography comes from the Browse by Area cards at 585 × 770, not from the calendar cells, which are
+only 172 × 123 and go soft the moment they are enlarged. The cup photos appear only inside the
+calendar on slide 4, at or below their native size, where they stay sharp.
+Every element sits on a single 76px margin. No rotation anywhere.
