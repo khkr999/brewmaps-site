@@ -1,0 +1,11 @@
+@import url("fonts/dmsans.css");
+@import url("fonts/playfair.css");
+:root{--green:#2B4D1F;--deep:#1E3A14;--night:#14290F;--cream:#F4EFE6;--sand:#EDE6D8;--ink:#141414;}
+html,body{margin:0;padding:0;}
+body{width:1080px;height:1350px;position:relative;overflow:hidden;font-family:"DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+.abs{position:absolute;}
+.serif{font-family:"Playfair Display",Georgia,serif;}
+.h{font-weight:700;letter-spacing:-0.02em;line-height:0.98;text-transform:uppercase;margin:0;}
+.stat{display:flex;flex-direction:column;}
+.stat .n{font-weight:700;letter-spacing:-0.04em;line-height:0.9;}
+.stat .l{font-weight:600;letter-spacing:0.12em;text-transform:uppercase;}
