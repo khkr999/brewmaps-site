@@ -51,7 +51,7 @@ S3=f'''{H}<style>body{{background:var(--cream);color:var(--green);}}</style>
 </div>
 <h1 class="h abs" style="left:{M-6}px;top:582px;font-size:142px;">Claimed<span style="color:#7FA86B">.</span></h1>
 <div class="rule abs" style="left:{M}px;top:838px;width:{1080-2*M}px;background:rgba(43,77,31,.2);"></div>
-<div class="abs" style="left:{M}px;top:884px;font-size:31px;font-weight:500;opacity:.75;line-height:1.45;"><b style="font-weight:700;opacity:1;">{REDEEMED_PLACEHOLDER} BrewPoints</b> redeemed<br>across {REDEEMED_CAFES} cafés.</div>'''
+<div class="abs" style="left:{M}px;top:884px;font-size:31px;font-weight:500;opacity:.75;line-height:1.45;"><b style="font-weight:700;opacity:1;">{REDEEMED_PLACEHOLDER} BrewPoints</b> redeemed across {REDEEMED_CAFES_N} cafés.</div>'''
 
 # ── 4  THE MONTH — one hero stat, two footnotes, photos as memories
 S4=f'''{H}<style>body{{background:var(--sand);color:var(--green);}}</style>
@@ -60,7 +60,7 @@ S4=f'''{H}<style>body{{background:var(--sand);color:var(--green);}}</style>
 {tile(596,470,404,2)}
 <div class="abs num" style="left:{M-14}px;top:404px;font-size:400px;">{CAFES}</div>
 <div class="abs kick" style="left:{M}px;top:786px;font-size:28px;opacity:.8;">cafés explored</div>
-{frag(0,940,242,470,12)}
+{tile(M,966,312,12)}
 <div class="rule abs" style="left:540px;top:990px;width:{1080-540-M}px;background:rgba(43,77,31,.2);"></div>
 <div class="abs" style="left:540px;top:1034px;font-size:33px;font-weight:600;opacity:.85;line-height:1.7;">{CUPS} cups posted<br>{FREE_DAYS} coffee-free days</div>'''
 
