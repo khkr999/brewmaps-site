@@ -1,7 +1,7 @@
 # Your Coffee Month — BrewMaps Monthly, September 2026
 
 Five slides, 1080 × 1350. A recurring monthly format: rebuild from a new Calendar screenshot each month.
-Order is deliberate — EMOTION → EARNED → REDEEMED → DETAIL → CTA.
+Order is deliberate — RESULT → EARNED → CLAIMED → THE MONTH → THE LOOP.
 
 ## ⚠ Before posting
 
@@ -31,9 +31,11 @@ Logo appears on two slides of four, never as a watermark.
 
 Your coffee month.
 
-6 cups posted. 20 cafés. 5 days without one. 340 BrewPoints earned, 200 already spent.
+20 cafés. 340 BrewPoints. One month.
 
-Every check-in lands on your calendar and earns BrewPoints. Spend them back at the cafés you're already going to. At the end of the month you get a picture of how you actually drank coffee.
+That is one person's September on BrewMaps. 6 cups posted, 5 coffee-free days, and 3 rewards claimed with 200 of those points.
+
+Every check-in lands on your calendar and earns BrewPoints. Check in when you grab a coffee and your month builds itself.
 
 Start building yours — check in when you grab a coffee. Share yours at the end of September and tag @BrewMaps. We'll repost our favourites.
 
@@ -47,10 +49,12 @@ Four slides. A café table with drinks above the headline "Your coffee month". A
 
 ## Slide roles
 
-| # | Role | Treatment |
+| # | Role | Hierarchy |
 |---|---|---|
-| 1 | Editorial cover | Cropped coffee moment above, dark green below. Kicker and logo form a masthead over a rule |
-| 2 | Earned | Night green, cream numeral. 340 fills the canvas width with nothing competing |
-| 3 | Redeemed | The exact inverse — forest green numeral on cream. Same grid, same type sizes, flipped palette, so the two read as one pair |
-| 4 | Data as design | Warm sand. Three numerals at three scales, asymmetric, complete check-in tiles on a locked grid |
-| 5 | Share and action | Deep green. Headline, CTA and calendar read as one block inside screenshot marks |
+| 1 | Stop-scroll hook | Three descending scales: 20 at 400px, 340 at 262px indented right, ONE MONTH at 128px. Photo demoted to a bottom band |
+| 2 | Earned | One number. 340 centred and full width, nothing competing |
+| 3 | Claimed | A typographic lockup, not a numeral: 3 REWARDS / CLAIMED. 200 carried as inline emphasis below |
+| 4 | The month | 20 is the hero; cups posted and coffee-free days drop to a footnote pair. Check-in photos enter as edge fragments |
+| 5 | The loop | Calendar is the hero. One CTA, social line secondary |
+
+Fragments on slide 4 show under 55% of each tile so the +N pill is never sliced mid-shape.

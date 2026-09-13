@@ -2,61 +2,79 @@ from data import *
 from cal import calendar
 H='<link rel="stylesheet" href="base.css">'
 M=76
+AR=123/172.0
+LC=f'<img class="abs" src="src/logo-cream.png" style="right:{M}px;top:{M}px;width:58px;opacity:.85;">'
 def ph(x,y,w,h,name,pos='center'):
     return (f'<div class="ph" style="left:{x}px;top:{y}px;width:{w}px;height:{h}px;">'
             f'<img src="src/{name}.png" style="object-position:{pos};"></div>')
+def frag(x,y,vis,full,i,r=16):
+    """A check-in photo entering from an edge. Only the left `vis` of a `full`-wide
+    tile shows, so the +N pill never gets sliced mid-shape."""
+    h=round(full*AR)
+    return (f'<div class="frag" style="left:{x}px;top:{y}px;width:{vis}px;height:{h}px;border-radius:{r}px;">'
+            f'<img src="src/photo-{i}.png" style="width:{full}px;"></div>')
+def tile(x,y,w,i,r=16):
+    return (f'<div class="ph" style="left:{x}px;top:{y}px;width:{w}px;height:{round(w*AR)}px;border-radius:{r}px;">'
+            f'<img src="src/photo-{i}.png"></div>')
 
-# ── 1  COVER — coffee moment above, dark green below, masthead kicker + logo
+# ── 1  HOOK — a descending cascade of real numbers, photo demoted to a band
 S1=f'''{H}<style>body{{background:var(--night);color:var(--cream);}}</style>
-{ph(0,0,1080,800,'hero-a','center 62%')}
-<div class="abs" style="left:0;top:560px;width:1080px;height:240px;background:linear-gradient(to bottom,rgba(14,31,10,0),rgba(14,31,10,.45));"></div>
-<div class="abs kick" style="left:{M}px;top:874px;font-size:25px;color:var(--mint);">{MONTH}, so far</div>
-<img class="abs" src="src/logo-cream.png" style="right:{M}px;top:856px;width:64px;opacity:.95;">
-<div class="rule abs" style="left:{M}px;top:936px;width:{1080-2*M}px;background:rgba(244,239,230,.22);"></div>
-<h1 class="h abs" style="left:{M-5}px;top:998px;font-size:118px;">Your<br>coffee month<span style="color:var(--mint)">.</span></h1>'''
+<div class="abs kick" style="left:{M}px;top:84px;font-size:23px;color:var(--mint);">Your coffee month</div>
+<div class="abs rowb" style="left:{M-14}px;top:132px;gap:34px;">
+  <span class="num" style="font-size:400px;">{CAFES}</span>
+  <span class="h" style="font-size:78px;">Cafés<span style="color:var(--mint)">.</span></span>
+</div>
+<div class="abs rowb" style="left:246px;top:498px;gap:30px;">
+  <span class="num" style="font-size:262px;">{POINTS_PLACEHOLDER}</span>
+  <span class="h" style="font-size:60px;">Points<span style="color:var(--mint)">.</span></span>
+</div>
+<h1 class="h abs" style="left:{M-6}px;top:756px;font-size:128px;">One month<span style="color:var(--mint)">.</span></h1>
+<div class="rule abs" style="left:{M}px;top:918px;width:{1080-2*M}px;background:rgba(244,239,230,.22);"></div>
+<div class="abs" style="left:{M}px;top:952px;font-size:29px;font-weight:500;color:rgba(244,239,230,.66);">This is your {MONTH} on BrewMaps.</div>
+{ph(0,1046,1080,304,'hero-a','center 58%')}
+{LC}'''
 
-# ── 2  REWARD — the number owns the canvas
+# ── 2  EARNED — one number, one reveal
 S2=f'''{H}<style>body{{background:var(--night);color:var(--cream);}}</style>
 <div class="abs" style="left:-360px;top:-300px;width:1820px;height:1700px;border-radius:50%;background:radial-gradient(circle,rgba(155,196,138,.26) 0%,rgba(155,196,138,.07) 44%,rgba(14,31,10,0) 70%);"></div>
-<div class="abs kick" style="left:{M}px;top:250px;font-size:27px;color:var(--mint);">And you earned</div>
+<div class="abs kick" style="left:{M}px;top:250px;font-size:27px;color:var(--mint);">You earned</div>
 <div class="abs num" style="left:0;top:348px;width:1080px;text-align:center;font-size:556px;">{POINTS_PLACEHOLDER}</div>
 <h1 class="h abs" style="left:{M-5}px;top:912px;font-size:104px;">BrewPoints<span style="color:var(--mint)">.</span></h1>
-<div class="abs" style="left:{M}px;top:1082px;font-size:29px;font-weight:500;color:rgba(244,239,230,.62);">Earned through your BrewMaps check-ins.</div>'''
+<div class="abs" style="left:{M}px;top:1082px;font-size:34px;font-weight:600;color:rgba(244,239,230,.72);">Just by checking in.</div>'''
 
-# ── 3  REDEEMED — the inverse of slide 2: green on cream
+# ── 3  CLAIMED — a word lockup, not a second giant numeral
 S3=f'''{H}<style>body{{background:var(--cream);color:var(--green);}}</style>
-<div class="abs kick" style="left:{M}px;top:250px;font-size:27px;opacity:.62;">And you redeemed</div>
-<div class="abs num" style="left:0;top:348px;width:1080px;text-align:center;font-size:556px;">{REDEEMED_PLACEHOLDER}</div>
-<h1 class="h abs" style="left:{M-5}px;top:912px;font-size:104px;">BrewPoints<span style="color:#7FA86B">.</span></h1>
-<div class="abs" style="left:{M}px;top:1082px;font-size:29px;font-weight:500;opacity:.68;">Spent across {REDEEMED_CAFES} cafés this month.</div>'''
-
-# ── 4  DATA AS DESIGN — cream, asymmetric, check-in photos bled to the edges
-S4=f'''{H}<style>body{{background:var(--sand);color:var(--green);}}</style>
-<div class="abs num" style="left:{M-10}px;top:96px;font-size:312px;">{CUPS}</div>
-{ph(604,132,400,286,'photo-9')}
-<div class="abs kick" style="left:{M}px;top:404px;font-size:26px;opacity:.8;">cups posted</div>
-{ph(M,556,330,236,'photo-2')}
-<div class="abs num" style="left:436px;top:472px;font-size:436px;">{CAFES}</div>
-<div class="abs kick" style="left:442px;top:876px;font-size:26px;opacity:.8;">caf&eacute;s</div>
-<div class="abs num" style="left:{M-10}px;top:922px;font-size:340px;">{FREE_DAYS}</div>
-<div class="abs kick" style="left:284px;top:1118px;font-size:26px;opacity:.8;line-height:1.3;">coffee-free<br>days</div>
-{ph(604,984,400,286,'photo-12')}'''
-
-# ── 5  SHARE — headline, CTA and calendar as one block
-TILE=136
-S5=f'''{H}<style>body{{background:var(--deep);color:var(--cream);}}</style>
-<h1 class="h abs" style="left:{M-5}px;top:88px;font-size:78px;">What will your<br>month look like<span style="color:var(--mint)">?</span></h1>
-<div class="abs" style="left:{M}px;top:268px;font-size:40px;font-weight:700;color:var(--cream);">Start building yours.</div>
-<div class="abs" style="left:{M}px;top:326px;font-size:27px;font-weight:500;color:rgba(244,239,230,.6);">Check in when you grab a coffee.</div>
-<div class="abs" style="left:44px;top:432px;">
- <div class="serif" style="font-size:36px;font-style:italic;margin-left:6px;margin-bottom:16px;">{MONTH}</div>
- {calendar('dark',tile=TILE,gap=8,rows=5,radius=17)}
+<div class="abs kick" style="left:{M}px;top:206px;font-size:27px;opacity:.6;">And you claimed</div>
+<div class="abs rowb" style="left:{M-12}px;top:292px;gap:34px;">
+  <span class="num" style="font-size:330px;">{REDEEMED_CAFES_N}</span>
+  <span class="h" style="font-size:142px;">Rewards</span>
 </div>
-<div class="abs" style="left:36px;top:412px;width:46px;height:46px;border-left:3px solid rgba(244,239,230,.65);border-top:3px solid rgba(244,239,230,.65);"></div>
-<div class="abs" style="right:36px;top:412px;width:46px;height:46px;border-right:3px solid rgba(244,239,230,.65);border-top:3px solid rgba(244,239,230,.65);"></div>
-<div class="abs" style="left:36px;top:1122px;width:46px;height:46px;border-left:3px solid rgba(244,239,230,.65);border-bottom:3px solid rgba(244,239,230,.65);"></div>
-<div class="abs" style="right:36px;top:1122px;width:46px;height:46px;border-right:3px solid rgba(244,239,230,.65);border-bottom:3px solid rgba(244,239,230,.65);"></div>
-<div class="abs" style="left:{M}px;top:1232px;font-size:25px;font-weight:500;color:rgba(244,239,230,.6);line-height:1.35;">Share yours at the end of September.<br>Tag <b style="color:var(--cream);font-weight:700;">@BrewMaps</b></div>
-<img class="abs" src="src/logo-cream.png" style="right:{M}px;bottom:{M}px;width:64px;opacity:.95;">'''
+<h1 class="h abs" style="left:{M-6}px;top:582px;font-size:142px;">Claimed<span style="color:#7FA86B">.</span></h1>
+<div class="rule abs" style="left:{M}px;top:838px;width:{1080-2*M}px;background:rgba(43,77,31,.2);"></div>
+<div class="abs" style="left:{M}px;top:884px;font-size:31px;font-weight:500;opacity:.75;line-height:1.45;"><b style="font-weight:700;opacity:1;">{REDEEMED_PLACEHOLDER} BrewPoints</b> redeemed<br>across {REDEEMED_CAFES} cafés.</div>'''
+
+# ── 4  THE MONTH — one hero stat, two footnotes, photos as memories
+S4=f'''{H}<style>body{{background:var(--sand);color:var(--green);}}</style>
+<h1 class="h abs" style="left:{M-5}px;top:88px;font-size:84px;">Your month,<br>in coffee<span style="color:#7FA86B">.</span></h1>
+{frag(808,66,272,470,9)}
+{tile(596,470,404,2)}
+<div class="abs num" style="left:{M-14}px;top:404px;font-size:400px;">{CAFES}</div>
+<div class="abs kick" style="left:{M}px;top:786px;font-size:28px;opacity:.8;">cafés explored</div>
+{frag(0,940,242,470,12)}
+<div class="rule abs" style="left:540px;top:990px;width:{1080-540-M}px;background:rgba(43,77,31,.2);"></div>
+<div class="abs" style="left:540px;top:1034px;font-size:33px;font-weight:600;opacity:.85;line-height:1.7;">{CUPS} cups posted<br>{FREE_DAYS} coffee-free days</div>'''
+
+# ── 5  THE LOOP — calendar as hero, one CTA
+TILE=132
+S5=f'''{H}<style>body{{background:var(--deep);color:var(--cream);}}</style>
+<h1 class="h abs" style="left:{M-5}px;top:84px;font-size:80px;">Every coffee<br>adds to your month<span style="color:var(--mint)">.</span></h1>
+<div class="abs" style="left:{M}px;top:284px;font-size:28px;font-weight:500;color:rgba(244,239,230,.62);">Check in. Earn BrewPoints. Build your {MONTH}.</div>
+<div class="abs" style="left:62px;top:400px;">
+ <div class="serif" style="font-size:34px;font-style:italic;margin-left:6px;margin-bottom:14px;">{MONTH}</div>
+ {calendar('dark',tile=TILE,gap=8,rows=5,radius=16)}
+</div>
+<div class="abs" style="left:{M}px;top:1122px;font-size:44px;font-weight:700;">Check in on BrewMaps<span style="color:var(--mint)">.</span></div>
+<div class="abs" style="left:{M}px;top:1206px;font-size:23px;font-weight:500;color:rgba(244,239,230,.5);line-height:1.4;">Share yours at the end of {MONTH}. Tag @BrewMaps</div>
+<img class="abs" src="src/logo-cream.png" style="right:{M}px;bottom:{M}px;width:58px;opacity:.85;">'''
 for n,c in [('wrap-1',S1),('wrap-2',S2),('wrap-3',S3),('wrap-4',S4),('wrap-5',S5)]:
     open(n+'.html','w').write(c)
