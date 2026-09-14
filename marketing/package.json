@@ -1,0 +1,7 @@
+{
+  "name": "brewmaps-marketing",
+  "private": true,
+  "description": "Renders BrewMaps social posts from HTML to PNG.",
+  "scripts": { "render": "node render.js" },
+  "dependencies": { "playwright": "^1.55.0" }
+}
