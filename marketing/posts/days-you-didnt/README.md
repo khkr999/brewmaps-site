@@ -14,6 +14,8 @@ On the 30th, screenshot your calendar, share it to your story and tag us. We'll 
 
 Library → Calendar, in the BrewMaps app.
 
+BrewMaps is free on the App Store. Link in bio.
+
 #BrewMaps #CoffeeCalendar #DaysYouDidnt #SpecialtyCoffee #DubaiCoffee #UAECoffee #SharjahCoffee #CoffeeDaily
 
 ## Alt text
@@ -25,3 +27,8 @@ Headline "5 days you didn't" above the BrewMaps September calendar showing six d
 - 30 September: "September, closed." with the finished calendar. Ask for screenshots, repost every one to Stories.
 - Reel: 7-second screen recording of the grid filling day by day, ending on the stat line.
 - Second static: the "HAD COFFEE, DIDN'T POST" chip from the August day view is a post on its own.
+
+## CTA
+
+Primary: share to story. The screenshot is the mechanic; story reshares are the reach.
+Every caption also carries the standing line "BrewMaps is free on the App Store. Link in bio." as a footer, not as the ask.

@@ -69,6 +69,12 @@ cd posts/where-should-we-go && python3 build_slide1.py && python3 build_slide2.p
 
 ## Rules
 
+One primary call to action per post, chosen for that post's job — comment, tag, share,
+traffic or install. Two competing asks and people do neither. Every caption also ends with
+the standing line "BrewMaps is free on the App Store. Link in bio." That is a footer, not
+the ask, so the install path always exists without crowding out the thing the post is
+actually for.
+
 Real data only. Café names, counts, ratings, distances and screenshots come from the
 app and are never edited. Anything not yet verified is marked as a placeholder in that
 post's README and in the source constant, never quietly invented.

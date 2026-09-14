@@ -22,6 +22,8 @@ Which one is yours? Tell us below.
 
 Search by Area → Jumeirah, on BrewMaps.
 
+BrewMaps is free on the App Store. Link in bio.
+
 #BrewMaps #Jumeirah #JumeirahCafe #DubaiCoffee #DubaiCafes #SpecialtyCoffee #UAECoffee #CoffeeDubai
 
 ## Alt text
@@ -37,3 +39,8 @@ app figure. Reconcile if the site is what people will click through to.
 ## Build
 
 `node ../../render.js post.html`
+
+## CTA
+
+Primary: comment. "Which one is yours?" invites a café name, and named cafés get reshared by the cafés themselves.
+Every caption also carries the standing line "BrewMaps is free on the App Store. Link in bio." as a footer, not as the ask.

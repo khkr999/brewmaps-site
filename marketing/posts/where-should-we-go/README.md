@@ -42,6 +42,8 @@ Pick an area on BrewMaps and it shows you the specialty cafés in it. 29 areas a
 
 Tag the friend who never decides.
 
+BrewMaps is free on the App Store. Link in bio.
+
 #BrewMaps #SpecialtyCoffee #DubaiCoffee #UAECoffee #DubaiCafes #SharjahCafes #CoffeeWithFriends
 
 ## Honest limitation
@@ -58,3 +60,8 @@ table above, or brief an illustrator against this palette.
 ```
 cd source && python3 gen_illo.py && node render.js illo-1.html
 ```
+
+## CTA
+
+Primary: tag a friend. Tagged friends bring the post to accounts that do not follow you.
+Every caption also carries the standing line "BrewMaps is free on the App Store. Link in bio." as a footer, not as the ask.

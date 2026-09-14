@@ -26,6 +26,8 @@ Full index at brewmaps.app/matcha-index, link in bio.
 
 Where do you get yours, and what do you pay?
 
+BrewMaps is free on the App Store. Link in bio.
+
 #BrewMaps #Matcha #MatchaLatte #DubaiMatcha #UAEMatcha #DubaiCafes #AbuDhabiCafes #SpecialtyCoffee #UAECoffee
 
 ## Alt text
@@ -36,3 +38,8 @@ median matcha price by area.
 ## Build
 
 `node ../../render.js slide-*.html`
+
+## CTA
+
+Primary: traffic to the index, then comment. Authority post, not an install post.
+Every caption also carries the standing line "BrewMaps is free on the App Store. Link in bio." as a footer, not as the ask.

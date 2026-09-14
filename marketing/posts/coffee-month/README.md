@@ -41,6 +41,8 @@ Start building yours — check in when you grab a coffee. Share yours at the end
 
 Library → Calendar, in the BrewMaps app.
 
+BrewMaps is free on the App Store. Link in bio.
+
 #BrewMaps #YourCoffeeMonth #BrewPoints #SpecialtyCoffee #DubaiCoffee #UAECoffee #SharjahCoffee #DubaiCafes #CoffeeDaily
 
 ## Alt text
@@ -58,3 +60,8 @@ Four slides. A café table with drinks above the headline "Your coffee month". A
 | 5 | The loop | Calendar is the hero. One CTA, social line secondary |
 
 Fragments on slide 4 show under 55% of each tile so the +N pill is never sliced mid-shape.
+
+## CTA
+
+Primary: share to story and tag. Personal data is the shareable part.
+Every caption also carries the standing line "BrewMaps is free on the App Store. Link in bio." as a footer, not as the ask.
