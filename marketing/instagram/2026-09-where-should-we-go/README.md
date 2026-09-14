@@ -23,10 +23,11 @@ Red from the reference is replaced by forest green. No third hue anywhere.
 |---|---|---|
 | 1 | Where should we go? / The hardest question in any group chat. | Three figures at a table, phones out, question marks |
 | 2 | Someone always has to decide. / Be that person. | Tighter crop, side figures tucked behind and leaning in, phone raised |
-| 3 | Pick an area. Find your coffee. / 29 areas across the UAE, on BrewMaps. | The real Browse by Area screen inside a hand-drawn phone frame |
+| 3 | Pick an area. Find your coffee. / 29 areas across the UAE, on BrewMaps. | The real Browse by Area screen, Dubai section, inside a hand-drawn phone frame |
 
-The device that ties them together: the illustrated phone on slides 1 and 2 becomes a
-drawn phone frame on slide 3, holding the real interface. Illustration carries the human
+The device that ties them together: the illustrated phone carries the BrewMaps cup mark
+in cream on slides 1 and 2, then becomes a drawn phone frame on slide 3 holding the real
+interface. The same object, three states. Illustration carries the human
 setup, the real app is the punchline, and the two visual systems have separate jobs
 instead of competing.
 

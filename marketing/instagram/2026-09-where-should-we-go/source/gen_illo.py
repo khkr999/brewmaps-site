@@ -33,7 +33,7 @@ scene=f'''
 {arm(f'M {B-64},{Bs+40} C {B-92},{Bs+104} {B-88},{Bs+150} {B-50},{Bs+164}', WHITE)}
 {arm(f'M {B+64},{Bs+40} C {B+92},{Bs+104} {B+88},{Bs+150} {B+50},{Bs+164}', WHITE)}
 {arm(f'M {C-64},{Cs+42} C {C-104},{Cs+64} {C-124},{Cs+100} {C-130},{Cs+128}', LINE)}
-{phone(B,Bs+150)}
+{phone(B,Bs+150,icon='src/mark-cream.png')}
 {hand(B-52,Bs+166,18)}{hand(B+52,Bs+166,18)}
 {hand(C-134,Cs+136,18)}
 {hand(A-132,As-44,18)}

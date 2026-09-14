@@ -32,7 +32,7 @@ scene=f'''
 {head(B,Bh,RX,RY)}{bun(B,Bh,RX,RY)}{face(B,Bh,look=0)}
 {arm(f'M {B-80},{Bs+50} C {B-112},{Bs+104} {B-104},{Bs+136} {B-70},{Bs+146}', WHITE)}
 {arm(f'M {B+80},{Bs+50} C {B+112},{Bs+104} {B+104},{Bs+136} {B+70},{Bs+146}', WHITE)}
-{phone(B,Bs+96,94,156,-4)}
+{phone(B,Bs+96,94,156,-4,icon="src/mark-cream.png")}
 {hand(B-72,Bs+148,20)}{hand(B+72,Bs+148,20)}
 
 <path d="M 0,{TOP} L 1080,{TOP} L 1080,1350 L 0,1350 Z" fill="{WHITE}" stroke="none"/>

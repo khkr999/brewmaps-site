@@ -58,10 +58,14 @@ def arm(d,fill,w=40):
 def hand(x,y,r=20):
     return f'<circle cx="{x}" cy="{y}" r="{r}" fill="{WHITE}" stroke="{LINE}" stroke-width="{SW}"/>'
 
-def phone(x,y,w=64,h=108,tilt=-8):
-    return (f'<g transform="rotate({tilt} {x} {y})">'
-            f'<rect x="{x-w/2}" y="{y-h/2}" width="{w}" height="{h}" rx="12" fill="{WHITE}" stroke="{LINE}" stroke-width="{SW}"/>'
-            f'<rect x="{x-w/2+11}" y="{y-h/2+14}" width="{w-22}" height="{h-32}" rx="5" fill="{GREEN}"/></g>')
+def phone(x,y,w=64,h=108,tilt=-8,icon=None):
+    g=(f'<g transform="rotate({tilt} {x} {y})">'
+       f'<rect x="{x-w/2}" y="{y-h/2}" width="{w}" height="{h}" rx="12" fill="{WHITE}" stroke="{LINE}" stroke-width="{SW}"/>'
+       f'<rect x="{x-w/2+11}" y="{y-h/2+14}" width="{w-22}" height="{h-32}" rx="5" fill="{GREEN}"/>')
+    if icon:
+        iw=w*0.54; ih=iw/1.51
+        g+=f'<image href="{icon}" x="{x-iw/2}" y="{y-ih/2-2}" width="{iw}" height="{ih}"/>'
+    return g+'</g>' 
 
 def cup(x,y,fill=WHITE,s=1.0):
     w=24*s; h=52*s

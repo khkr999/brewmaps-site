@@ -13,6 +13,6 @@ html=f'''<link rel="stylesheet" href="base.css">
 <div class="abs" style="left:0;top:0;">{svg}</div>
 <h1 class="h abs" style="left:70px;top:142px;font-size:96px;color:{LINE};">Pick an area<span style="color:{MID}">.</span><br>Find your coffee<span style="color:{MID}">.</span></h1>
 <div class="abs" style="left:76px;top:366px;font-size:29px;font-weight:500;opacity:.62;">29 areas across the UAE, on BrewMaps.</div>
-<div class="screen"><img src="src/browse-top.png"></div>
+<div class="screen"><img src="src/browse-dubai.png"></div>
 <img class="abs" src="src/logo-green.png" style="right:70px;top:150px;width:70px;opacity:.9;">'''
 open('illo-3.html','w').write(html)
