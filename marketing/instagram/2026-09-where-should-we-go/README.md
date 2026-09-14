@@ -1,6 +1,6 @@
 # Where should we go? — flat line illustration demo
 
-Slide 1 only, 1080 × 1350. A demo of the illustrated style in BrewMaps colours.
+Three slides, 1080 × 1350. Illustrated setup, real app payoff.
 
 ## Style
 
@@ -17,14 +17,31 @@ loose decorative strokes. Palette locked to three values plus the ground:
 
 Red from the reference is replaced by forest green. No third hue anywhere.
 
-## The three-slide idea
+## The three slides
 
-1. Illustrated. Three friends, phones out, nobody deciding. "Where should we go?"
-2. Illustrated. One person holding the phone, everyone leaning in. "Someone always has to decide."
-3. Real app. The Browse by Area screen with "Pick an area. Find your coffee."
+| # | Copy | Visual |
+|---|---|---|
+| 1 | Where should we go? / The hardest question in any group chat. | Three figures at a table, phones out, question marks |
+| 2 | Someone always has to decide. / Be that person. | Tighter crop, side figures tucked behind and leaning in, phone raised |
+| 3 | Pick an area. Find your coffee. / 29 areas across the UAE, on BrewMaps. | The real Browse by Area screen inside a hand-drawn phone frame |
 
-Illustration carries the human setup; the real interface is the payoff. That keeps the
-photographic editorial system and this one in separate jobs rather than competing.
+The device that ties them together: the illustrated phone on slides 1 and 2 becomes a
+drawn phone frame on slide 3, holding the real interface. Illustration carries the human
+setup, the real app is the punchline, and the two visual systems have separate jobs
+instead of competing.
+
+## Caption
+
+Where should we go?
+
+Nobody has ever answered this question quickly. Someone opens a map, someone says "anywhere",
+somebody suggests the place you went last week.
+
+Pick an area on BrewMaps and it shows you the specialty cafés in it. 29 areas across the UAE.
+
+Tag the friend who never decides.
+
+#BrewMaps #SpecialtyCoffee #DubaiCoffee #UAECoffee #DubaiCafes #SharjahCafes #CoffeeWithFriends
 
 ## Honest limitation
 
