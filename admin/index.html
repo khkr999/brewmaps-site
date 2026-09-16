@@ -618,6 +618,74 @@ function render(d) {
       ${paDupBad ? '' : '· ✓ no duplicate sends detected (7d)'}
     </div>` : '';
 
+  // ── Notifications health (get_notification_health, migration 180) ─────────
+  // "opened" here is push_opened — an actual TAP — not notification_queue.is_read,
+  // which only means it was seen in the in-app list. "pushed" counts only rows
+  // with send_attempts >= 1; friend_checkin is in-app only since 119 and never
+  // leaves the server, so counting it would understate every rate.
+  const NH = d.notifications || null;
+  const nhPushed = NH ? NH.byType.reduce((a, b) => a + b.pushed, 0) : 0;
+  const nhOpened = NH ? NH.byType.reduce((a, b) => a + b.opened, 0) : 0;
+  const nhRate   = nhPushed ? Math.round(nhOpened / nhPushed * 1000) / 10 : 0;
+  const nhBreach = NH ? (NH.caps.overWeekly + NH.caps.overDaily) : 0;
+  const nhUnreach = NH ? (NH.reach.realUsers - NH.reach.withToken) : 0;
+  const nhBars = NH ? NH.byType.map(b => `
+    <div class="bar-row">
+      <div class="bar-label">
+        <span class="bar-name">${b.type}</span>
+        <span class="bar-count">${b.opened}/${b.pushed} · ${b.rate ?? 0}%</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${Math.min(100, Math.round((b.rate ?? 0) * 2.5))}%${(b.rate ?? 0) < 3 ? ';background:#e74c3c' : ''}"></div>
+      </div>
+    </div>`).join('') : '';
+  const nhJobs = NH ? NH.jobs.map(j =>
+    `<span class="count-badge" style="${j.active ? '' : 'background:#eee;color:#999;text-decoration:line-through'}">${j.name.replace('enqueue-', '')}</span>`).join(' ') : '';
+  const nhRecent = NH ? NH.recent.map(r => `
+    <tr>
+      <td><div class="cafe-name">${r.who}</div><div class="cafe-area">${r.type}</div></td>
+      <td><div class="cafe-area">${(r.title || '').replace(/</g, '&lt;')}</div></td>
+      <td style="white-space:nowrap;font-size:11px;color:var(--stone)">${new Date(r.sent_at).toLocaleString('en-GB', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}</td>
+      <td>${r.is_read ? '<span class="count-badge">seen</span>' : ''}</td>
+    </tr>`).join('') : '';
+
+  const notificationsHtml = NH ? `
+    <div class="section-title">🔔 Notifications · last 30 days</div>
+    ${nhBreach ? `<div style="background:#fdecea;border:1px solid #e74c3c;color:#a3271f;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:12px">
+      🚨 ${nhBreach} user(s) OVER the cap — worst ${NH.caps.worstWeek}/week, ${NH.caps.worstDay}/day. Caps are 2/week scheduled and 4/day.
+    </div>` : ''}
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Pushed</div><div class="kpi-value">${nhPushed.toLocaleString()}</div>
+        <div class="kpi-sub">actually left the server</div>
+      </div>
+      <div class="kpi-card accent">
+        <div class="kpi-label">Open Rate</div><div class="kpi-value">${nhRate}%</div>
+        <div class="kpi-sub">${nhOpened} taps</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Reachable</div><div class="kpi-value">${NH.reach.withToken}</div>
+        <div class="kpi-sub">${nhUnreach} of ${NH.reach.realUsers} have no push token</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Over The Cap</div>
+        <div class="kpi-value" style="${nhBreach ? 'color:#e74c3c' : ''}">${nhBreach}</div>
+        <div class="kpi-sub">worst ${NH.caps.worstWeek}/wk · ${NH.caps.worstDay}/day</div>
+      </div>
+    </div>
+    <div class="bar-card" style="margin-top:12px">
+      <div class="bar-card-title">Open rate by type — red is under 3%</div>
+      ${nhBars}
+    </div>
+    <div class="bar-card" style="margin-top:12px">
+      <div class="bar-card-title">Jobs — struck through is switched off</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">${nhJobs}</div>
+    </div>
+    <div class="bar-card" style="margin-top:12px">
+      <div class="bar-card-title">Last 20 sent</div>
+      <table style="width:100%"><tbody>${nhRecent}</tbody></table>
+    </div>` : '';
+
   document.getElementById('main-content').innerHTML = `
 
     <div class="section-title">📈 Product Analytics</div>
@@ -647,6 +715,7 @@ function render(d) {
     ` : `<div class="table-card"><div class="empty-state" style="padding:20px">Analytics populate once testers update to the latest build and start using the app. Check back in a day or two.</div></div>`}
 
     ${pushAnchorsHtml}
+    ${notificationsHtml}
 
     <div class="section-title">👥 Users · Last ${period} days</div>
     <div class="kpi-grid">
