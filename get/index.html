@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Get BrewMaps — UAE Café Finder</title>
-  <meta name="description" content="812 cafés across the UAE, matched to your taste. Download BrewMaps free on the App Store." />
+  <meta name="description" content="812 cafés across the UAE, matched to your taste. Download BrewMaps free on the App Store and Google Play." />
   <link rel="icon" type="image/png" href="/logo.png" />
 
   <!-- Open Graph (rich preview for shares) -->
   <meta property="og:title" content="Get BrewMaps — UAE Café Finder" />
-  <meta property="og:description" content="812 cafés across the UAE, matched to your taste. Free on the App Store." />
+  <meta property="og:description" content="812 cafés across the UAE, matched to your taste. Free on the App Store and Google Play." />
   <meta property="og:image" content="https://brewmaps.app/logo.png" />
   <meta property="og:url" content="https://brewmaps.app/get" />
   <meta property="og:type" content="website" />
@@ -92,7 +92,11 @@
       margin-bottom: 40px;
     }
 
-    /* App Store button */
+    /* Store buttons */
+    .store-row {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 14px;
+    }
     .store-btn {
       display: inline-flex; align-items: center; gap: 13px;
       background: var(--espresso); color: #fff;
@@ -169,18 +173,30 @@
 
     <div class="kicker">The UAE's Café Finder</div>
     <h1 class="serif">Find your kind of <em>café.</em></h1>
-    <p class="sub"><span data-live="total">812</span> cafés across all 7 emirates — matched to your taste, not just the nearest one. Free on the App Store.</p>
+    <p class="sub"><span data-live="total">812</span> cafés across all 7 emirates — matched to your taste, not just the nearest one. Free on the App Store and Google Play.</p>
 
-    <a class="store-btn" id="installBtn"
-       href="https://apps.apple.com/ae/app/brewmaps-uae-caf%C3%A9-finder/id6775899450">
-      <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
-        <path d="M17.05 12.7c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.75 2.28-1.6 2.78-.41 6.89 1.15 9.14.76 1.1 1.67 2.34 2.86 2.29 1.15-.05 1.58-.74 2.97-.74 1.39 0 1.78.74 3 .72 1.24-.02 2.02-1.12 2.78-2.23.88-1.28 1.24-2.52 1.26-2.58-.03-.01-2.41-.93-2.43-3.68zM14.77 5.9c.64-.77 1.07-1.85.95-2.9-.92.04-2.03.61-2.69 1.38-.59.68-1.11 1.77-.97 2.81 1.02.08 2.07-.52 2.71-1.29z"/>
-      </svg>
-      <span class="txt">
-        <small>Download on the</small>
-        <b>App Store</b>
-      </span>
-    </a>
+    <div class="store-row">
+      <a class="store-btn" id="installBtn" data-store="app_store"
+         href="https://apps.apple.com/ae/app/brewmaps-uae-caf%C3%A9-finder/id6775899450">
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+          <path d="M17.05 12.7c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.75 2.28-1.6 2.78-.41 6.89 1.15 9.14.76 1.1 1.67 2.34 2.86 2.29 1.15-.05 1.58-.74 2.97-.74 1.39 0 1.78.74 3 .72 1.24-.02 2.02-1.12 2.78-2.23.88-1.28 1.24-2.52 1.26-2.58-.03-.01-2.41-.93-2.43-3.68zM14.77 5.9c.64-.77 1.07-1.85.95-2.9-.92.04-2.03.61-2.69 1.38-.59.68-1.11 1.77-.97 2.81 1.02.08 2.07-.52 2.71-1.29z"/>
+        </svg>
+        <span class="txt">
+          <small>Download on the</small>
+          <b>App Store</b>
+        </span>
+      </a>
+      <a class="store-btn" data-store="google_play"
+         href="https://play.google.com/store/apps/details?id=com.brewmaps.app">
+        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+          <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 010 1.73l-2.808 1.626L15.005 12l2.693-2.491zM5.864 2.658L16.802 8.99l-2.303 2.303-8.635-8.635z"/>
+        </svg>
+        <span class="txt">
+          <small>Get it on</small>
+          <b>Google Play</b>
+        </span>
+      </a>
+    </div>
 
     <div class="trust">
       <span class="pill"><span data-live="total">812</span> cafés</span>
@@ -201,13 +217,19 @@
   </footer>
 
   <script>
-    // Fire download-intent events, then let the link navigate to the App Store.
-    document.getElementById('installBtn').addEventListener('click', function () {
-      if (window.fbq) {
-        fbq('trackCustom', 'AppStoreClick');
-        fbq('track', 'Lead');            // standard event → optimizable + shows as a column in Ads Manager
-      }
-      // no preventDefault — navigation to the App Store proceeds normally (sendBeacon survives it)
+    // Fire download-intent events, then let the link navigate to the store.
+    // Bound to EVERY .store-btn, not just the Apple one — an Android click that fires no
+    // pixel event is invisible to Meta's optimisation, which silently degrades the ad account.
+    // Event name stays 'AppStoreClick' on purpose: any existing custom conversion or audience
+    // built on it keeps working. The `store` param is what distinguishes the two.
+    document.querySelectorAll('.store-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (window.fbq) {
+          fbq('trackCustom', 'AppStoreClick', { store: btn.dataset.store || 'app_store' });
+          fbq('track', 'Lead');          // standard event → optimizable + a column in Ads Manager
+        }
+        // no preventDefault — navigation to the store proceeds normally (sendBeacon survives it)
+      });
     });
   
     // Live café counts — brewmaps.app never drifts from the catalogue. Static numbers are the first paint;
