@@ -1,26 +1,29 @@
 import sys
 AREA = sys.argv[1] if len(sys.argv)>1 else "Jumeirah"
-GREEN='#1E3A14'; CREAM='#F4EFE6'; MINT='#9BC48A'
-html = f'''<link rel="stylesheet" href="../../../marketing/assets/fonts/dmsans.css">
+CREAM='#F4EFE6'
+# Reels safe area for a 1080x1920 file on a 19.5:9 phone:
+# ~96px is cropped off each side, and the Reels/Friends tabs cover the top ~300px.
+L, T, W, H = 132, 344, 816, 176
+html = f'''<link rel="stylesheet" href="fonts/dmsans.css">
 <style>
- @import url("fonts/dmsans.css");
  html,body{{margin:0;background:transparent;}}
  body{{width:1080px;height:1920px;font-family:"DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;}}
- .banner{{position:absolute;left:52px;top:96px;width:976px;height:196px;border-radius:44px;
-   background:rgba(14,31,10,.88);backdrop-filter:blur(18px);display:flex;align-items:center;
-   padding:0 30px;box-sizing:border-box;box-shadow:0 26px 60px -28px rgba(0,0,0,.65);}}
- .av{{width:112px;height:112px;border-radius:50%;background:{CREAM};display:flex;align-items:center;justify-content:center;flex:0 0 auto;}}
- .av img{{width:66px;}}
- .txt{{margin-left:26px;flex:1 1 auto;}}
- .name{{color:{CREAM};font-size:46px;font-weight:700;letter-spacing:-.01em;line-height:1.1;}}
- .sub{{color:rgba(244,239,230,.55);font-size:27px;font-weight:500;margin-top:5px;}}
- .btn{{width:104px;height:104px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}}
- .no{{background:#E5484D;margin-right:18px;}} .yes{{background:#3DBE63;}}
- .btn svg{{width:50px;height:50px;fill:#fff;}}
+ .banner{{position:absolute;left:{L}px;top:{T}px;width:{W}px;height:{H}px;border-radius:40px;
+   background:rgba(14,31,10,.88);display:flex;align-items:center;
+   padding:0 26px;box-sizing:border-box;box-shadow:0 24px 56px -26px rgba(0,0,0,.66);}}
+ .av{{width:98px;height:98px;border-radius:50%;background:{CREAM};display:flex;align-items:center;justify-content:center;flex:0 0 auto;}}
+ .av img{{width:58px;}}
+ .txt{{margin-left:22px;flex:1 1 auto;min-width:0;}}
+ .name{{color:{CREAM};font-size:42px;font-weight:700;letter-spacing:-.01em;line-height:1.1;
+   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}}
+ .sub{{color:rgba(244,239,230,.55);font-size:24px;font-weight:500;margin-top:4px;}}
+ .btn{{width:92px;height:92px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}}
+ .no{{background:#E5484D;margin-right:15px;}} .yes{{background:#3DBE63;}}
+ .btn svg{{width:44px;height:44px;fill:#fff;}}
  .no svg{{transform:rotate(134deg);}}
 </style>
 <div class="banner">
-  <div class="av"><img src="../../../marketing/assets/logos/mark-green.png"></div>
+  <div class="av"><img src="src/mark-green.png"></div>
   <div class="txt"><div class="name">{AREA}</div><div class="sub">BrewMaps</div></div>
   <div class="btn no"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .58 3.6 1 1 0 0 1-.25 1z"/></svg></div>
   <div class="btn yes"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.58 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.4 11.4 0 0 0 .58 3.6 1 1 0 0 1-.25 1z"/></svg></div>

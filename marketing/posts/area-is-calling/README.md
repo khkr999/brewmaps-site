@@ -27,6 +27,22 @@ decides whether to care. The macro shot is what holds them once they have stoppe
 3. Last 1.5s: fade the whole frame to about 25% and bring up the handle
 4. Loop it — end on the frame you opened on
 
+## Reels safe area — do not ignore
+
+Instagram fills the screen by matching height, so a 1080 × 1920 file loses about **96px off
+each side** on a 19.5:9 phone. Its own chrome then covers the top and bottom. Anything that
+must be readable belongs inside:
+
+| Edge | Keep clear |
+|---|---|
+| Top | 300px — status bar, Reels/Friends tabs |
+| Bottom | 420px — caption, handle, music |
+| Left and right | 96px cropped, plus margin |
+| Right, lower half | 190px — like/comment/share rail |
+
+The banner is therefore 816px wide at x 132 and starts at y 344. An earlier cut placed it at
+y 96 full width and Instagram ate the name and both buttons.
+
 ## Rendered version in this folder
 
 `export/jumeirah-is-calling.mp4` — 10s, 1080 × 1920, silent. Built from the real Browse by
@@ -41,7 +57,7 @@ Add music before posting. A silent Reel loses reach.
 ## Overlays ready
 
 `banner-jumeirah.png`, `banner-al-quoz.png`, `banner-city-walk.png`, `banner-deira.png` —
-1080 × 1920, transparent, BrewMaps green. `mock-over-photo.png` shows how it reads.
+1080 × 1920, transparent, BrewMaps green, positioned inside the safe area above. `mock-over-photo.png` shows how it reads.
 
 New area: `python3 banner.py "Al Barsha"` then `node render_alpha.js banner-al-barsha.html`.
 
