@@ -40,8 +40,13 @@ must be readable belongs inside:
 | Left and right | 96px cropped, plus margin |
 | Right, lower half | 190px — like/comment/share rail |
 
-The banner is therefore 816px wide at x 132 and starts at y 344. An earlier cut placed it at
-y 96 full width and Instagram ate the name and both buttons.
+The bar itself runs **past both edges** (x -30, width 1140) so it reads as a full-bleed system
+banner rather than a floating card. Its contents are inset 145px, which puts the avatar at
+x 115 and the far edge of the buttons at x 965 — both inside the visible 96–984 band. Top edge
+sits at y 330, clear of the tabs.
+
+Get this wrong and Instagram eats the area name and the buttons, which is what happened on the
+first cut.
 
 ## Rendered version in this folder
 

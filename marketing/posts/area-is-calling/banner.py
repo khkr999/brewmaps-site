@@ -1,25 +1,26 @@
 import sys
 AREA = sys.argv[1] if len(sys.argv)>1 else "Jumeirah"
 CREAM='#F4EFE6'
-# Reels safe area for a 1080x1920 file on a 19.5:9 phone:
-# ~96px is cropped off each side, and the Reels/Friends tabs cover the top ~300px.
-L, T, W, H = 132, 344, 816, 176
+# Instagram crops ~96px off each side of a 1080x1920 Reel and its tabs cover the top ~300px.
+# The bar itself runs past both edges so it reads full-bleed; the CONTENT is inset 145px
+# so the avatar (from x=115) and the buttons (to x=965) stay inside the visible 96–984 band.
+L, T, W, H, PAD = -30, 330, 1140, 222, 145
 html = f'''<link rel="stylesheet" href="fonts/dmsans.css">
 <style>
  html,body{{margin:0;background:transparent;}}
  body{{width:1080px;height:1920px;font-family:"DM Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;}}
- .banner{{position:absolute;left:{L}px;top:{T}px;width:{W}px;height:{H}px;border-radius:40px;
-   background:rgba(14,31,10,.88);display:flex;align-items:center;
-   padding:0 26px;box-sizing:border-box;box-shadow:0 24px 56px -26px rgba(0,0,0,.66);}}
- .av{{width:98px;height:98px;border-radius:50%;background:{CREAM};display:flex;align-items:center;justify-content:center;flex:0 0 auto;}}
- .av img{{width:58px;}}
- .txt{{margin-left:22px;flex:1 1 auto;min-width:0;}}
- .name{{color:{CREAM};font-size:42px;font-weight:700;letter-spacing:-.01em;line-height:1.1;
+ .banner{{position:absolute;left:{L}px;top:{T}px;width:{W}px;height:{H}px;
+   background:rgba(14,31,10,.9);display:flex;align-items:center;
+   padding:0 {PAD}px;box-sizing:border-box;box-shadow:0 26px 60px -24px rgba(0,0,0,.7);}}
+ .av{{width:124px;height:124px;border-radius:50%;background:{CREAM};display:flex;align-items:center;justify-content:center;flex:0 0 auto;}}
+ .av img{{width:74px;}}
+ .txt{{margin-left:28px;flex:1 1 auto;min-width:0;}}
+ .name{{color:{CREAM};font-size:54px;font-weight:700;letter-spacing:-.012em;line-height:1.08;
    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}}
- .sub{{color:rgba(244,239,230,.55);font-size:24px;font-weight:500;margin-top:4px;}}
- .btn{{width:92px;height:92px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}}
- .no{{background:#E5484D;margin-right:15px;}} .yes{{background:#3DBE63;}}
- .btn svg{{width:44px;height:44px;fill:#fff;}}
+ .sub{{color:rgba(244,239,230,.55);font-size:30px;font-weight:500;margin-top:6px;}}
+ .btn{{width:112px;height:112px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}}
+ .no{{background:#E5484D;margin-right:20px;}} .yes{{background:#3DBE63;}}
+ .btn svg{{width:54px;height:54px;fill:#fff;}}
  .no svg{{transform:rotate(134deg);}}
 </style>
 <div class="banner">
