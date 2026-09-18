@@ -27,6 +27,17 @@ decides whether to care. The macro shot is what holds them once they have stoppe
 3. Last 1.5s: fade the whole frame to about 25% and bring up the handle
 4. Loop it — end on the frame you opened on
 
+## Rendered version in this folder
+
+`export/jumeirah-is-calling.mp4` — 10s, 1080 × 1920, silent. Built from the real Browse by
+Area screen scrolling under the banner, ending on the handle. Rebuild with `./build_video.sh`.
+
+This is the screen-recording variant, not the macro variant. It is postable as-is and it
+demonstrates the product, but the reference gets its hold from real macro footage of coffee
+being made. Shoot that and drop the same overlay on it for the stronger version.
+
+Add music before posting. A silent Reel loses reach.
+
 ## Overlays ready
 
 `banner-jumeirah.png`, `banner-al-quoz.png`, `banner-city-walk.png`, `banner-deira.png` —
