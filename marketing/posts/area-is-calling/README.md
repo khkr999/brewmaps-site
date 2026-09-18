@@ -47,9 +47,9 @@ New area: `python3 banner.py "Al Barsha"` then `node render_alpha.js banner-al-b
 
 ## Caption
 
-Answer it.
+Jumeirah's calling. Picking up?
 
-Jumeirah has 24. Al Quoz has 29. City Walk has 12. Pick an area, see the cafés in it.
+24 cafés there. 29 in Al Quoz. 12 in City Walk. Pick an area, see the cafés in it.
 
 Which area should call next? 👇
 
@@ -59,7 +59,7 @@ BrewMaps is free on the App Store. Link in bio.
 
 ### Shorter alternative
 
-Answer it. ☕
+Jumeirah's calling. Picking up? ☕
 
 29 areas across the UAE. Which one should call next? 👇
 
@@ -68,6 +68,12 @@ BrewMaps is free on the App Store. Link in bio.
 #BrewMaps #DubaiCoffee #SpecialtyCoffee #UAECoffee #DubaiCafes
 
 Every count named in the caption is visible in the video itself, which rewards watching it twice.
+
+The opener plays the gag rather than explaining it, and "Picking up?" is the half that
+survives Instagram's truncation. The closing question is open rather than yes/no, so replies
+name an area you can turn into the next episode.
+
+Spelling: Jumeirah.
 
 ## CTA
 
