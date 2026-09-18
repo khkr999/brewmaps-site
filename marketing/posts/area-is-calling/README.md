@@ -47,11 +47,27 @@ New area: `python3 banner.py "Al Barsha"` then `node render_alpha.js banner-al-b
 
 ## Caption
 
-Jumeirah is calling.
+Answer it.
 
-29 areas across the UAE. Pick one, see the cafés in it.
+Jumeirah has 24. Al Quoz has 29. City Walk has 12. Pick an area, see the cafés in it.
+
+Which area should call next? 👇
 
 BrewMaps is free on the App Store. Link in bio.
+
+#BrewMaps #DubaiCoffee #SpecialtyCoffee #UAECoffee #DubaiCafes
+
+### Shorter alternative
+
+Answer it. ☕
+
+29 areas across the UAE. Which one should call next? 👇
+
+BrewMaps is free on the App Store. Link in bio.
+
+#BrewMaps #DubaiCoffee #SpecialtyCoffee #UAECoffee #DubaiCafes
+
+Every count named in the caption is visible in the video itself, which rewards watching it twice.
 
 ## CTA
 
