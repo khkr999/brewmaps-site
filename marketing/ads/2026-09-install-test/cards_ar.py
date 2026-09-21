@@ -17,7 +17,8 @@ def page(body, bg=NIGHT, fg=CREAM):
 </style><div class="c">{body}</div>'''
 
 cards=[
- ('ar-1', page('<div class="line">ما لا يخبرك به أحد<br>عن القهوة في دبي</div>')),
+ ('ar-0', page('<div class="line" style="font-size:214px;line-height:1.02;">محد<br>خبرك<span style="color:'+MINT+'">!!</span></div>')),
+ ('ar-1', page('<div class="line" style="font-size:88px;">عن أسعار القهوة<br>في دبي</div>')),
  ('ar-2', page('<div class="kick">القوز</div><div class="big" style="font-size:400px;margin-top:38px;">7</div>'
                '<div class="lab">دراهم · إسبريسو واحد</div>')),
  ('ar-3', page('<div class="kick">جي بي آر</div><div class="big" style="font-size:400px;margin-top:38px;">34</div>'

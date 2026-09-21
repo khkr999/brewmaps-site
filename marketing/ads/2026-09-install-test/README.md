@@ -13,7 +13,7 @@ creatives use different psychology rather than variations of one idea.
 | **A** `ad-a-control.mp4` | Curiosity | A fake call banner from "Jumeirah" over the app. Stops the scroll, never explains the product. | Great hook, no value proposition. Does intrigue alone drive installs? |
 | **B** `ad-b-demo.mp4` | Utility | Plain demo. Browse areas, "Pick an area", tap through to Jumeirah's 24 cafés, "See every café in it." | The boring control-beater. Often wins install campaigns outright. |
 | **C** `ad-c-price.mp4` | Money | AED 7 in Al Quoz, AED 34 in JBR, and half of 78 cafés charge 14 or less. | Does a useful fact convert better than a product tour? |
-| **C-ar** `ad-c-price-ar.mp4` | Money, Arabic | Same cut, fully in Arabic, right to left. | Does language matter more than angle here? |
+| **C-ar** `ad-c-price-ar.mp4` | Money, Arabic | Opens on محد خبرك!! then the same price story, right to left. | Does language matter more than angle here? |
 
 A never says what the app is. B says nothing but. C sells the knowledge, not the app.
 Whichever wins tells you what to make ten more of.
@@ -44,7 +44,8 @@ Whichever wins tells you what to make ten more of.
 **C-ar — price, Arabic**
 
 - Primary text: راجعنا سعر الإسبريسو في 78 مقهى في الإمارات. 7 دراهم في القوز، 34 درهماً في جي بي آر. نصف المقاهي تبيعه بـ 14 درهماً أو أقل. BrewMaps يعطيك السعر قبل ما تطلب.
-- Headline: اعرف السعر قبل ما تطلب
+- Headline: محد خبرك عن أسعار القهوة
+- Alt headline: اعرف السعر قبل ما تطلب
 - Description: 812 مقهى · أسعار حقيقية من المنيو
 - CTA button: Install Now
 
@@ -56,6 +57,11 @@ Numerals stay Western, which is standard for UAE consumer advertising.
 Number agreement is handled: 7 takes the plural (دراهم), 34 takes the accusative singular
 (درهماً). The copy avoids "median" in both languages — it now says half the cafés charge this
 or less, which is exactly what the data shows and needs no explanation.
+
+The opener is محد خبرك!! — Gulf dialect for "nobody told you", slammed in at 214px across two
+lines. It is the strongest hook in the whole test because it is a spoken phrase rather than a
+written one, so it reads as a person talking, not a brand announcing. The line completes on the
+next card with عن أسعار القهوة في دبي, which is what makes anyone wait through the second beat.
 
 **Get a native speaker to read it before you spend money.** The Arabic is correct, but tone in
 paid advertising is worth a second pair of eyes, and the closing line uses light Gulf dialect
