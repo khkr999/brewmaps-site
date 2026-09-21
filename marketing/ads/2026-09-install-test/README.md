@@ -23,21 +23,21 @@ Whichever wins tells you what to make ten more of.
 
 - Primary text: Jumeirah's calling. 24 specialty cafés, and you're not at any of them. BrewMaps maps every café worth going to across the UAE.
 - Headline: Pick an area. Find your coffee.
-- Description: 413 cafés. 29 areas.
+- Description: 812 cafés across the UAE.
 - CTA button: Install Now
 
 **B — demo**
 
 - Primary text: Stop asking the group chat. Pick any area in the UAE and BrewMaps shows you every specialty café in it, with menus, prices and opening hours.
 - Headline: Every café in your area
-- Description: 413 cafés across 29 areas
+- Description: 812 cafés across the UAE
 - CTA button: Install Now
 
 **C — price**
 
 - Primary text: We checked the menu price of a plain espresso at 78 UAE cafés. AED 7 in Al Quoz. AED 34 in JBR. The median is 14. BrewMaps has the real prices before you order.
 - Headline: Know what coffee should cost
-- Description: Real menu prices, 413 cafés
+- Description: Real menu prices, 812 cafés
 - CTA button: Install Now
 
 ## Running it cleanly
@@ -52,6 +52,14 @@ Whichever wins tells you what to make ten more of.
 
 Take the winning angle and make three variations *within* it, changing one thing each time —
 the area named, the opening line, the first frame. That is when small variations start paying.
+
+## Two counts, both real
+
+The catalogue holds **812 cafés**. The app's Browse by area header reads **29 areas · 413 cafés**,
+which is the subset inside those 29 browse areas. Both are true at different scopes, so all
+written copy uses 812 across the UAE and never pins it to "29 areas".
+
+Ad B's scroll now starts below that header so the two numbers are never on screen together.
 
 ## Honest notes
 

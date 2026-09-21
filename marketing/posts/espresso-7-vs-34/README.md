@@ -18,7 +18,7 @@ That shape suits BrewMaps because the payoff is a number nobody else has.
 | 4 | Same drink. Same city. | slow push in |
 | 5 | We checked 78 cafés — **14** — AED, the median | slow push in, sand ground |
 | 6 | Screenshot this. Before your next coffee run. | settles from oversize |
-| 7 | @brewmaps — 413 cafés. 29 areas. | slow push in |
+| 7 | @brewmaps — 812 cafés across the UAE. | slow push in |
 
 Cards 2 and 3 are typographically identical, so the only thing that changes between them is
 the number. That is what makes the jump land.

@@ -28,7 +28,7 @@ def card(name, body, bg=NIGHT):
 
 overlay('ovA.html','Pick an area.',420)
 overlay('ovB.html','See every café in it.',420)
-card('adend.html', '<img src="src/logo-cream.png" style="width:150px"><div class="big" style="margin-top:34px;">413</div>'
-                   '<div class="l">specialty cafés<br>across 29 areas</div><div class="cta">Get BrewMaps</div>')
+card('adend.html', '<img src="src/logo-cream.png" style="width:150px"><div class="big" style="margin-top:34px;">812</div>'
+                   '<div class="l">specialty cafés<br>across the UAE</div><div class="cta">Get BrewMaps</div>')
 card('cend.html',  '<img src="src/logo-cream.png" style="width:150px"><div class="l" style="margin-top:30px;">Know what coffee<br>should cost.</div>'
-                   '<div class="s">413 cafés. 29 areas. Real menu prices.</div><div class="cta">Get BrewMaps</div>')
+                   '<div class="s">812 cafés. Real menu prices.</div><div class="cta">Get BrewMaps</div>')
