@@ -18,7 +18,7 @@ cards = [
  ('c2', page('<div class="kick">Al Quoz</div><div class="big" style="font-size:400px;margin-top:40px;">7</div><div class="lab">AED, one espresso</div>')),
  ('c3', page('<div class="kick">JBR</div><div class="big" style="font-size:400px;margin-top:40px;">34</div><div class="lab">AED, one espresso</div>')),
  ('c4', page('<div class="line" style="font-size:104px;">Same drink<span style="color:'+MINT+'">.</span><br>Same city<span style="color:'+MINT+'">.</span></div>')),
- ('c5', page('<div class="kick" style="color:#5C7F4A">We checked 78 cafés</div><div class="big" style="font-size:300px;margin-top:40px;color:'+DEEP+'">14</div><div class="lab" style="color:'+DEEP+'">AED, the median</div>', bg=SAND, fg=INK)),
+ ('c5', page('<div class="kick" style="color:#5C7F4A">We checked 78 cafés</div><div class="big" style="font-size:300px;margin-top:40px;color:'+DEEP+'">14</div><div class="lab" style="color:'+DEEP+'">AED. Half of them<br>charge this or less</div>', bg=SAND, fg=INK)),
  ('c6', page('<div class="line" style="font-size:96px;">Screenshot this<span style="color:'+MINT+'">.</span></div><div class="sub">Before your next coffee run.</div>')),
  ('c7', page('<img src="src/logo-cream.png" style="width:150px"><div class="line" style="font-size:62px;margin-top:34px;">@brewmaps</div><div class="sub">812 cafés across the UAE.</div>')),
 ]

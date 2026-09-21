@@ -12,7 +12,8 @@ creatives use different psychology rather than variations of one idea.
 |---|---|---|---|
 | **A** `ad-a-control.mp4` | Curiosity | A fake call banner from "Jumeirah" over the app. Stops the scroll, never explains the product. | Great hook, no value proposition. Does intrigue alone drive installs? |
 | **B** `ad-b-demo.mp4` | Utility | Plain demo. Browse areas, "Pick an area", tap through to Jumeirah's 24 cafés, "See every café in it." | The boring control-beater. Often wins install campaigns outright. |
-| **C** `ad-c-price.mp4` | Money | AED 7 in Al Quoz, AED 34 in JBR, median 14 across 78 cafés. | Does a useful fact convert better than a product tour? |
+| **C** `ad-c-price.mp4` | Money | AED 7 in Al Quoz, AED 34 in JBR, and half of 78 cafés charge 14 or less. | Does a useful fact convert better than a product tour? |
+| **C-ar** `ad-c-price-ar.mp4` | Money, Arabic | Same cut, fully in Arabic, right to left. | Does language matter more than angle here? |
 
 A never says what the app is. B says nothing but. C sells the knowledge, not the app.
 Whichever wins tells you what to make ten more of.
@@ -35,10 +36,30 @@ Whichever wins tells you what to make ten more of.
 
 **C — price**
 
-- Primary text: We checked the menu price of a plain espresso at 78 UAE cafés. AED 7 in Al Quoz. AED 34 in JBR. The median is 14. BrewMaps has the real prices before you order.
+- Primary text: We checked the menu price of a plain espresso at 78 UAE cafés. AED 7 in Al Quoz. AED 34 in JBR. Half of them charge 14 or less. BrewMaps has the real prices before you order.
 - Headline: Know what coffee should cost
 - Description: Real menu prices, 812 cafés
 - CTA button: Install Now
+
+**C-ar — price, Arabic**
+
+- Primary text: راجعنا سعر الإسبريسو في 78 مقهى في الإمارات. 7 دراهم في القوز، 34 درهماً في جي بي آر. نصف المقاهي تبيعه بـ 14 درهماً أو أقل. BrewMaps يعطيك السعر قبل ما تطلب.
+- Headline: اعرف السعر قبل ما تطلب
+- Description: 812 مقهى · أسعار حقيقية من المنيو
+- CTA button: Install Now
+
+## On the Arabic cut
+
+Typeface is Tajawal, which sits well beside DM Sans. Layout is right to left throughout.
+Numerals stay Western, which is standard for UAE consumer advertising.
+
+Number agreement is handled: 7 takes the plural (دراهم), 34 takes the accusative singular
+(درهماً). The copy avoids "median" in both languages — it now says half the cafés charge this
+or less, which is exactly what the data shows and needs no explanation.
+
+**Get a native speaker to read it before you spend money.** The Arabic is correct, but tone in
+paid advertising is worth a second pair of eyes, and the closing line uses light Gulf dialect
+("قبل ما تطلب") rather than formal MSA. Switch to "قبل أن تطلب" if you want it more formal.
 
 ## Running it cleanly
 
