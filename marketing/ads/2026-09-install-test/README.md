@@ -46,7 +46,7 @@ Whichever wins tells you what to make ten more of.
 - Primary text: راجعنا سعر الإسبريسو في 78 مقهى في الإمارات. 7 دراهم في القوز، 34 درهماً في جي بي آر. نصف المقاهي تبيعه بـ 14 درهماً أو أقل. BrewMaps يعطيك السعر قبل ما تطلب.
 - Headline: محد خبرك عن أسعار القهوة
 - Alt headline: اعرف السعر قبل ما تطلب
-- Description: 812 مقهى · أسعار حقيقية من المنيو
+- Description: 812 مقهى في الإمارات
 - CTA button: Install Now
 
 ## On the Arabic cut

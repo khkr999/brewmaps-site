@@ -29,7 +29,7 @@ cards=[
                '<div class="lab" style="color:'+DEEP+';opacity:.75;">نصف المقاهي تبيعه<br>بهذا السعر أو أقل</div>', bg=SAND, fg=INK)),
  ('ar-end', page('<img src="../../assets/logos/logo-cream.png" style="width:148px">'
                  '<div class="line" style="font-size:78px;margin-top:30px;">اعرف السعر<br>قبل ما تطلب</div>'
-                 '<div class="s">812 مقهى في الإمارات<br>أسعار حقيقية من المنيو</div>'
+                 '<div class="s">812 مقهى في الإمارات</div>'
                  '<div class="cta">حمّل BrewMaps</div>')),
 ]
 for n,h in cards: open(f'{n}.html','w',encoding='utf-8').write(h)
