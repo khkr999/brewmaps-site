@@ -1,6 +1,7 @@
 # Voiceover script — ad C, Arabic (`ad-c-price-ar.mp4`)
 
-Video is 11.0s and currently silent. The on-screen text carries the whole message, so the
+Video is **17.0s** and currently silent — it was extended from 11s so each card holds long
+enough for its line. Card timings live in one editable list at the top of `build_ar.py`. The on-screen text carries the whole message, so the
 voice should land *with* the cards, not ahead of them.
 
 ## Paste this into ElevenLabs
@@ -28,16 +29,25 @@ or gets the case wrong. Ellipses are doing the pacing.
 
 | Time | Card on screen | Line |
 |---|---|---|
-| 0.0 – 1.2 | محد خبرك!! | محد خبرك! |
-| 1.2 – 2.6 | عن أسعار القهوة في دبي | عن أسعار القهوة في دبي. |
-| 2.6 – 4.1 | القوز · 7 | إسبريسو في القوز… بسبعة دراهم. |
-| 4.1 – 5.6 | جي بي آر · 34 | نفس الإسبريسو في جي بي آر… بأربعة وثلاثين. |
-| 5.6 – 7.0 | نفس المشروب. نفس المدينة. | نفس المشروب. نفس المدينة. |
-| 7.0 – 8.7 | 78 مقهى · 14 | نصف المقاهي تبيعه بأربعة عشر درهماً أو أقل. |
-| 8.7 – 11.0 | end card | حمّل BrewMaps… واعرف السعر قبل ما تطلب. |
+| 0.0 – 1.4 | محد خبرك!! | محد خبرك! |
+| 1.4 – 3.3 | عن أسعار القهوة في دبي | عن أسعار القهوة في دبي. |
+| 3.3 – 5.8 | القوز · 7 | إسبريسو في القوز… بسبعة دراهم. |
+| 5.8 – 8.8 | جي بي آر · 34 | نفس الإسبريسو في جي بي آر… بأربعة وثلاثين. |
+| 8.8 – 10.9 | نفس المشروب. نفس المدينة. | نفس المشروب. نفس المدينة. |
+| 10.9 – 13.9 | 78 مقهى · 14 | نصف المقاهي تبيعه بأربعة عشر درهماً أو أقل. |
+| 13.9 – 17.0 | end card | حمّل BrewMaps… واعرف السعر قبل ما تطلب. |
 
-If the generated take runs long, cut "إسبريسو في" from line 3 and "نفس الإسبريسو في" from line 4
-down to just the area names. The cards already say what the drink is.
+These are estimates from the script, not from a real take. Generate the voiceover, then:
+
+```
+# edit SECONDS at the top of build_ar.py to match your take, then
+python3 build_ar.py                    # silent, to check the timing
+python3 build_ar.py voice.mp3          # muxes the audio in
+```
+
+The motion scales itself to whatever duration you set — slams still settle over the first
+45% of their card and drifts still travel the full length — so nothing freezes when a card
+gets longer.
 
 ## Settings
 
