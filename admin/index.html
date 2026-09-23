@@ -659,6 +659,34 @@ function render(d) {
       <td>${r.is_read ? '<span class="count-badge">seen</span>' : ''}</td>
     </tr>`).join('') : '';
 
+  // ── Partner notifications (get_partner_push_report, migration 184) ─────────
+  // Separate from the anchors above on purpose: those are the product talking to
+  // everyone, these point people at a café that pays us, so they are judged on
+  // visits and not on taps. The last three columns are the ones a partner cares
+  // about — and they are evidence the push was followed, not proof it caused it.
+  const PP = d.partnerPushes || null;
+  const ppRows = PP && (PP.campaigns || []).length ? PP.campaigns.map(c => `
+    <tr>
+      <td><div class="cafe-name">${(c.cafe || '').replace(/</g, '&lt;')}</div>
+          <div class="cafe-area">${c.campaign}${c.area ? ' · ' + c.area : ''}</div></td>
+      <td style="text-align:center">${c.sent}</td>
+      <td style="text-align:center">${c.opened}${c.delivered ? ` · ${Math.round(c.opened / c.delivered * 100)}%` : ''}</td>
+      <td style="text-align:center">${c.viewed}</td>
+      <td style="text-align:center">${c.directions}</td>
+      <td style="text-align:center"><strong>${c.checked_in}</strong></td>
+      <td style="white-space:nowrap;font-size:11px;color:var(--stone)">${new Date(c.last_send).toLocaleString('en-GB', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}</td>
+    </tr>`).join('') : '';
+  const partnerPushHtml = PP ? `
+    <div class="section-title">🤝 Partner notifications · last ${PP.days} days</div>
+    ${ppRows ? `<div class="table-card">
+      <div class="bar-card-title" style="padding:14px 14px 0">A tap is not a visit — read the last three columns</div>
+      <table><thead><tr><th>Café · campaign</th><th>Sent</th><th>Opened</th><th>Opened café</th><th>Directions</th><th>Checked in</th><th>Last send</th></tr></thead>
+      <tbody>${ppRows}</tbody></table>
+      <div class="cafe-area" style="padding:10px 14px 14px">
+        Opened café, directions and check-ins count recipients who did that at that café within 7 days of their own push.
+      </div>
+    </div>` : `<div class="table-card"><div class="empty-state" style="padding:20px">No partner notifications in the last ${PP.days} days.</div></div>`}` : '';
+
   const notificationsHtml = NH ? `
     <div class="section-title">🔔 Notifications · last 30 days</div>
     ${nhBreach ? `<div style="background:#fdecea;border:1px solid #e74c3c;color:#a3271f;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:12px">
@@ -726,6 +754,7 @@ function render(d) {
 
     ${pushAnchorsHtml}
     ${notificationsHtml}
+    ${partnerPushHtml}
 
     <div class="section-title">👥 Users · Last ${period} days</div>
     <div class="kpi-grid">
