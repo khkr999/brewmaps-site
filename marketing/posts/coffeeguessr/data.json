@@ -11,7 +11,9 @@
    "lng": 55.1453299,
    "focusY": 0.12,
    "source": "https://www.brewmaps.app/c/361579d1-e505-4f35-b3a4-0238ead535e4",
-   "areaSlug": "dubai-marina"
+   "areaSlug": "dubai-marina",
+   "areaAr": "دبي مارينا",
+   "emirateAr": "دبي"
   },
   {
    "photo": "photos/r2.jpg",
@@ -24,7 +26,9 @@
    "lng": 54.5767623,
    "focusY": 0.33,
    "source": "https://www.brewmaps.app/c/acfc08ee-f688-4837-8f6c-365f5fdbe53b",
-   "areaSlug": "al-raha"
+   "areaSlug": "al-raha",
+   "areaAr": "الراحة",
+   "emirateAr": "أبوظبي"
   },
   {
    "photo": "photos/r3.jpg",
@@ -37,7 +41,9 @@
    "lng": 55.2271809,
    "focusY": 0.5,
    "source": "https://www.brewmaps.app/c/3c308539-a20a-4f39-a0aa-813e6cf02d37",
-   "areaSlug": "al-quoz"
+   "areaSlug": "al-quoz",
+   "areaAr": "القوز",
+   "emirateAr": "دبي"
   },
   {
    "photo": "photos/r4.jpg",
@@ -50,7 +56,9 @@
    "lng": 55.7623455,
    "focusY": 0.5,
    "source": "https://www.brewmaps.app/c/1777f935-eb49-49a9-adfc-cb43d809d3f8",
-   "areaSlug": "al-ain-oasis"
+   "areaSlug": "al-ain-oasis",
+   "areaAr": "واحة العين",
+   "emirateAr": "العين"
   }
  ],
  "dots": [

@@ -109,37 +109,67 @@ function drawRound(ctx, A, i, t) {
 
   // below the card: the question, then the answer
   const qa = 1 - seg(t, GUESS - 0.1, GUESS + 0.1), aa = seg(t, GUESS + 0.35, GUESS + 0.6);
-  ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  ctx.textBaseline = 'alphabetic';
   if (qa > 0) {
     ctx.globalAlpha = qa;
-    const q = i === 0 ? 'Guess the area' : 'Which area?';
-    ctx.font = '700 84px "DM Sans"'; const qw = ctx.measureText(q).width, dot = i === 0 ? '.' : '';
-    ctx.fillStyle = CREAM; ctx.fillText(q, W / 2 - (dot ? ctx.measureText(dot).width / 2 : 0), 1300);
-    if (dot) { ctx.fillStyle = PALE; ctx.fillText(dot, W / 2 + qw / 2 - ctx.measureText(dot).width / 2 + 2, 1300); }
-    ctx.font = '500 34px "DM Sans"'; ctx.fillStyle = 'rgba(244,239,230,.6)';
-    ctx.fillText(i === 0 ? 'Real cafés from the app. Three seconds each.' : 'Three seconds.', W / 2, 1362);
+    accent(ctx, i === 0 ? L.hook : L.q, 1300, font(700, 84), 900);
+    plain(ctx, i === 0 ? L.hookSub : L.qSub, 1362, font(500, 34), 'rgba(244,239,230,.6)');
   }
   if (aa > 0) {
     ctx.globalAlpha = aa; const lift = (1 - easeOut(aa)) * 24;
-    fitText(ctx, R.area, 860, 96, 800);
-    const aw = ctx.measureText(R.area).width; ctx.fillStyle = CREAM; ctx.fillText(R.area, W / 2 - 14, 1290 + lift);
-    ctx.fillStyle = PALE; ctx.textAlign = 'left'; ctx.fillText('.', W / 2 - 14 + aw / 2, 1290 + lift); ctx.textAlign = 'center';
-    ctx.font = '500 34px "DM Sans"'; ctx.fillStyle = 'rgba(244,239,230,.62)'; ctx.fillText(R.emirate, W / 2, 1346 + lift);
-    fitText(ctx, `${R.cafe}  ·  ★ ${R.rating}`, 860, 32, 600); ctx.fillStyle = 'rgba(155,196,138,.95)'; ctx.fillText(`${R.cafe}  ·  ★ ${R.rating}`, W / 2, 1404 + lift);
+    accent(ctx, [L.area(R), '.'], 1290 + lift, font(700, 96), 860);
+    plain(ctx, L.emirate(R), 1350 + lift, font(500, 34), 'rgba(244,239,230,.62)');
+    // café names stay exactly as listed, in Latin script, left to right
+    ctx.direction = 'ltr'; ctx.textAlign = 'center';
+    fitText(ctx, `${R.cafe}  ·  ★ ${R.rating}`, 860, 32, 600); ctx.fillStyle = 'rgba(155,196,138,.95)'; ctx.fillText(`${R.cafe}  ·  ★ ${R.rating}`, W / 2, 1410 + lift);
   }
   ctx.globalAlpha = 1;
   ctx.restore();
 }
 
+// ─── words: English, or Khaleeji Arabic set right to left in Tajawal ────────
+const STR = {
+  en: { font: 'DM Sans', dir: 'ltr', scale: 1, title: 'COFFEEGUESSR', spacing: '4px', round: i => `ROUND ${i} / 4`,
+        hook: ['Guess the area', '.'], hookSub: 'Real cafés from the app. Three seconds each.',
+        q: ['Which area', '?'], qSub: 'Three seconds.',
+        end: ['How many did you get', '?'], endSub: 'Comment your score out of 4.',
+        l1: ['812 cafés across the UAE', '.'], l2: 'Find all of them on BrewMaps.',
+        area: R => R.area, emirate: R => R.emirate },
+  ar: { font: 'Tajawal', dir: 'rtl', scale: 1.1, title: 'وين الكوفي؟', spacing: '0px', round: i => `الجولة ${i} من 4`,
+        hook: ['حزّر وين هالكوفي', '؟'], hookSub: 'كوفيهات حقيقية من التطبيق. ثلاث ثواني لكل وحدة.',
+        q: ['وين هذا', '؟'], qSub: 'ثلاث ثواني بس.',
+        end: ['كم وحدة جبتها صح', '؟'], endSub: 'حط نتيجتك من 4 في الكومنتات.',
+        l1: ['812 كوفي في الإمارات', '.'], l2: 'كلهم تلقاهم على BrewMaps.',
+        area: R => R.areaAr, emirate: R => R.emirateAr },
+};
+let L = STR.en;
+function setLang(k) { L = STR[k] || STR.en; }
+const font = (w, px) => `${w} ${Math.round(px * L.scale)}px "${L.font}"`;
+function plain(ctx, text, y, f, color) {
+  ctx.direction = L.dir; ctx.textAlign = 'center'; ctx.font = f; ctx.fillStyle = color; ctx.fillText(text, W / 2, y);
+}
+// A line whose final punctuation sits in pale green. In Arabic the mark lands on the left end.
+function accent(ctx, [body, mark], y, f, maxW) {
+  ctx.direction = L.dir; ctx.font = f;
+  let px = parseInt(f.match(/(\d+)px/)[1]);
+  while (ctx.measureText(body + mark).width > maxW && px > 30) { px -= 2; ctx.font = f.replace(/\d+px/, px + 'px'); }
+  const bw = ctx.measureText(body).width, mw = ctx.measureText(mark).width, x0 = (W - bw - mw) / 2;
+  ctx.textAlign = 'left';
+  const [bx, mx] = L.dir === 'rtl' ? [x0 + mw, x0] : [x0, x0 + bw];
+  ctx.fillStyle = CREAM; ctx.fillText(body, bx, y);
+  ctx.fillStyle = PALE; ctx.fillText(mark, mx, y);
+}
+
 // ─── frame ─────────────────────────────────────────────────────────────────
 function header(ctx, A, i) {
-  const m = A.mark, mh = 44, mw = mh * m.width / m.height;
-  ctx.drawImage(m, 96, 300, mw, mh);
-  ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillStyle = CREAM; ctx.font = '700 34px "DM Sans"';
-  ctx.letterSpacing = '4px'; ctx.fillText('COFFEEGUESSR', 96 + mw + 18, 324); ctx.letterSpacing = '0px';
+  const m = A.mark, mh = 44, mw = mh * m.width / m.height, rtl = L.dir === 'rtl';
+  ctx.drawImage(m, rtl ? 984 - mw : 96, 300, mw, mh);
+  ctx.textBaseline = 'middle'; ctx.direction = L.dir; ctx.fillStyle = CREAM; ctx.font = font(700, 34);
+  ctx.letterSpacing = L.spacing; ctx.textAlign = rtl ? 'right' : 'left';
+  ctx.fillText(L.title, rtl ? 984 - mw - 18 : 96 + mw + 18, 324); ctx.letterSpacing = '0px';
   if (i != null) {
-    ctx.textAlign = 'right'; ctx.font = '600 30px "DM Sans"'; ctx.fillStyle = 'rgba(244,239,230,.62)';
-    ctx.fillText(`ROUND ${i + 1} / 4`, 984, 324);
+    ctx.textAlign = rtl ? 'left' : 'right'; ctx.font = font(500, 30); ctx.fillStyle = 'rgba(244,239,230,.62)';
+    ctx.fillText(L.round(i + 1), rtl ? 96 : 984, 324);
   }
   ctx.textBaseline = 'alphabetic';
 }
@@ -149,28 +179,25 @@ function endCard(ctx, A, t) {
   ctx.globalAlpha = e;
   const m = A.mark, mw = 150, mh = mw * m.height / m.width;
   ctx.drawImage(m, (W - mw) / 2, 400, mw, mh);
-  ctx.textAlign = 'center'; ctx.font = '700 84px "DM Sans"';
-  const q = 'How many did you get', qw = ctx.measureText(q + '?').width;
-  ctx.fillStyle = CREAM; ctx.textAlign = 'left'; ctx.fillText(q, (W - qw) / 2, 650);
-  ctx.fillStyle = PALE; ctx.fillText('?', (W - qw) / 2 + ctx.measureText(q).width, 650);
-  ctx.textAlign = 'center'; ctx.font = '500 38px "DM Sans"'; ctx.fillStyle = 'rgba(244,239,230,.7)';
-  ctx.fillText('Comment your score out of 4.', W / 2, 718);
-  // the answers, as a strip of the four photos
+  accent(ctx, L.end, 650, font(700, 84), 900);
+  plain(ctx, L.endSub, 718, font(500, 38), 'rgba(244,239,230,.7)');
+  // the answers, as a strip of the four photos (right to left in Arabic, so round 1 reads first)
   const tw = 196, gap = 34, x0 = (W - (4 * tw + 3 * gap)) / 2;
   A.data.rounds.forEach((R, i) => {
-    const a = easeOut(seg(t, 0.25 + i * 0.12, 0.6 + i * 0.12)), x = x0 + i * (tw + gap), y = 810 + (1 - a) * 40;
+    const slot = L.dir === 'rtl' ? 3 - i : i;
+    const a = easeOut(seg(t, 0.25 + i * 0.12, 0.6 + i * 0.12)), x = x0 + slot * (tw + gap), y = 810 + (1 - a) * 40;
     ctx.save(); ctx.globalAlpha = e * a;
     roundRect(ctx, x - 5, y - 5, tw + 10, tw + 10, 26); ctx.fillStyle = CREAM; ctx.fill();
     ctx.save(); roundRect(ctx, x, y, tw, tw, 22); ctx.clip(); cover(ctx, A.photos[i], x, y, tw, tw, R.focusY); ctx.restore();
-    fitText(ctx, R.area, tw + 20, 30, 700); ctx.fillStyle = CREAM; ctx.fillText(R.area, x + tw / 2, y + tw + 50);
+    ctx.direction = L.dir; ctx.textAlign = 'center'; ctx.font = font(700, 30);
+    let px = Math.round(30 * L.scale); while (ctx.measureText(L.area(R)).width > tw + 20 && px > 18) { px -= 2; ctx.font = `700 ${px}px "${L.font}"`; }
+    ctx.fillStyle = CREAM; ctx.fillText(L.area(R), x + tw / 2, y + tw + 50);
     ctx.restore();
   });
   const f = seg(t, 0.9, 1.3);
-  ctx.globalAlpha = e * f; ctx.font = '700 44px "DM Sans"'; ctx.fillStyle = CREAM;
-  const l1 = '812 cafés across the UAE', l1w = ctx.measureText(l1 + '.').width;
-  ctx.textAlign = 'left'; ctx.fillText(l1, (W - l1w) / 2, 1200); ctx.fillStyle = PALE; ctx.fillText('.', (W - l1w) / 2 + ctx.measureText(l1).width, 1200);
-  ctx.textAlign = 'center'; ctx.font = '500 34px "DM Sans"'; ctx.fillStyle = 'rgba(244,239,230,.62)';
-  ctx.fillText('Find all of them on BrewMaps.', W / 2, 1256);
+  ctx.globalAlpha = e * f;
+  accent(ctx, L.l1, 1200, font(700, 44), 900);
+  plain(ctx, L.l2, 1258, font(500, 34), 'rgba(244,239,230,.62)');
   ctx.globalAlpha = 1;
 }
 
