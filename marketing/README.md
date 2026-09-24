@@ -34,6 +34,23 @@ marketing/
 | `matcha-index` | Carousel, 3 | Ready | Tue 15 Sep, 18:00 |
 | `coffee-month` | Carousel, 5 | Blocked on real BrewPoints figures | Month end, recurring |
 | `where-should-we-go` | Carousel, 3 | Art direction demo | Unscheduled |
+| `the-regular` | Reel series, ~15s | Ep. 1 ready | Thu 1 Oct (International Coffee Day) |
+
+## The creative bar
+
+Set by *The Regular*, ep. 1. Every new idea is checked against these before anything is built.
+
+1. **Something happens.** A small story with a setup, an obstacle, a payoff and a button,
+   not a feature announcement. People stay to see how it ends.
+2. **Real world, drawn intervention.** Real photos from the app, real screenshots, real numbers,
+   with something hand-made acting on them. Nothing looks like a template.
+3. **The product is in the story.** The app does something inside the plot (he swaps the paper
+   map for BrewMaps), shown with the real interface, never a mock-up.
+4. **The brand is the payoff.** The mark, forest green, cream, the pale-green full stop arrive as
+   the reward at the end, not as a watermark from frame one.
+5. **No words until the end.** It works in Arabic and English without a second cut.
+6. **A reason to come back.** A series, a vote, or a question that the next post answers.
+7. **If it could be any café app's post, it isn't finished.**
 
 ## Brand values
 
