@@ -32,11 +32,32 @@ cropped from the app's own photo and not otherwise edited). The café isn't name
 
 ## Caption
 
+Posts on International Coffee Day (1 Oct). The ask is a tag, not "where should he go next?",
+because this runs as a one-off for now rather than a series.
+
+**Arabic (Khaleeji)**
+
+> كان معاه خريطة… بعدين نزّل BrewMaps ☕️
+>
+> منشن الخوي اللي يتسلق شفاطة عشان كوب قهوة 👇
+>
+> يوم القهوة العالمي سعيد 🤎
+>
+> BrewMaps مجاني على الآب ستور. الرابط في البايو.
+>
+> #BrewMaps #يوم_القهوة_العالمي #قهوة_مختصة #كوفيهات_أبوظبي #كوفيهات_دبي #الإمارات
+
+**English**
+
 > He had a map. Then he had BrewMaps. ☕️
 >
-> Where should he go next? Comment an area 👇
+> Tag someone who'd climb a straw for a good coffee 👇
+>
+> Happy International Coffee Day.
 >
 > BrewMaps is free on the App Store. Link in bio.
+>
+> #BrewMaps #InternationalCoffeeDay #SpecialtyCoffee #AbuDhabiCafes #DubaiCafes #UAECoffee
 
 ## How it's built
 
