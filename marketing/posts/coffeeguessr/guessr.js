@@ -138,7 +138,7 @@ const STR = {
   ar: { font: 'Tajawal', dir: 'rtl', scale: 1.1, title: 'وين الكوفي؟', spacing: '0px', round: i => `الجولة ${i} من 4`,
         hook: ['خمّن وين هالكوفي', '؟'], hookSub: 'كوفيهات حقيقية من التطبيق. ثلاث ثواني لكل وحدة.',
         q: ['وين هذا', '؟'], qSub: 'ثلاث ثواني بس.',
-        end: ['كم وحدة جبتها صح', '؟'], endSub: 'اكتب لنا نتيجتك من 4 بالكومنتات 👇',
+        end: ['كم وحدة جبتها صح', '؟'], endSub: '',
         l1: ['أكثر من ٨١٢ كوفي في كل أنحاء الإمارات', '.'], l2: 'بتحصلهم كلهم على BrewMaps.',
         area: R => R.areaAr, emirate: R => R.emirateAr },
 };
@@ -180,7 +180,7 @@ function endCard(ctx, A, t) {
   const m = A.mark, mw = 150, mh = mw * m.height / m.width;
   ctx.drawImage(m, (W - mw) / 2, 400, mw, mh);
   accent(ctx, L.end, 650, font(700, 84), 900);
-  plain(ctx, L.endSub, 718, font(500, 38), 'rgba(244,239,230,.7)');
+  if (L.endSub) plain(ctx, L.endSub, 718, font(500, 38), 'rgba(244,239,230,.7)');
   // the answers, as a strip of the four photos (right to left in Arabic, so round 1 reads first)
   const tw = 196, gap = 34, x0 = (W - (4 * tw + 3 * gap)) / 2;
   A.data.rounds.forEach((R, i) => {
