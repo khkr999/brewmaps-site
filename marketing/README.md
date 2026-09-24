@@ -34,7 +34,8 @@ marketing/
 | `matcha-index` | Carousel, 3 | Ready | Tue 15 Sep, 18:00 |
 | `coffee-month` | Carousel, 5 | Blocked on real BrewPoints figures | Month end, recurring |
 | `where-should-we-go` | Carousel, 3 | Art direction demo | Unscheduled |
-| `the-regular` | Reel series, ~15s | Ep. 1 ready | Thu 1 Oct (International Coffee Day) |
+| `the-regular` | Reel, 14.8s | Ep. 1 ready | Thu 1 Oct (International Coffee Day) |
+| `coffeeguessr` | Reel, 19.7s | Ready | Mon 28 Sep |
 
 ## The creative bar
 

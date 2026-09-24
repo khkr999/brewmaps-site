@@ -5,13 +5,13 @@ Times are Gulf Standard Time. Build status is per post; nothing marked "to build
 | Day | Time | Format | Post | Job | Status |
 |---|---|---|---|---|---|
 | Sat 26 Sep | 20:00 | Story | Teaser: a still of The Regular, lost, holding his map upside down. "Thursday." | Anticipation | To build (a still frame from the rig) |
-| Mon 28 Sep | 19:30 | Reel, ~12s | **"812"**: real café photos from the app tile into the cup-and-pin mark, a slow zoom out from one café to the whole logo | Reach, saves | To build |
+| Mon 28 Sep | 19:30 | Reel, 19.7s | **CoffeeGuessr**: four real café photos, three seconds each to guess the area, pin drops on the UAE map | Reach, comments | **Ready**: `posts/coffeeguessr/export/coffeeguessr-ep1.mp4` |
 | Tue 29 Sep | 20:00 | Story | Poll: "Paper map or app?" and a second teaser still | Warm-up | To build |
 | Thu 1 Oct | 11:00 | Reel, 14.8s | **The Regular, ep. 1**, on International Coffee Day. Collab invite to 1918 Cafe | Reach from strangers | **Ready**: `posts/the-regular/export/the-regular-ep1.mp4` |
 | Thu 1 Oct | 18:00 | Story | Reshare ep. 1 with a question sticker: "Where should he go next?" | Picks ep. 2 | Needs only the sticker |
 | Sat 3 Oct | 19:00 | Story | The top two areas from the comments, head-to-head poll | Picks ep. 2 | To build |
-| Sun 4 Oct | 12:00 | Reel, ~10s | **"Out of the app"**: he climbs out of a café card in the real app and the frame dives into that café's full-size photo | Shows what the app is | To build |
-| Thu 8 Oct | 11:00 | Reel, ~15s | **The Regular, ep. 2**, in the area the vote picks, on that area's café photo | Series, follows | To build after the vote |
+| Sun 4 Oct | 12:00 | Reel | Next new idea (not The Regular): Departures board or the indecision meme | Reach | To pick and build |
+| Thu 8 Oct | 11:00 | Reel | Open: a different format again | — | — |
 | Sun 11 Oct | 12:00 | Reel or carousel | Open slot, decided by what week 1 and 2 numbers show | — | — |
 
 ## Paid, alongside
