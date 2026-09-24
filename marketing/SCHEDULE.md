@@ -1,4 +1,35 @@
-# BrewMaps Instagram — 13 to 15 September 2026
+# BrewMaps Instagram — 25 September to 11 October 2026
+
+Times are Gulf Standard Time. Build status is per post; nothing marked "to build" exists yet.
+
+| Day | Time | Format | Post | Job | Status |
+|---|---|---|---|---|---|
+| Sat 26 Sep | 20:00 | Story | Teaser: a still of The Regular, lost, holding his map upside down. "Thursday." | Anticipation | To build (a still frame from the rig) |
+| Mon 28 Sep | 19:30 | Reel, ~12s | **"812"**: real café photos from the app tile into the cup-and-pin mark, a slow zoom out from one café to the whole logo | Reach, saves | To build |
+| Tue 29 Sep | 20:00 | Story | Poll: "Paper map or app?" and a second teaser still | Warm-up | To build |
+| Thu 1 Oct | 11:00 | Reel, 14.8s | **The Regular, ep. 1**, on International Coffee Day. Collab invite to 1918 Cafe | Reach from strangers | **Ready**: `posts/the-regular/export/the-regular-ep1.mp4` |
+| Thu 1 Oct | 18:00 | Story | Reshare ep. 1 with a question sticker: "Where should he go next?" | Picks ep. 2 | Needs only the sticker |
+| Sat 3 Oct | 19:00 | Story | The top two areas from the comments, head-to-head poll | Picks ep. 2 | To build |
+| Sun 4 Oct | 12:00 | Reel, ~10s | **"Out of the app"**: he climbs out of a café card in the real app and the frame dives into that café's full-size photo | Shows what the app is | To build |
+| Thu 8 Oct | 11:00 | Reel, ~15s | **The Regular, ep. 2**, in the area the vote picks, on that area's café photo | Series, follows | To build after the vote |
+| Sun 11 Oct | 12:00 | Reel or carousel | Open slot, decided by what week 1 and 2 numbers show | — | — |
+
+## Paid, alongside
+
+- Keep **C-Arabic (price)** running. It's the winner on CAC.
+- Keep **A (control)** running untouched as the baseline.
+- After ep. 1 has run organically for 48 hours, if its saves and shares are strong, add it to the
+  install campaign as **ad D**, with an install end card replacing the comment CTA.
+- "Out of the app" is the second candidate for paid, after its organic run.
+
+## Rules for the calendar
+
+Every feed post clears the creative bar in `README.md`. Stories carry the lighter, interactive work.
+
+---
+
+# Archive: 13 to 15 September 2026
+
 
 Three posts, three formats, one visual system (white, DM Sans, forest green #2B4D1F, real app UI).
 Times are Gulf Standard Time. Treat them as starting points and move them to whatever your insights show.
