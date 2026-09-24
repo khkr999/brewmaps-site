@@ -70,7 +70,7 @@ Arabic price ad. Café names stay exactly as listed, in Latin script.
 | Answers | دبي مارينا، الراحة، القوز، واحة العين | Dubai Marina, Al Raha, Al Quoz, Al Ain Oasis |
 | End | كم وحدة جبتها صح؟ | How many did you get? |
 | End line | اكتب لنا نتيجتك من 4 بالكومنتات 👇 | Comment your score out of 4. |
-| Close | 812 كوفي في الإمارات. / بتحصلهم كلهم على BrewMaps. | 812 cafés across the UAE. / Find all of them on BrewMaps. |
+| Close | أكثر من ٨١٢ كوفي في كل أنحاء الإمارات. / بتحصلهم كلهم على BrewMaps. | 812 cafés across the UAE. / Find all of them on BrewMaps. |
 
 **Arabic caption**
 
