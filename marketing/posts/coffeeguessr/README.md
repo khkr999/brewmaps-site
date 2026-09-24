@@ -46,7 +46,7 @@ Swap rounds by editing `data.json` (photo, area, emirate, café, rating, lat/lng
 >
 > How many did you get? Comment your score out of 4 👇
 >
-> BrewMaps is free on the App Store. Link in bio.
+> BrewMaps is free on the App Store and Google Play. Link in bio.
 >
 > #BrewMaps #CoffeeGuessr #GeoGuessr #DubaiCoffee #AbuDhabiCafes #UAECoffee #SpecialtyCoffee #DubaiCafes #AlAin
 
@@ -80,7 +80,7 @@ Arabic price ad. Café names stay exactly as listed, in Latin script.
 >
 > كم وحدة جبتها صح؟ اكتب لنا نتيجتك من ٤ بالكومنتات 👇
 >
-> BrewMaps مجاني على الآب ستور. الرابط في البايو.
+> BrewMaps مجاني على الآب ستور وجوجل بلاي. الرابط في البايو.
 >
 > #BrewMaps #وين_الكوفي #كوفيهات_دبي #قهوة_مختصة #دبي #أبوظبي #العين #الإمارات
 

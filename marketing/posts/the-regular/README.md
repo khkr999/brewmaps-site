@@ -43,7 +43,7 @@ because this runs as a one-off for now rather than a series.
 >
 > يوم القهوة العالمي سعيد 🤎
 >
-> BrewMaps مجاني على الآب ستور. الرابط في البايو.
+> BrewMaps مجاني على الآب ستور وجوجل بلاي. الرابط في البايو.
 >
 > #BrewMaps #يوم_القهوة_العالمي #قهوة_مختصة #كوفيهات_أبوظبي #كوفيهات_دبي #الإمارات
 
@@ -55,7 +55,7 @@ because this runs as a one-off for now rather than a series.
 >
 > Happy International Coffee Day.
 >
-> BrewMaps is free on the App Store. Link in bio.
+> BrewMaps is free on the App Store and Google Play. Link in bio.
 >
 > #BrewMaps #InternationalCoffeeDay #SpecialtyCoffee #AbuDhabiCafes #DubaiCafes #UAECoffee
 

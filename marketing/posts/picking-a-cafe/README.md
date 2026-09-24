@@ -86,7 +86,7 @@ To add it: `ffmpeg -i export/picking-a-cafe-ar.mp4 -i voice.mp3 -c:v copy -c:a a
 >
 > أو خلّه يفتح BrewMaps… أكثر من ٨١٢ كوفي في كل أنحاء الإمارات، مرتبة حسب المنطقة.
 >
-> BrewMaps مجاني على الآب ستور. الرابط في البايو.
+> BrewMaps مجاني على الآب ستور وجوجل بلاي. الرابط في البايو.
 >
 > #BrewMaps #كوفيهات_دبي #قهوة_مختصة #ويكند #دبي #أبوظبي #الشارقة #الإمارات
 
@@ -96,7 +96,7 @@ To add it: `ffmpeg -i export/picking-a-cafe-ar.mp4 -i voice.mp3 -c:v copy -c:a a
 >
 > Or send them BrewMaps. 812 cafés across the UAE, sorted by area.
 >
-> BrewMaps is free on the App Store. Link in bio.
+> BrewMaps is free on the App Store and Google Play. Link in bio.
 >
 > #BrewMaps #DubaiCafes #SpecialtyCoffee #WeekendPlans #DubaiCoffee #UAECoffee
 
