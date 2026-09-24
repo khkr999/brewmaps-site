@@ -3,7 +3,8 @@
 // Timing is "on twos": the drawing changes 12 times a second, the video runs at 24.
 
 const W = 1080, H = 1920, LINE = 6.5;
-const CREAM = '#F4EFE6', NIGHT = 'rgba(14,31,10,.80)', PALE = '#9BC48A';
+const CREAM = '#F4EFE6', NIGHT = 'rgba(14,31,10,.93)', PALE = '#9BC48A', FOREST = '#2B4D1F', LC = CREAM;
+let ASSETS = {};
 
 // ─── small maths ────────────────────────────────────────────────────────────
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -42,7 +43,7 @@ function poly(ctx, pts, closed) { ctx.moveTo(pts[0][0], pts[0][1]); pts.slice(1)
 function shape(ctx, pts, { smooth = true, fill = null } = {}) {
   const P = () => { ctx.beginPath(); (smooth ? cr : poly)(ctx, pts, true); };
   ctx.globalCompositeOperation = 'source-over';
-  P(); ctx.fillStyle = '#fff'; ctx.fill(); ctx.lineWidth = 2 * LINE; ctx.strokeStyle = '#fff'; ctx.stroke();
+  P(); ctx.fillStyle = LC; ctx.fill(); ctx.lineWidth = 2 * LINE; ctx.strokeStyle = LC; ctx.stroke();
   ctx.globalCompositeOperation = 'destination-out'; P(); ctx.fill();
   ctx.globalCompositeOperation = 'source-over';
   if (fill) { P(); ctx.fillStyle = fill; ctx.fill(); }
@@ -50,13 +51,13 @@ function shape(ctx, pts, { smooth = true, fill = null } = {}) {
 function tube(ctx, pts, w) {
   const P = () => { ctx.beginPath(); cr(ctx, pts, false); };
   ctx.lineCap = ctx.lineJoin = 'round';
-  ctx.globalCompositeOperation = 'source-over'; P(); ctx.lineWidth = w + 2 * LINE; ctx.strokeStyle = '#fff'; ctx.stroke();
+  ctx.globalCompositeOperation = 'source-over'; P(); ctx.lineWidth = w + 2 * LINE; ctx.strokeStyle = LC; ctx.stroke();
   ctx.globalCompositeOperation = 'destination-out'; P(); ctx.lineWidth = w; ctx.stroke();
   ctx.globalCompositeOperation = 'source-over';
 }
 function stroke(ctx, pts, { smooth = true, width = LINE, closed = false } = {}) {
   ctx.globalCompositeOperation = 'source-over'; ctx.lineCap = ctx.lineJoin = 'round';
-  ctx.beginPath(); (smooth ? cr : poly)(ctx, pts, closed); ctx.lineWidth = width; ctx.strokeStyle = '#fff'; ctx.stroke();
+  ctx.beginPath(); (smooth ? cr : poly)(ctx, pts, closed); ctx.lineWidth = width; ctx.strokeStyle = LC; ctx.stroke();
 }
 const circlePts = (c, rx, ry = rx, n = 10, a0 = 0) => Array.from({ length: n }, (_, i) => { const a = a0 + i / n * Math.PI * 2; return [c[0] + rx * Math.cos(a), c[1] + ry * Math.sin(a)]; });
 
@@ -123,7 +124,7 @@ function drawHead(ctx, P) {
   else if (P.eyes === 'squeeze') stroke(ctx, [[ex - 6, ey - 5], [ex + 3, ey], [ex - 6, ey + 4]].map(H), { smooth: false });
   else {
     const r = P.eyes === 'wide' ? 6.5 : 4.8;
-    ctx.beginPath(); cr(ctx, circlePts([ex, ey], r, r, 8).map(H), true); ctx.fillStyle = '#fff'; ctx.fill();
+    ctx.beginPath(); cr(ctx, circlePts([ex, ey], r, r, 8).map(H), true); ctx.fillStyle = LC; ctx.fill();
   }
   const m = P.mouth || 'smile';
   if (m === 'smile') stroke(ctx, [[12, 14], [21, 20], [31, 11]].map(H));
@@ -147,21 +148,44 @@ function drawMap(ctx, place) {
   stroke(ctx, [[-50, -30], [-36, -38]].map(T), { width: 5 }); stroke(ctx, [[46, 38], [60, 30]].map(T), { width: 5 });
 }
 
-// The BrewMaps pin he plants like a summit flag: the one spot of colour in the piece.
-function pinPath(ctx, tip, r) {
-  const c = [tip[0], tip[1] - 2.15 * r], k = Math.acos(1 / 2.15);
-  ctx.moveTo(tip[0], tip[1]);
-  ctx.arc(c[0], c[1], r, Math.PI / 2 + k, Math.PI / 2 - k + Math.PI * 2);
-  ctx.closePath();
-}
-function drawFlag(ctx, base, lean = 0) {
-  const top = add(base, rot([0, -100], lean));
+// The flag he plants like a summit flag: forest green, carrying the real BrewMaps mark.
+function drawFlag(ctx, base, lean = 0, t = 0, dir = 1) {
+  const top = add(base, rot([0, -132], lean)), fw = 112, fh = 76, wave = k => 5 * Math.sin(t * 9 - k * 2.4);
   stroke(ctx, [J(base), J(top)], { smooth: false });
-  const r = 19, tip = top;
-  ctx.beginPath(); pinPath(ctx, tip, r); ctx.fillStyle = PALE; ctx.fill();
-  ctx.lineWidth = LINE; ctx.strokeStyle = '#fff'; ctx.lineJoin = 'round'; ctx.stroke();
-  const hole = [tip[0], tip[1] - 2.15 * r];
-  ctx.beginPath(); ctx.arc(hole[0], hole[1], 6.5, 0, Math.PI * 2); ctx.fillStyle = '#fff'; ctx.fill();
+  const edge = [0, .33, .66, 1].map(k => [dir * k * fw, wave(k) * k]);
+  const pts = [...edge, ...edge.slice().reverse().map(([x, y]) => [x, y + fh])].map(p => J(add(top, rot(p, lean))));
+  shape(ctx, pts, { smooth: false, fill: FOREST });
+  const m = ASSETS.mark;
+  if (m) {
+    const mw = 70, mh = mw * m.height / m.width, c = add(top, rot([dir * fw / 2, fh / 2 + wave(.5) * .5], lean));
+    ctx.save(); ctx.translate(c[0], c[1]); ctx.rotate(lean); ctx.drawImage(m, -mw / 2, -mh / 2, mw, mh); ctx.restore();
+  }
+}
+
+// A phone the size of a door, showing the real app. The screenshot is cropped, never edited:
+// it starts below the browse header so the subset count there never sits next to "812".
+const SHOT_TOP = 540;
+function drawPhone(ctx, c, s, w = 250, h = 440) {
+  if (s <= 0.01) return;
+  const W2 = w * s, H2 = h * s, x = c[0] - W2 / 2, y = c[1] - H2 / 2, r = 34 * s, j = J([0, 0], 1.2);
+  const P = (inset) => { ctx.beginPath(); ctx.roundRect(x + inset + j[0], y + inset + j[1], W2 - 2 * inset, H2 - 2 * inset, Math.max(2, r - inset)); };
+  ctx.globalCompositeOperation = 'source-over';
+  P(0); ctx.fillStyle = LC; ctx.fill(); ctx.lineWidth = 2 * LINE; ctx.strokeStyle = LC; ctx.stroke();
+  ctx.globalCompositeOperation = 'destination-out'; P(0); ctx.fill(); ctx.globalCompositeOperation = 'source-over';
+  const shot = ASSETS.shot;
+  if (shot) {
+    const inset = 9 * s; ctx.save(); P(inset); ctx.clip();
+    ctx.fillStyle = '#fff'; ctx.fillRect(x, y, W2, H2);
+    const k = (W2 - 2 * inset) / shot.width;
+    ctx.drawImage(shot, 0, SHOT_TOP, shot.width, shot.height - SHOT_TOP, x + inset + j[0], y + inset + j[1], shot.width * k, (shot.height - SHOT_TOP) * k);
+    ctx.restore();
+  }
+}
+
+function drawQuestion(ctx, hc) {
+  const q = [[-12, -96], [-8, -110], [4, -114], [14, -106], [12, -94], [2, -86], [0, -76]].map(p => J(add(hc, p)));
+  stroke(ctx, q);
+  ctx.beginPath(); ctx.arc(...J(add(hc, [0, -62]), 0.6), 5, 0, Math.PI * 2); ctx.fillStyle = LC; ctx.fill();
 }
 
 function drawCharacter(ctx, P) {
@@ -170,7 +194,8 @@ function drawCharacter(ctx, P) {
   drawTorso(ctx, P);
   drawLeg(ctx, P, 'f');
   const hc = drawHead(ctx, P);
-  if (P.map) drawMap(ctx, p => toWorld(P, add(P.map.c, rot(p, P.map.r || 0))));
+  if (P.map) drawMap(ctx, p => toWorld(P, add(P.map.c, rot([p[0], p[1] * (P.map.sy ?? 1)], P.map.r || 0))));
+  if (P.phone) drawPhone(ctx, toWorld(P, P.phone.c), P.phone.s);
   const hand = drawArm(ctx, P, 'f');
   return { hc, hand };
 }
@@ -189,48 +214,68 @@ const SCENES = {
 };
 
 // ─── choreography, episode 1 ────────────────────────────────────────────────
-function episode1(t, S) {
+const SHIFT = 1.5;                                   // the opening runs 1.5s longer than the first cut
+function intro(t, S) {
+  const G = S.ground;
+  const P = { f: -1, rot: 0, tilt: 0, eyes: 'open', mouth: 'smile', hands: {}, feet: {} };
+  const props = {};
+  const stand = (x, bob = 0) => { P.x = x; P.y = G(x) - 112 + bob; };
+  const planted = dx => ({ w: [P.x + P.f * dx, G(P.x + P.f * dx)] });
+  const MC = [74, -150];
+  const PH = [150, -170], hold = { b: [262, -150], f: [34, -120] };
+  const fly = () => { const dt = t - 1.58, st = toWorld({ x: S.stopX, y: G(S.stopX) - 112, f: -1, rot: 0 }, [-40, -250]);
+    return { c: [st[0] + 620 * dt, st[1] - 1050 * dt + 1300 * dt * dt], r: -0.8 - 9 * dt, sy: -1 }; };
+
+  if (t < 1.5) {                                    // A · walks in turning a paper map the wrong way up
+    const u = easeOut(seg(t, 0, 1.5)), x = mix(S.startX, S.stopX, u), ph = (S.startX - x) / 150 * Math.PI * 2;
+    stand(x, -4 * Math.abs(Math.sin(ph)));
+    const foot = (off, a) => ({ w: [P.x + P.f * (off + 24 * Math.sin(a)), G(P.x + P.f * (off + 24 * Math.sin(a))) - 16 * Math.max(0, Math.cos(a))] });
+    P.feet = { f: foot(6, ph), b: foot(-8, ph + Math.PI) };
+    const flip = Math.cos(Math.PI * ease(seg(t, 0.4, 1.05)));
+    P.map = { c: MC, r: 0.04 * Math.sin(ph), sy: flip }; P.hands = { b: [150, -124], f: [2, -108] };
+    P.tilt = -0.12 + 0.3 * ease(seg(t, 0.4, 1.05)); P.mouth = t > 0.9 ? 'flat' : 'smile';
+    props.question = t > 1.0;
+  } else if (t < 1.9) {                             // B · gives up and bins the map over his shoulder
+    stand(S.stopX); P.feet = { f: planted(10), b: planted(-12) };
+    const u = ease(seg(t, 1.5, 1.6)), v = ease(seg(t, 1.64, 1.86)), g = { b: [150, -124], f: [2, -108] };
+    P.hands = { b: mix2(mix2(g.b, [-70, -250], u), [-30, -40], v), f: mix2(mix2(g.f, [-40, -262], u), [24, -40], v) };
+    P.elbow = { b: 1, f: 1 }; P.tilt = 0.3; P.mouth = 'flat';
+    if (t < 1.58) P.map = { c: mix2(MC, [-40, -250], u), r: -u * 0.8, sy: -1 };
+    else props.flyingMap = fly();
+  } else if (t < 3.75) {                            // C+D · pulls out BrewMaps. Reads. Scrolls.
+    stand(S.stopX); P.feet = { f: planted(10), b: planted(-12) };
+    const u = easeOut(seg(t, 1.9, 2.2)), thumb = t > 2.4 ? 7 * Math.max(0, Math.sin((t - 2.4) * 11)) : 0;
+    P.phone = { c: mix2([30, -60], PH, u), s: mix(0.15, 1, u) };
+    P.hands = { b: mix2([-30, -40], hold.b, u), f: add(mix2([24, -40], hold.f, u), [0, -thumb]) };
+    P.tilt = mix(0.3, 0.05, u); P.mouth = 'smile'; P.look = [3, 2];
+    if (t < 2.4) props.flyingMap = fly();
+  } else {                                          // E · …and looks up. It was right there.
+    stand(S.stopX); P.feet = { f: planted(10), b: planted(-12) };
+    const away = ease(seg(t, 4.1, 4.42));
+    P.phone = { c: mix2(PH, [20, -40], away), s: 1 - away };
+    P.hands = { b: mix2(hold.b, [-30, -40], away), f: mix2(hold.f, [24, -40], away) };
+    P.tilt = mix(0.05, 0.55, ease(seg(t, 3.75, 3.95)));
+    P.eyes = t > 3.85 ? 'wide' : 'open'; P.mouth = t > 3.85 ? 'o' : 'smile';
+    props.ticks = t > 3.85 && t < 4.3 ? 1 : 0;
+  }
+  return { P, props };
+}
+
+function episode1(T, S) {
+  if (T < 3.0 + SHIFT) return intro(T, S);
+  const t = T - SHIFT;
   const G = S.ground, grips = [add(S.tip, scl(S.sdir, 8)), add(S.tip, scl(S.sdir, 44))];
   const P = { f: -1, rot: 0, tilt: 0, eyes: 'open', mouth: 'smile', hands: {}, feet: {} };
   const props = { flyingMap: null, flag: null, ticks: 0, splash: null, water: null };
   const stand = (x, crouch = 0) => { P.x = x; P.y = G(x) - 112 + crouch; };
   const planted = (dx) => ({ w: [P.x + P.f * dx, G(P.x + P.f * dx)] });
 
-  if (t < 1.8) {                                    // A · walks in, nose in a paper map
-    const u = easeOut(seg(t, 0, 1.8)), x = mix(S.startX, S.stopX, u), ph = (S.startX - x) / 150 * Math.PI * 2;
-    stand(x, -4 * Math.abs(Math.sin(ph)));
-    const foot = (off, a) => ({ w: [P.x + P.f * (off + 24 * Math.sin(a)), G(P.x + P.f * (off + 24 * Math.sin(a))) - 16 * Math.max(0, Math.cos(a))] });
-    P.feet = { f: foot(6, ph), b: foot(-8, ph + Math.PI) };
-    P.tilt = -0.18; P.map = { c: [74, -150], r: 0.04 * Math.sin(ph) };
-    P.hands = { b: [150, -124], f: [2, -108] };
-  } else if (t < 2.55) {                            // B · stops. lowers the map. looks up.
-    stand(S.stopX); P.feet = { f: planted(10), b: planted(-12) };
-    const u = ease(seg(t, 1.85, 2.15));
-    P.map = { c: mix2([74, -150], [70, -90], u), r: 0 };
-    P.hands = { b: mix2([150, -124], [146, -64], u), f: mix2([2, -108], [0, -62], u) };
-    P.tilt = mix(-0.18, 0.5, ease(seg(t, 1.95, 2.2)));
-    P.eyes = t > 2.0 ? 'wide' : 'open'; P.mouth = t > 2.0 ? 'o' : 'smile';
-    props.ticks = t > 2.0 && t < 2.45 ? 1 : 0;
-  } else if (t < 3.0) {                             // C · throws the map over his shoulder
-    stand(S.stopX); P.feet = { f: planted(10), b: planted(-12) };
-    const u = ease(seg(t, 2.55, 2.68)), v = ease(seg(t, 2.72, 2.95));
-    const up = [[-70, -250], [-40, -262]];
-    P.hands = { b: mix2(mix2([146, -64], up[0], u), [-30, -40], v), f: mix2(mix2([0, -62], up[1], u), [24, -40], v) };
-    P.elbow = { b: 1, f: 1 };
-    P.tilt = 0.4; P.mouth = 'grin';
-    if (t < 2.64) P.map = { c: mix2([70, -90], [-40, -250], u), r: -u * 0.8 };
-    else {
-      const dt = t - 2.64, start = toWorld({ ...P, rot: 0 }, [-40, -250]);
-      props.flyingMap = { c: [start[0] + 620 * dt, start[1] - 1050 * dt + 1300 * dt * dt], r: -0.8 - 9 * dt };
-    }
-  } else if (t < 3.3) {                             // D · crouch, eyes on the straw
+  if (t < 3.3) {                                    // D · crouch, eyes on the straw
     const u = ease(seg(t, 3.0, 3.2));
     stand(mix(S.stopX, S.stopX - 22, u), 26 * u); P.rot = 0.16 * u;
     P.feet = { f: planted(10), b: planted(-12) };
     P.hands = { b: mix2([-30, -40], [-60, -70], u), f: mix2([24, -40], [-30, -60], u) };
     P.tilt = 0.55; P.mouth = 'flat';
-    const dt = t - 2.64, start = toWorld({ x: S.stopX, y: G(S.stopX) - 112, f: -1, rot: 0 }, [-40, -250]);
-    props.flyingMap = { c: [start[0] + 620 * dt, start[1] - 1050 * dt + 1300 * dt * dt], r: -0.8 - 9 * dt };
   } else if (t < 4.0) {                             // E+F · leaps, grabs the straw, hangs and kicks
     const hang = [grips[1][0] + 22, grips[1][1] + 246];
     const u = easeOut(seg(t, 3.3, 3.52)), x0 = S.stopX - 22, y0 = G(x0) - 86;
@@ -266,12 +311,12 @@ function episode1(t, S) {
     P.x = top[0]; P.y = top[1]; P.rot = 0;
     P.feet = { f: { w: S.rimStand[0] }, b: { w: S.rimStand[1] } };
     const a = ease(seg(t, 5.2, 5.32)), b = ease(seg(t, 5.36, 5.5)), c = ease(seg(t, 5.56, 5.7)), d = ease(seg(t, 5.72, 5.85));
-    const high = [70, -228], plant = toLocal(P, add(S.flag, [0, -62]));
+    const high = [56, -236], plant = toLocal(P, add(S.flag, [0, -62]));
     let hf = mix2(mix2(mix2([60, -150], [-44, -30], a), high, b), plant, c);
     hf = mix2(hf, [34, -62], d);
     P.hands = { f: hf, b: mix2([-50, -150], [-36, -58], Math.max(b, d)) };
     P.elbow = { b: -1, f: t > 5.7 ? 1 : -1 };
-    if (t >= 5.32 && t < 5.7) { const hw = toWorld(P, hf); props.heldFlag = { base: add(hw, [0, 40]), lean: 0 }; }
+    if (t >= 5.32 && t < 5.7) { const hw = toWorld(P, hf); props.heldFlag = { base: add(hw, [0, 40]), lean: 0, dir: P.f }; }
     P.tilt = b > 0.5 && c < 0.5 ? 0.5 : 0.3;
     P.mouth = t > 5.36 ? 'grin' : 'flat'; P.eyes = t > 5.72 ? 'closed' : 'open';
   } else if (t < 6.3) {                             // J · wind-up
@@ -377,30 +422,44 @@ function renderFrame(ctx, layer, t, S, assets, opts = {}) {
 
   const lc = layer.getContext('2d');
   lc.setTransform(1, 0, 0, 1, 0, 0); lc.clearRect(0, 0, W, H);
-  if (props.flag) drawFlag(lc, props.flag.base, props.flag.lean);
-  if (props.heldFlag && P.hidden) drawFlag(lc, props.heldFlag.base, 0);
+  if (props.flag) drawFlag(lc, props.flag.base, props.flag.lean, t);
   let head = null;
   if (!P.hidden) {
     const r = drawCharacter(lc, P); head = r.hc;
-    if (props.heldFlag) drawFlag(lc, props.heldFlag.base, 0);
+    if (props.heldFlag) drawFlag(lc, props.heldFlag.base, 0, t, props.heldFlag.dir);
     if (props.water) eraseBelowWater(lc, S, props.water);
   }
-  if (props.flyingMap) drawMap(lc, p => add(props.flyingMap.c, rot(p, props.flyingMap.r)));
+  if (props.flyingMap) drawMap(lc, p => add(props.flyingMap.c, rot([p[0], p[1] * (props.flyingMap.sy ?? 1)], props.flyingMap.r)));
   if (props.ticks && head) drawTicks(lc, head);
+  if (props.question && head) drawQuestion(lc, head);
   if (props.splash != null) { drawSplash(lc, S, props.splash); drawRipples(lc, S, S.entry, props.splash); }
   if (props.pop != null) drawRipples(lc, S, [S.float[0], S.liquid.cy + 22], props.pop, 2);
 
   ctx.save(); ctx.filter = 'drop-shadow(0px 3px 5px rgba(40,24,10,.30))'; ctx.drawImage(layer, 0, 0); ctx.restore();
 
-  // end card
+  // end card: the mark, the line, the real app, and him sitting on it
   const e = seg(t, opts.endAt, opts.endAt + 0.45);
   if (e > 0) {
     ctx.globalAlpha = e; ctx.fillStyle = NIGHT; ctx.fillRect(0, 0, W, H);
-    const lw = 150, lh = lw * assets.logo.height / assets.logo.width;
-    ctx.drawImage(assets.logo, (W - lw) / 2, 700, lw, lh);
-    ctx.fillStyle = CREAM; ctx.textAlign = 'center';
-    ctx.font = '700 58px "DM Sans"'; ctx.fillText(opts.headline, W / 2, 700 + lh + 90);
-    ctx.fillStyle = 'rgba(244,239,230,.62)'; ctx.font = '500 32px "DM Sans"'; ctx.fillText(opts.sub, W / 2, 700 + lh + 146);
+    const m = assets.mark, mw = 132, mh = mw * m.height / m.width;
+    ctx.drawImage(m, (W - mw) / 2, 318, mw, mh);
+    ctx.textAlign = 'left'; ctx.font = '700 104px "DM Sans"';
+    const head = opts.headline, dot = head.slice(-1), body = head.slice(0, -1);
+    const bw = ctx.measureText(body).width, tw = ctx.measureText(head).width, x0 = (W - tw) / 2;
+    ctx.fillStyle = CREAM; ctx.fillText(body, x0, 520); ctx.fillStyle = PALE; ctx.fillText(dot, x0 + bw, 520);
+    ctx.textAlign = 'center'; ctx.fillStyle = 'rgba(244,239,230,.66)'; ctx.font = '500 34px "DM Sans"';
+    ctx.fillText(opts.sub, W / 2, 582);
+
+    const sit = easeOut(seg(t, opts.endAt + 0.25, opts.endAt + 0.55)), wv = 22 * Math.sin((t - opts.endAt) * 15) * seg(t, opts.endAt + 0.6, opts.endAt + 0.8);
+    boil = Math.floor(t * 12) % 3; jc = 0;
+    lc.clearRect(0, 0, W, H);
+    drawPhone(lc, [W / 2, 1200], 1, 400, 640);
+    if (sit > 0) {
+      const Q = { f: 1, x: 672, y: 882 - 90 * (1 - sit), rot: 0, tilt: 0.12, eyes: 'open', mouth: 'grin', knee: { f: 1, b: 1 }, elbow: { b: -1, f: -1 },
+                  feet: { f: [66, 60], b: [44, 66] }, hands: { b: [-70 + wv, -244], f: [40, 6] } };
+      drawCharacter(lc, Q);
+    }
+    ctx.drawImage(layer, 0, 0);
     ctx.globalAlpha = 1;
   }
   if (S.label) { ctx.fillStyle = 'rgba(200,30,30,.85)'; ctx.font = '700 22px "DM Sans"'; ctx.textAlign = 'left'; ctx.fillText(S.label, 120, 1600); }

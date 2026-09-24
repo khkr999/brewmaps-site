@@ -8,10 +8,11 @@ const q = new URLSearchParams(location.search), S = SCENES[q.get('scene') || 'st
 const img = src => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = src; });
 const ctx = document.getElementById('c').getContext('2d'), layer = document.createElement('canvas');
 layer.width = 1080; layer.height = 1920;
-const OPTS = { endAt: 10.5, headline: 'Where should he go next?', sub: 'Comment an area.' };
+const OPTS = { endAt: 12.0, headline: 'Found it.', sub: '812 cafés across the UAE, on BrewMaps.' };
 window.ready = (async () => {
   await Promise.all([document.fonts.load('700 58px "DM Sans"'), document.fonts.load('500 32px "DM Sans"')]);
-  window.assets = { plate: await img(S.plate), logo: await img('../../assets/logos/logo-cream.png') };
+  window.assets = { plate: await img(S.plate), mark: await img('../../assets/logos/mark-cream.png'), shot: await img('../../assets/screenshots/browse-dubai.png') };
+  ASSETS = window.assets;
 })();
 window.frame = t => { renderFrame(ctx, layer, t, S, window.assets, OPTS); return document.getElementById('c').toDataURL('image/png'); };
 </script>
