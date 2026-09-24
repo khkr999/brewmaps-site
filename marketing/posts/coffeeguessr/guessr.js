@@ -136,10 +136,10 @@ const STR = {
         l1: ['812 cafés across the UAE', '.'], l2: 'Find all of them on BrewMaps.',
         area: R => R.area, emirate: R => R.emirate },
   ar: { font: 'Tajawal', dir: 'rtl', scale: 1.1, title: 'وين الكوفي؟', spacing: '0px', round: i => `الجولة ${i} من 4`,
-        hook: ['حزّر وين هالكوفي', '؟'], hookSub: 'كوفيهات حقيقية من التطبيق. ثلاث ثواني لكل وحدة.',
+        hook: ['خمّن وين هالكوفي', '؟'], hookSub: 'كوفيهات حقيقية من التطبيق. ثلاث ثواني لكل وحدة.',
         q: ['وين هذا', '؟'], qSub: 'ثلاث ثواني بس.',
-        end: ['كم وحدة جبتها صح', '؟'], endSub: 'حط نتيجتك من 4 في الكومنتات.',
-        l1: ['812 كوفي في الإمارات', '.'], l2: 'كلهم تلقاهم على BrewMaps.',
+        end: ['كم وحدة جبتها صح', '؟'], endSub: 'اكتب لنا نتيجتك من 4 بالكومنتات 👇',
+        l1: ['812 كوفي في الإمارات', '.'], l2: 'بتحصلهم كلهم على BrewMaps.',
         area: R => R.areaAr, emirate: R => R.emirateAr },
 };
 let L = STR.en;

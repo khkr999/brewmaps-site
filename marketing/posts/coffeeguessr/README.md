@@ -64,27 +64,27 @@ Arabic price ad. Café names stay exactly as listed, in Latin script.
 |---|---|---|
 | Game name | وين الكوفي؟ | COFFEEGUESSR |
 | Round | الجولة 1 من 4 | ROUND 1 / 4 |
-| Hook | حزّر وين هالكوفي؟ | Guess the area. |
+| Hook | خمّن وين هالكوفي؟ | Guess the area. |
 | Hook line | كوفيهات حقيقية من التطبيق. ثلاث ثواني لكل وحدة. | Real cafés from the app. Three seconds each. |
 | Rounds 2–4 | وين هذا؟ / ثلاث ثواني بس. | Which area? / Three seconds. |
 | Answers | دبي مارينا، الراحة، القوز، واحة العين | Dubai Marina, Al Raha, Al Quoz, Al Ain Oasis |
 | End | كم وحدة جبتها صح؟ | How many did you get? |
-| End line | حط نتيجتك من 4 في الكومنتات. | Comment your score out of 4. |
-| Close | 812 كوفي في الإمارات. / كلهم تلقاهم على BrewMaps. | 812 cafés across the UAE. / Find all of them on BrewMaps. |
+| End line | اكتب لنا نتيجتك من 4 بالكومنتات 👇 | Comment your score out of 4. |
+| Close | 812 كوفي في الإمارات. / بتحصلهم كلهم على BrewMaps. | 812 cafés across the UAE. / Find all of them on BrewMaps. |
 
 **Arabic caption**
 
 > وين الكوفي؟ 🇦🇪
 >
-> ٤ كوفيهات حقيقية من BrewMaps. عندك ٣ ثواني بس… حزّر المنطقة قبل لا ينزل الدبوس 📍
+> ٤ كوفيهات حقيقية من BrewMaps. عندك ٣ ثواني بس… خمّن المنطقة قبل لا ينزل الدبوس 📍
 >
-> كم وحدة جبتها صح؟ حط نتيجتك من 4 في الكومنتات 👇
+> كم وحدة جبتها صح؟ اكتب لنا نتيجتك من ٤ بالكومنتات 👇
 >
 > BrewMaps مجاني على الآب ستور. الرابط في البايو.
 >
 > #BrewMaps #وين_الكوفي #كوفيهات_دبي #قهوة_مختصة #دبي #أبوظبي #العين #الإمارات
 
-Gulf dialect by design (حزّر، هالكوفي، جبتها، حط، تلقاهم). Worth one read by a native speaker before it goes out.
+Gulf dialect by design (خمّن، هالكوفي، جبتها، بتحصلهم). Worth one read by a native speaker before it goes out.
 
 ## Series
 
