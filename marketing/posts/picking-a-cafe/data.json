@@ -1,0 +1,64 @@
+{
+ "cards": [
+  {
+   "photo": "photos/c1.jpg",
+   "cafe": "East West Atelier",
+   "area": "al-quoz",
+   "source": "https://www.brewmaps.app/c/c04cd35b-ddff-4a1b-82ee-9aa6bc170eb7"
+  },
+  {
+   "photo": "photos/c2.jpg",
+   "cafe": "Saya Café City Walk",
+   "area": "city-walk",
+   "source": "https://www.brewmaps.app/c/f85de221-e7f2-43cd-859f-115dc87e7788"
+  },
+  {
+   "photo": "photos/c3.jpg",
+   "cafe": "Aptitude Cafe",
+   "area": "al-saadiyat-island",
+   "source": "https://www.brewmaps.app/c/73508938-d510-453a-a11b-00da45f05709"
+  },
+  {
+   "photo": "photos/c4.jpg",
+   "cafe": "The Good Moon",
+   "area": "jumeirah",
+   "source": "https://www.brewmaps.app/c/e30b5625-ff82-4cad-94d8-c834a5d7cc79"
+  },
+  {
+   "photo": "photos/c5.jpg",
+   "cafe": "Caffeine Coffee Roaster",
+   "area": "city-walk",
+   "source": "https://www.brewmaps.app/c/c09deefa-5af7-4916-b9b2-913e07736a7d"
+  },
+  {
+   "photo": "photos/c6.jpg",
+   "cafe": "Bounty Beets",
+   "area": "dubai-marina",
+   "source": "https://www.brewmaps.app/c/862e5f72-b608-4136-bfe6-3511e746443b"
+  },
+  {
+   "photo": "photos/c7.jpg",
+   "cafe": "Risen Café and Artisanal Bakery, Palm Jumeirah",
+   "area": "palm-jumeirah",
+   "source": "https://www.brewmaps.app/c/9c9de418-970b-4c3b-afda-c355dff464e5"
+  },
+  {
+   "photo": "photos/c8.jpg",
+   "cafe": "Harvest & Co",
+   "area": "ground-floor",
+   "source": "https://www.brewmaps.app/c/70d06ffc-3b34-43ba-bee0-26ba5a98f016"
+  },
+  {
+   "photo": "photos/c9.jpg",
+   "cafe": "Toby's Estate (Jumeira)",
+   "area": "jumeirah",
+   "source": "https://www.brewmaps.app/c/54801cf9-7140-4153-8e38-1b58b254e18e"
+  },
+  {
+   "photo": "photos/c10.jpg",
+   "cafe": "Jetlag Cafe - Premium Specialty Coffee and Tea | Perfect Break Spot",
+   "area": "al-qasimia",
+   "source": "https://www.brewmaps.app/c/8040a3d4-de13-4466-ae4e-1b5dd33e0c39"
+  }
+ ]
+}

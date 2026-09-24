@@ -10,7 +10,7 @@ Times are Gulf Standard Time. Build status is per post; nothing marked "to build
 | Thu 1 Oct | 11:00 | Reel, 14.8s | **The Regular, ep. 1**, on International Coffee Day. Collab invite to 1918 Cafe | Reach from strangers | **Ready**: `posts/the-regular/export/the-regular-ep1.mp4` |
 | Thu 1 Oct | 18:00 | Story | Reshare ep. 1 with a question sticker: "Where should he go next?" | Picks ep. 2 | Needs only the sticker |
 | Sat 3 Oct | 19:00 | Story | The top two areas from the comments, head-to-head poll | Picks ep. 2 | To build |
-| Sun 4 Oct | 12:00 | Reel | Next new idea (not The Regular): Departures board or the indecision meme | Reach | To pick and build |
+| Sun 4 Oct | 12:00 | Reel, 15s | **Me picking a café** (أنا وأنا أختار كوفي للويكند): swipe excuses, a clock racing to 47:12, then the real app in 10 seconds | Tags, shares | **Ready**: `posts/picking-a-cafe/export/` |
 | Thu 8 Oct | 11:00 | Reel | Open: a different format again | — | — |
 | Sun 11 Oct | 12:00 | Reel or carousel | Open slot, decided by what week 1 and 2 numbers show | — | — |
 
