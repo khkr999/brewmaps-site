@@ -2,7 +2,8 @@
 // Everything is drawn onto one canvas: plate, character layer, end card.
 // Timing is "on twos": the drawing changes 12 times a second, the video runs at 24.
 
-const W = 1080, H = 1920, LINE = 6.5;
+const W = 1080, H = 1920;
+let LINE = 6.5;
 const CREAM = '#F4EFE6', NIGHT = 'rgba(14,31,10,.93)', PALE = '#9BC48A', FOREST = '#2B4D1F', LC = CREAM;
 let ASSETS = {};
 
@@ -162,25 +163,29 @@ function drawFlag(ctx, base, lean = 0, t = 0, dir = 1) {
   }
 }
 
-// A phone the size of a door, showing the real app. The screenshot is cropped, never edited:
-// it starts below the browse header so the subset count there never sits next to "812".
-const SHOT_TOP = 540;
-function drawPhone(ctx, c, s, w = 250, h = 440) {
+// A phone showing the real app. The page is two overlapping screenshots of Browse by area,
+// joined where they match pixel for pixel (assets/derived/browse-scroll.png), so scrolling it is
+// the app's own content moving. It starts below the header, so its subset count never sits next to
+// "812". The floating tab bar is fixed to the bottom of the screen, as it is in the app.
+function drawPhone(ctx, c, s, w = 250, h = 440, scroll = 0) {
   if (s <= 0.01) return;
   const W2 = w * s, H2 = h * s, x = c[0] - W2 / 2, y = c[1] - H2 / 2, r = 34 * s, j = J([0, 0], 1.2);
   const P = (inset) => { ctx.beginPath(); ctx.roundRect(x + inset + j[0], y + inset + j[1], W2 - 2 * inset, H2 - 2 * inset, Math.max(2, r - inset)); };
   ctx.globalCompositeOperation = 'source-over';
   P(0); ctx.fillStyle = LC; ctx.fill(); ctx.lineWidth = 2 * LINE; ctx.strokeStyle = LC; ctx.stroke();
   ctx.globalCompositeOperation = 'destination-out'; P(0); ctx.fill(); ctx.globalCompositeOperation = 'source-over';
-  const shot = ASSETS.shot;
-  if (shot) {
-    const inset = 9 * s; ctx.save(); P(inset); ctx.clip();
+  const page = ASSETS.page, bar = ASSETS.bar;
+  if (page) {
+    const inset = 9 * s, iw = W2 - 2 * inset, ih = H2 - 2 * inset, k = iw / page.width, ox = x + inset + j[0], oy = y + inset + j[1];
+    const maxScroll = Math.max(0, page.height - ih / k), sc = clamp(scroll, 0, maxScroll);
+    ctx.save(); P(inset); ctx.clip();
     ctx.fillStyle = '#fff'; ctx.fillRect(x, y, W2, H2);
-    const k = (W2 - 2 * inset) / shot.width;
-    ctx.drawImage(shot, 0, SHOT_TOP, shot.width, shot.height - SHOT_TOP, x + inset + j[0], y + inset + j[1], shot.width * k, (shot.height - SHOT_TOP) * k);
+    ctx.drawImage(page, 0, sc, page.width, Math.min(page.height - sc, ih / k), ox, oy, iw, Math.min(page.height - sc, ih / k) * k);
+    if (bar) ctx.drawImage(bar, ox, oy + ih - bar.height * k, iw, bar.height * k);
     ctx.restore();
   }
 }
+const PAGE_SCROLL = 1282;                           // rows of page below the first screenful, for the in-story phone
 
 function drawQuestion(ctx, hc) {
   const q = [[-12, -96], [-8, -110], [4, -114], [14, -106], [12, -94], [2, -86], [0, -76]].map(p => J(add(hc, p)));
@@ -195,7 +200,7 @@ function drawCharacter(ctx, P) {
   drawLeg(ctx, P, 'f');
   const hc = drawHead(ctx, P);
   if (P.map) drawMap(ctx, p => toWorld(P, add(P.map.c, rot([p[0], p[1] * (P.map.sy ?? 1)], P.map.r || 0))));
-  if (P.phone) drawPhone(ctx, toWorld(P, P.phone.c), P.phone.s);
+  if (P.phone) drawPhone(ctx, toWorld(P, P.phone.c), P.phone.s, 250, 440, P.phone.scroll || 0);
   const hand = drawArm(ctx, P, 'f');
   return { hc, hand };
 }
@@ -205,13 +210,35 @@ function drawCharacter(ctx, P) {
 const SCENES = {
   standin: {
     plate: 'plates/standin.png', label: 'PENCIL TEST · stand-in plate · not for posting',
-    ground: x => 1268 + 0.08 * (x - 790),
+    groundPlate: x => 1268 + 0.08 * (x - 790), endAt: 12.0,
     tip: [775, 775], sdir: [-0.845, 0.535],
     liquid: { cx: 517, cy: 790, rx: 214, ry: 110 },
     rimStand: [[730, 772], [752, 768]], flag: [655, 772], entry: [528, 800], float: [548, 936],
     startX: 1120, stopX: 832,
   },
+  // 1918 Cafe, Al Bateen: an iced latte with a tall black straw on a round black table.
+  bateen: {
+    plate: 'plates/1918-cafe.jpg', routine: 'pole', scale: 0.62, linePx: 5.4, endAt: 12.3,
+    groundPlate: x => 1093 + 0.03 * (x - 400),
+    tip: [485, 474], sdir: [-0.419, 0.908],
+    glass: [[205, 788], [395, 788], [412, 900], [416, 1000], [400, 1088], [190, 1088], [176, 1000], [180, 900]],
+    liquid: { cx: 300, cy: 790, rx: 93, ry: 11 }, entry: [300, 790],
+    startX: 1150, stopX: 660, nearX: 452,
+  },
 };
+
+// Plate pixels → the character's own space. The layer is drawn scaled by K, so everything he
+// touches (straw, rim, table) is expressed in his units and every line scales with him.
+function virtual(S) {
+  const K = S.scale || 1, v = p => [p[0] / K, p[1] / K], o = { ...S, K };
+  o.ground = x => S.groundPlate(x * K) / K;
+  ['tip', 'entry', 'float', 'flag'].forEach(k => { if (S[k]) o[k] = v(S[k]); });
+  if (S.rimStand) o.rimStand = S.rimStand.map(v);
+  if (S.glass) o.glass = S.glass.map(v);
+  if (S.liquid) o.liquid = { cx: S.liquid.cx / K, cy: S.liquid.cy / K, rx: S.liquid.rx / K, ry: S.liquid.ry / K };
+  ['startX', 'stopX', 'nearX'].forEach(k => { if (S[k] != null) o[k] = S[k] / K; });
+  return o;
+}
 
 // ─── choreography, episode 1 ────────────────────────────────────────────────
 const SHIFT = 1.5;                                   // the opening runs 1.5s longer than the first cut
@@ -244,15 +271,17 @@ function intro(t, S) {
     else props.flyingMap = fly();
   } else if (t < 3.75) {                            // C+D · pulls out BrewMaps. Reads. Scrolls.
     stand(S.stopX); P.feet = { f: planted(10), b: planted(-12) };
-    const u = easeOut(seg(t, 1.9, 2.2)), thumb = t > 2.4 ? 7 * Math.max(0, Math.sin((t - 2.4) * 11)) : 0;
-    P.phone = { c: mix2([30, -60], PH, u), s: mix(0.15, 1, u) };
+    const u = easeOut(seg(t, 1.9, 2.2));
+    const f1 = seg(t, 2.35, 2.55), f2 = seg(t, 2.95, 3.15), thumb = 26 * (Math.sin(Math.PI * f1) + Math.sin(Math.PI * f2));
+    const scroll = PAGE_SCROLL * (0.5 * easeOut(seg(t, 2.4, 2.9)) + 0.5 * easeOut(seg(t, 3.0, 3.6)));
+    P.phone = { c: mix2([30, -60], PH, u), s: mix(0.15, 1, u), scroll };
     P.hands = { b: mix2([-30, -40], hold.b, u), f: add(mix2([24, -40], hold.f, u), [0, -thumb]) };
     P.tilt = mix(0.3, 0.05, u); P.mouth = 'smile'; P.look = [3, 2];
     if (t < 2.4) props.flyingMap = fly();
   } else {                                          // E · …and looks up. It was right there.
     stand(S.stopX); P.feet = { f: planted(10), b: planted(-12) };
     const away = ease(seg(t, 4.1, 4.42));
-    P.phone = { c: mix2(PH, [20, -40], away), s: 1 - away };
+    P.phone = { c: mix2(PH, [20, -40], away), s: 1 - away, scroll: PAGE_SCROLL };
     P.hands = { b: mix2(hold.b, [-30, -40], away), f: mix2(hold.f, [24, -40], away) };
     P.tilt = mix(0.05, 0.55, ease(seg(t, 3.75, 3.95)));
     P.eyes = t > 3.85 ? 'wide' : 'open'; P.mouth = t > 3.85 ? 'o' : 'smile';
@@ -363,14 +392,111 @@ function episode1(T, S) {
   return { P, props };
 }
 
+// ─── choreography, episode 1 on a tall-straw glass ──────────────────────────
+// Climbs the straw like a pole, plants the flag on its tip, cannonballs in, ends with his arms over the rim.
+function episodePole(T, S) {
+  if (T < 4.5) return intro(T, S);
+  const t = T, G = S.ground;
+  const P = { f: -1, rot: 0, tilt: 0, eyes: 'open', mouth: 'smile', hands: {}, feet: {} };
+  const props = {};
+  const on = sv => add(S.tip, scl(S.sdir, sv));                  // sv units down the straw from its tip
+  const side = [S.sdir[1], -S.sdir[0]];                           // the straw's underside
+  const lean = -Math.atan2(-S.sdir[0], S.sdir[1]);                // body lying along the straw
+  const stand = (x, crouch = 0) => { P.x = x; P.y = G(x) - 112 + crouch; };
+  const planted = dx => ({ w: [P.x + P.f * dx, G(P.x + P.f * dx)] });
+  const GRAB = 484, STEP = 153, TOP = GRAB - 3 * STEP, rimY = S.liquid.cy, rimX = S.liquid.cx;
+  const hangHip = (sh, bend = 0) => add(on(sh + 246 - bend), scl(side, 30));
+  const cling = sb => ({ f: { w: add(on(sb + 92), scl(side, 6)) }, b: { w: add(on(sb + 118), scl(side, 2)) } });
+  const setHip = p => { P.x = p[0]; P.y = p[1]; };
+
+  if (t < 5.1) {                                    // walks up to the glass, eyes on the straw
+    const u = ease(seg(t, 4.5, 5.1)), x = mix(S.stopX, S.nearX, u), ph = (S.stopX - x) / 150 * Math.PI * 2;
+    stand(x, -3 * Math.abs(Math.sin(ph)));
+    const foot = (off, a) => ({ w: [P.x + P.f * (off + 20 * Math.sin(a)), G(P.x + P.f * (off + 20 * Math.sin(a))) - 14 * Math.max(0, Math.cos(a))] });
+    P.feet = u < 1 ? { f: foot(6, ph), b: foot(-8, ph + Math.PI) } : { f: planted(10), b: planted(-12) };
+    P.hands = { b: [-30 - 10 * Math.sin(ph), -40], f: [24 + 10 * Math.sin(ph), -40] };
+    P.tilt = 0.6; P.mouth = 'smile';
+  } else if (t < 5.35) {                            // crouch
+    const u = ease(seg(t, 5.1, 5.3));
+    stand(S.nearX, 26 * u); P.rot = 0.12 * u;
+    P.feet = { f: planted(10), b: planted(-12) };
+    P.hands = { b: mix2([-30, -40], [-64, -60], u), f: mix2([24, -40], [-40, -56], u) };
+    P.tilt = 0.7; P.mouth = 'flat';
+  } else if (t < 5.85) {                            // leaps, grabs the straw, dangles
+    const u = easeOut(seg(t, 5.35, 5.6)), from = [S.nearX, G(S.nearX) - 86];
+    const hip = hangHip(GRAB), sway = t > 5.6 ? Math.sin((t - 5.6) * 14) * (1 - seg(t, 5.6, 5.85)) : 0;
+    setHip(add(mix2(from, hip, u), [8 * sway, -40 * Math.sin(u * Math.PI)]));
+    P.rot = mix(0.12, lean, u) + 0.05 * sway;
+    const reach0 = toWorld(P, [-40, -250]);
+    P.hands = { f: { w: mix2(reach0, on(GRAB - 15), ease(seg(t, 5.35, 5.52))) }, b: { w: mix2(reach0, on(GRAB + 15), ease(seg(t, 5.35, 5.56))) } };
+    P.elbow = { b: 1, f: 1 };
+    const k = (t - 5.5) * 18;
+    P.feet = t < 5.55 ? { f: [16, 104], b: [-14, 108] } : { f: [20 + 24 * Math.sin(k), 94 - 16 * Math.cos(k)], b: [24 * Math.sin(k + Math.PI), 94 - 16 * Math.cos(k + Math.PI)] };
+    P.tilt = 0.4; P.mouth = t < 5.6 ? 'o' : 'effort'; P.eyes = t < 5.6 ? 'wide' : 'squeeze';
+  } else if (t < 7.4) {                             // three pulls up the straw
+    const n = Math.min(2, Math.floor((t - 5.85) / 0.5)), u = seg(t, 5.85 + n * 0.5, 6.35 + n * 0.5);
+    const sh0 = GRAB - n * STEP, sh1 = sh0 - STEP;
+    const hf = mix(sh0 - 15, sh1 - 15, ease(seg(u, 0, 0.4))), hb = mix(sh0 + 15, sh1 + 15, ease(seg(u, 0.35, 0.75)));
+    const sb = mix(sh0, sh1, ease(seg(u, 0.3, 1))), bend = 40 * Math.sin(Math.PI * seg(u, 0.3, 1));
+    setHip(hangHip(sb, bend)); P.rot = lean;
+    P.hands = { f: { w: on(hf) }, b: { w: on(hb) } }; P.elbow = { b: 1, f: 1 };
+    P.feet = cling(sb + 246 - bend - 60 * Math.sin(Math.PI * seg(u, 0.2, 0.6))); P.knee = { f: 1, b: 1 };
+    P.tilt = 0.3; P.mouth = 'effort'; P.eyes = 'squeeze';
+  } else if (t < 8.5) {                             // summit: pulls the flag, plants it on the straw's tip
+    setHip(hangHip(TOP, 76)); P.rot = lean;
+    const a = ease(seg(t, 7.4, 7.55)), b = ease(seg(t, 7.58, 7.76)), c = ease(seg(t, 7.8, 7.96)), d = ease(seg(t, 8.0, 8.14));
+    const plantAt = toLocal(P, add(S.tip, [0, -26]));
+    let hf = mix2(mix2(mix2(toLocal(P, on(TOP - 15)), [-44, -30], a), [40, -238], b), plantAt, c);
+    hf = mix2(hf, [44, -250], d);
+    P.hands = { f: hf, b: { w: on(TOP + 12) } }; P.elbow = { b: 1, f: t > 7.96 ? 1 : -1 };
+    if (t >= 7.55 && t < 7.96) { const hw = toWorld(P, hf); props.heldFlag = { base: add(hw, [0, 30]), lean: 0, dir: 1 }; }
+    P.feet = cling(TOP + 246 - 76); P.knee = { f: 1, b: 1 };
+    P.tilt = b > 0.5 && c < 0.5 ? 0.5 : 0.25;
+    P.mouth = t > 7.58 ? 'grin' : 'flat'; P.eyes = t > 8.0 ? 'closed' : 'open';
+    if (t > 8.2) { P.tilt = -0.35; P.eyes = 'open'; P.look = [2, 4]; }          // …looks down at the drink
+  } else if (t < 9.9) {                             // lets go: cannonball
+    const p0 = hangHip(TOP, 76), p1 = [rimX, rimY + 30], c = [mix(p0[0], p1[0], 0.35), p0[1] - 90];
+    let p = bez(p0, c, p1, seg(t, 8.5, 9.12));
+    if (t > 9.12) p = [p1[0], p1[1] + 300 * easeOut(seg(t, 9.12, 9.3))];
+    setHip(p);
+    const tuck = ease(seg(t, 8.55, 8.7));
+    P.rot = mix(lean, 0.6, seg(t, 8.5, 9.1));
+    P.feet = { f: mix2([30, 90], [44, -6], tuck), b: mix2([-10, 96], [30, 2], tuck) }; P.knee = { f: 1, b: 1 };
+    P.hands = { f: mix2([40, -200], [70, -26], tuck), b: mix2([-40, -200], [56, -20], tuck) }; P.elbow = { b: -1, f: -1 };
+    P.tilt = 0.2; P.mouth = 'grin'; P.eyes = 'closed';
+    if (t > 8.95) props.water = rimY + 2;
+    if (t > 9.28) P.hidden = true;
+  } else {                                          // pops up, arms over the rim, waves
+    const u = easeOut(seg(t, 9.9, 10.2)), bob = 4 * Math.sin((t - 9.9) * 5) * seg(t, 10.2, 10.5);
+    P.f = 1; P.x = rimX + 4; P.y = mix(rimY + 330, rimY + 155, u) + bob;
+    const drape = ease(seg(t, 10.15, 10.35));
+    let hb = mix2(toWorld(P, [-40, -60]), [rimX - 100, rimY - 4], drape);
+    const hf = mix2(toWorld(P, [40, -60]), [rimX + 100, rimY - 4], drape);
+    const up = ease(seg(t, 10.6, 10.8)), wv = t > 10.8 ? 22 * Math.sin((t - 10.8) * 15) * (1 - seg(t, 12.0, 12.3)) : 0;
+    hb = mix2(hb, toWorld(P, [-74 + wv, -244]), up);
+    P.hands = { f: { w: hf }, b: { w: hb } }; P.elbow = { b: -1, f: 1 };
+    P.feet = { f: [20, 100], b: [-10, 104] };
+    P.tilt = 0.1; P.eyes = t < 10.4 ? 'closed' : 'open'; P.mouth = t < 10.4 ? 'smile' : 'grin';
+    props.water = rimY + 2;
+    if (t < 10.4) props.pop = t - 9.9;
+  }
+  if (t >= 7.96) {
+    const k = t - 7.96, sp = t > 9.12 ? t - 9.12 : 0;
+    props.flag = { base: S.tip, lean: 0.16 * Math.exp(-k * 7) * Math.sin(k * 30) + (sp ? 0.1 * Math.exp(-sp * 5) * Math.sin(sp * 26) : 0) };
+  }
+  if (t >= 9.12 && t < 10.0) props.splash = t - 9.12;
+  return { P, props };
+}
+
 // ─── compositing ────────────────────────────────────────────────────────────
 function eraseBelowWater(ctx, S, wl) {
   const L = S.liquid;
   ctx.save();
-  ctx.beginPath(); ctx.rect(0, wl, W, H); ctx.clip();
+  ctx.beginPath(); ctx.rect(-1e4, wl, 2e4, 2e4); ctx.clip();
   ctx.globalCompositeOperation = 'destination-out';
-  ctx.beginPath(); ctx.ellipse(L.cx, L.cy, L.rx, L.ry, 0, 0, Math.PI * 2); ctx.fill();
-  ctx.fillRect(L.cx - L.rx, L.cy, 2 * L.rx, H);
+  ctx.beginPath();
+  if (S.glass) { poly(ctx, S.glass, true); ctx.fill(); }
+  else { ctx.ellipse(L.cx, L.cy, L.rx, L.ry, 0, 0, Math.PI * 2); ctx.fill(); ctx.fillRect(L.cx - L.rx, L.cy, 2 * L.rx, 2e4); }
   ctx.restore();
 }
 function drawRipples(ctx, S, centre, age, n = 3) {
@@ -415,13 +541,14 @@ function drawTicks(ctx, hc) {
 function renderFrame(ctx, layer, t, S, assets, opts = {}) {
   const td = Math.floor(t * 12) / 12;               // drawings change on twos
   boil = Math.floor(t * 12) % 3; jc = 0;
-  const { P, props } = episode1(td, S);
+  const { P, props } = (S.routine === 'pole' ? episodePole : episode1)(td, S);
 
   ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
   ctx.drawImage(assets.plate, 0, 0, W, H);
 
   const lc = layer.getContext('2d');
   lc.setTransform(1, 0, 0, 1, 0, 0); lc.clearRect(0, 0, W, H);
+  lc.setTransform(S.K, 0, 0, S.K, 0, 0); LINE = (S.linePx || 6.5) / S.K;
   if (props.flag) drawFlag(lc, props.flag.base, props.flag.lean, t);
   let head = null;
   if (!P.hidden) {
@@ -433,12 +560,13 @@ function renderFrame(ctx, layer, t, S, assets, opts = {}) {
   if (props.ticks && head) drawTicks(lc, head);
   if (props.question && head) drawQuestion(lc, head);
   if (props.splash != null) { drawSplash(lc, S, props.splash); drawRipples(lc, S, S.entry, props.splash); }
-  if (props.pop != null) drawRipples(lc, S, [S.float[0], S.liquid.cy + 22], props.pop, 2);
+  if (props.pop != null) drawRipples(lc, S, S.float ? [S.float[0], S.liquid.cy + 22] : S.entry, props.pop, 2);
+  lc.setTransform(1, 0, 0, 1, 0, 0); LINE = 6.5;
 
-  ctx.save(); ctx.filter = 'drop-shadow(0px 3px 5px rgba(40,24,10,.30))'; ctx.drawImage(layer, 0, 0); ctx.restore();
+  ctx.save(); ctx.filter = 'drop-shadow(0px 0px 1.5px rgba(20,16,10,.45)) drop-shadow(0px 3px 5px rgba(20,16,10,.30))'; ctx.drawImage(layer, 0, 0); ctx.restore();
 
   // end card: the mark, the line, the real app, and him sitting on it
-  const e = seg(t, opts.endAt, opts.endAt + 0.45);
+  const endAt = S.endAt ?? endAt, e = seg(t, endAt, endAt + 0.45);
   if (e > 0) {
     ctx.globalAlpha = e; ctx.fillStyle = NIGHT; ctx.fillRect(0, 0, W, H);
     const m = assets.mark, mw = 132, mh = mw * m.height / m.width;
@@ -450,10 +578,10 @@ function renderFrame(ctx, layer, t, S, assets, opts = {}) {
     ctx.textAlign = 'center'; ctx.fillStyle = 'rgba(244,239,230,.66)'; ctx.font = '500 34px "DM Sans"';
     ctx.fillText(opts.sub, W / 2, 582);
 
-    const sit = easeOut(seg(t, opts.endAt + 0.25, opts.endAt + 0.55)), wv = 22 * Math.sin((t - opts.endAt) * 15) * seg(t, opts.endAt + 0.6, opts.endAt + 0.8);
+    const sit = easeOut(seg(t, endAt + 0.25, endAt + 0.55)), wv = 22 * Math.sin((t - endAt) * 15) * seg(t, endAt + 0.6, endAt + 0.8);
     boil = Math.floor(t * 12) % 3; jc = 0;
     lc.clearRect(0, 0, W, H);
-    drawPhone(lc, [W / 2, 1200], 1, 400, 640);
+    drawPhone(lc, [W / 2, 1200], 1, 400, 640, 1530 * ease(seg(t, endAt + 0.5, endAt + 2.2)));
     if (sit > 0) {
       const Q = { f: 1, x: 672, y: 882 - 90 * (1 - sit), rot: 0, tilt: 0.12, eyes: 'open', mouth: 'grin', knee: { f: 1, b: 1 }, elbow: { b: -1, f: -1 },
                   feet: { f: [66, 60], b: [44, 66] }, hands: { b: [-70 + wv, -244], f: [40, 6] } };
