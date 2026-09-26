@@ -37,7 +37,8 @@ marketing/
 | `the-regular` | Reel, 14.8s | Ep. 1 ready | Thu 1 Oct (International Coffee Day) |
 | `coffeeguessr` | Reel, 19.7s, EN + AR | Ready | Mon 28 Sep |
 | `picking-a-cafe` | Reel, 15s, AR + EN | Ready | Sun 4 Oct |
-| `hidden-under-20` | Reel, 17.8s, AR + EN | Ready | Mon 28 Sep |
+| `hidden-under-20` | Reel, 17.8s, AR + EN | Superseded: too plain, same data reused below | — |
+| `dont-tell-anyone` | Reel, 16.4s, AR + EN | Ready | Mon 28 Sep |
 
 ## The creative bar
 

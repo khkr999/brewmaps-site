@@ -5,7 +5,7 @@ Times are Gulf Standard Time. Build status is per post; nothing marked "to build
 | Day | Time | Format | Post | Job | Status |
 |---|---|---|---|---|---|
 | Sat 26 Sep | 20:00 | Story | Teaser: a still of The Regular, lost, holding his map upside down. "Thursday." | Anticipation | To build (a still frame from the rig) |
-| Mon 28 Sep | 19:30 | Reel, 17.8s | **Hidden under 20**: four cafés rated 4.8+, latte under AED 20, few reviews; guess the price, then the app | Saves, sends | **Ready**: `posts/hidden-under-20/export/` (CoffeeGuessr already posted) |
+| Mon 28 Sep | 19:30 | Reel, 16.4s | **لا تقول لأحد 🤫**: a secret list of four hidden cafés typed live into a notes page, then shared with every group chat | Shares, saves | **Ready**: `posts/dont-tell-anyone/export/` |
 | Tue 29 Sep | 20:00 | Story | Poll: "Paper map or app?" and a second teaser still | Warm-up | To build |
 | Thu 1 Oct | 11:00 | Reel, 14.8s | **The Regular, ep. 1**, on International Coffee Day. Collab invite to 1918 Cafe | Reach from strangers | **Ready**: `posts/the-regular/export/the-regular-ep1.mp4` |
 | Thu 1 Oct | 18:00 | Story | Reshare ep. 1 with a question sticker: "Where should he go next?" | Picks ep. 2 | Needs only the sticker |
