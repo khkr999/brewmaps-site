@@ -1,6 +1,6 @@
 # ElevenLabs voiceover: قهوتك تقول عنك وايد (V3)
 
-Timed to `export/your-order-v3-ar-paid.mp4` (22.8s) and `-organic.mp4` (21.8s).
+Timed to `export/your-order-v3-ar-paid.mp4` (25.0s) and `-organic.mp4` (24.2s).
 Each line starts as its text appears on screen.
 
 ## Voice and settings
@@ -22,35 +22,35 @@ doesn't switch accent mid-line.
 | # | Starts at | On screen | Say (paste this) |
 |---|---|---|---|
 | 1 | 0.00 | قهوتك تقول عنك وايد 👀 | قهوتك… تقول عنك وايد. |
-| 2 | 1.35 | لا تزعل | `[smirks]` لا تزعل. |
-| 3 | 1.95 | سبانش لاتيه | سبانش لاتيه. |
-| 4 | 2.80 | يقول ما يحب الحلو… | يقول ما يحب الحلو… |
-| 5 | 3.80 | وطلبه كله حليب مكثف 😭 | وطلبه كله حليب مكثّف. |
-| 6 | 5.15 | V60 | في ستّين. |
-| 7 | 6.00 | يشرح لك الـ tasting notes… | يشرح لك التيستنغ نوتس… |
-| 8 | 7.00 | وأنت أصلاً ما سألت 🤓 | وانت أصلاً… ما سألت. |
-| 9 | 8.35 | ماتشا | ماتشا. |
-| 10 | 9.20 | يطلبها عشان لونها… | يطلبها عشان لونها… |
-| 11 | 10.20 | مو عشان طعمها 💚 | مو عشان طعمها. |
-| 12 | 11.15 | آيس أمريكانو | آيس أمريكانو. |
-| 13 | 12.00 | دوام. | دوام. |
-| 14 | 12.60 | إيميلات. | إيميلات. |
-| 15 | 13.20 | لا تكلمه. 🧊 | لا تكلّمه. |
-| 16 | 14.15 | كرك | `[sighs]` كرك. |
-| — | 14.6–15.3 | (steam only) | *silence: let it breathe* |
-| 17 | 15.30 | معفي من التحليل 😌 | معفي من التحليل. |
-| 18 | 16.85 | BrewMaps يعرف ذوقك | برو مابس يعرف ذوقك… |
-| 19 | 18.05 | ويقترح لك وين تجرّبه | ويقترح لك وين تجرّبه. |
-| 20 | 19.60 | مهما كان طلبك، | مهما كان طلبك… |
-| 21 | 20.35 | تلقاه على BrewMaps. | تلقاه على برو مابس. |
-| 22 | 21.40 | حمّل التطبيق مجاناً | حمّل التطبيق مجاناً. |
+| 2 | 1.50 | لا تزعل | `[smirks]` لا تزعل. |
+| 3 | 2.15 | سبانش لاتيه | سبانش لاتيه. |
+| 4 | 3.10 | يقول ما يحب الحلو… | يقول ما يحب الحلو… |
+| 5 | 4.20 | وطلبه كله حليب مكثف 😭 | وطلبه كله حليب مكثّف. |
+| 6 | 5.75 | V60 | في ستّين. |
+| 7 | 6.70 | يشرح لك الـ tasting notes… | يشرح لك التيستنغ نوتس… |
+| 8 | 7.80 | وأنت أصلاً ما سألت 🤓 | وانت أصلاً… ما سألت. |
+| 9 | 9.35 | ماتشا | ماتشا. |
+| 10 | 10.30 | يطلبها عشان لونها… | يطلبها عشان لونها… |
+| 11 | 11.40 | مو عشان طعمها 💚 | مو عشان طعمها. |
+| 12 | 12.55 | آيس أمريكانو | آيس أمريكانو. |
+| 13 | 13.50 | دوام. | دوام. |
+| 14 | 14.20 | إيميلات. | إيميلات. |
+| 15 | 14.90 | لا تكلمه. 🧊 | لا تكلّمه. |
+| 16 | 15.95 | كرك | `[sighs]` كرك. |
+| — | 16.4–17.3 | (steam only) | *silence: let it breathe* |
+| 17 | 17.30 | معفي من التحليل 😌 | معفي من التحليل. |
+| 18 | 18.95 | BrewMaps يعرف ذوقك | برو مابس يعرف ذوقك… |
+| 19 | 20.30 | ويقترح لك وين تجرّبه | ويقترح لك وين تجرّبه. |
+| 20 | 22.00 | مهما كان طلبك، | مهما كان طلبك… |
+| 21 | 22.75 | تلقاه على BrewMaps. | تلقاه على برو مابس. |
+| 22 | 23.80 | حمّل التطبيق مجاناً | حمّل التطبيق مجاناً. |
 
 **Organic ending** (replaces 20–22):
 
 | # | Starts at | On screen | Say |
 |---|---|---|---|
-| 20o | 19.60 | أنت أي واحد؟ 👇 | وانت؟ أي واحد فيهم؟ |
-| 21o | 20.80 | منشن اللي يشبه طلبه | منشن اللي يشبه طلبه. |
+| 20o | 22.00 | أنت أي واحد؟ 👇 | وانت؟ أي واحد فيهم؟ |
+| 21o | 23.20 | منشن اللي يشبه طلبه | منشن اللي يشبه طلبه. |
 
 Every line must finish before the next one starts. If a take runs long, speed that one line up
 (ElevenLabs speed 1.05–1.1) rather than cutting it.
@@ -71,11 +71,11 @@ and writes `export/your-order-v3-ar-paid-vo.mp4`.
 | Starts at | Say |
 |---|---|
 | 0.00 | Your coffee says a lot about you. |
-| 1.35 | No offence. |
-| 1.95 / 2.80 / 3.80 | Spanish latte. / Says he doesn't like sweet… / orders straight condensed milk. |
-| 5.15 / 6.00 / 7.00 | V sixty. / Explains the tasting notes… / nobody even asked. |
-| 8.35 / 9.20 / 10.20 | Matcha. / Orders it for the colour… / not the taste. |
-| 11.15 / 12.00 / 12.60 / 13.20 | Iced americano. / Meetings. / Emails. / Don't talk to him. |
-| 14.15 / 15.30 | Karak. … / Exempt from analysis. |
-| 16.85 / 18.05 | BrewMaps knows your taste… / and where to try it next. |
-| 19.60 / 20.35 / 21.40 | Whatever you order… / find it on BrewMaps. / Download the app, free. |
+| 1.50 | No offence. |
+| 2.15 / 3.10 / 4.20 | Spanish latte. / Says he doesn't like sweet… / orders straight condensed milk. |
+| 5.75 / 6.70 / 7.80 | V sixty. / Explains the tasting notes… / nobody even asked. |
+| 9.35 / 10.30 / 11.40 | Matcha. / Orders it for the colour… / not the taste. |
+| 12.55 / 13.50 / 14.20 / 14.90 | Iced americano. / Meetings. / Emails. / Don't talk to him. |
+| 15.95 / 17.30 | Karak. … / Exempt from analysis. |
+| 18.95 / 20.30 | BrewMaps knows your taste… / and where to try it next. |
+| 22.00 / 22.75 / 23.80 | Whatever you order… / find it on BrewMaps. / Download the app, free. |

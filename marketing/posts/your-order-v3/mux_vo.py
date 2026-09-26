@@ -3,10 +3,8 @@
 import subprocess, sys, os, imageio_ffmpeg
 end = sys.argv[1] if len(sys.argv) > 1 else 'paid'
 lang = sys.argv[2] if len(sys.argv) > 2 else 'ar'
-MARKS = {'01': 0.00, '02': 1.35, '03': 1.95, '04': 2.80, '05': 3.80, '06': 5.15, '07': 6.00, '08': 7.00,
-         '09': 8.35, '10': 9.20, '11': 10.20, '12': 11.15, '13': 12.00, '14': 12.60, '15': 13.20,
-         '16': 14.15, '17': 15.30, '18': 16.85, '19': 18.05}
-MARKS.update({'20': 19.60, '21': 20.35, '22': 21.40} if end == 'paid' else {'20o': 19.60, '21o': 20.80})
+MARKS = {'01': 0.0, '02': 1.5, '03': 2.15, '04': 3.1, '05': 4.2, '06': 5.75, '07': 6.7, '08': 7.8, '09': 9.35, '10': 10.3, '11': 11.4, '12': 12.55, '13': 13.5, '14': 14.2, '15': 14.9, '16': 15.95, '17': 17.3, '18': 18.95, '19': 20.3}
+MARKS.update({'20': 22.00, '21': 22.75, '22': 23.80} if end == 'paid' else {'20o': 22.00, '21o': 23.20})
 video = f'export/your-order-v3-{lang}-{end}.mp4'
 takes = [(k, t) for k, t in MARKS.items() if os.path.exists(f'vo/{k}.mp3')]
 missing = [k for k in MARKS if not os.path.exists(f'vo/{k}.mp3')]

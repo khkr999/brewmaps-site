@@ -4,15 +4,15 @@
 
 | File | Language | Ending | Length |
 |---|---|---|---|
-| `export/your-order-v3-ar-paid.mp4` | Khaleeji | install CTA | 22.8s |
-| `export/your-order-v3-ar-organic.mp4` | Khaleeji | أنت أي واحد؟ 👇 | 21.8s |
-| `export/your-order-v3-en-paid.mp4` | English | install CTA | 22.8s |
-| `export/your-order-v3-en-organic.mp4` | English | Which one are you? 👇 | 21.8s |
+| `export/your-order-v3-ar-paid.mp4` | Khaleeji | install CTA | 25.0s |
+| `export/your-order-v3-ar-organic.mp4` | Khaleeji | أنت أي واحد؟ 👇 | 24.2s |
+| `export/your-order-v3-en-paid.mp4` | English | install CTA | 25.0s |
+| `export/your-order-v3-en-organic.mp4` | English | Which one are you? 👇 | 24.2s |
 
 ## Timeline
 
-Paced for a voiceover (see `VOICEOVER.md`): hook 1.9s, drinks 2.6–3.2s each (name, setup at 0.9s,
-punchline at 1.9s), product 2.8s, end 3.3s (paid) or 2.3s (organic). The table below is the earlier,
+Paced for a voiceover (see `VOICEOVER.md`): hook 2.1s, drinks 2.9–3.6s each (name, setup at 1.0s,
+punchline at 2.1s), product 3.1s, end 3.1s (paid) or 2.3s (organic). The table below is the earlier,
 faster cut; scene order and content are unchanged.
 
 | Time | Scene | Background | On screen |

@@ -9,11 +9,11 @@ const AR = '٠١٢٣٤٥٦٧٨٩';
 
 let ORGANIC = false, T = [], DURATION = 0;
 // beats inside a drink scene, in seconds from the scene start: the voice says the name, then the setup, then the punchline
-const SETUP = 0.9, PUNCH = 1.9;
+const SETUP = 1.0, PUNCH = 2.1;
 function setEnd(kind) {
   ORGANIC = kind === 'organic';
   // paced for a spoken line per beat; see VOICEOVER.md for the matching script
-  T = [0, 1.9, 5.1, 8.3, 11.1, 14.1, 16.7, 19.5, ORGANIC ? 21.8 : 22.8];
+  T = [0, 2.1, 5.7, 9.3, 12.5, 15.9, 18.8, 21.9, ORGANIC ? 24.2 : 25.0];
   DURATION = T[T.length - 1];
 }
 setEnd('paid');
@@ -218,14 +218,14 @@ function bg(ctx, color) {
   g.addColorStop(0, 'rgba(255,255,255,.035)'); g.addColorStop(1, 'rgba(0,0,0,.05)');
   ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
 }
-const drift = lt => -8 * seg(lt, 0, 3.2);
+const drift = lt => -8 * seg(lt, 0, 3.6);
 const appear = lt => { const u = eo(seg(lt, 0, 0.3)); return { a: u, dy: (1 - u) * 16 }; };
 
 function hook(ctx, lt) {
   bg(ctx, NIGHT);
   line(ctx, L.hook[0], 720, F(800, 360), CREAM, 1, { maxW: 900 });                     // on frame one: it's the thumbnail
   line(ctx, L.hook[1], 900, F(800, 120), PALE, seg(lt, 0.2, 0.45), { maxW: 888 });
-  line(ctx, L.hook[2], 1010, F(500, 40), CREAM, seg(lt, 1.35, 1.55), { alpha: 0.55 });
+  line(ctx, L.hook[2], 1010, F(500, 40), CREAM, seg(lt, 1.5, 1.7), { alpha: 0.55 });
 }
 
 function drinkText(ctx, lt, [name, setup, punch], dark, nameFont) {
@@ -267,9 +267,9 @@ function sceneAmericano(ctx, lt) {
   ctx.save(); ctx.globalAlpha = a; americano(ctx, dy + drift(lt), FOREST); ctx.restore();
   line(ctx, L.am[0], 560, F(800, 190), FOREST, eo(seg(lt, 0, 0.3)), { maxW: 888 });
   // three beats, one line: the words land one after another
-  const beats = [[L.am[1], 0.9], [L.am[2], 1.5], [L.am[3], 2.1]];
+  const beats = [[L.am[1], 1.0], [L.am[2], 1.7], [L.am[3], 2.4]];
   beats.forEach(([s, at], k) => line(ctx, s, 690 + k * 88, F(k === 2 ? 800 : 500, k === 2 ? 72 : 64), k === 2 ? FOREST : INK, seg(lt, at, at + 0.2), { maxW: 820 }));
-  const bp = seg(lt, 1.5, 1.65) * (1 - seg(lt, 2.1, 2.25));             // unread badge beside the cup, only with "emails"
+  const bp = seg(lt, 1.7, 1.85) * (1 - seg(lt, 2.4, 2.55));             // unread badge beside the cup, only with "emails"
   if (bp > 0) {
     ctx.save(); ctx.globalAlpha = bp; ctx.direction = L.dir; ctx.font = F(700, 30);
     const w = ctx.measureText(L.badge).width + 70, x = RTL() ? 96 : W - 96 - w, y = 915 - (1 - bp) * 12;
@@ -283,7 +283,7 @@ function sceneKarak(ctx, lt) {
   bg(ctx, SAND);
   karak(ctx, drift(lt), lt, FOREST);
   line(ctx, L.kk[0], 640, F(800, 300), FOREST, 1, { center: true });            // hard cut: already there
-  line(ctx, L.kk[1], 800, F(800, 72), FOREST, seg(lt, 1.2, 1.45), { center: true });
+  line(ctx, L.kk[1], 800, F(800, 72), FOREST, seg(lt, 1.4, 1.65), { center: true });
 }
 
 // the product: one real screen, held. Discover → "Drinks you'd love · Matches your taste"
@@ -297,7 +297,7 @@ function phone(ctx, A, lt, x, y, w, h) {
   ctx.fillStyle = '#fff'; ctx.fillRect(sx, sy, sw, sh);
   ctx.drawImage(A.discover, 0, off, 1320, sh / k, sx, sy, sw, sh);
   ctx.restore();
-  const hp = io(seg(lt, 1.5, 1.9));                                        // outline the "Drinks you'd love" row
+  const hp = io(seg(lt, 1.7, 2.1));                                        // outline the "Drinks you'd love" row
   if (hp > 0) {
     const ry0 = sy + (1085 - off) * k, ry1 = sy + (1760 - off) * k;
     ctx.save(); ctx.strokeStyle = PALE; ctx.lineWidth = 6; ctx.globalAlpha = hp;
@@ -309,7 +309,7 @@ function sceneProduct(ctx, A, lt) {
   const u = eo(seg(lt, 0, 0.45));
   phone(ctx, A, lt, PH.x, PH.y + (1 - u) * 220, PH.w, PH.h);
   line(ctx, L.prod[0], 420, F(800, 84), CREAM, seg(lt, 0.15, 0.45), { center: true, maxW: 940 });
-  line(ctx, L.prod[1], 505, F(500, 52), PALE, seg(lt, 1.35, 1.65), { center: true, maxW: 940 });
+  line(ctx, L.prod[1], 505, F(500, 52), PALE, seg(lt, 1.5, 1.8), { center: true, maxW: 940 });
 }
 function sceneEnd(ctx, A, lt) {
   bg(ctx, FOREST);
