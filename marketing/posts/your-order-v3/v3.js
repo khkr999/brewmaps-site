@@ -8,9 +8,12 @@ const COFFEE = '#7A4E33', MILKC = '#EFE0C2', KARAK = '#B98A5E';
 const AR = '٠١٢٣٤٥٦٧٨٩';
 
 let ORGANIC = false, T = [], DURATION = 0;
+// beats inside a drink scene, in seconds from the scene start: the voice says the name, then the setup, then the punchline
+const SETUP = 0.9, PUNCH = 1.9;
 function setEnd(kind) {
   ORGANIC = kind === 'organic';
-  T = [0, 1.3, 3.6, 5.9, 8.0, 10.2, 12.2, 14.8, ORGANIC ? 16.6 : 17.2];
+  // paced for a spoken line per beat; see VOICEOVER.md for the matching script
+  T = [0, 1.9, 5.1, 8.3, 11.1, 14.1, 16.7, 19.5, ORGANIC ? 21.8 : 22.8];
   DURATION = T[T.length - 1];
 }
 setEnd('paid');
@@ -215,27 +218,27 @@ function bg(ctx, color) {
   g.addColorStop(0, 'rgba(255,255,255,.035)'); g.addColorStop(1, 'rgba(0,0,0,.05)');
   ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
 }
-const drift = lt => -8 * seg(lt, 0, 2.3);
+const drift = lt => -8 * seg(lt, 0, 3.2);
 const appear = lt => { const u = eo(seg(lt, 0, 0.3)); return { a: u, dy: (1 - u) * 16 }; };
 
 function hook(ctx, lt) {
   bg(ctx, NIGHT);
   line(ctx, L.hook[0], 720, F(800, 360), CREAM, 1, { maxW: 900 });                     // on frame one: it's the thumbnail
   line(ctx, L.hook[1], 900, F(800, 120), PALE, seg(lt, 0.2, 0.45), { maxW: 888 });
-  line(ctx, L.hook[2], 1010, F(500, 40), CREAM, seg(lt, 0.65, 0.85), { alpha: 0.55 });
+  line(ctx, L.hook[2], 1010, F(500, 40), CREAM, seg(lt, 1.35, 1.55), { alpha: 0.55 });
 }
 
 function drinkText(ctx, lt, [name, setup, punch], dark, nameFont) {
   const ink = dark ? CREAM : FOREST, accent = dark ? PALE : FOREST;
   line(ctx, name, 560, nameFont || F(800, name.length > 6 ? 190 : 240), ink, eo(seg(lt, 0, 0.3)), { maxW: 888 });
-  line(ctx, setup, 700, F(500, 66), dark ? CREAM : INK, seg(lt, 0.3, 0.6), { alpha: 0.8, maxW: 820 });
-  if (punch) line(ctx, punch, 800, F(800, 72), dark ? accent : FOREST, seg(lt, 1.05, 1.35), { maxW: 820 });
+  line(ctx, setup, 700, F(500, 66), dark ? CREAM : INK, seg(lt, SETUP, SETUP + 0.3), { alpha: 0.8, maxW: 820 });
+  if (punch) line(ctx, punch, 800, F(800, 72), dark ? accent : FOREST, seg(lt, PUNCH, PUNCH + 0.3), { maxW: 820 });
 }
 
 function sceneSpanish(ctx, lt) {
   bg(ctx, FOREST);
   const { a, dy } = appear(lt);
-  tin(ctx, lt - 0.95, CREAM, 1120); const rise = eo(seg(lt - 0.95, 0.45, 0.95));
+  tin(ctx, lt - (PUNCH - 0.1), CREAM, 1120); const rise = eo(seg(lt - (PUNCH - 0.1), 0.45, 0.95));
   ctx.save(); ctx.globalAlpha = a; spanishLatte(ctx, dy + drift(lt), rise * 40, CREAM); ctx.restore();
   drinkText(ctx, lt, L.sl, true);
 }
@@ -245,7 +248,7 @@ function sceneV60(ctx, lt) {
   ctx.save(); ctx.globalAlpha = a; v60(ctx, dy + drift(lt), lt, FOREST); ctx.restore();
   // tasting notes float up beside the dripper, then leave before the punchline
   ['Berry', 'Floral', 'Chocolate'].forEach((nm, k) => {
-    const p = seg(lt, 0.3 + k * 0.2, 0.5 + k * 0.2), out = seg(lt, 0.95, 1.1);
+    const p = seg(lt, SETUP + 0.1 + k * 0.25, SETUP + 0.3 + k * 0.25), out = seg(lt, PUNCH - 0.15, PUNCH);
     if (p <= 0 || out >= 1) return;
     const side = RTL() ? 1 : -1, x = 540 + side * -330 + (k % 2 ? -20 : 20), y = 1020 + k * 110 - eo(p) * 20;
     ctx.save(); ctx.globalAlpha = 0.5 * eo(p) * (1 - out); ctx.font = F(400, 36, 'DM Sans'); ctx.textAlign = 'center'; ctx.fillStyle = FOREST; ctx.fillText(nm, x, y); ctx.restore();
@@ -255,7 +258,7 @@ function sceneV60(ctx, lt) {
 function sceneMatcha(ctx, lt) {
   bg(ctx, NIGHT);
   const { a, dy } = appear(lt);
-  ctx.save(); ctx.globalAlpha = a; matcha(ctx, dy + drift(lt), -0.35 * io(seg(lt, 1.05, 1.6)), CREAM); ctx.restore();
+  ctx.save(); ctx.globalAlpha = a; matcha(ctx, dy + drift(lt), -0.35 * io(seg(lt, PUNCH, PUNCH + 0.55)), CREAM); ctx.restore();
   drinkText(ctx, lt, L.mt, true);
 }
 function sceneAmericano(ctx, lt) {
@@ -264,12 +267,12 @@ function sceneAmericano(ctx, lt) {
   ctx.save(); ctx.globalAlpha = a; americano(ctx, dy + drift(lt), FOREST); ctx.restore();
   line(ctx, L.am[0], 560, F(800, 190), FOREST, eo(seg(lt, 0, 0.3)), { maxW: 888 });
   // three beats, one line: the words land one after another
-  const beats = [[L.am[1], 0.45], [L.am[2], 0.95], [L.am[3], 1.45]];
+  const beats = [[L.am[1], 0.9], [L.am[2], 1.5], [L.am[3], 2.1]];
   beats.forEach(([s, at], k) => line(ctx, s, 690 + k * 88, F(k === 2 ? 800 : 500, k === 2 ? 72 : 64), k === 2 ? FOREST : INK, seg(lt, at, at + 0.2), { maxW: 820 }));
-  const bp = seg(lt, 0.95, 1.1) * (1 - seg(lt, 1.45, 1.6));             // unread badge beside the cup, only with "emails"
+  const bp = seg(lt, 1.5, 1.65) * (1 - seg(lt, 2.1, 2.25));             // unread badge beside the cup, only with "emails"
   if (bp > 0) {
     ctx.save(); ctx.globalAlpha = bp; ctx.direction = L.dir; ctx.font = F(700, 30);
-    const w = ctx.measureText(L.badge).width + 70, x = RTL() ? 150 : W - 150 - w, y = 1110 - (1 - bp) * 12;
+    const w = ctx.measureText(L.badge).width + 70, x = RTL() ? 96 : W - 96 - w, y = 915 - (1 - bp) * 12;
     ctx.beginPath(); ctx.roundRect(x, y, w, 64, 14); ctx.fillStyle = CREAM; ctx.fill(); ctx.strokeStyle = FOREST; ctx.lineWidth = 3; ctx.stroke();
     ctx.beginPath(); ctx.arc(RTL() ? x + w - 28 : x + 28, y + 32, 8, 0, 7); ctx.fillStyle = FOREST; ctx.fill();
     ctx.fillStyle = FOREST; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(L.badge, x + w / 2 + (RTL() ? -10 : 10), y + 34);
@@ -280,7 +283,7 @@ function sceneKarak(ctx, lt) {
   bg(ctx, SAND);
   karak(ctx, drift(lt), lt, FOREST);
   line(ctx, L.kk[0], 640, F(800, 300), FOREST, 1, { center: true });            // hard cut: already there
-  line(ctx, L.kk[1], 800, F(800, 72), FOREST, seg(lt, 0.75, 1.0), { center: true });
+  line(ctx, L.kk[1], 800, F(800, 72), FOREST, seg(lt, 1.2, 1.45), { center: true });
 }
 
 // the product: one real screen, held. Discover → "Drinks you'd love · Matches your taste"
@@ -294,7 +297,7 @@ function phone(ctx, A, lt, x, y, w, h) {
   ctx.fillStyle = '#fff'; ctx.fillRect(sx, sy, sw, sh);
   ctx.drawImage(A.discover, 0, off, 1320, sh / k, sx, sy, sw, sh);
   ctx.restore();
-  const hp = io(seg(lt, 1.4, 1.8));                                        // outline the "Drinks you'd love" row
+  const hp = io(seg(lt, 1.5, 1.9));                                        // outline the "Drinks you'd love" row
   if (hp > 0) {
     const ry0 = sy + (1085 - off) * k, ry1 = sy + (1760 - off) * k;
     ctx.save(); ctx.strokeStyle = PALE; ctx.lineWidth = 6; ctx.globalAlpha = hp;
@@ -306,7 +309,7 @@ function sceneProduct(ctx, A, lt) {
   const u = eo(seg(lt, 0, 0.45));
   phone(ctx, A, lt, PH.x, PH.y + (1 - u) * 220, PH.w, PH.h);
   line(ctx, L.prod[0], 420, F(800, 84), CREAM, seg(lt, 0.15, 0.45), { center: true, maxW: 940 });
-  line(ctx, L.prod[1], 505, F(500, 52), PALE, seg(lt, 0.45, 0.75), { center: true, maxW: 940 });
+  line(ctx, L.prod[1], 505, F(500, 52), PALE, seg(lt, 1.35, 1.65), { center: true, maxW: 940 });
 }
 function sceneEnd(ctx, A, lt) {
   bg(ctx, FOREST);
@@ -314,21 +317,21 @@ function sceneEnd(ctx, A, lt) {
   if (ORGANIC) {
     const mw = 150, mh = mw * m.height / m.width;
     line(ctx, L.organic[0], 860, F(800, 120), CREAM, seg(lt, 0.05, 0.4), { center: true });
-    line(ctx, L.organic[1], 980, F(500, 50), PALE, seg(lt, 0.4, 0.7), { center: true });
-    ctx.save(); ctx.globalAlpha = eo(seg(lt, 0.6, 0.9)); ctx.drawImage(m, (W - mw) / 2, 1100, mw, mh); ctx.restore();
+    line(ctx, L.organic[1], 980, F(500, 50), PALE, seg(lt, 1.3, 1.6), { center: true });
+    ctx.save(); ctx.globalAlpha = eo(seg(lt, 1.5, 1.8)); ctx.drawImage(m, (W - mw) / 2, 1100, mw, mh); ctx.restore();
     return;
   }
   const mw = 280, mh = mw * m.height / m.width, ma = eo(seg(lt, 0, 0.3));
   ctx.save(); ctx.globalAlpha = ma; ctx.drawImage(m, (W - mw) / 2, 380 + (1 - ma) * 16, mw, mh); ctx.restore();
-  line(ctx, L.end[0], 760, F(500, 64), CREAM, seg(lt, 0.25, 0.5), { center: true });
-  const r = line(ctx, L.end[1], 900, F(800, 120), CREAM, seg(lt, 0.35, 0.6), { center: true, maxW: 900 });
-  if (r && lt > 0.6) {                                                    // the pale-green full stop
-    ctx.save(); ctx.globalAlpha = seg(lt, 0.6, 0.7); ctx.font = F(800, r.px); ctx.fillStyle = PALE; ctx.textAlign = 'left';
+  line(ctx, L.end[0], 760, F(500, 64), CREAM, seg(lt, 0.1, 0.35), { center: true });
+  const r = line(ctx, L.end[1], 900, F(800, 120), CREAM, seg(lt, 0.85, 1.1), { center: true, maxW: 900 });
+  if (r && lt > 1.1) {                                                    // the pale-green full stop
+    ctx.save(); ctx.globalAlpha = seg(lt, 1.1, 1.2); ctx.font = F(800, r.px); ctx.fillStyle = PALE; ctx.textAlign = 'left';
     ctx.fillText('.', RTL() ? r.left - ctx.measureText('.').width - 2 : r.left + r.w + 2, 900); ctx.restore();
   }
-  line(ctx, L.end[2], 985, F(400, 38), CREAM, seg(lt, 0.55, 0.8), { center: true, alpha: 0.72 });
-  const c = line(ctx, L.end[3], 1130, F(700, 50), CREAM, seg(lt, 0.8, 1.0), { center: true });
-  const ul = io(seg(lt, 0.9, 1.3));
+  line(ctx, L.end[2], 985, F(400, 38), CREAM, seg(lt, 1.3, 1.55), { center: true, alpha: 0.72 });
+  const c = line(ctx, L.end[3], 1130, F(700, 50), CREAM, seg(lt, 1.9, 2.1), { center: true });
+  const ul = io(seg(lt, 2.0, 2.4));
   if (c && ul > 0) { ctx.save(); ctx.strokeStyle = PALE; ctx.lineWidth = 5; ctx.lineCap = 'round'; ctx.beginPath();
     const y = 1160; if (RTL()) { ctx.moveTo(c.left + c.w, y); ctx.lineTo(c.left + c.w - c.w * ul, y); } else { ctx.moveTo(c.left, y); ctx.lineTo(c.left + c.w * ul, y); }
     ctx.stroke(); ctx.restore(); }

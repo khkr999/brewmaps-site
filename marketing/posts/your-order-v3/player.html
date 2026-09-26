@@ -20,7 +20,7 @@ window.ready = (async () => {
   window.A = { mark: await img('../../assets/logos/mark-cream.png'), discover: await img('../../assets/screenshots/discover-drinks.png'), buf,
     grain: [noise(1), noise(2), noise(3)] };
   window.DURATION = DURATION;
-  for (const t of [0, 2, 11, 13, 16]) renderFrame(ctx, t, window.A);
+  for (const t of [0, 3, 12, 17, 21]) renderFrame(ctx, t, window.A);
 })();
 window.frame = t => { renderFrame(ctx, t, window.A); return document.getElementById('c').toDataURL('image/png'); };
 </script>
