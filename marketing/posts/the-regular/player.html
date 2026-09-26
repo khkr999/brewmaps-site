@@ -1,0 +1,19 @@
+<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="../../assets/fonts/dmsans.css">
+<style>html,body{margin:0;background:#000}</style>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script src="rig.js"></script>
+<script>
+const q = new URLSearchParams(location.search), S = virtual(SCENES[q.get('scene') || 'bateen']);
+window.DURATION = S.endAt + 2.5;
+const img = src => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = src; });
+const ctx = document.getElementById('c').getContext('2d'), layer = document.createElement('canvas');
+layer.width = 1080; layer.height = 1920;
+const OPTS = { headline: 'Found it.', sub: '812 cafés across the UAE, on BrewMaps.' };
+window.ready = (async () => {
+  await Promise.all([document.fonts.load('700 58px "DM Sans"'), document.fonts.load('500 32px "DM Sans"')]);
+  window.assets = { plate: await img(S.plate), mark: await img('../../assets/logos/mark-cream.png'), page: await img('../../assets/derived/browse-scroll.png'), bar: await img('../../assets/derived/browse-tabbar.png') };
+  ASSETS = window.assets;
+})();
+window.frame = t => { renderFrame(ctx, layer, t, S, window.assets, OPTS); return document.getElementById('c').toDataURL('image/png'); };
+</script>

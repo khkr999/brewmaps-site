@@ -1,0 +1,63 @@
+{
+ "median": 23,
+ "medianOf": 206,
+ "shareUnder20": 23,
+ "cafes": [
+  {
+   "cafe": "Sibul Cafe",
+   "rating": 5.0,
+   "reviews": 38,
+   "latte": 16,
+   "menuItem": "Latte",
+   "area": "Al Karama",
+   "emirate": "Dubai",
+   "areaAr": "الكرامة",
+   "emirateAr": "دبي",
+   "photo": "photos/h1.jpg",
+   "focusY": 0.55,
+   "source": "https://www.brewmaps.app/c/0e14f409-f9a0-49bd-9be0-94f748c2ada8"
+  },
+  {
+   "cafe": "Special Stage Specialty Coffee",
+   "rating": 4.8,
+   "reviews": 64,
+   "latte": 15,
+   "menuItem": "Cafe Latte",
+   "area": "Al Muroor",
+   "emirate": "Abu Dhabi",
+   "areaAr": "المرور",
+   "emirateAr": "أبوظبي",
+   "photo": "photos/h2.jpg",
+   "focusY": 0.5,
+   "source": "https://www.brewmaps.app/c/c3945ee5-3720-426f-bcf0-3cbf0a798e26"
+  },
+  {
+   "cafe": "Bebax Coffee",
+   "rating": 5.0,
+   "reviews": 112,
+   "latte": 16.5,
+   "menuItem": "Latte",
+   "area": "Ajman",
+   "emirate": "Ajman",
+   "areaAr": "عجمان",
+   "emirateAr": "عجمان",
+   "photo": "photos/h3.jpg",
+   "focusY": 0.35,
+   "source": "https://www.brewmaps.app/c/3d9f3615-317a-4f7f-bb49-1e953ad4d6d2"
+  },
+  {
+   "cafe": "Oomi Specialty Coffee",
+   "rating": 4.8,
+   "reviews": 147,
+   "latte": 18,
+   "menuItem": "Latte",
+   "area": "Dubai Internet City",
+   "emirate": "Dubai",
+   "areaAr": "مدينة دبي للإنترنت",
+   "emirateAr": "دبي",
+   "photo": "photos/h4.jpg",
+   "focusY": 0.5,
+   "source": "https://www.brewmaps.app/c/1075d606-318b-46b0-8b84-63212536fbba"
+  }
+ ]
+}

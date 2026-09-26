@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="../../assets/fonts/dmsans.css">
+<link rel="stylesheet" href="../../assets/fonts/tajawal.css">
+<style>html,body{margin:0;background:#000}</style>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script src="order.js"></script>
+<script>
+const img = src => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = src; });
+const json = src => fetch(src).then(r => r.json());
+const ctx = document.getElementById('c').getContext('2d');
+setLang(new URLSearchParams(location.search).get('lang') || 'ar');
+window.FPS = FPS; window.DURATION = DURATION;
+window.ready = (async () => {
+  await Promise.all(['500 40px', '700 76px', '800 120px'].flatMap(f => [document.fonts.load(f + ' "DM Sans"'), document.fonts.load(f + ' "Tajawal"', 'كوفي')]));
+
+  window.A = { mark: await img('../../assets/logos/mark-cream.png') };
+  for (const t of [0, 2, 12]) renderFrame(ctx, t, window.A);
+})();
+window.frame = t => { renderFrame(ctx, t, window.A); return document.getElementById('c').toDataURL('image/png'); };
+</script>
