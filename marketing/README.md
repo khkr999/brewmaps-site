@@ -41,7 +41,8 @@ marketing/
 | `dont-tell-anyone` | Reel, 16.4s, AR + EN | Rejected: flat and slow | — |
 | `drew-it` | Reel, 12.4s, AR + EN | Ready | Mon 28 Sep |
 | `your-order` | Reel / ad, 13.7s, AR + EN | Superseded by V2 | — |
-| `your-order-v2` | Reel / ad, 13.4s, AR + EN | Ready; search footage to swap in | Next paid test |
+| `your-order-v2` | Reel / ad, 13.4s, AR + EN | Superseded by V3 | — |
+| `your-order-v3` | Reel / ad, 17.2s (paid) / 16.6s (organic), AR + EN | Ready | Next post and paid test |
 
 ## The creative bar
 
