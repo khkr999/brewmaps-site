@@ -1,0 +1,27 @@
+<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="../../assets/fonts/dmsans.css">
+<link rel="stylesheet" href="../../assets/fonts/tajawal.css">
+<style>html,body{margin:0;background:#000}</style>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script src="v2.js"></script>
+<script>
+const img = src => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.onerror = () => r(null); i.src = src; });
+const ctx = document.getElementById('c').getContext('2d');
+setLang(new URLSearchParams(location.search).get('lang') || 'ar');
+window.FPS = FPS; window.DURATION = DURATION;
+function noise(seed) {                       // film grain, three plates cycled at 12fps
+  const c = document.createElement('canvas'); c.width = 540; c.height = 960; const g = c.getContext('2d'), d = g.createImageData(540, 960);
+  let s = seed; for (let i = 0; i < d.data.length; i += 4) { s = (s * 1664525 + 1013904223) >>> 0; const v = 128 + ((s >>> 24) - 128) * 0.9; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; }
+  g.putImageData(d, 0, 0); return c;
+}
+window.ready = (async () => {
+  await Promise.all(['400 30px', '500 62px', '700 64px', '800 300px'].flatMap(f => [document.fonts.load(f + ' "DM Sans"'), document.fonts.load(f + ' "Tajawal"', 'قهوتك')]));
+  let search = [];
+  try { const m = await fetch('app/frames.json').then(r => r.ok ? r.json() : []); search = (await Promise.all(m.map(f => img('app/' + f)))).filter(Boolean); } catch (e) {}
+  window.A = { mark: await img('../../assets/logos/mark-cream.png'), browse: await img('../../assets/screenshots/browse-top.png'),
+    list: await img('../../assets/screenshots/jumeirah-list.png'), bar: await img('../../assets/derived/browse-tabbar.png'),
+    grain: [noise(1), noise(2), noise(3)], search };
+  for (const t of [0, 1.5, 9.5, 12]) renderFrame(ctx, t, window.A);
+})();
+window.frame = t => { renderFrame(ctx, t, window.A); return document.getElementById('c').toDataURL('image/png'); };
+</script>
