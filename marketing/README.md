@@ -40,6 +40,7 @@ marketing/
 | `hidden-under-20` | Reel, 17.8s, AR + EN | Superseded: too plain, same data reused below | — |
 | `dont-tell-anyone` | Reel, 16.4s, AR + EN | Rejected: flat and slow | — |
 | `drew-it` | Reel, 12.4s, AR + EN | Ready | Mon 28 Sep |
+| `your-order` | Reel / ad, 13.7s, AR + EN | Ready | Next paid test |
 
 ## The creative bar
 
