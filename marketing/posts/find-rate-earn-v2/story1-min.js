@@ -22,15 +22,18 @@ function renderFrame(ctx, t, A) {
   text(ctx, L.h1, EDGE(), 520, F(800, 112), CREAM, al, 1);
   text(ctx, L.h2, EDGE(), 645, F(800, 112), CREAM, al, seg(t, 0.15, 0.45));
 
-  // the one number, counting as the map fills
-  const n = Math.round(812 * io(seg(t, 0.95, 3.95))), a = eo(seg(t, 0.6, 0.95));
+  // the one number: no counting. It lands once, after the map has filled, rising out of a mask.
+  const a = seg(t, 3.9, 4.4);
   if (a > 0) {
-    ctx.save(); ctx.globalAlpha = a; ctx.direction = 'ltr'; ctx.font = F(800, 250); ctx.fillStyle = PALE;
-    const num = L.n(M.count(n)); ctx.textAlign = RTL() ? 'right' : 'left'; ctx.fillText(num, EDGE(), 950);
-    const nw = ctx.measureText(num).width;                          // the unit rides beside the number as it counts
-    ctx.direction = L.dir; ctx.font = F(500, 52); ctx.fillStyle = CREAM; ctx.globalAlpha = a * 0.8;
-    ctx.textAlign = RTL() ? 'right' : 'left'; ctx.fillText(M.unit, RTL() ? EDGE() - nw - 30 : EDGE() + nw + 30, 890);
+    const e = eo(a), num = L.n(812);
+    ctx.save(); ctx.direction = 'ltr'; ctx.font = F(800, 250); ctx.textAlign = RTL() ? 'right' : 'left';
+    ctx.beginPath(); ctx.rect(0, 700, W, 272); ctx.clip();                  // the number rises into view from below its baseline
+    ctx.fillStyle = PALE; ctx.fillText(num, EDGE(), 950 + (1 - e) * 230);
     ctx.restore();
+    const nw = (() => { ctx.save(); ctx.font = F(800, 250); const w = ctx.measureText(num).width; ctx.restore(); return w; })();
+    const u = eo(seg(t, 4.15, 4.55));
+    ctx.save(); ctx.globalAlpha = u * 0.8; ctx.direction = L.dir; ctx.font = F(500, 52); ctx.fillStyle = CREAM; ctx.textAlign = RTL() ? 'right' : 'left';
+    ctx.fillText(M.unit, (RTL() ? EDGE() - nw - 30 : EDGE() + nw + 30) + (RTL() ? 1 : -1) * (1 - u) * 16, 890); ctx.restore();
   }
 
   // the map: a quiet outline, then dots appear in waves by emirate
@@ -50,9 +53,9 @@ function renderFrame(ctx, t, A) {
   ctx.globalAlpha = 1;
 
   // next
-  const nx = eo(seg(t, 4.4, 4.8));
+  const nx = eo(seg(t, 4.9, 5.3));
   if (nx > 0) {
-    const nudge = Math.sin((t - 4.4) * 4) * 6 * (RTL() ? -1 : 1);
+    const nudge = Math.sin((t - 4.9) * 4) * 6 * (RTL() ? -1 : 1);
     ctx.save(); ctx.globalAlpha = nx * 0.75; ctx.direction = L.dir; ctx.font = F(500, 40); ctx.fillStyle = CREAM; ctx.textAlign = 'center';
     ctx.fillText(L.next, W / 2 + (RTL() ? 24 : -24), 1720);
     const w = ctx.measureText(L.next).width; ctx.fillText(L.arrow, W / 2 + (RTL() ? -w / 2 - 18 : w / 2 + 18) + nudge, 1720);
