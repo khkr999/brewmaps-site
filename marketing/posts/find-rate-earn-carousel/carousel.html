@@ -212,7 +212,7 @@ const pin = (x, y, s, fill) => { const g = el(M, 'g', { transform:`translate(${x
   el(g, 'ellipse', { cy:2, rx:12, ry:4, fill:'#000', opacity:.16 });
   el(g, 'path', { d:'M0 0 C-8 -14 -24 -28 -24 -46 A24 24 0 1 1 24 -46 C24 -28 8 -14 0 0Z', fill, stroke:'#FBF7EF', 'stroke-width':3 });
   const c = el(g, 'g', { transform:'translate(-1 -45) scale(.36)' }); c.innerHTML = CUP('#FBF7EF'); };
-[[300, 330], [420, 405], [230, 520], [700, 330], [900, 430], [780, 560], [120, 650], [960, 300], [160, 330], [620, 250]].forEach(([x, y]) => pin(x, y, 1.1, '#1D4526'));
+[[300, 330], [230, 520], [700, 330]].forEach(([x, y]) => pin(x, y, 1.1, '#1D4526'));
 // you are here, and the way to the one worth going to
 el(M, 'circle', { cx:330, cy:590, r:46, fill:'#C9A35A', opacity:.22 });
 el(M, 'circle', { cx:330, cy:590, r:15, fill:'#C9A35A', stroke:'#fff', 'stroke-width':6 });
