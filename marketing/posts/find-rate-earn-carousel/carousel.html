@@ -1,302 +1,258 @@
 <!doctype html><html lang="ar"><meta charset="utf-8">
-<!-- Find · Rate · Earn carousel. One 3240×1350 panorama, cut into three 1080×1350 slides by shot.js,
-     so the light, the gold thread and the layout run on across the swipe. -->
+<!-- Find · Rate · Earn, final. One 3240×1350 panorama cut into three 1080×1350 carousel slides by shot.js.
+     Brand post: no café names, photos, logos or branded cups. UI labels in Arabic; drink names stay as the app shows them. -->
 <link rel="stylesheet" href="../../assets/fonts/tajawal.css">
 <link rel="stylesheet" href="../../assets/fonts/playfair.css">
 <link rel="stylesheet" href="../../assets/fonts/dmsans.css">
 <style>
 :root {
-  --bg:#0F2A16; --bg2:#0A1F10; --green:#1D4526; --green2:#2B5E35;
-  --cream:#F6F0E4; --card:#FBF7EF; --sand:#EDE4D2; --muted:#7C8676; --ink:#13230F;
-  --gold:#C9A35A; --gold2:#E6C98C;
+  --bg:#0F2A16; --bg2:#0A1F10; --green:#1D4526; --green2:#2E6338;
+  --cream:#F6F0E4; --card:#FBF7EF; --sand:#ECE3D1; --muted:#6F7A6A; --ink:#13230F;
+  --gold:#C9A35A; --gold2:#E3C58A;
+  --lift: 0 1px 0 rgba(255,255,255,.7) inset, 0 34px 70px rgba(3,12,5,.50), 0 10px 22px rgba(3,12,5,.28);
+  --lift-sm: 0 18px 36px rgba(3,12,5,.38), 0 5px 12px rgba(3,12,5,.22);
+  --M:72px;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html, body { width:3240px; height:1350px; overflow:hidden; }
 body { position:relative; font-family:'Tajawal'; color:var(--cream);
   background:
-    radial-gradient(900px 700px at 560px 760px, rgba(64,120,72,.55), transparent 70%),
-    radial-gradient(900px 760px at 1620px 760px, rgba(201,163,90,.20), transparent 70%),
-    radial-gradient(900px 700px at 2700px 740px, rgba(64,120,72,.50), transparent 70%),
+    radial-gradient(820px 680px at 520px 780px, rgba(58,112,66,.50), transparent 70%),
+    radial-gradient(820px 680px at 1620px 780px, rgba(58,112,66,.42), transparent 70%),
+    radial-gradient(820px 680px at 2700px 780px, rgba(58,112,66,.50), transparent 70%),
     linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%); }
-.grain { position:absolute; inset:0; opacity:.09; mix-blend-mode:overlay; pointer-events:none; z-index:50; }
-.slide { position:absolute; top:0; width:1080px; height:1350px; direction:rtl; }
+.grain { position:absolute; inset:0; opacity:.08; mix-blend-mode:overlay; pointer-events:none; z-index:50; }
+.slide { position:absolute; top:0; width:1080px; height:1350px; direction:rtl; overflow:hidden; }
 .s1 { left:0; } .s2 { left:1080px; } .s3 { left:2160px; }
 .latin { font-family:'DM Sans'; direction:ltr; unicode-bidi:isolate; }
 
-/* the progress device, same place on every slide */
-.nav { position:absolute; top:62px; right:72px; left:72px; display:flex; align-items:center; gap:18px; font-size:32px; font-weight:700; z-index:20; }
-.nav span { opacity:.38; } .nav span.on { opacity:1; position:relative; }
-.nav span.on::after { content:''; position:absolute; right:0; left:0; bottom:-12px; height:4px; border-radius:2px; background:var(--gold); }
-.nav b { color:var(--gold); font-weight:500; opacity:.8; font-family:'DM Sans'; font-size:28px; }
-.nav .brand { margin-right:auto; font-family:'DM Sans'; font-weight:700; font-size:30px; letter-spacing:-.2px; opacity:.9; direction:ltr; }
+/* header: logo top-left, journey top-right, identical on every slide */
+.logo { position:absolute; top:56px; left:var(--M); height:52px; z-index:20; }
+.nav { position:absolute; top:58px; right:var(--M); display:flex; align-items:center; gap:16px; font-size:31px; font-weight:700; line-height:1; z-index:20; }
+.nav span { color:rgba(246,240,228,.52); padding-bottom:12px; border-bottom:3px solid transparent; }
+.nav span.on { color:var(--cream); border-bottom-color:var(--gold); }
+.nav b { color:var(--gold); font-family:'DM Sans'; font-weight:500; font-size:26px; padding-bottom:12px; opacity:.85; }
 
-h1 { position:absolute; top:140px; right:72px; left:60px; font-weight:800; font-size:112px; line-height:1.08; letter-spacing:-1px; z-index:20; }
-.kicker { position:absolute; right:72px; font-weight:700; font-size:50px; color:var(--gold2); z-index:20; }
-.foot { position:absolute; right:72px; left:72px; font-size:46px; line-height:1.4; z-index:20; }
-.foot .a { font-weight:800; } .foot .b { font-weight:500; opacity:.8; }
+h1 { position:absolute; top:136px; right:var(--M); font-weight:800; font-size:108px; line-height:1.12; letter-spacing:-.5px; z-index:20; white-space:nowrap; }
+.kicker { position:absolute; right:var(--M); font-weight:700; font-size:48px; color:var(--gold2); z-index:20; }
+.foot { position:absolute; right:var(--M); left:var(--M); font-size:44px; line-height:1.45; z-index:20; }
+.foot .a { font-weight:800; } .foot .b { font-weight:500; color:rgba(246,240,228,.82); }
 
-/* app surfaces */
-.card { position:absolute; background:var(--card); color:var(--ink); border-radius:34px; direction:ltr; font-family:'DM Sans';
-  box-shadow: 0 2px 0 rgba(255,255,255,.6) inset, 0 30px 60px rgba(4,14,6,.45), 0 8px 18px rgba(4,14,6,.25); }
+.card { position:absolute; background:var(--card); color:var(--ink); border-radius:36px; box-shadow:var(--lift); }
 .name { font-family:'Playfair Display'; font-style:italic; font-weight:600; letter-spacing:-.3px; }
 .star { color:var(--gold); }
 
-/* slide 1 */
-.map { position:absolute; left:-70px; top:318px; width:1030px; height:790px; border-radius:60px; overflow:hidden; transform:rotate(-3deg);
-  box-shadow:0 50px 90px rgba(3,12,5,.55), 0 10px 24px rgba(3,12,5,.3); z-index:5; }
+/* ── slide 1 ── */
+.map { position:absolute; left:-70px; top:318px; width:1036px; height:792px; border-radius:60px; overflow:hidden; transform:rotate(-3deg); box-shadow:var(--lift); z-index:5; }
 .map svg { position:absolute; inset:0; }
-.search { position:absolute; top:40px; left:110px; right:40px; height:96px; border-radius:48px; background:var(--card); display:flex; align-items:center; gap:22px; padding:0 34px;
-  font-family:'DM Sans'; font-size:32px; color:#8C8A80; direction:ltr; box-shadow:0 12px 26px rgba(20,30,15,.18); }
+.search { position:absolute; top:40px; right:40px; left:120px; height:96px; border-radius:48px; background:var(--card); display:flex; align-items:center; gap:20px; padding:0 34px;
+  font-size:33px; font-weight:500; color:#8A8A80; box-shadow:0 12px 26px rgba(20,30,15,.16); direction:rtl; }
 .search i { width:30px; height:30px; border:4px solid var(--green); border-radius:50%; position:relative; flex:none; }
-.search i::after { content:''; position:absolute; width:4px; height:14px; background:var(--green); right:-8px; bottom:-12px; transform:rotate(-45deg); border-radius:2px; }
-.chips { position:absolute; top:156px; left:110px; display:flex; gap:14px; direction:ltr; font-family:'DM Sans'; font-weight:600; font-size:26px; }
-.chips span { background:var(--card); color:var(--ink); padding:12px 24px; border-radius:30px; box-shadow:0 8px 18px rgba(20,30,15,.15); }
+.search i::after { content:''; position:absolute; width:4px; height:14px; background:var(--green); left:-7px; bottom:-12px; transform:rotate(45deg); border-radius:2px; }
+.chips { position:absolute; top:156px; right:40px; display:flex; gap:12px; direction:rtl; font-weight:700; font-size:28px; }
+.chips span { background:var(--card); color:var(--ink); padding:13px 26px 9px; border-radius:30px; box-shadow:0 8px 18px rgba(20,30,15,.14); }
 .chips span.on { background:var(--green); color:var(--cream); }
 
-.cafe { display:flex; align-items:center; gap:24px; padding:24px 30px 24px 24px; }
-.thumb { width:104px; height:104px; border-radius:24px; flex:none; background:radial-gradient(circle at 35% 30%, #3D7A48, var(--green) 70%); display:grid; place-items:center; }
-.thumb svg { width:58px; }
-.cafe .name { font-size:42px; line-height:1.1; }
-.cafe .meta { margin-top:8px; font-size:28px; font-weight:500; color:#5E6A59; display:flex; align-items:center; gap:10px; }
-.cafe .meta b { color:var(--ink); font-weight:700; }
-.open { margin-left:auto; align-self:flex-start; margin-top:6px; background:#E3EEDB; color:var(--green); font-weight:700; font-size:22px; padding:8px 16px; border-radius:20px; }
+.disc { display:flex; align-items:center; gap:22px; padding:22px 30px 22px 22px; direction:ltr; font-family:'DM Sans'; }
+.thumb { width:100px; height:100px; border-radius:26px; flex:none; background:radial-gradient(circle at 35% 30%, #3E7B49, var(--green) 72%); display:grid; place-items:center; }
+.thumb svg { width:60px; height:60px; }
+.disc .name { font-size:42px; line-height:1.1; }
+.disc .meta { margin-top:8px; font-size:28px; font-weight:500; color:var(--muted); display:flex; align-items:center; gap:10px; }
+.disc .meta b { color:var(--ink); font-weight:700; }
+.disc .meta .open { color:var(--green2); font-weight:700; }
 
-/* slide 2 */
-.drink { left:150px; top:370px; width:800px; height:800px; transform:rotate(2.5deg); overflow:hidden; z-index:6; }
-.drink .photo { position:absolute; top:0; left:0; right:0; height:470px; overflow:hidden; border-radius:34px 34px 0 0;
-  background: radial-gradient(420px 360px at 50% 55%, #6B4A31 0%, #3A2718 60%, #20160D 100%); }
-.drink .photo svg { position:absolute; inset:0; }
-.seg { position:absolute; top:28px; left:28px; display:flex; background:rgba(251,247,239,.16); backdrop-filter:blur(8px); border-radius:30px; padding:6px; font-weight:700; font-size:26px; }
-.seg span { padding:10px 26px; border-radius:24px; color:rgba(251,247,239,.75); }
+/* ── slide 2 ── */
+.drink { left:136px; top:366px; width:808px; height:806px; transform:rotate(2.5deg); overflow:hidden; z-index:6; }
+.photo { position:absolute; top:0; left:0; right:0; height:520px; overflow:hidden; }
+.photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 40%; filter:saturate(1.05) contrast(1.06) brightness(.96); }
+.photo::after { content:''; position:absolute; inset:0;
+  background: radial-gradient(120% 90% at 50% 45%, transparent 45%, rgba(20,12,6,.55) 100%), linear-gradient(180deg, rgba(0,0,0,.25), transparent 30%, transparent 75%, rgba(0,0,0,.35)); }
+.seg { position:absolute; top:28px; right:28px; z-index:2; display:flex; direction:rtl; background:rgba(20,14,8,.42); backdrop-filter:blur(10px); border-radius:32px; padding:6px; font-weight:700; font-size:28px; }
+.seg span { padding:12px 28px 8px; border-radius:26px; color:rgba(251,247,239,.78); }
 .seg span.on { background:var(--card); color:var(--ink); }
-.avg { position:absolute; top:28px; right:28px; background:rgba(15,10,6,.45); backdrop-filter:blur(8px); color:#fff; border-radius:30px; padding:12px 22px; font-weight:700; font-size:30px; }
+.avg { position:absolute; top:28px; left:28px; z-index:2; background:rgba(20,14,8,.42); backdrop-filter:blur(10px); color:#fff; border-radius:32px; padding:12px 24px; font-family:'DM Sans'; font-weight:700; font-size:30px; direction:ltr; }
 .avg .star { color:var(--gold2); }
-.drink .body { position:absolute; top:470px; left:0; right:0; bottom:0; padding:34px 44px; }
-.drink .name { font-size:64px; line-height:1; }
-.drink .sub { margin-top:10px; font-size:28px; color:#6B7466; font-weight:500; }
-.stars { position:absolute; left:52px; right:70px; bottom:58px; display:flex; justify-content:space-between; }
-.stars svg { width:104px; height:104px; overflow:visible; }
+.drink .body { position:absolute; top:520px; left:0; right:0; bottom:0; padding:34px 46px 0; direction:ltr; }
+.drink .name { font-size:62px; line-height:1; }
+.stars { position:absolute; left:40px; right:58px; bottom:44px; display:flex; justify-content:space-between; align-items:center; }
+.stars svg { width:112px; height:112px; overflow:visible; filter:drop-shadow(0 6px 8px rgba(120,86,30,.28)); }
 
-/* slide 3 */
-.passport { left:96px; top:380px; width:888px; height:690px; transform:rotate(-2deg); z-index:6; padding:40px 48px; }
+/* ── slide 3 ── */
+.passport { left:96px; top:382px; width:888px; height:676px; transform:rotate(-2deg); z-index:6; padding:40px 50px 0; direction:rtl; }
 .passport .top { display:flex; align-items:center; justify-content:space-between; }
-.passport .name { font-size:52px; }
-.passport .top img { height:52px; }
-.grid { margin-top:26px; display:grid; grid-template-columns:repeat(3, 1fr); gap:16px 0; justify-items:center; }
+.passport .title { font-weight:800; font-size:44px; }
+.passport .top img { height:40px; }
+.grid { margin-top:24px; display:grid; grid-template-columns:repeat(3, 1fr); gap:16px 0; justify-items:center; direction:rtl; }
 .stamp { width:128px; height:128px; border-radius:50%; background:radial-gradient(circle at 38% 32%, #3A7445, var(--green) 72%); display:grid; place-items:center; position:relative;
-  box-shadow: 0 6px 12px rgba(16,40,20,.25), inset 0 -4px 0 rgba(0,0,0,.12); }
-.stamp::before { content:''; position:absolute; inset:12px; border:3px dashed rgba(246,240,228,.35); border-radius:50%; }
-.stamp svg { width:62px; }
-.stamp.next { background:transparent; box-shadow:0 0 0 4px var(--gold), 0 0 50px rgba(201,163,90,.55); }
-.stamp.next::before { border-color:rgba(201,163,90,.7); }
-.pts { position:absolute; z-index:9; background:linear-gradient(180deg, #E8CB8E, #C9A35A); color:var(--ink); font-family:'DM Sans'; font-weight:800; font-size:44px; letter-spacing:.5px;
-  padding:18px 34px; border-radius:40px; box-shadow:0 20px 40px rgba(4,14,6,.5), inset 0 2px 0 rgba(255,255,255,.5); transform:rotate(-7deg); direction:ltr; }
-.bar { margin-top:30px; }
-.bar .row { display:flex; justify-content:space-between; font-weight:700; font-size:28px; color:#5E6A59; }
-.bar .row b { color:var(--ink); }
-.bar .track { margin-top:14px; height:22px; border-radius:11px; background:var(--sand); overflow:hidden; }
-.bar .fill { height:100%; width:88.9%; border-radius:11px; background:linear-gradient(90deg, var(--green), #3F7A4A); position:relative; }
-.cta { position:absolute; right:72px; left:72px; top:1186px; height:116px; border-radius:60px; background:var(--cream); color:var(--bg);
-  display:flex; align-items:center; justify-content:center; gap:22px; font-weight:800; font-size:52px; z-index:20;
-  box-shadow:0 0 0 2px rgba(230,201,140,.9), 0 0 0 10px rgba(201,163,90,.18), 0 24px 50px rgba(3,12,5,.5); }
-.cta .arrow { width:62px; height:62px; border-radius:50%; background:var(--bg); display:grid; place-items:center; }
+  box-shadow:0 6px 12px rgba(16,40,20,.25), inset 0 -4px 0 rgba(0,0,0,.12); }
+.stamp::before { content:''; position:absolute; inset:11px; border:3px dashed rgba(246,240,228,.35); border-radius:50%; }
+.stamp svg { width:62px; height:62px; }
+.stamp.fresh { box-shadow:0 0 0 5px var(--card), 0 0 0 8px var(--gold), 0 10px 24px rgba(16,40,20,.3); }
+.stamp .plus { position:absolute; top:-26px; left:50%; transform:translateX(-50%) rotate(-4deg); white-space:nowrap; background:linear-gradient(180deg, #EACF94, #C9A35A); color:var(--ink);
+  font-weight:800; font-size:26px; padding:8px 16px 4px; border-radius:18px; box-shadow:0 8px 16px rgba(60,40,10,.3); }
+.stamp.reward { background:radial-gradient(circle, #FFF6E2 0%, #F6E7C6 100%); box-shadow:0 0 0 4px var(--gold), 0 0 44px rgba(201,163,90,.65); }
+.stamp.reward::before { border-color:rgba(201,163,90,.8); }
+.stamp.reward .lbl { position:absolute; bottom:22px; font-weight:800; font-size:21px; color:#8C6A2C; }
+.bar { margin-top:28px; }
+.bar .row { display:flex; justify-content:space-between; align-items:baseline; font-weight:700; font-size:29px; color:var(--muted); }
+.bar .row b { color:var(--ink); font-size:34px; }
+.bar .track { margin-top:12px; height:20px; border-radius:10px; background:var(--sand); overflow:hidden; direction:rtl; }
+.bar .fill { height:100%; width:88.9%; border-radius:10px; background:linear-gradient(270deg, var(--green), #3F7A4A); }
+
+.cta { position:absolute; right:var(--M); left:var(--M); top:1180px; height:118px; border-radius:59px; background:var(--cream); color:var(--bg);
+  display:flex; align-items:center; gap:24px; padding:0 14px 0 14px; z-index:20; direction:rtl;
+  box-shadow:0 0 0 1.5px rgba(227,197,138,.95), 0 26px 50px rgba(3,12,5,.55); }
+.cta .icon { width:90px; height:90px; border-radius:24px; background:linear-gradient(160deg, #2F6339, var(--green)); display:grid; place-items:center; flex:none; box-shadow:inset 0 1px 0 rgba(255,255,255,.18); }
+.cta .icon img { width:60px; }
+.cta .txt { font-weight:800; font-size:50px; padding-top:6px; }
+.cta .stores { margin-right:auto; font-family:'DM Sans'; font-weight:600; font-size:22px; color:var(--muted); text-align:left; line-height:1.3; direction:ltr; }
+.cta .go { width:90px; height:90px; border-radius:50%; background:var(--bg); display:grid; place-items:center; flex:none; }
 </style>
 <body>
 <svg class="grain" width="3240" height="1350"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 1 0"/></filter><rect width="100%" height="100%" filter="url(#g)"/></svg>
-
-<!-- the gold thread: one route that runs across all three slides -->
-<svg id="thread" width="3240" height="1350" style="position:absolute;inset:0;z-index:3"></svg>
-
 <svg width="0" height="0" style="position:absolute"><defs>
-  <symbol id="cup" viewBox="-30 -24 64 48"><path d="M-22 -14 H22 C21 12 11 18 0 18 C-11 18 -21 12 -22 -14Z" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/><path d="M22 -9 a9 9 0 0 1 0 17" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></symbol>
-  <symbol id="st" viewBox="-52 -52 104 104"><path d="M0 -48 L14.1 -19.4 45.7 -14.8 22.8 7.4 28.2 38.8 0 24 -28.2 38.8 -22.8 7.4 -45.7 -14.8 -14.1 -19.4Z" stroke-linejoin="round"/></symbol>
-  <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EDD39C"/><stop offset="1" stop-color="#C39B50"/></linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EFD6A0"/><stop offset="1" stop-color="#C29A4E"/></linearGradient>
 </defs></svg>
 
-<!-- ───────────── 1 · FIND ───────────── -->
+<!-- ───────────── 1 · تلقى ───────────── -->
 <section class="slide s1">
-  <div class="nav"><span class="on">تلقى</span><b>←</b><span>تقيّم</span><b>←</b><span>تكسب</span><span class="brand">BrewMaps</span></div>
+  <img class="logo" src="img/lockup-cream.png">
+  <div class="nav"><span class="on">تلقى</span><b>←</b><span>تقيّم</span><b>←</b><span>تكسب</span></div>
   <h1>تدور كوفي عدل؟</h1>
 
   <div class="map">
-    <svg id="mapsvg" viewBox="0 0 1030 790" width="1030" height="790"></svg>
-    <div class="search"><i></i>Search cafés, areas, drinks</div>
-    <div class="chips"><span class="on">Specialty</span><span>Open now</span><span>Top rated</span></div>
+    <svg id="mapsvg" viewBox="0 0 1036 792" width="1036" height="792"></svg>
+    <div class="search"><i></i>دوّر على كوفي أو مشروب</div>
+    <div class="chips"><span class="on">مختصة</span><span>مفتوح الحين</span><span>الأعلى تقييم</span></div>
   </div>
 
-  <div class="card cafe" style="left:470px; top:770px; width:540px; transform:rotate(2deg); z-index:8">
-    <div class="thumb"><svg viewBox="-30 -24 64 48" style="color:#F6F0E4"><use href="#cup"/></svg></div>
-    <div><div class="name">The Grey</div><div class="meta"><span class="star">★</span><b>4.8</b>· Al Wasl</div></div>
+  <div class="card disc" style="left:455px; top:782px; width:520px; transform:rotate(2deg); z-index:8">
+    <div class="thumb" data-icon="cup"></div>
+    <div><div class="name">Specialty Coffee</div><div class="meta"><span class="star">★</span><b>4.8</b>· 1.2 km</div></div>
   </div>
-  <div class="card cafe" style="left:40px; top:958px; width:560px; transform:rotate(-3deg); z-index:7">
-    <div class="thumb"><svg viewBox="-30 -24 64 48" style="color:#F6F0E4"><use href="#cup"/></svg></div>
-    <div><div class="name">RAW Coffee Company</div><div class="meta"><span class="star">★</span><b>4.6</b>· Al Quoz</div></div>
+  <div class="card disc" style="left:40px; top:968px; width:420px; transform:rotate(-3deg); z-index:7">
+    <div class="thumb" data-icon="v60"></div>
+    <div><div class="name">V60</div><div class="meta"><span class="star">★</span><b>4.9</b>· 850 m</div></div>
   </div>
-  <div class="card cafe" style="left:655px; top:545px; width:400px; transform:rotate(4deg) scale(.82); transform-origin:left top; z-index:6; opacity:.97">
-    <div class="thumb"><svg viewBox="-30 -24 64 48" style="color:#F6F0E4"><use href="#cup"/></svg></div>
-    <div><div class="name">The Bench</div><div class="meta"><span class="star">★</span><b>4.8</b>· Al Raha</div></div>
+  <div class="card disc" style="left:660px; top:560px; width:470px; transform:rotate(4deg) scale(.8); transform-origin:left top; z-index:6">
+    <div class="thumb" data-icon="matcha"></div>
+    <div><div class="name">Matcha</div><div class="meta"><span class="star">★</span><b>4.7</b>· <span class="open">Open now</span></div></div>
   </div>
 
-  <div class="foot" style="top:1150px"><div class="a">أكثر من ٨٠٠ كوفي حول الإمارات.</div><div class="b">كلهم في <span class="latin" style="font-weight:700">BrewMaps</span>.</div></div>
+  <div class="foot" style="top:1150px"><div class="a">أكثر من ٨٠٠ كوفي حول الإمارات.</div><div class="b">كلهم في <span class="latin" style="font-weight:700;color:var(--cream)">BrewMaps</span>.</div></div>
 </section>
 
-<!-- ───────────── 2 · RATE ───────────── -->
+<!-- ───────────── 2 · تقيّم ───────────── -->
 <section class="slide s2">
-  <div class="nav"><span>تلقى</span><b>←</b><span class="on">تقيّم</span><b>←</b><span>تكسب</span><span class="brand">BrewMaps</span></div>
+  <img class="logo" src="img/lockup-cream.png">
+  <div class="nav"><span>تلقى</span><b>←</b><span class="on">تقيّم</span><b>←</b><span>تكسب</span></div>
   <h1>رحت؟ جرّبت؟ قيّم.</h1>
-  <div class="kicker" style="top:278px">قيّم القهوة، مو بس الكوفي.</div>
+  <div class="kicker" style="top:272px">قيّم القهوة، مو بس الكوفي.</div>
 
   <div class="card drink">
-    <div class="photo"><svg id="latte" viewBox="0 0 800 470" width="800" height="470"></svg>
-      <div class="seg"><span>Café</span><span class="on">Drink</span></div>
+    <div class="photo"><img src="img/iced-latte.jpg">
+      <div class="seg"><span>الكوفي</span><span class="on">المشروب</span></div>
       <div class="avg"><span class="star">★</span> 4.7</div>
     </div>
     <div class="body">
       <div class="name">Spanish Latte</div>
-      <div class="sub">How was your drink?</div>
       <div class="stars" id="stars"></div>
     </div>
   </div>
 
-  <div class="foot" style="top:1215px"><div class="b" style="opacity:.85">خل غيرك يعرف شو يطلب.</div></div>
+  <div class="foot" style="top:1212px"><div class="b">خل غيرك يعرف شو يطلب.</div></div>
 </section>
 
-<!-- ───────────── 3 · EARN ───────────── -->
+<!-- ───────────── 3 · تكسب ───────────── -->
 <section class="slide s3">
-  <div class="nav"><span>تلقى</span><b>←</b><span>تقيّم</span><b>←</b><span class="on">تكسب</span><span class="brand">BrewMaps</span></div>
-  <h1 style="font-size:98px; top:132px">كل قهوة تقرّبك<br>من اللي بعدها.</h1>
+  <img class="logo" src="img/lockup-cream.png">
+  <div class="nav"><span>تلقى</span><b>←</b><span>تقيّم</span><b>←</b><span class="on">تكسب</span></div>
+  <h1 style="font-size:96px; line-height:1.14">كل قهوة تقرّبك<br>من اللي بعدها.</h1>
 
   <div class="card passport">
-    <div class="top"><div class="name">Coffee Passport</div></div>
+    <div class="top"><div class="title">جواز القهوة</div><img src="img/mark-green.png"></div>
     <div class="grid" id="grid"></div>
-    <div class="bar"><div class="row"><span><b>8</b> / 9</span><span>1 more to your reward</span></div><div class="track"><div class="fill"></div></div></div>
+    <div class="bar"><div class="row"><span><b>٨</b> / ٩</span><span>باقي قهوة وحدة على مكافأتك</span></div><div class="track"><div class="fill"></div></div></div>
   </div>
-  <div class="pts" style="left:676px; top:338px">+25 POINTS</div>
 
-  <div class="foot" style="top:1096px; text-align:right"><div class="a" style="color:var(--gold2)">اجمع نقاط. خذ مكافآت.</div></div>
-  <div class="cta"><span>حمّل <span class="latin">BrewMaps</span> مجاناً</span><span class="arrow"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M19 6 L10 15 L19 24" fill="none" stroke="#F6F0E4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+  <div class="foot" style="top:1090px"><div class="a" style="color:var(--gold2)">اجمع نقاط. خذ مكافآت.</div></div>
+  <div class="cta">
+    <span class="icon"><img src="img/mark-cream.png"></span>
+    <span class="txt">حمّل <span class="latin">BrewMaps</span> مجاناً</span>
+    <span class="stores">App Store<br>Google Play</span>
+    <span class="go"><svg width="34" height="34" viewBox="0 0 30 30"><path d="M18 6 L9 15 L18 24" fill="none" stroke="#F6F0E4" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+  </div>
 </section>
 
 <script>
 const NS = 'http://www.w3.org/2000/svg';
 const el = (p, tag, a) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); p.append(e); return e; };
-let seed = 5; const rnd = () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296;
+const CUP = c => `<path d="M-22 -14 H22 C21 12 11 18 0 18 C-11 18 -21 12 -22 -14Z" fill="none" stroke="${c}" stroke-width="5" stroke-linejoin="round"/><path d="M22 -9 a9 9 0 0 1 0 17" fill="none" stroke="${c}" stroke-width="5" stroke-linecap="round"/>`;
+const ICON = {
+  cup: `<svg viewBox="-32 -32 64 64">${CUP('#F6F0E4')}</svg>`,
+  v60: `<svg viewBox="-32 -32 64 64"><path d="M-24 -18 H24 L6 10 H-6 Z" fill="none" stroke="#F6F0E4" stroke-width="4.5" stroke-linejoin="round"/><path d="M-10 -8 L-3 4 M0 -8 V4 M10 -8 L3 4" stroke="#F6F0E4" stroke-width="3" stroke-linecap="round" opacity=".7"/><path d="M-16 20 H16" stroke="#F6F0E4" stroke-width="4.5" stroke-linecap="round"/><path d="M-6 10 V20 M6 10 V20" stroke="#F6F0E4" stroke-width="4.5"/></svg>`,
+  matcha: `<svg viewBox="-32 -32 64 64"><path d="M-26 -4 H26 C26 14 14 22 0 22 C-14 22 -26 14 -26 -4Z" fill="none" stroke="#F6F0E4" stroke-width="4.5" stroke-linejoin="round"/><ellipse cy="-4" rx="20" ry="5" fill="#9BC48A"/><path d="M8 -28 L-2 -10 M12 -26 L2 -9" stroke="#F6F0E4" stroke-width="3.5" stroke-linecap="round"/></svg>`,
+};
+document.querySelectorAll('[data-icon]').forEach(d => d.innerHTML = ICON[d.dataset.icon]);
 
-// ── map ─────────────────────────────────────────────────────────────
+// ── map: BrewMaps' own palette, fewer, clearer pins ──
 const M = document.getElementById('mapsvg');
-el(M, 'rect', { width:1030, height:790, fill:'#F1EADC' });
-const grid = el(M, 'g', { transform:'rotate(-24 515 395)' });
-for (let x = -600; x < 1700; x += 86) el(grid, 'line', { x1:x, y1:-600, x2:x, y2:1500, stroke:'#FBF8F1', 'stroke-width':7 });
-for (let y = -600; y < 1500; y += 70) el(grid, 'line', { x1:-600, y1:y, x2:1700, y2:y, stroke:'#FBF8F1', 'stroke-width':7 });
-[[120, 260, 170, 110], [520, 520, 150, 150], [860, 180, 190, 120], [300, 700, 200, 120]].forEach(([x, y, w, h]) =>
-  el(M, 'rect', { x:x - w / 2, y:y - h / 2, width:w, height:h, rx:34, fill:'#D5E5C6', transform:`rotate(-24 ${x} ${y})` }));
-// the coast and a creek
-el(M, 'path', { d:'M0 0 H700 C660 70 600 90 540 150 C470 220 420 200 360 260 C300 320 250 330 190 400 C140 460 80 470 0 520 Z', fill:'#BFD7C9' });
-el(M, 'path', { d:'M420 225 C470 290 520 300 560 360 C600 420 660 430 720 470 C760 500 820 505 880 540', fill:'none', stroke:'#BFD7C9', 'stroke-width':26, 'stroke-linecap':'round' });
-// highways
-for (const d of ['M-40 700 C 240 560, 520 470, 1100 250', 'M620 -40 C 640 200, 700 420, 820 830']) {
-  el(M, 'path', { d, fill:'none', stroke:'#E3D6BC', 'stroke-width':34 });
-  el(M, 'path', { d, fill:'none', stroke:'#FFFDF8', 'stroke-width':24 });
-}
-// pins and clusters
+el(M, 'rect', { width:1036, height:792, fill:'#F1EADC' });
+const grid = el(M, 'g', { transform:'rotate(-24 518 396)' });
+for (let x = -600; x < 1700; x += 88) el(grid, 'line', { x1:x, y1:-600, x2:x, y2:1500, stroke:'#FBF8F1', 'stroke-width':7 });
+for (let y = -600; y < 1500; y += 72) el(grid, 'line', { x1:-600, y1:y, x2:1700, y2:y, stroke:'#FBF8F1', 'stroke-width':7 });
+[[150, 300, 170, 110], [470, 560, 150, 130], [880, 210, 190, 120], [300, 720, 200, 120]].forEach(([x, y, w, h]) =>
+  el(M, 'rect', { x:x - w / 2, y:y - h / 2, width:w, height:h, rx:34, fill:'#D6E5C8', transform:`rotate(-24 ${x} ${y})` }));
+el(M, 'path', { d:'M0 0 H700 C660 70 600 90 540 150 C470 220 420 200 360 260 C300 320 250 330 190 400 C140 460 80 470 0 520 Z', fill:'#C3D9CB' });
+el(M, 'path', { d:'M420 225 C470 290 520 300 560 360 C600 420 660 430 720 470 C760 500 820 505 880 540', fill:'none', stroke:'#C3D9CB', 'stroke-width':26, 'stroke-linecap':'round' });
+for (const d of ['M-40 700 C 240 560, 520 470, 1100 250', 'M640 -40 C 660 200, 720 420, 840 830']) {
+  el(M, 'path', { d, fill:'none', stroke:'#E4D8BF', 'stroke-width':34 }); el(M, 'path', { d, fill:'none', stroke:'#FFFDF8', 'stroke-width':24 }); }
+// small pins: the brand teardrop with a cup
 const pin = (x, y, s, fill) => { const g = el(M, 'g', { transform:`translate(${x} ${y}) scale(${s})` });
-  el(g, 'ellipse', { cy:2, rx:12, ry:4, fill:'#000', opacity:.18 });
-  el(g, 'path', { d:'M0 0 C-8 -14 -24 -28 -24 -46 A24 24 0 1 1 24 -46 C24 -28 8 -14 0 0Z', fill });
-  el(g, 'circle', { cy:-46, r:9, fill:'#FBF7EF' }); };
-[[300, 330], [420, 400], [560, 270], [700, 330], [900, 420], [780, 560], [230, 520], [450, 620], [640, 680], [960, 300], [360, 250], [850, 690], [120, 650], [980, 560], [650, 450], [160, 330]]
-  .forEach(([x, y], i) => pin(x, y, 1.05, i % 4 === 3 ? '#4E8A59' : '#1D4526'));
-const cluster = (x, y, n) => { el(M, 'circle', { cx:x, cy:y, r:40, fill:'#1D4526', opacity:.18 }); el(M, 'circle', { cx:x, cy:y, r:29, fill:'#1D4526', stroke:'#FBF7EF', 'stroke-width':5 });
-  const t = el(M, 'text', { x, y:y + 10, 'text-anchor':'middle', 'font-family':'DM Sans', 'font-weight':700, 'font-size':27, fill:'#FBF7EF' }); t.textContent = n; };
-cluster(180, 440, 24); cluster(700, 470, 12); cluster(920, 640, 9);
-// you
-el(M, 'circle', { cx:330, cy:580, r:46, fill:'#C9A35A', opacity:.22 });
-el(M, 'circle', { cx:330, cy:580, r:16, fill:'#C9A35A', stroke:'#fff', 'stroke-width':6 });
-// the chosen one
-const big = el(M, 'g', { transform:'translate(540 438) scale(2.1)' });
+  el(g, 'ellipse', { cy:2, rx:12, ry:4, fill:'#000', opacity:.16 });
+  el(g, 'path', { d:'M0 0 C-8 -14 -24 -28 -24 -46 A24 24 0 1 1 24 -46 C24 -28 8 -14 0 0Z', fill, stroke:'#FBF7EF', 'stroke-width':3 });
+  const c = el(g, 'g', { transform:'translate(-1 -45) scale(.36)' }); c.innerHTML = CUP('#FBF7EF'); };
+[[300, 330], [420, 405], [230, 520], [700, 330], [900, 430], [780, 560], [120, 650], [960, 300], [160, 330], [620, 250]].forEach(([x, y]) => pin(x, y, 1.1, '#1D4526'));
+// you are here, and the way to the one worth going to
+el(M, 'circle', { cx:330, cy:590, r:46, fill:'#C9A35A', opacity:.22 });
+el(M, 'circle', { cx:330, cy:590, r:15, fill:'#C9A35A', stroke:'#fff', 'stroke-width':6 });
+el(M, 'path', { d:'M346 574 C 400 530, 470 486, 528 462', fill:'none', stroke:'#C9A35A', 'stroke-width':6, 'stroke-dasharray':'2 14', 'stroke-linecap':'round' });
+// the BrewMaps pin: cream, gold ring, the mark inside
+el(M, 'circle', { cx:545, cy:462, r:70, fill:'#C9A35A', opacity:.14 });
+const big = el(M, 'g', { transform:'translate(545 462) scale(2.35)' });
 el(big, 'ellipse', { cy:2, rx:14, ry:5, fill:'#000', opacity:.25 });
 el(big, 'path', { d:'M0 0 C-8 -14 -24 -28 -24 -46 A24 24 0 1 1 24 -46 C24 -28 8 -14 0 0Z', fill:'#C9A35A' });
-el(big, 'circle', { cy:-46, r:16, fill:'#13230F' });
-const bc = el(big, 'g', { transform:'translate(-1 -45) scale(.42)' });
-el(bc, 'path', { d:'M-22 -14 H22 C21 12 11 18 0 18 C-11 18 -21 12 -22 -14Z', fill:'none', stroke:'#F6F0E4', 'stroke-width':6, 'stroke-linejoin':'round' });
-el(bc, 'path', { d:'M22 -9 a9 9 0 0 1 0 17', fill:'none', stroke:'#F6F0E4', 'stroke-width':6, 'stroke-linecap':'round' });
-el(M, 'path', { d:'M345 562 C 400 520, 470 470, 530 446', fill:'none', stroke:'#C9A35A', 'stroke-width':6, 'stroke-dasharray':'2 14', 'stroke-linecap':'round' });
+el(big, 'circle', { cy:-46, r:19, fill:'#FBF7EF' });
+el(big, 'image', { href:'img/mark-green.png', x:-13, y:-54.5, width:26, height:17 });
 
-// ── spanish latte, three-quarter view ────────────────────────────────
-const Lt = document.getElementById('latte');
-Lt.innerHTML = `
-<defs>
-  <linearGradient id="coffeeG" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#F3E7D2"/><stop offset=".10" stop-color="#E6CFAE"/>
-    <stop offset=".22" stop-color="#8E5A34"/><stop offset=".48" stop-color="#6A3F22"/>
-    <stop offset=".64" stop-color="#A8744B"/><stop offset=".76" stop-color="#E8D3B2"/><stop offset="1" stop-color="#F2E4C8"/></linearGradient>
-  <linearGradient id="glassSide" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".10" stop-color="#fff" stop-opacity=".05"/>
-    <stop offset=".78" stop-color="#fff" stop-opacity="0"/><stop offset=".90" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity=".08"/></linearGradient>
-  <linearGradient id="shade" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#000" stop-opacity=".28"/><stop offset=".3" stop-color="#000" stop-opacity="0"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".32"/></linearGradient>
-  <filter id="swirl" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .05" numOctaves="3" seed="4"/><feDisplacementMap in="SourceGraphic" scale="46"/></filter>
-  <filter id="soft"><feGaussianBlur stdDeviation="14"/></filter>
-  <filter id="blur2"><feGaussianBlur stdDeviation="2"/></filter>
-  <radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#F2C98A" stop-opacity=".55"/><stop offset="1" stop-color="#F2C98A" stop-opacity="0"/></radialGradient>
-  <clipPath id="cupClip"><path d="M292 118 L508 118 L488 424 Q400 440 312 424 Z"/></clipPath>
-</defs>
-<ellipse cx="400" cy="250" rx="300" ry="220" fill="url(#glow)"/><g transform="translate(400 250) scale(1.14) translate(-400 -250)">
-<rect x="0" y="420" width="800" height="60" fill="#1A120B" opacity=".55"/>
-<ellipse cx="400" cy="432" rx="150" ry="20" fill="#000" opacity=".55" filter="url(#soft)"/>
-<g clip-path="url(#cupClip)">
-  <rect x="270" y="150" width="260" height="290" fill="url(#coffeeG)" filter="url(#swirl)"/>
-  <rect x="270" y="100" width="260" height="60" fill="#F3E7D2" opacity=".0"/>
-  <!-- ice -->
-  <g opacity=".85">
-    <rect x="316" y="146" width="84" height="80" rx="16" transform="rotate(-14 358 186)" fill="#fff" fill-opacity=".30" stroke="#fff" stroke-opacity=".55" stroke-width="3"/>
-    <rect x="404" y="160" width="80" height="76" rx="16" transform="rotate(16 444 198)" fill="#fff" fill-opacity=".22" stroke="#fff" stroke-opacity=".5" stroke-width="3"/>
-    <rect x="350" y="226" width="72" height="66" rx="14" transform="rotate(8 386 259)" fill="#fff" fill-opacity=".14" stroke="#fff" stroke-opacity=".35" stroke-width="3"/>
-  </g>
-  <rect x="270" y="100" width="260" height="340" fill="url(#shade)"/>
-  <rect x="270" y="100" width="260" height="340" fill="url(#glassSide)"/>
-  <!-- condensation -->
-  <g id="drops" fill="#fff"></g>
-</g>
-<!-- straw -->
-<path d="M448 300 L500 40" stroke="#2F6B3B" stroke-width="20" stroke-linecap="round"/>
-<path d="M444 290 L494 44" stroke="#5E9C68" stroke-width="6" stroke-linecap="round" opacity=".8"/>
-<!-- rim and base -->
-<ellipse cx="400" cy="118" rx="108" ry="18" fill="#fff" fill-opacity=".10" stroke="#fff" stroke-opacity=".7" stroke-width="3"/>
-<path d="M292 118 L312 424 Q400 440 488 424 L508 118" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="3"/>
-<path d="M312 424 Q400 440 488 424" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="4"/>
-<path d="M306 140 L322 400" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity=".35" filter="url(#blur2)"/>
-<path d="M478 150 L468 380" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".25" filter="url(#blur2)"/></g>`;
-const D = document.getElementById('drops');
-for (let i = 0; i < 70; i++) { const x = 296 + rnd() * 208, y = 170 + rnd() * 240, r = 1.5 + rnd() * 3.5; el(D, 'circle', { cx:x, cy:y, r, 'fill-opacity': .25 + rnd() * .45 }); }
-
-// ── stars: four set, the fifth mid-tap ──────────────────────────────
+// ── stars: four set, the fifth mid-tap ──
+const STAR = 'M0 -48 L14.1 -19.4 45.7 -14.8 22.8 7.4 28.2 38.8 0 24 -28.2 38.8 -22.8 7.4 -45.7 -14.8 -14.1 -19.4Z';
 const S = document.getElementById('stars');
 for (let i = 0; i < 5; i++) {
   const tap = i === 4;
   S.insertAdjacentHTML('beforeend', `<svg viewBox="-60 -60 120 120">
-    ${tap ? '<circle r="58" fill="none" stroke="#C9A35A" stroke-opacity=".35" stroke-width="3"/><circle r="74" fill="none" stroke="#C9A35A" stroke-opacity=".16" stroke-width="3"/>' : ''}
-    <g transform="scale(${tap ? 1.12 : 1})"><use href="#st" x="-52" y="-52" width="104" height="104" fill="url(#gold)" stroke="#B88E43" stroke-width="2"/></g>
-    ${tap ? '<g stroke="#C9A35A" stroke-width="5" stroke-linecap="round"><path d="M0 -84 V-98"/><path d="M60 -62 L70 -72"/><path d="M-60 -62 L-70 -72"/></g>' : ''}
+    ${tap ? '<circle r="60" fill="#C9A35A" fill-opacity=".10"/><circle r="60" fill="none" stroke="#C9A35A" stroke-opacity=".45" stroke-width="2.5"/><circle r="76" fill="none" stroke="#C9A35A" stroke-opacity=".18" stroke-width="2.5"/>' : ''}
+    <path d="${STAR}" transform="scale(${tap ? 1.1 : 1})" fill="url(#gold)" stroke="#B88E43" stroke-width="2" stroke-linejoin="round"/>
+    ${tap ? '<g stroke="#C9A35A" stroke-width="5" stroke-linecap="round"><path d="M0 -86 V-100"/><path d="M62 -62 L72 -72"/><path d="M-62 -62 L-72 -72"/></g>' : ''}
   </svg>`);
 }
 
-// ── passport ────────────────────────────────────────────────────────
+// ── passport: eight stamps (RTL order), the eighth just landed (+٢٥), the ninth is the reward ──
+let seed = 9; const rnd = () => (seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296;
 const G = document.getElementById('grid');
 for (let i = 0; i < 9; i++) {
-  const d = document.createElement('div'); d.className = 'stamp' + (i === 8 ? ' next' : '');
-  if (i < 8) { d.style.transform = `rotate(${(rnd() - .5) * 28}deg)`; d.innerHTML = '<svg viewBox="-30 -24 64 48" style="color:#F6F0E4"><use href="#cup"/></svg>'; }
-  else d.innerHTML = '<svg viewBox="-30 -30 60 60" style="width:54px"><path d="M0 -20 V20 M-20 0 H20" stroke="#C9A35A" stroke-width="6" stroke-linecap="round"/></svg>';
+  const d = document.createElement('div');
+  if (i < 8) {
+    d.className = 'stamp' + (i === 7 ? ' fresh' : '');
+    d.style.transform = `rotate(${(rnd() - .5) * 26}deg)`;
+    d.innerHTML = `<svg viewBox="-32 -32 64 64">${CUP('#F6F0E4')}</svg>` + (i === 7 ? '<span class="plus">+٢٥ نقطة</span>' : '');
+    if (i === 7) d.style.transform = 'none';
+  } else {
+    d.className = 'stamp reward';
+    d.innerHTML = `<svg viewBox="-32 -38 64 64"><rect x="-22" y="-10" width="44" height="30" rx="4" fill="none" stroke="#B88E43" stroke-width="4.5"/><path d="M-26 -10 H26 M0 -10 V20" stroke="#B88E43" stroke-width="4.5" stroke-linecap="round"/><path d="M0 -10 C-6 -24 -20 -22 -16 -14 C-13 -9 -4 -10 0 -10 C4 -10 13 -9 16 -14 C20 -22 6 -24 0 -10Z" fill="none" stroke="#B88E43" stroke-width="4" stroke-linejoin="round"/></svg>`;
+  }
   G.append(d);
 }
-
-// ── the thread: leaves the chosen pin on slide 1, runs under the drink, ends at the empty stamp ──
-const T = document.getElementById('thread');
-el(T, 'path', { d:'M880 1110 C 1000 1250, 1150 1300, 1240 1240 S 1180 1000, 1080 1000', fill:'none' });
-const route = 'M1010 1128 C 1100 1190, 1180 1230, 1300 1200 C 1500 1150, 1900 1300, 2080 1200 C 2200 1130, 2150 1060, 2240 1050';
-
-
-const CUP = '<path d="M-22 -14 H22 C21 12 11 18 0 18 C-11 18 -21 12 -22 -14Z" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/><path d="M22 -9 a9 9 0 0 1 0 17" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>';
-document.querySelectorAll('use').forEach(u => { if (u.getAttribute('href') === '#cup') u.outerHTML = CUP; });
-window.ready = document.fonts.ready;
+window.ready = Promise.all([document.fonts.ready, ...[...document.images].map(i => i.complete ? 0 : new Promise(r => i.onload = i.onerror = r))]);
 </script>
 </body></html>
