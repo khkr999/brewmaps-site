@@ -1,0 +1,143 @@
+<!doctype html><html lang="ar"><meta charset="utf-8">
+<!-- Find · Rate · Earn, premium static set. story.html?n=1|2|3 -->
+<link rel="stylesheet" href="../../assets/fonts/tajawal.css">
+<link rel="stylesheet" href="../../assets/fonts/playfair.css">
+<link rel="stylesheet" href="../../assets/fonts/dmsans.css">
+<style>
+:root { --ink:#16290F; --forest:#223D18; --cream:#F3EDE2; --paper:#EDE5D6; --gold:#C8A56A; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1920px; overflow:hidden; }
+body { font-family:'Tajawal'; direction:rtl; position:relative; }
+body.dark { background:radial-gradient(1000px 900px at 50% 40%, #2A4A1E 0%, var(--forest) 45%, var(--ink) 100%); color:var(--cream); --line:var(--cream); --fill:rgba(243,237,226,.05); }
+body.light { background:radial-gradient(1000px 900px at 50% 40%, #F8F4EC 0%, var(--cream) 50%, #E6DDCC 100%); color:var(--forest); --line:var(--forest); --fill:rgba(34,61,24,.04); }
+.grain { position:absolute; inset:0; opacity:.07; mix-blend-mode:overlay; pointer-events:none; }
+.latin { font-family:'DM Sans'; direction:ltr; unicode-bidi:isolate; }
+
+.head { position:absolute; top:236px; left:110px; right:110px; display:flex; align-items:center; justify-content:space-between; }
+.num { font-family:'Playfair Display'; font-style:italic; font-weight:500; font-size:40px; letter-spacing:1px; direction:ltr; }
+.num em { font-style:italic; opacity:.45; }
+.head img { height:44px; }
+.rule { position:absolute; top:312px; left:110px; right:110px; height:1.5px; background:var(--gold); opacity:.7; }
+
+.frame { position:absolute; top:392px; left:50%; transform:translateX(-50%); width:620px; height:800px; }
+.frame svg { width:100%; height:100%; overflow:visible; }
+
+h1 { position:absolute; top:1270px; left:80px; right:80px; text-align:center; font-weight:500; font-size:100px; line-height:1.15; letter-spacing:-.5px; }
+.sub { position:absolute; top:1405px; left:120px; right:120px; text-align:center; font-weight:400; font-size:42px; line-height:1.55; opacity:.78; }
+.sub b { font-weight:700; opacity:1; }
+
+.foot { position:absolute; top:1640px; left:0; right:0; text-align:center; font-size:32px; font-weight:500; letter-spacing:2px; }
+.foot span { opacity:.35; } .foot span.on { opacity:1; }
+.foot i { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--gold); margin:0 22px 6px; vertical-align:middle; }
+
+.cta { position:absolute; top:1580px; left:0; right:0; text-align:center; }
+.cta .btn { display:inline-block; border:2px solid var(--gold); color:var(--cream); font-size:46px; font-weight:500; padding:26px 64px 20px; border-radius:999px; }
+.cta p { margin-top:22px; font-size:30px; opacity:.6; letter-spacing:1px; }
+</style>
+<body>
+<svg class="grain" width="1080" height="1920"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 1 0"/></filter><rect width="100%" height="100%" filter="url(#g)"/></svg>
+<div class="head"><span class="num"></span><img></div>
+<div class="rule"></div>
+<div class="frame"><svg viewBox="0 0 620 800"><defs>
+  <clipPath id="arch"><path d="M20 800 V310 A290 290 0 0 1 600 310 V800 Z"/></clipPath>
+</defs><g id="art"></g></svg></div>
+<h1></h1><p class="sub"></p>
+<div id="end"></div>
+<script>
+const n = +(new URLSearchParams(location.search).get('n') || 1);
+const G = '#C8A56A';
+const S = {
+  1: { theme:'dark', h1:'تدوّر كوفي عدل؟', sub:'<b>٨١٢ كوفي</b> في كل أنحاء الإمارات<br>كلها في <span class="latin">BrewMaps</span>' },
+  2: { theme:'light', h1:'رحت وجرّبت؟', sub:'قيّم مشروبك<br>عشان غيرك يعرف <b>وين يروح</b>' },
+  3: { theme:'dark', h1:'كل ما تقيّم تجمع نقاط', sub:'وتبدّلها بـ<b>قهوة ببلاش</b><br><small style="font-size:32px;opacity:.7">في الكوفيهات المشاركة</small>' },
+}[n];
+document.body.className = S.theme;
+const LINE = S.theme === 'dark' ? '#F3EDE2' : '#223D18';
+document.querySelector('.num').innerHTML = `0${n} <em>/ 03</em>`;
+document.querySelector('.head img').src = `../../assets/logos/mark-${S.theme === 'dark' ? 'cream' : 'green'}.png`;
+document.querySelector('h1').textContent = S.h1;
+document.querySelector('.sub').innerHTML = S.sub;
+if (n === 3) { document.querySelector('h1').style.fontSize = '92px'; }
+document.getElementById('end').innerHTML = n < 3
+  ? `<p class="foot">${['تلقى','قيّم','اكسب'].map((w,i)=>`<span class="${i===n-1?'on':''}">${w}</span>`).join('<i></i>')}</p>`
+  : `<div class="cta"><span class="btn">حمّل <span class="latin">BrewMaps</span> مجاناً</span><p>الآب ستور · جوجل بلاي</p></div>`;
+
+// ── drawing helpers (monoline) ─────────────────────────────────────
+const NS = 'http://www.w3.org/2000/svg';
+const el = (tag, a, parent) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); (parent || art).append(e); return e; };
+const art = document.getElementById('art');
+const ARCH = 'M20 800 V310 A290 290 0 0 1 600 310 V800 Z';
+const cup = (x, y, s, color, w, parent) => {
+  el('path', { d:`M${x-22*s} ${y-14*s} H${x+22*s} C${x+21*s} ${y+12*s} ${x+11*s} ${y+18*s} ${x} ${y+18*s} C${x-11*s} ${y+18*s} ${x-21*s} ${y+12*s} ${x-22*s} ${y-14*s}Z`, fill:'none', stroke:color, 'stroke-width':w, 'stroke-linejoin':'round' }, parent);
+  el('path', { d:`M${x+22*s} ${y-9*s} a${9*s} ${9*s} 0 0 1 0 ${17*s}`, fill:'none', stroke:color, 'stroke-width':w, 'stroke-linecap':'round' }, parent);
+};
+const star = (cx, cy, R) => { let d = ''; for (let i = 0; i < 10; i++) { const a = -Math.PI/2 + i*Math.PI/5, r = i%2 ? R*.45 : R; d += (i?'L':'M') + (cx + r*Math.cos(a)).toFixed(1) + ' ' + (cy + r*Math.sin(a)).toFixed(1); } return d + 'Z'; };
+
+// the arch: a soft fill, a fine line, and a second hairline in gold just outside it
+el('path', { d:ARCH, fill:'var(--fill)' });
+const inner = el('g', { 'clip-path':'url(#arch)' });
+el('path', { d:ARCH, fill:'none', stroke:LINE, 'stroke-width':2.5, opacity:.9 });
+el('path', { d:'M4 800 V310 A306 306 0 0 1 616 310 V800', fill:'none', stroke:G, 'stroke-width':1.5 });
+el('line', { x1:-40, y1:800, x2:660, y2:800, stroke:G, 'stroke-width':1.5 });
+
+let s = 11; const rnd = () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296;
+
+if (n === 1) {
+  // a quiet city plan in hairlines, café dots everywhere, one pin in gold
+  const g = el('g', { transform:'rotate(-14 310 480)', opacity:.28 }, inner);
+  for (let x = -300; x < 950; x += 92) el('line', { x1:x, y1:-200, x2:x, y2:1100, stroke:LINE, 'stroke-width': x % 3 ? 1.5 : 4 }, g);
+  for (let y = -200; y < 1100; y += 78) el('line', { x1:-300, y1:y, x2:950, y2:y, stroke:LINE, 'stroke-width': y % 4 ? 1.5 : 4 }, g);
+  el('path', { d:'M-40 330 C 120 400, 300 250, 660 380', fill:'none', stroke:LINE, 'stroke-width':14, opacity:.12 }, inner);
+  el('path', { d:'M-40 0 H300 C260 80 280 150 200 200 C130 245 60 230 -40 290Z', fill:LINE, opacity:.07 }, inner);
+  for (let i = 0; i < 46; i++) {
+    const x = 40 + rnd() * 540, y = 90 + rnd() * 690;
+    if (Math.hypot(x - 310, y - 470) < 110) continue;
+    el('circle', { cx:x, cy:y, r: 5 + rnd() * 2.5, fill:LINE, opacity: .45 + rnd() * .45 }, inner);
+  }
+  // the one you find
+  el('circle', { cx:310, cy:540, r:120, fill:'none', stroke:G, 'stroke-width':1.5, opacity:.35 }, inner);
+  el('circle', { cx:310, cy:540, r:74, fill:'none', stroke:G, 'stroke-width':1.5, opacity:.6 }, inner);
+  el('ellipse', { cx:310, cy:542, rx:26, ry:7, fill:'#0B1507', opacity:.5 }, inner);
+  el('path', { d:'M310 540 C296 516 262 488 262 452 A48 48 0 1 1 358 452 C358 488 324 516 310 540Z', fill:G }, inner);
+  el('circle', { cx:310, cy:452, r:30, fill:'#223D18' }, inner);
+  cup(307, 454, .72, G, 4, inner);
+}
+
+if (n === 2) {
+  // an iced spanish latte in fine line, one warm tone for the coffee, five small gold stars above
+  const top = 330, bot = 720, L = y => 190 + 26 * (y - top) / (bot - top), R = y => 430 - 26 * (y - top) / (bot - top);
+  const glass = `M${L(top)} ${top} H${R(top)} L${R(bot)} ${bot} H${L(bot)} Z`;
+  el('clipPath', { id:'gl' }).append(Object.assign(document.createElementNS(NS, 'path'), {}));
+  document.getElementById('gl').firstChild.setAttribute('d', glass);
+  const liq = el('g', { 'clip-path':'url(#gl)' }, inner);
+  const gr = el('linearGradient', { id:'cf', x1:0, y1:0, x2:0, y2:1 }, art);
+  [[0,'#6E4630',1],[.5,'#9A6A48',.95],[1,'#D9BE9C',0]].forEach(([o,c,a]) => el('stop', { offset:o, 'stop-color':c, 'stop-opacity':a }, gr));
+  el('rect', { x:150, y:top+46, width:320, height:bot-top, fill:'#F7F2E8' }, liq);
+  el('rect', { x:150, y:top+60, width:320, height:190, fill:'url(#cf)' }, liq);
+  el('rect', { x:150, y:bot-70, width:320, height:70, fill:'#EBDDC2' }, liq);
+  [[250,top+100,70,-12],[350,top+128,64,16],[292,top+190,58,-4]].forEach(([x,y,w,r]) => el('rect', { x:x-w/2, y:y-w/2, width:w, height:w, rx:12, transform:`rotate(${r} ${x} ${y})`, fill:'rgba(255,255,255,.28)', stroke:'#223D18', 'stroke-width':2 }, liq));
+  el('line', { x1:348, y1:bot-40, x2:400, y2:top-110, stroke:'#223D18', 'stroke-width':12, 'stroke-linecap':'round' }, inner);
+  el('line', { x1:348, y1:bot-40, x2:400, y2:top-110, stroke:'#F3EDE2', 'stroke-width':6, 'stroke-linecap':'round' }, inner);
+  el('path', { d:glass, fill:'none', stroke:'#223D18', 'stroke-width':3.5, 'stroke-linejoin':'round' }, inner);
+  el('line', { x1:L(top)+22, y1:top+30, x2:L(top)+34, y2:top+250, stroke:'#fff', 'stroke-width':5, 'stroke-linecap':'round', opacity:.8 }, inner);
+  el('ellipse', { cx:310, cy:bot+6, rx:150, ry:12, fill:'#223D18', opacity:.08 }, inner);
+  for (let k = 0; k < 5; k++) el('path', { d:star(310 + (k - 2) * 74, 170, 26), fill:G }, inner);
+  el('line', { x1:190, y1:228, x2:430, y2:228, stroke:G, 'stroke-width':1.5, opacity:.8 }, inner);
+}
+
+if (n === 3) {
+  // a vertical stamp card: nine stamps, the tenth in gold is on us
+  el('text', { x:310, y:175, 'text-anchor':'middle', 'font-family':'Tajawal', 'font-weight':500, 'font-size':30, 'letter-spacing':2, fill:G }, inner).textContent = 'بطاقة القهوة';
+  el('line', { x1:210, y1:205, x2:410, y2:205, stroke:G, 'stroke-width':1.5, opacity:.7 }, inner);
+  for (let i = 0; i < 10; i++) {
+    const col = i % 2, row = Math.floor(i / 2), x = col ? 230 : 390, y = 280 + row * 108;   // right column first, reading order
+    if (i < 9) { el('circle', { cx:x, cy:y, r:42, fill:'none', stroke:LINE, 'stroke-width':2.5, opacity:.9 }, inner); cup(x - 3, y + 2, .82, LINE, 3, inner); }
+    else {
+      el('circle', { cx:x, cy:y, r:46, fill:G }, inner);
+      el('text', { x, y:y + 10, 'text-anchor':'middle', 'font-family':'Tajawal', 'font-weight':700, 'font-size':27, fill:'#16290F' }, inner).textContent = 'ببلاش';
+    }
+  }
+}
+window.ready = document.fonts.ready;
+</script>
+</body></html>
