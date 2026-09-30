@@ -52,15 +52,7 @@ function renderFrame(ctx, t, A) {
   }
   ctx.globalAlpha = 1;
 
-  // next
-  const nx = eo(seg(t, 4.9, 5.3));
-  if (nx > 0) {
-    const nudge = Math.sin((t - 4.9) * 4) * 6 * (RTL() ? -1 : 1);
-    ctx.save(); ctx.globalAlpha = nx * 0.75; ctx.direction = L.dir; ctx.font = F(500, 40); ctx.fillStyle = CREAM; ctx.textAlign = 'center';
-    ctx.fillText(L.next, W / 2 + (RTL() ? 24 : -24), 1720);
-    const w = ctx.measureText(L.next).width; ctx.fillText(L.arrow, W / 2 + (RTL() ? -w / 2 - 18 : w / 2 + 18) + nudge, 1720);
-    ctx.restore();
-  }
+  handTo(ctx, t, 4.9, CREAM, FOREST, L.next);
 
   ctx.save(); ctx.globalCompositeOperation = 'overlay'; ctx.globalAlpha = 0.03; ctx.drawImage(A.grain[Math.floor(t * 12) % 3], 0, 0, W, H); ctx.restore();
 }

@@ -3,8 +3,8 @@
 
 const COFFEE = '#7A4E33', MILKC = '#EFE0C2', INK = '#141414';
 const S2 = {
-  ar: { page: '٢/٣', h1: 'قيّم مشروبك', h2: 'بعد كل زيارة', aside: 'ولا تجامل 😌', next: 'التالي: اكسب' },
-  en: { page: '2/3', h1: 'Rate your drink', h2: 'after every visit', aside: 'No flattering 😌', next: 'Next: earn' },
+  ar: { page: '٢/٣', h1: 'قيّم مشروبك', h2: 'بعد كل زيارة', aside: 'ولا تجامل', next: 'التالي: اكسب' },
+  en: { page: '2/3', h1: 'Rate your drink', h2: 'after every visit', aside: 'No flattering', next: 'Next: earn' },
 };
 
 function latte(ctx, cx, top, bot, a) {
@@ -60,17 +60,10 @@ function renderFrame(ctx, t, A) {
   }
 
   // one small line after the last star
-  text(ctx, M.aside, W / 2, 1505, F(500, 48), FOREST, 'center', seg(t, 3.0, 3.35), 0.85);
+  text(ctx, M.aside, W / 2, 1505, F(700, 50), FOREST, 'center', seg(t, 3.0, 3.35), 1);
 
-  // next
-  const nx = eo(seg(t, 3.9, 4.3));
-  if (nx > 0) {
-    const nudge = Math.sin((t - 3.9) * 4) * 6 * (RTL() ? -1 : 1);
-    ctx.save(); ctx.globalAlpha = nx * 0.75; ctx.direction = L.dir; ctx.font = F(500, 40); ctx.fillStyle = FOREST; ctx.textAlign = 'center';
-    ctx.fillText(M.next, W / 2 + (RTL() ? 24 : -24), 1720);
-    const w = ctx.measureText(M.next).width; ctx.fillText(L.arrow, W / 2 + (RTL() ? -w / 2 - 18 : w / 2 + 18) + nudge, 1720);
-    ctx.restore();
-  }
+  handTo(ctx, t, 3.9, PALE, NIGHT, M.next);
+  openFrom(ctx, t, NIGHT);
 
   ctx.save(); ctx.globalCompositeOperation = 'overlay'; ctx.globalAlpha = 0.03; ctx.drawImage(A.grain[Math.floor(t * 12) % 3], 0, 0, W, H); ctx.restore();
 }
