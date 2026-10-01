@@ -4,7 +4,9 @@ A recurring Reel series. A small white line-drawn character has one tiny adventu
 drink at a real BrewMaps café. V2 adds two English supers over the opening (see below); the rest has no text until the end card.
 
 Ep. 1 (International Coffee Day, 1 Oct), 14.8s, `export/the-regular-ep1.mp4`.
-V2 (new opening, English supers): `export/the-regular-ep1-v2.mp4`.
+V2 (new opening, English supers): `export/the-regular-ep1-v2.mp4`, 16.75s. The opening holds twice so the supers can be read
+(`HOLDS` in `rig.js`: 1.15s on the pin pile-up, 0.8s on the BrewMaps scroll), so in v2 every beat below after 1.45s runs later
+by the time held so far. Supers: 0.25–2.85s and 3.15–6.2s.
 Plate: the iced latte from **1918 Cafe, Al Bateen**, as listed in the app (`plates/1918-cafe.jpg`,
 cropped from the app's own photo and not otherwise edited). The café isn't named in the video; the glass carries it.
 

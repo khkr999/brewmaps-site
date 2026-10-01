@@ -577,10 +577,20 @@ function drawTicks(ctx, hc) {
   });
 }
 
+// ─── holds: the opening pauses so the supers can be read. [story time, seconds held] ──
+const HOLDS = [[1.45, 1.15], [3.6, 0.8]];
+const HELD = HOLDS.reduce((a, h) => a + h[1], 0);
+function storyTime(tr) {
+  let off = 0;
+  for (const [at, d] of HOLDS) { if (tr < at + off) return tr - off; if (tr < at + off + d) return at; off += d; }
+  return tr - off;
+}
+
 // ─── one frame ──────────────────────────────────────────────────────────────
-function renderFrame(ctx, layer, t, S, assets, opts = {}) {
+function renderFrame(ctx, layer, tReal, S, assets, opts = {}) {
+  const t = storyTime(tReal);                       // the animation's own clock (stands still during holds)
   const td = Math.floor(t * 12) / 12;               // drawings change on twos
-  boil = Math.floor(t * 12) % 3; jc = 0;
+  boil = Math.floor(tReal * 12) % 3; jc = 0;        // lines keep boiling through the holds
   const { P, props } = (S.routine === 'pole' ? episodePole : episode1)(td, S);
 
   ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
@@ -608,10 +618,10 @@ function renderFrame(ctx, layer, t, S, assets, opts = {}) {
   ctx.save(); ctx.filter = 'drop-shadow(0px 0px 1.5px rgba(20,16,10,.45)) drop-shadow(0px 3px 5px rgba(20,16,10,.30))'; ctx.drawImage(layer, 0, 0); ctx.restore();
 
   // supers: the problem, then the answer. Ink green on the pale wall, left-aligned, above the action.
-  (opts.supers || []).forEach(L => {
-    const a = seg(t, L.t0, L.t0 + 0.3) * (1 - seg(t, L.t1 - 0.25, L.t1)); if (a <= 0) return;
+  (opts.supers || []).forEach(L => {                // supers run on real time
+    const a = seg(tReal, L.t0, L.t0 + 0.3) * (1 - seg(tReal, L.t1 - 0.25, L.t1)); if (a <= 0) return;
     ctx.save(); ctx.globalAlpha = a; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
-    let y = L.y + (1 - easeOut(seg(t, L.t0, L.t0 + 0.3))) * 18;
+    let y = L.y + (1 - easeOut(seg(tReal, L.t0, L.t0 + 0.3))) * 18;
     L.lines.forEach(parts => {
       ctx.font = L.font; let x = 96;
       parts.forEach(([txt, col]) => { ctx.fillStyle = col; ctx.fillText(txt, x, y); x += ctx.measureText(txt).width; });
