@@ -8,7 +8,8 @@ V2 (new opening, English supers): `export/the-regular-ep1-v2.mp4`, 16.75s. The o
 (`HOLDS` in `rig.js`: 1.15s on the pin pile-up, 0.8s on the BrewMaps scroll), so in v2 every beat below after 1.45s runs later
 by the time held so far. Supers: 0.25–2.85s and 3.15–6.2s.
 Plate: the iced latte from **1918 Cafe, Al Bateen**, as listed in the app (`plates/1918-cafe.jpg`,
-cropped from the app's own photo and not otherwise edited). The café isn't named in the video; the glass carries it.
+cropped from the app's own photo). For v2 the paper doily under the glass was retouched out (it read as spilled milk);
+the untouched crop is kept as `plates/1918-cafe-original.jpg`. The café isn't named in the video; the glass carries it.
 
 | Time | Beat |
 |---|---|
