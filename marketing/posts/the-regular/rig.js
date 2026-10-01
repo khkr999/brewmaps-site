@@ -185,7 +185,45 @@ function drawPhone(ctx, c, s, w = 250, h = 440, scroll = 0) {
     ctx.restore();
   }
 }
-const PAGE_SCROLL = 1282;                           // rows of page below the first screenful, for the in-story phone
+const PAGE_SCROLL = 1282;
+
+// The "before" phone: any generic map app. Grey map, a crowd of identical grey pins, nothing to choose by.
+const GREY = '#C9CCCF', PIN = '#8B9096';
+function greyPin(ctx, p, s = 1) {
+  const T = q => J(add(p, scl(q, s)), 0.6);
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.beginPath(); cr(ctx, [[0, 0], [-15, -26], [-17, -44], [0, -60], [17, -44], [15, -26]].map(T), true);
+  ctx.fillStyle = PIN; ctx.fill(); ctx.lineWidth = LINE * 0.7; ctx.strokeStyle = LC; ctx.stroke();
+  ctx.beginPath(); ctx.arc(...T([0, -40]), 6 * s, 0, Math.PI * 2); ctx.fillStyle = '#E9EAEC'; ctx.fill();
+}
+const GPINS = (() => { const r = prng(42), a = []; for (let i = 0; i < 26; i++) a.push([r(), r()]); return a; })();
+function drawGenericPhone(ctx, c, s, w = 250, h = 440, r0 = 0) {
+  if (s <= 0.01) return;
+  ctx.save(); ctx.translate(c[0], c[1]); ctx.rotate(r0);
+  const W2 = w * s, H2 = h * s, x = -W2 / 2, y = -H2 / 2, r = 34 * s, j = J([0, 0], 1.2);
+  const P = inset => { ctx.beginPath(); ctx.roundRect(x + inset + j[0], y + inset + j[1], W2 - 2 * inset, H2 - 2 * inset, Math.max(2, r - inset)); };
+  ctx.globalCompositeOperation = 'source-over';
+  P(0); ctx.fillStyle = LC; ctx.fill(); ctx.lineWidth = 2 * LINE; ctx.strokeStyle = LC; ctx.stroke();
+  ctx.globalCompositeOperation = 'destination-out'; P(0); ctx.fill(); ctx.globalCompositeOperation = 'source-over';
+  const inset = 9 * s; ctx.save(); P(inset); ctx.clip();
+  ctx.fillStyle = '#E6E7E8'; ctx.fillRect(x, y, W2, H2);
+  ctx.strokeStyle = '#FAFAFA'; ctx.lineWidth = 9 * s;
+  for (let k = -3; k <= 3; k++) { ctx.beginPath(); ctx.moveTo(x, k * 70 * s); ctx.lineTo(x + W2, k * 70 * s + 40 * s); ctx.stroke(); }
+  for (let k = -2; k <= 2; k++) { ctx.beginPath(); ctx.moveTo(k * 60 * s, y); ctx.lineTo(k * 60 * s - 30 * s, y + H2); ctx.stroke(); }
+  ctx.fillStyle = GREY; ctx.beginPath(); ctx.roundRect(x + 16 * s, y + 18 * s, W2 - 32 * s, 34 * s, 17 * s); ctx.fill();   // search bar
+  GPINS.forEach(([u, v]) => greyPin(ctx, [x + 22 * s + u * (W2 - 44 * s), y + 92 * s + v * (H2 - 110 * s)], 0.55 * s));
+  ctx.restore(); ctx.restore();
+}
+// pins that spill out of the screen: offsets from the phone, in his units
+const SPILL = [[-150, -250], [-40, -330], [90, -300], [180, -210], [-230, -150], [210, -60], [-60, -210], [40, -420], [-170, -390], [150, -400], [-250, -300], [260, -320]];
+function drawSpill(ctx, c, t0, t) {
+  SPILL.forEach((o, i) => {
+    const a = seg(t, t0 + i * 0.07, t0 + i * 0.07 + 0.16); if (a <= 0) return;
+    const pop = a < 1 ? 0.6 + 0.6 * Math.sin(a * Math.PI * 0.75) : 1;
+    greyPin(ctx, add(c, scl(o, 0.4 + 0.6 * easeOut(a))), 1.25 * pop);
+  });
+}
+                           // rows of page below the first screenful, for the in-story phone
 
 function drawQuestion(ctx, hc) {
   const q = [[-12, -96], [-8, -110], [4, -114], [14, -106], [12, -94], [2, -86], [0, -76]].map(p => J(add(hc, p)));
@@ -201,6 +239,7 @@ function drawCharacter(ctx, P) {
   const hc = drawHead(ctx, P);
   if (P.map) drawMap(ctx, p => toWorld(P, add(P.map.c, rot([p[0], p[1] * (P.map.sy ?? 1)], P.map.r || 0))));
   if (P.phone) drawPhone(ctx, toWorld(P, P.phone.c), P.phone.s, 250, 440, P.phone.scroll || 0);
+  if (P.gphone) drawGenericPhone(ctx, toWorld(P, P.gphone.c), P.gphone.s, 250, 440, P.gphone.r || 0);
   const hand = drawArm(ctx, P, 'f');
   return { hc, hand };
 }
@@ -251,24 +290,25 @@ function intro(t, S) {
   const MC = [74, -150];
   const PH = [150, -170], hold = { b: [262, -150], f: [34, -120] };
   const fly = () => { const dt = t - 1.58, st = toWorld({ x: S.stopX, y: G(S.stopX) - 112, f: -1, rot: 0 }, [-40, -250]);
-    return { c: [st[0] + 620 * dt, st[1] - 1050 * dt + 1300 * dt * dt], r: -0.8 - 9 * dt, sy: -1 }; };
+    return { c: [st[0] + 620 * dt, st[1] - 1050 * dt + 1300 * dt * dt], r: 0.8 + 7 * dt }; };
 
   if (t < 1.5) {                                    // A · walks in turning a paper map the wrong way up
     const u = easeOut(seg(t, 0, 1.5)), x = mix(S.startX, S.stopX, u), ph = (S.startX - x) / 150 * Math.PI * 2;
     stand(x, -4 * Math.abs(Math.sin(ph)));
     const foot = (off, a) => ({ w: [P.x + P.f * (off + 24 * Math.sin(a)), G(P.x + P.f * (off + 24 * Math.sin(a))) - 16 * Math.max(0, Math.cos(a))] });
     P.feet = { f: foot(6, ph), b: foot(-8, ph + Math.PI) };
-    const flip = Math.cos(Math.PI * ease(seg(t, 0.4, 1.05)));
-    P.map = { c: MC, r: 0.04 * Math.sin(ph), sy: flip }; P.hands = { b: [150, -124], f: [2, -108] };
-    P.tilt = -0.12 + 0.3 * ease(seg(t, 0.4, 1.05)); P.mouth = t > 0.9 ? 'flat' : 'smile';
-    props.question = t > 1.0;
+    P.gphone = { c: PH, s: 1, r: 0.04 * Math.sin(ph) }; P.hands = { ...hold };
+    P.tilt = 0.05 + 0.25 * ease(seg(t, 0.5, 1.1)); P.mouth = t > 0.9 ? 'flat' : 'smile'; P.look = [3, 2];
+    props.spill = { c: toWorld(P, PH), t0: 0.35 };
+    props.question = t > 1.05;
   } else if (t < 1.9) {                             // B · gives up and bins the map over his shoulder
     stand(S.stopX); P.feet = { f: planted(10), b: planted(-12) };
-    const u = ease(seg(t, 1.5, 1.6)), v = ease(seg(t, 1.64, 1.86)), g = { b: [150, -124], f: [2, -108] };
+    const u = ease(seg(t, 1.5, 1.6)), v = ease(seg(t, 1.64, 1.86)), g = hold;
     P.hands = { b: mix2(mix2(g.b, [-70, -250], u), [-30, -40], v), f: mix2(mix2(g.f, [-40, -262], u), [24, -40], v) };
     P.elbow = { b: 1, f: 1 }; P.tilt = 0.3; P.mouth = 'flat';
-    if (t < 1.58) P.map = { c: mix2(MC, [-40, -250], u), r: -u * 0.8, sy: -1 };
-    else props.flyingMap = fly();
+    if (t < 1.58) P.gphone = { c: mix2(PH, [-40, -250], u), s: 1, r: u * 0.8 };
+    else props.flyingPhone = fly();
+    props.spill = { c: toWorld({ x: S.stopX, y: G(S.stopX) - 112, f: -1, rot: 0 }, PH), t0: 0.35, fade: seg(t, 1.5, 1.75) };
   } else if (t < 3.75) {                            // C+D · pulls out BrewMaps. Reads. Scrolls.
     stand(S.stopX); P.feet = { f: planted(10), b: planted(-12) };
     const u = easeOut(seg(t, 1.9, 2.2));
@@ -277,7 +317,7 @@ function intro(t, S) {
     P.phone = { c: mix2([30, -60], PH, u), s: mix(0.15, 1, u), scroll };
     P.hands = { b: mix2([-30, -40], hold.b, u), f: add(mix2([24, -40], hold.f, u), [0, -thumb]) };
     P.tilt = mix(0.3, 0.05, u); P.mouth = 'smile'; P.look = [3, 2];
-    if (t < 2.4) props.flyingMap = fly();
+    if (t < 2.4) props.flyingPhone = fly();
   } else {                                          // E · …and looks up. It was right there.
     stand(S.stopX); P.feet = { f: planted(10), b: planted(-12) };
     const away = ease(seg(t, 4.1, 4.42));
@@ -557,6 +597,8 @@ function renderFrame(ctx, layer, t, S, assets, opts = {}) {
     if (props.water) eraseBelowWater(lc, S, props.water);
   }
   if (props.flyingMap) drawMap(lc, p => add(props.flyingMap.c, rot([p[0], p[1] * (props.flyingMap.sy ?? 1)], props.flyingMap.r)));
+  if (props.flyingPhone) drawGenericPhone(lc, props.flyingPhone.c, 1, 250, 440, props.flyingPhone.r);
+  if (props.spill && !(props.spill.fade >= 1)) { lc.save(); lc.globalAlpha = 1 - (props.spill.fade || 0); drawSpill(lc, props.spill.c, props.spill.t0, td); lc.restore(); }
   if (props.ticks && head) drawTicks(lc, head);
   if (props.question && head) drawQuestion(lc, head);
   if (props.splash != null) { drawSplash(lc, S, props.splash); drawRipples(lc, S, S.entry, props.splash); }
@@ -564,6 +606,19 @@ function renderFrame(ctx, layer, t, S, assets, opts = {}) {
   lc.setTransform(1, 0, 0, 1, 0, 0); LINE = 6.5;
 
   ctx.save(); ctx.filter = 'drop-shadow(0px 0px 1.5px rgba(20,16,10,.45)) drop-shadow(0px 3px 5px rgba(20,16,10,.30))'; ctx.drawImage(layer, 0, 0); ctx.restore();
+
+  // supers: the problem, then the answer. Ink green on the pale wall, left-aligned, above the action.
+  (opts.supers || []).forEach(L => {
+    const a = seg(t, L.t0, L.t0 + 0.3) * (1 - seg(t, L.t1 - 0.25, L.t1)); if (a <= 0) return;
+    ctx.save(); ctx.globalAlpha = a; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    let y = L.y + (1 - easeOut(seg(t, L.t0, L.t0 + 0.3))) * 18;
+    L.lines.forEach(parts => {
+      ctx.font = L.font; let x = 96;
+      parts.forEach(([txt, col]) => { ctx.fillStyle = col; ctx.fillText(txt, x, y); x += ctx.measureText(txt).width; });
+      y += L.lead;
+    });
+    ctx.restore();
+  });
 
   // end card: the mark, the line, the real app, and him sitting on it
   const endAt = S.endAt ?? endAt, e = seg(t, endAt, endAt + 0.45);

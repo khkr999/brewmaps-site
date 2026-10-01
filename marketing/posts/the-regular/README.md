@@ -1,17 +1,18 @@
 # The Regular
 
 A recurring Reel series. A small white line-drawn character has one tiny adventure on a real
-drink at a real BrewMaps café. There's no text until the end card, so one cut works for Arabic and English.
+drink at a real BrewMaps café. V2 adds two English supers over the opening (see below); the rest has no text until the end card.
 
 Ep. 1 (International Coffee Day, 1 Oct), 14.8s, `export/the-regular-ep1.mp4`.
+V2 (new opening, English supers): `export/the-regular-ep1-v2.mp4`.
 Plate: the iced latte from **1918 Cafe, Al Bateen**, as listed in the app (`plates/1918-cafe.jpg`,
 cropped from the app's own photo and not otherwise edited). The café isn't named in the video; the glass carries it.
 
 | Time | Beat |
 |---|---|
-| 0.0–1.5 | Walks in along the table with a paper map, flips it upside down. A "?" appears. |
-| 1.5–1.9 | Gives up and throws the map over his shoulder. |
-| 1.9–3.75 | Pulls out a door-sized phone with the **real BrewMaps app** and scrolls it with his thumb: Sharjah, then Dubai. |
+| 0.0–1.5 | Walks in squinting at a generic grey map app. Identical grey pins spill out of the screen around him. A "?" appears. Super: **Every map shows you coffee.** |
+| 1.5–1.9 | Gives up and tosses the phone over his shoulder; the pins fade. |
+| 1.9–3.75 | Pulls out a door-sized phone with the **real BrewMaps app** and scrolls it with his thumb: Sharjah, then Dubai. Super: **BrewMaps shows you the good ones.** (to 4.3s) |
 | 3.75–4.5 | Looks up. The latte was right there. |
 | 4.5–5.85 | Walks to the glass, crouches, leaps, grabs the straw, dangles. |
 | 5.85–7.4 | Three pulls up the straw. |
