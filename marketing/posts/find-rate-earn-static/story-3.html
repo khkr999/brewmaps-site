@@ -1,0 +1,53 @@
+<!doctype html><html lang="ar"><meta charset="utf-8">
+<link rel="stylesheet" href="shared.css">
+<style>
+  h1 { font-size:118px; }
+  .sub { top:700px; }
+  .fine { position:absolute; top:782px; right:80px; font-size:34px; font-weight:500; color:rgba(244,239,230,.6); }
+  .art { top:870px; height:600px; overflow:visible; }
+  .cta { position:absolute; top:1500px; left:0; right:0; text-align:center; }
+  .cta .btn { display:inline-block; background:var(--cream); color:var(--forest); font-weight:800; font-size:62px; padding:30px 70px 22px; border-radius:999px; box-shadow:0 14px 30px rgba(14,31,10,.35); }
+  .cta .stores { margin-top:26px; font-size:36px; font-weight:500; color:rgba(244,239,230,.75); }
+</style>
+<body class="green">
+<div class="steps"><span class="step">تلقى</span><span class="dash"></span><span class="step">قيّم</span><span class="dash"></span><span class="step on">اكسب</span><img class="logo" src="../../assets/logos/mark-cream.png"></div>
+<h1>وكل ما تقيّم<br>تجمع نقاط</h1>
+<p class="sub">وتبدّلها بـ<b>قهوة ببلاش</b></p>
+<p class="fine">في الكوفيهات المشاركة</p>
+<div class="art">
+<svg viewBox="0 0 920 600" style="overflow:visible"><defs>
+  <filter id="sh" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#0E1F0A" flood-opacity=".45"/></filter>
+</defs>
+  <!-- the stamp card -->
+  <g transform="rotate(-5 460 300)" filter="url(#sh)">
+    <rect x="40" y="60" width="840" height="480" rx="44" fill="#F4EFE6"/>
+    <image href="../../assets/logos/mark-green.png" x="80" y="96" height="64" width="120" preserveAspectRatio="xMinYMid meet"/>
+    <text x="840" y="142" text-anchor="start" direction="rtl" font-family="Tajawal" font-weight="800" font-size="46" fill="#2B4D1F">بطاقة القهوة</text>
+    <line x1="80" y1="190" x2="840" y2="190" stroke="#2B4D1F" stroke-opacity=".15" stroke-width="3" stroke-dasharray="4 12" stroke-linecap="round"/>
+    <g id="stamps"></g>
+  </g>
+  <!-- the "+ points" tag -->
+  <g transform="translate(96 40) rotate(-12)" filter="url(#sh)">
+    <rect x="-20" y="-44" width="210" height="88" rx="44" fill="#E4B96E"/>
+    <text x="85" y="16" text-anchor="middle" direction="rtl" font-family="Tajawal" font-weight="800" font-size="46" fill="#2B4D1F">+ نقاط</text>
+  </g>
+</svg></div>
+<div class="cta"><span class="btn">حمّل <span class="latin">BrewMaps</span> مجاناً</span><p class="stores">على الآب ستور وجوجل بلاي</p></div>
+<script src="defs.js"></script>
+<script>
+const NS = 'http://www.w3.org/2000/svg', el = (tag, a) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); return e; };
+const S = document.getElementById('stamps');
+for (let i = 0; i < 10; i++) {
+  const col = i % 5, row = i >> 2 > 1 ? 1 : Math.floor(i / 5), x = 760 - col * 150, y = 290 + row * 150;   // right to left, like reading
+  if (i < 9) {
+    S.append(el('circle', { cx: x, cy: y, r: 60, fill: '#2B4D1F' }));
+    const c = el('use', { href: '#cup', transform: `translate(${x - 3} ${y + 2}) scale(1.05)`, fill: 'none', stroke: '#F4EFE6', 'stroke-width': 6, 'stroke-linejoin': 'round' });
+    S.append(c);
+  } else {
+    S.append(el('circle', { cx: x, cy: y, r: 66, fill: '#E4B96E' }));
+    S.append(el('circle', { cx: x, cy: y, r: 56, fill: 'none', stroke: '#2B4D1F', 'stroke-width': 3, 'stroke-dasharray': '3 9', 'stroke-linecap': 'round' }));
+    const t = el('text', { x, y: y + 14, 'text-anchor': 'middle', 'font-family': 'Tajawal', 'font-weight': 800, 'font-size': 33, fill: '#2B4D1F', direction: 'rtl' }); t.textContent = 'ببلاش'; S.append(t);
+  }
+}
+</script>
+</body></html>

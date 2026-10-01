@@ -1,0 +1,48 @@
+<!doctype html><html lang="ar"><meta charset="utf-8">
+<link rel="stylesheet" href="shared.css">
+<body class="green">
+<div class="steps"><span class="step on">تلقى</span><span class="dash"></span><span class="step">قيّم</span><span class="dash"></span><span class="step">اكسب</span><img class="logo" src="../../assets/logos/mark-cream.png"></div>
+<h1>تدوّر كوفي عدل؟</h1>
+<p class="sub">أكثر من <b>٨١٢ كوفي</b> في كل أنحاء الإمارات،<br>كلها في <b class="latin">BrewMaps</b></p>
+<div class="art" style="background:#F4EFE6">
+<svg viewBox="0 0 920 760"><defs>
+  <filter id="sh" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#0E1F0A" flood-opacity=".28"/></filter>
+</defs>
+  <rect width="920" height="760" fill="#FFFDF8"/>
+  <g id="blocks" transform="rotate(-12 460 380)"></g>
+  <path d="M-60 640 C 260 520, 600 330, 1000 150" stroke="#E3D8C3" stroke-width="58" fill="none"/>
+  <path d="M-60 640 C 260 520, 600 330, 1000 150" stroke="#FFFDF8" stroke-width="44" fill="none"/>
+  <path d="M-60 640 C 260 520, 600 330, 1000 150" stroke="#E3D8C3" stroke-width="3" stroke-dasharray="18 18" fill="none"/>
+  <path d="M0 0 H500 C455 80 500 150 410 215 C320 280 255 245 185 330 C125 400 60 390 0 440 Z" fill="#BCD6AC"/>
+  <g fill="none" stroke="#DCEBD2" stroke-width="5" stroke-linecap="round">
+    <path d="M60 90 q20 -12 40 0 t40 0"/><path d="M230 60 q20 -12 40 0 t40 0"/><path d="M110 230 q20 -12 40 0 t40 0"/><path d="M300 170 q20 -12 40 0 t40 0"/>
+  </g>
+  <g id="pins"></g>
+  <path d="M300 660 C 360 590, 470 520, 575 420" stroke="#2B4D1F" stroke-width="8" stroke-dasharray="2 20" stroke-linecap="round" fill="none"/>
+  <circle cx="300" cy="664" r="50" fill="#2B4D1F" opacity=".16"/>
+  <circle cx="300" cy="664" r="19" fill="#2B4D1F" stroke="#FFFDF8" stroke-width="7"/>
+  <ellipse cx="590" cy="408" rx="42" ry="12" fill="#0E1F0A" opacity=".22"/>
+  <g transform="translate(590 408) scale(2.35)" filter="url(#sh)">
+    <use href="#pin" fill="#2B4D1F"/><circle cy="-64" r="25" fill="#F4EFE6"/>
+    <use href="#cup" transform="translate(0 -64) scale(.62)" fill="#2B4D1F" stroke="#2B4D1F" stroke-width="5" stroke-linejoin="round"/>
+  </g>
+</svg></div>
+<p class="next">التالي: قيّم<span>←</span></p>
+<script src="defs.js"></script>
+<script>
+const NS = 'http://www.w3.org/2000/svg', el = (tag, a) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); return e; };
+let s = 7; const rnd = () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296;
+const B = document.getElementById('blocks');
+for (let x = -260; x < 1180; x += 150) for (let y = -260; y < 1020; y += 124) {
+  const park = rnd() < 0.12, c = park ? '#C8DDB8' : (rnd() < 0.5 ? '#ECE3D2' : '#E6DBC6');
+  B.append(el('rect', { x: x + 11, y: y + 11, width: 128, height: 102, rx: 14, fill: c }));
+  if (park) for (let i = 0; i < 4; i++) B.append(el('circle', { cx: x + 40 + (i % 2) * 60, cy: y + 38 + (i >> 1) * 42, r: 15, fill: '#9BC48A' }));
+}
+const P = document.getElementById('pins');
+[[640,170],[800,265],[235,540],[410,470],[840,520],[720,640],[140,690],[500,690],[870,110],[455,300],[760,400],[610,560],[95,560],[560,120]].forEach(([x, y], i) => {
+  const g = el('g', { transform: `translate(${x} ${y}) scale(.72)` });
+  g.append(el('use', { href: '#pin', fill: i % 3 === 2 ? '#7FA96C' : '#2B4D1F' }), el('circle', { cy: -64, r: 13, fill: '#FFFDF8' }));
+  P.append(g);
+});
+</script>
+</body></html>

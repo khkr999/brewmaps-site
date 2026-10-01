@@ -1,0 +1,34 @@
+{
+ "shots": [
+  {
+   "key": "sibul",
+   "cafe": "Sibul Cafe",
+   "rating": 5.0,
+   "area": "Al Karama",
+   "emirate": "Dubai",
+   "areaAr": "الكرامة",
+   "emirateAr": "دبي",
+   "source": "https://www.brewmaps.app/c/0e14f409-f9a0-49bd-9be0-94f748c2ada8"
+  },
+  {
+   "key": "aldar",
+   "cafe": "Frontyard",
+   "rating": 4.7,
+   "area": "Al Raha",
+   "emirate": "Abu Dhabi",
+   "areaAr": "الراحة",
+   "emirateAr": "أبوظبي",
+   "source": "https://www.brewmaps.app/c/acfc08ee-f688-4837-8f6c-365f5fdbe53b"
+  },
+  {
+   "key": "glass",
+   "cafe": "1918 Cafe",
+   "rating": 4.6,
+   "area": "Al Bateen",
+   "emirate": "Abu Dhabi",
+   "areaAr": "البطين",
+   "emirateAr": "أبوظبي",
+   "source": "https://www.brewmaps.app/c/7ef5f2cb-c9ea-4606-9457-e2d3e8f5560e"
+  }
+ ]
+}

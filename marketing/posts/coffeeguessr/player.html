@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="../../assets/fonts/dmsans.css">
+<link rel="stylesheet" href="../../assets/fonts/tajawal.css">
+<style>html,body{margin:0;background:#000}</style>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script src="guessr.js"></script>
+<script>
+const img = src => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = src; });
+const json = src => fetch(src).then(r => r.json());
+const ctx = document.getElementById('c').getContext('2d');
+window.DURATION = DURATION; window.FPS = FPS;
+setLang(new URLSearchParams(location.search).get('lang') || 'en');
+window.ready = (async () => {
+  await Promise.all(['500 34px', '600 30px', '700 84px'].flatMap(f => [document.fonts.load(f + ' "DM Sans"'), document.fonts.load(f + ' "Tajawal"', 'وين')]));
+  const data = await json('data.json'), uae = await json('uae.json');
+  makeProjection(uae);
+  window.A = { data, uae, mark: await img('../../assets/logos/mark-cream.png'), photos: await Promise.all(data.rounds.map(r => img(r.photo))) };
+})();
+window.frame = t => { renderFrame(ctx, t, window.A); return document.getElementById('c').toDataURL('image/png'); };
+</script>
