@@ -12,7 +12,7 @@ cropped from the app's own photo and not otherwise edited). The café isn't name
 |---|---|
 | 0.0–1.5 | Walks in squinting at a generic grey map app. Identical grey pins spill out of the screen around him. A "?" appears. Super: **Every map shows you coffee.** |
 | 1.5–1.9 | Gives up and tosses the phone over his shoulder; the pins fade. |
-| 1.9–3.75 | Pulls out a door-sized phone with the **real BrewMaps app** and scrolls it with his thumb: Sharjah, then Dubai. Super: **BrewMaps shows you the good ones.** (to 4.3s) |
+| 1.9–3.75 | Pulls out a door-sized phone with the **real BrewMaps app** and scrolls it with his thumb: Sharjah, then Dubai. Super: **BrewMaps finds the café that fits you.** (to 4.3s) |
 | 3.75–4.5 | Looks up. The latte was right there. |
 | 4.5–5.85 | Walks to the glass, crouches, leaps, grabs the straw, dangles. |
 | 5.85–7.4 | Three pulls up the straw. |

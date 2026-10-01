@@ -12,8 +12,8 @@ layer.width = 1080; layer.height = 1920;
 const INK = '#16301A', GRN = '#2B6B35';
 const OPTS = { headline: 'Found it.', sub: '812 cafés across the UAE, on BrewMaps.',
   supers: [
-    { t0: 0.25, t1: 1.8, y: 360, lead: 92, font: '700 80px "DM Sans"', lines: [[['Every map shows', INK]], [['you coffee.', INK]]] },
-    { t0: 2.0, t1: 4.3, y: 360, lead: 92, font: '700 80px "DM Sans"', lines: [[['BrewMaps', GRN], [' shows', INK]], [['you the ', INK], ['good ones.', GRN]]] },
+    { t0: 0.25, t1: 1.8, y: 360, lead: 84, font: '700 72px "DM Sans"', lines: [[['Every map shows', INK]], [['you coffee.', INK]]] },
+    { t0: 2.0, t1: 4.3, y: 360, lead: 84, font: '700 72px "DM Sans"', lines: [[['BrewMaps', GRN], [' finds the café', INK]], [['that ', INK], ['fits you.', GRN]]] },
   ] };
 window.ready = (async () => {
   await Promise.all([document.fonts.load('700 80px "DM Sans"'), document.fonts.load('500 32px "DM Sans"')]);
