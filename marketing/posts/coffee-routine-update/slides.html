@@ -1,0 +1,156 @@
+<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8">
+<!-- روتين قهوتك يحتاج تحديث — 5-slide Arabic carousel, 1080×1350. slides.html?n=1..5
+     System: green bookends (1, 5), off-white middle; faint map grid under everything; a progress bar that
+     "installs the update" across the swipe (20 → 100%). Hairline map drawings, no photos, no café names. -->
+<link rel="stylesheet" href="../../assets/fonts/tajawal.css">
+<link rel="stylesheet" href="../../assets/fonts/dmsans.css">
+<style>
+:root { --g:#173D20; --g2:#2B6235; --sage:#DCE8D3; --paper:#F7F6F1; --ink:#101D0D; --mute:#7B8277; --line:#E2E0D8; --cream:#F4EFE4; --M:88px; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1350px; overflow:hidden; }
+body { font-family:'Tajawal'; position:relative; background:var(--paper); color:var(--ink); }
+body.dark { background:var(--g); color:var(--cream); }
+.latin { font-family:'DM Sans'; direction:ltr; unicode-bidi:isolate; }
+.grid { position:absolute; inset:0; }
+.logo { position:absolute; top:76px; left:var(--M); height:44px; }
+.idx { position:absolute; top:84px; right:var(--M); font-weight:700; font-size:28px; letter-spacing:2px; opacity:.55; }
+.h { position:absolute; right:var(--M); left:var(--M); font-weight:800; line-height:1.12; letter-spacing:-.5px; }
+.sub { position:absolute; right:var(--M); left:var(--M); font-weight:500; font-size:44px; line-height:1.4; }
+.dark .sub { color:#B9CDB2; }
+.em { color:var(--g2); } .dark .em { color:#A9D19A; }
+/* the update bar */
+.bar { position:absolute; bottom:96px; right:var(--M); left:var(--M); }
+.bar .lbl { display:flex; justify-content:space-between; font-size:26px; font-weight:700; margin-bottom:14px; opacity:.75; }
+.bar .track { height:6px; border-radius:3px; background:rgba(16,29,13,.10); overflow:hidden; }
+.dark .bar .track { background:rgba(244,239,228,.16); }
+.bar .fill { height:100%; border-radius:3px; background:var(--g2); margin-right:0; }
+.dark .bar .fill { background:#A9D19A; }
+svg text { font-family:'Tajawal'; }
+</style>
+<body>
+<svg class="grid" id="grid" width="1080" height="1350"></svg>
+<img class="logo" id="logo">
+<div class="idx" id="idx"></div>
+<div id="s"></div>
+<div class="bar"><div class="lbl"><span id="bl"></span><span id="bp"></span></div><div class="track"><div class="fill" id="bf"></div></div></div>
+<script>
+const n = +(new URLSearchParams(location.search).get('n') || 1);
+const dark = n === 1 || n === 5;
+document.body.className = dark ? 'dark' : '';
+document.getElementById('logo').src = `img/lockup-${dark ? 'cream' : 'green'}.png`;
+const AR = d => String(d).replace(/\d/g, c => '٠١٢٣٤٥٦٧٨٩'[c]);
+document.getElementById('idx').textContent = `${AR('0' + n)} / ${AR('05')}`;
+const pct = n * 20;
+document.getElementById('bf').style.width = pct + '%';
+document.getElementById('bl').innerHTML = n < 5 ? 'جاري التحديث…' : 'تم التحديث <svg width="26" height="20" viewBox="0 0 26 20" style="vertical-align:-2px;margin-right:6px"><path d="M2 10 L9 17 L24 2" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+document.getElementById('bp').textContent = AR(pct) + '٪';
+
+// the map grid under everything: a few hairline streets, very faint
+const NS = 'http://www.w3.org/2000/svg', el = (p, t, a) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); p.append(e); return e; };
+const Gr = document.getElementById('grid'), gl = dark ? 'rgba(244,239,228,.06)' : 'rgba(23,61,32,.055)';
+const gg = el(Gr, 'g', { transform:`rotate(-16 540 675) translate(${-n * 40} 0)`, stroke:gl, fill:'none' });
+for (let x = -800; x < 1900; x += 120) el(gg, 'line', { x1:x, y1:-600, x2:x, y2:2000, 'stroke-width': x % 360 ? 2 : 6 });
+for (let y = -600; y < 2000; y += 104) el(gg, 'line', { x1:-800, y1:y, x2:1900, y2:y, 'stroke-width': y % 312 ? 2 : 6 });
+
+const CUP = c => `<path d="M-22 -14 H22 C21 12 11 18 0 18 C-11 18 -21 12 -22 -14Z" fill="none" stroke="${c}" stroke-width="5.5" stroke-linejoin="round"/><path d="M22 -9 a9 9 0 0 1 0 17" fill="none" stroke="${c}" stroke-width="5.5" stroke-linecap="round"/>`;
+const PIN = (x, y, s, fill, stroke = 'none', cup = '#fff') => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 0 C-9 -16 -26 -30 -26 -50 A26 26 0 1 1 26 -50 C26 -30 9 -16 0 0Z" fill="${fill}" stroke="${stroke}" stroke-width="2.5"/>${cup ? `<g transform="translate(-1 -49) scale(.42)">${CUP(cup)}</g>` : ''}</g>`;
+
+const S = {
+  // 1 · HOOK
+  1: `<div style="position:absolute; top:300px; right:var(--M); display:flex; align-items:center; gap:14px; font-size:30px; font-weight:700; color:#A9D19A;">
+        <span style="width:14px; height:14px; border-radius:50%; background:#A9D19A; box-shadow:0 0 0 8px rgba(169,209,154,.18)"></span>تحديث جديد</div>
+      <div class="h" style="top:380px; font-size:150px;">روتين قهوتك<br>يحتاج <span class="em">تحديث.</span></div>
+      <div class="sub" style="top:780px; font-size:48px;">مو كل يوم نفس الكوفي.</div>`,
+
+  // 2 · PROBLEM: the same loop, again and again
+  2: `<div class="h" style="top:190px; font-size:84px;">كل مرة تفتح الماب…<br>وترجع لنفس <span class="em">الأماكن؟</span></div>
+      <svg style="position:absolute; top:470px; left:var(--M);" width="904" height="560" viewBox="0 0 904 560">
+        <defs><clipPath id="c2"><rect width="904" height="560" rx="36"/></clipPath>
+        <marker id="ar" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10Z" fill="#8F958B"/></marker></defs>
+        <g clip-path="url(#c2)">
+          <rect width="904" height="560" fill="#EFEEE7"/>
+          <g fill="none" stroke="#FFFFFF" stroke-linecap="round">
+            <path d="M-20 120 C 200 140, 420 90, 924 150" stroke-width="22"/><path d="M-20 400 C 260 380, 600 430, 924 380" stroke-width="22"/>
+            <path d="M260 -20 C 240 200, 300 380, 280 580" stroke-width="16"/><path d="M640 -20 C 660 180, 600 360, 650 580" stroke-width="16"/>
+            <path d="M-20 260 L 924 250" stroke-width="8"/><path d="M460 -20 L 470 580" stroke-width="8"/><path d="M120 -20 L 110 580" stroke-width="8"/><path d="M800 -20 L 790 580" stroke-width="8"/>
+          </g>
+          <!-- everything nearby you haven't tried: faint outline pins -->
+          <g opacity=".55" id="faint"></g>
+          <!-- the same three places, round and round -->
+          <g fill="none" stroke="#8F958B" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 14">
+            <path d="M560 300 C 520 230, 470 210, 420 200 C 360 190, 330 240, 350 300 C 370 360, 460 380, 520 350"/>
+            <path d="M574 310 C 540 220, 470 190, 410 184 C 340 178, 306 240, 332 312 C 360 384, 470 398, 534 362" opacity=".55"/>
+            <path d="M588 320 C 560 210, 470 170, 400 168 C 320 166, 282 240, 314 324 C 350 408, 480 416, 548 374" opacity=".3"/>
+          </g>
+          ${PIN(420, 200, 1.05, '#A8ADA4')} ${PIN(350, 300, 1.05, '#A8ADA4')} ${PIN(520, 350, 1.05, '#A8ADA4')}
+          <circle cx="572" cy="308" r="16" fill="#101D0D"/><circle cx="572" cy="308" r="30" fill="#101D0D" opacity=".12"/>
+        </g>
+      </svg>
+      <div class="sub" style="top:1060px; font-size:40px;">فيه كوفيات حولك <span class="em" style="font-weight:800">يمكن ما قد جرّبتها.</span></div>`,
+
+  // 3 · SOLUTION: browse by area
+  3: `<div class="h" style="top:180px; font-size:76px; line-height:1.18;">افتح <span class="latin em" style="font-weight:700">BrewMaps</span>.<br>اختَر المنطقة.<br>وشوف وش <span class="em">حولك.</span></div>
+      <div style="position:absolute; top:560px; right:var(--M); left:var(--M); height:500px; background:#fff; border:1.5px solid var(--line); border-radius:36px; padding:30px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:22px;">
+          <span style="font-weight:800; font-size:34px;">تصفّح حسب المنطقة</span>
+          <span style="font-size:24px; font-weight:600; color:var(--mute)">دبي</span>
+        </div>
+        <div id="tiles" style="display:grid; grid-template-columns:1fr 1fr; gap:18px;"></div>
+      </div>`,
+
+  // 4 · PAYOFF: closer than you think
+  4: `<div class="h" style="top:190px; font-size:68px; white-space:nowrap;">يمكن كوفيك المفضل الجاي…<br><span class="em">أقرب مما تتوقع.</span></div>
+      <svg style="position:absolute; top:470px; left:var(--M);" width="904" height="600" viewBox="0 0 904 600">
+        <defs><clipPath id="c4"><rect width="904" height="600" rx="36"/></clipPath></defs>
+        <g clip-path="url(#c4)">
+          <rect width="904" height="600" fill="#EFEEE7"/>
+          <g fill="none" stroke="#FFFFFF" stroke-linecap="round">
+            <path d="M-20 150 C 220 170, 520 110, 924 170" stroke-width="20"/><path d="M-20 460 C 300 430, 600 490, 924 440" stroke-width="20"/>
+            <path d="M300 -20 C 280 220, 340 400, 320 620" stroke-width="14"/><path d="M700 -20 C 690 200, 640 400, 690 620" stroke-width="14"/>
+          </g>
+          <g fill="none" stroke="#173D20" stroke-width="2" opacity=".22"><circle cx="452" cy="330" r="130"/><circle cx="452" cy="330" r="250"/></g>
+          <text x="452" y="186" text-anchor="middle" font-size="22" font-weight="700" fill="#173D20" opacity=".5">٥٠٠ م</text>
+          <text x="452" y="66" text-anchor="middle" font-size="22" font-weight="700" fill="#173D20" opacity=".5">١ كم</text>
+          ${PIN(600, 420, 1.1, '#2B6235')} ${PIN(250, 470, 1.1, '#2B6235')} ${PIN(690, 180, 1.1, '#2B6235')} ${PIN(160, 200, 1.1, '#2B6235')}
+          <circle cx="452" cy="330" r="15" fill="#101D0D"/><circle cx="452" cy="330" r="30" fill="#101D0D" opacity=".12"/>
+          ${PIN(548, 296, 1.7, '#173D20')}
+        </g>
+      </svg>
+      <div style="position:absolute; top:700px; left:150px; width:330px; background:#fff; border:1.5px solid var(--line); border-radius:26px; padding:20px 22px; display:flex; gap:18px; align-items:center; direction:ltr; font-family:'DM Sans';">
+        <span style="width:74px; height:74px; border-radius:18px; background:var(--sage); display:grid; place-items:center; flex:none;">
+          <svg width="44" height="44" viewBox="-32 -32 64 64"><path d="M-24 -18 H24 L6 10 H-6 Z" fill="none" stroke="#173D20" stroke-width="4.5" stroke-linejoin="round"/><path d="M-16 20 H16" stroke="#173D20" stroke-width="4.5" stroke-linecap="round"/><path d="M-6 10 V20 M6 10 V20" stroke="#173D20" stroke-width="4.5"/></svg></span>
+        <span><div style="font-weight:700; font-size:34px;">V60</div><div style="margin-top:4px; font-size:24px; color:var(--mute); font-weight:500;"><span style="color:#C9A35A">★</span> <b style="color:var(--ink)">4.9</b> · 600 m</div></span>
+      </div>`,
+
+  // 5 · CTA
+  5: `<div style="position:absolute; top:300px; left:0; right:0; display:flex; justify-content:center;">
+        <span style="width:220px; height:220px; border-radius:54px; background:var(--cream); display:grid; place-items:center;"><img src="img/mark-green.png" style="width:150px"></span></div>
+      <div class="h" style="top:580px; text-align:center; font-size:100px; white-space:nowrap;">حدّث روتين <span class="em">قهوتك.</span></div>
+      <div class="sub" style="top:730px; text-align:center; font-size:48px;">اكتشفه على <span class="latin" style="font-weight:700; color:var(--cream)">BrewMaps</span>.</div>
+      <div style="position:absolute; top:880px; left:0; right:0; display:flex; justify-content:center; gap:20px; direction:ltr; font-family:'DM Sans'; font-weight:600; font-size:28px;">
+        <span style="border:2px solid rgba(244,239,228,.5); border-radius:999px; padding:16px 34px;">App Store</span>
+        <span style="border:2px solid rgba(244,239,228,.5); border-radius:999px; padding:16px 34px;">Google Play</span></div>`,
+};
+document.getElementById('s').innerHTML = S[n];
+
+if (n === 2) {   // faint outline pins: the cafés nearby you've never opened
+  const F = document.getElementById('faint');
+  [[90,90],[200,170],[330,90],[640,80],[780,140],[860,260],[720,300],[150,350],[230,480],[420,470],[620,500],[760,440],[860,520],[60,520],[700,220]]
+    .forEach(([x, y]) => F.insertAdjacentHTML('beforeend', PIN(x, y, .8, 'none', '#2B6235', '#2B6235')));
+}
+if (n === 3) {   // area tiles: real areas and the café counts the app shows; one selected
+  const T = document.getElementById('tiles');
+  [['جميرا', 24], ['القوز', 29, 1], ['سيتي ووك', 12], ['جي بي آر', 8]].forEach(([name, c, on], i) => {
+    const d = document.createElement('div');
+    d.style.cssText = `height:184px; border-radius:24px; position:relative; overflow:hidden; padding:22px 26px; display:flex; flex-direction:column; justify-content:flex-end; ${on ? 'background:#173D20; color:#F4EFE4;' : 'background:#F1F0EA; color:#101D0D;'}`;
+    const st = on ? 'rgba(244,239,228,.14)' : 'rgba(23,61,32,.08)';
+    d.innerHTML = `<svg style="position:absolute; inset:0" width="100%" height="100%" viewBox="0 0 400 184" preserveAspectRatio="none"><g fill="none" stroke="${st}" stroke-width="10" stroke-linecap="round"><path d="M-10 ${50 + i * 9} C 120 ${30 + i * 7}, 260 ${90 - i * 6}, 410 ${60 + i * 5}"/><path d="M${140 + i * 30} -10 C ${120 + i * 30} 80, ${170 + i * 25} 120, ${150 + i * 30} 194"/><path d="M-10 ${130 - i * 4} L 410 ${120 + i * 3}" stroke-width="5"/></g></svg>
+      ${on ? `<span style="position:absolute; top:20px; left:22px; width:40px; height:40px; border-radius:50%; background:#A9D19A; display:grid; place-items:center;"><svg width="20" height="16" viewBox="0 0 26 20"><path d="M2 10 L9 17 L24 2" fill="none" stroke="#173D20" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>` : ''}
+      <div style="position:relative; font-weight:800; font-size:38px;">${name}</div>
+      <div style="position:relative; font-weight:500; font-size:26px; opacity:.7">${AR(c)} ${c <= 10 ? 'كوفيات' : 'كوفي'}</div>`;
+    T.append(d);
+  });
+}
+window.ready = Promise.all([document.fonts.ready, ...[...document.images].map(i => i.complete ? 0 : new Promise(r => i.onload = i.onerror = r))]);
+</script>
+</body></html>

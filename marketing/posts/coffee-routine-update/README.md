@@ -1,0 +1,22 @@
+# روتين قهوتك يحتاج تحديث — "Your coffee routine needs an update"
+
+5-slide Arabic carousel, 1080×1350, `export/slide-1..5.png`. Replaces the phone-UI version in `../coffee-update/`.
+HOOK → PROBLEM → SOLUTION → PAYOFF → CTA.
+
+System
+- Green bookends (1 and 5, `#173D20`, cream type); off-white middle (`#F7F6F1`), green the only accent.
+- A faint street grid under every slide; hairline flat map drawings, no photos, no café names.
+- The update installs as you swipe: a bar at the bottom fills 20 → 100% ("جاري التحديث…" → "تم التحديث").
+- One grid: 88px margins, logo top-left, slide number top-right, headline zone, visual zone, bar at the bottom.
+- Slide 3's area tiles use the real areas and café counts from the app's Browse by area screen (Jumeirah 24,
+  Al Quoz 29, City Walk 12, JBR 8). Slide 4's V60 card (★4.9 · 600 m) is illustrative.
+
+Rebuild: `NODE_PATH=<playwright node_modules> node shot.js`
+
+## Caption
+
+> روتين قهوتك يحتاج تحديث ☕️
+>
+> BrewMaps مجاني على الآب ستور وجوجل بلاي. الرابط في البايو.
+>
+> #BrewMaps #قهوة_مختصة #كوفيهات_الإمارات
