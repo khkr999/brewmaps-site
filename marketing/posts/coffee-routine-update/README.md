@@ -9,7 +9,8 @@ System
 - The update installs as you swipe: a bar at the bottom fills 20 → 100% ("جاري التحديث…" → "تم التحديث").
 - One grid: 88px margins, logo top-left, slide number top-right, headline zone, visual zone, bar at the bottom.
 - Slide 3's area tiles use the real areas and café counts from the app's Browse by area screen (Jumeirah 24,
-  Al Quoz 29, City Walk 12, JBR 8). Slide 4 carries the personalization: "BrewMaps يلقى لك الكوفي اللي يناسب ذوقك.",
+  Al Quoz 29, City Walk 12, JBR 8). Slide 4 headline: "يمكن كوفيك المفضل… أقرب مما تتوقع."; slide 5: "اكتشف الكوفي اللي يناسبك على BrewMaps."
+  Slide 4 carries the personalization: "BrewMaps يلقى لك الكوفي اللي يناسب ذوقك.",
   match % on the pins and "يناسب ذوقك ٩٢٪" on the V60 card (★4.9 · 600 m), after the app's own "Matches your taste"
   and match-% badges. The numbers are illustrative.
 
