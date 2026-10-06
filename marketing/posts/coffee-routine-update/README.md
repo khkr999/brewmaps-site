@@ -5,8 +5,9 @@ HOOK → PROBLEM → SOLUTION → PAYOFF → CTA.
 
 System
 - Green bookends (1 and 5, `#173D20`, cream type); off-white middle (`#F7F6F1`), green the only accent.
-- A faint street grid under every slide; flat map drawings (blocks, park, water, main roads), no photos, no café names.
-- Pins: caramel `#D9773F` for cafés (untried on 2, matches on 4), grey for the usual places, BrewMaps green for the best match.
+- A faint street grid under every slide; flat map drawings, no photos, no café names.
+- Maps on 2 and 4 follow the app's own map: cream land, blue water, green park, white streets, grey highway;
+  white cup pins, dark-green clusters with counts, the blue you-dot, light-green match % pills.
 - The update installs as you swipe: a bar at the bottom fills 20 → 100% ("جاري التحديث…" → "تم التحديث").
 - One grid: 88px margins, logo top-left, slide number top-right, headline zone, visual zone, bar at the bottom.
 - Slide 3's area tiles use the real areas and café counts from the app's Browse by area screen (Jumeirah 24,
