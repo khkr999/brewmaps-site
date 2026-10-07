@@ -260,7 +260,7 @@ const CLIMB = 5;                                            // climbing: half-st
 // extra foreshortening. Head back toward the far side of the cup, eyes closed, arms dropped outward past both sides with
 // loose open hands, legs loose, feet falling outward. His hips and upper legs are under the coffee (soft erase inside the
 // rim + a waterline); below the rim he shows faintly through the glass. One fixed pose: the whole figure drifts 1–2 px.
-var FL = { land: [306, 968], c: [262, 968], s: 0.44, sq: 0.62, hip: [47, 32], hipR: [65, 26], line: 6.1, headR: 33 };
+var FL = { land: [306, 968], c: [262, 968], s: 0.44, sq: 0.62, hip: [47, 32], hipR: [65, 26], line: 6.1, body: 0.86 };
 const TRACE = {
   o: [434.5, 422.5],
   head: [272, 128], neck: [[300, 196], [312, 236]],
@@ -269,34 +269,35 @@ const TRACE = {
   armL: [[282, 282], [190, 380], [100, 482]], armR: [[436, 244], [564, 274], [684, 300]],
   legL: [[410, 452], [462, 592], [486, 716], [530, 784]],
   legR: [[488, 436], [620, 546], [734, 640], [800, 652]],
-  faceAng: -0.64,
+  hipC: [448, 440], across: 0.94, headBack: -0.12,
 };
 function drawFloater(ctx, t) {
-  const d = [1.3 * Math.sin(t * 0.42), 0.9 * Math.sin(t * 0.57 + 1.3)];      // the whole figure drifts 1–2 px; the pose never changes
+  // Drawn with the character's own parts, at his own scale: the profile head (one eye, hair loops on the crown), the
+  // rig's torso with its shorts line, tube limbs and round hands. Only the joint positions come from the trace.
+  const FS = K * FL.body, d = [1.3 * Math.sin(t * 0.42), 0.9 * Math.sin(t * 0.57 + 1.3)];
   const cx = FL.c[0] + d[0], cy = FL.c[1] + d[1];
-  const M = ([x, y]) => [cx + (x - TRACE.o[0]) * FL.s, cy + (y - TRACE.o[1]) * FL.s * FL.sq];
+  const M = ([x, y]) => [(cx + (x - TRACE.o[0]) * FL.s) / FS, (cy + (y - TRACE.o[1]) * FL.s * FL.sq) / FS];
   const X = p => J(M(p));
-  for (const L of [TRACE.legL, TRACE.legR]) tube(ctx, L.map(X), RIG.leg * 0.8);
+  ctx.save(); ctx.setTransform(FS, 0, 0, FS, 0, 0); LINE = 5.6 / K;
+  for (const L of [TRACE.legL, TRACE.legR]) tube(ctx, L.map(X), RIG.leg);
   const hands = [];
-  for (const [A, side] of [[TRACE.armL, -1], [TRACE.armR, 1]]) {
-    const pts = A.map(M); tube(ctx, pts.map(p => J(p)), RIG.arm * 0.82);
-    const v = [pts[2][0] - pts[1][0], pts[2][1] - pts[1][1]]; hands.push([pts[2], scl(v, 1 / len(v)), side]);
-  }
-  const tp = TRACE.torso.map(X);
+  for (const A of [TRACE.armL, TRACE.armR]) { const pts = A.map(M); tube(ctx, pts.map(p => J(p)), RIG.arm); hands.push(pts[2]); }
+  // torso: the rig's own torso, fitted between his hips and his neck (foreshortened along the body, full width across)
+  const hip = M(TRACE.hipC), neck = M(TRACE.neck[0]), ax = [neck[0] - hip[0], neck[1] - hip[1]], L = len(ax), u = scl(ax, 1 / L), v = [-u[1], u[0]];
+  const TW = ([x, y]) => add(hip, add(scl(v, x * TRACE.across), scl(u, -y * L / 160)));
+  const tp = RIG.torso.map(p => J(TW(p)));
   shape(ctx, tp);
-  ctx.save(); ctx.beginPath(); cr(ctx, tp, true); ctx.clip(); stroke(ctx, TRACE.shorts.map(X)); ctx.restore();
-  hands.forEach(([w, fd, side]) => openHand(ctx, w, fd, side));
-  tube(ctx, TRACE.neck.map(X), 15);
-  // head: the character's own head, face up and tipped back: hair loops on the crown, two closed eyes, a neutral mouth
-  const c = M(TRACE.head), R = FL.headR, fa = TRACE.faceAng;           // fa turns the face's "up" toward the crown (up-left)
-  const H = (x, y) => J(add(c, rot([x * R / 40, y * R / 40], fa)), 0.7);
-  [196, 220, 244, 268, 292, 316, 340].forEach((deg, i) => {
-    const r = deg * Math.PI / 180, cc = [43 * Math.cos(r), 43 * Math.sin(r)];
-    stroke(ctx, circlePts([0, 0], 8.5 + (i % 2), 8.5, 7).map(p => H(cc[0] + p[0], cc[1] + p[1])), { closed: true });
-  });
-  shape(ctx, circlePts([0, 0], 40, 41, 12).map(p => H(p[0], p[1])));
-  for (const ex of [-15, 15]) stroke(ctx, [H(ex - 7, -2), H(ex, 2), H(ex + 7, -2)], { width: LINE * 0.9 });   // eyes closed, at ease
-  stroke(ctx, [H(-6, 18), H(0, 19), H(6, 18)], { width: LINE * 0.8 });                                     // neutral mouth
+  ctx.save(); ctx.beginPath(); cr(ctx, tp, true); ctx.clip(); stroke(ctx, [[-60, -30], [0, -22], [64, -32]].map(p => J(TW(p)))); ctx.restore();
+  hands.forEach(w => shape(ctx, circlePts(w, RIG.hand, RIG.hand, 8).map(p => J(p, 0.8))));
+  // head: his profile head, crown toward the far side of the cup, face to the sky; eyes closed, a small resting mouth
+  const hc = M(TRACE.head), crown = scl([hc[0] - neck[0], hc[1] - neck[1]], 1 / len([hc[0] - neck[0], hc[1] - neck[1]]));
+  const P = { f: 1, rot: Math.atan2(crown[0], -crown[1]) + TRACE.headBack, tilt: 0, eyes: 'closed', mouth: 'rest' };
+  const hl = add(RIG.neck, [10, -40]), q = rot(hl, P.rot); P.x = hc[0] - q[0]; P.y = hc[1] - q[1];
+  tube(ctx, [TW([4, -150]), toWorld(P, RIG.neck)].map(p => J(p)), 16);
+  drawHead(ctx, P);
+  const m0 = toWorld(P, add(hl, [26, 16])), m1 = toWorld(P, add(hl, [28, 24]));
+  stroke(ctx, [J(m0, 0.5), J(m1, 0.5)], { smooth: false, width: LINE * 0.9 });
+  ctx.restore(); LINE = FL.line;
   // hips and upper legs under the coffee: a soft erase, only inside the rim
   const Rr = CUP_A.rim, hx = cx + FL.hip[0], hy = cy + FL.hip[1];
   ctx.save();
