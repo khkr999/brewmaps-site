@@ -18,13 +18,15 @@ Lines (every episode): **نفس الكوفي، مشروبين… / واحد بس
 
 search → effort → find → FLOP BACK → complete peace. The first half is quick (the 24%, a sad walk, the 92%, the ladder,
 the climb, the BrewMaps flag out of his pocket and planted on the rim). Then a satisfied glance, he turns his back to the
-drink and flops backward into it (his feet knock the ladder away), and floats across the iced latte like it's a pool:
-head back, arms spread wide past the rim, open hands, legs loose, almost motionless. The camera eases in on him; the line
+drink and flops backward into it (his feet knock the ladder away). On the splash the frame turns clean (ladder, pouch and
+flag gone) and he floats on the iced latte like it's a pool, after the pool-float reference: head fallen back, face to
+the sky, eyes closed, arms dropped out past both sides of the cup with open hands, one leg straight and one slightly
+bent under the surface. One fixed pose; only the whole body drifts 1–2 px. The camera eases in on him; the line
 comes only after the joke lands (small setup, one big statement on a soft scrim); then the scene washes into BrewMaps
 green with him still faintly there, and the end line + Brew Maps lockup come in.
 
-- `reel.js`: the scene. The float is its own drawing (`drawFloater`, seen from above like a pool float, same line style,
-  slightly larger, heavier line). Green is kept for BrewMaps things only (phone, badges, flag); the pouch is white line art.
+- `reel.js`: the scene. The float is its own drawing (`drawFloater`, `POSE`/`FL`: same line style, seen from above like
+  the reference; below the coffee line it shows faintly through the glass). Green is kept for BrewMaps things only (phone, badges, flag); the pouch is white line art.
 - Plate `plates/iced-hot-v2.jpg` (graded by `enhance.py` from the AI-generated, unbranded `plates/iced-hot.jpg`) + animated steam.
 - Sound: `sound.py` → `export/ep1-ladder-flag-mix.wav` (−17.6 LUFS, −1.2 dBFS peak). Cue times come from `events.js`,
   which reads the animation (it draws on twos). Busy, bright pizzicato through the effort; a brand fanfare as the flag
@@ -42,7 +44,7 @@ green with him still faintly there, and the end line + Brew Maps lockup come in.
 | 5.0–6.62s | Pouch, ladder, three clicks, a fast climb. |
 | 6.62–7.08s | The BrewMaps flag out of his pocket, open, planted on the rim. |
 | 7.14–7.68s | A satisfied glance; he flops backward into the drink, knocking the ladder away. |
-| 7.68–8.0s | Splash: floating across the latte like a pool. |
+| 7.68–8.0s | Splash: the frame turns clean; he floats on the latte like a pool. |
 | 8.25–11.9s | Almost motionless. **نفس الكوفي، مشروبين… / واحد بس على ذوقك.** |
 | 11.9–15.2s | Washes into green, he stays faintly: **مو بس وين تروح… وش تشرب.** + Brew Maps lockup. |
 

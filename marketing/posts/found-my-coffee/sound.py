@@ -316,13 +316,10 @@ for k in range(6):                                      # ice cubes knocking
 for _ in range(38):                                     # droplets falling back
     u = rng.uniform(0, 1) ** 1.6
     place(bubble(rng.uniform(1400, 3600), 0.02, 2.2), SPL + 0.09 + 0.4 * u, -14 - 8 * u - rng.uniform(0, 5), pan_x(300) + rng.uniform(-.35, .35))
-# the ladder: knocked by his feet as he goes, tips over, clatters onto the counter
+# the ladder: knocked by his feet as he goes (it's gone from the frame once he lands, so no clatter)
 place(wood(640, 0.08, 0.02), E['push'] + 0.03, -15, pan_x(440))
-fall_d = E['clatter'] - E['push']
-place(whoosh(fall_d, 250, 1300, peak=0.97, bw=0.6, curve=2.2)[:int(fall_d * SR)], E['push'], -19, pan_x(560))
-for dt, f, lvl in [(0, 380, -8), (0.035, 520, -12), (0.07, 450, -14), (0.11, 600, -17)]:      # rails, then rungs rattling
-    place(wood(f, 0.16, 0.035), E['clatter'] + dt, lvl, pan_x(620) + rng.uniform(-.1, .1))
-place(wood(480, 0.12, 0.03), E['bounce'] - 0.12, -17, pan_x(620))
+fall_d = SPL - E['push']
+place(whoosh(fall_d, 250, 1100, peak=0.9, bw=0.6, curve=2.2)[:int(fall_d * SR)], E['push'], -21, pan_x(560))
 # complete peace: a soft settle, then only the faintest lapping with each slow ripple
 st_ = lp(noise(0.6), 800) * np.sin(np.pi * np.linspace(0, 1, int(0.6 * SR))) ** 2
 for _ in range(4): b = bubble(rng.uniform(350, 700), 0.05, 1.5); o = int(rng.uniform(0.05, 0.4) * SR); st_[o:o + len(b)] += 0.4 * b
