@@ -11,7 +11,7 @@ const V = p => [p[0] / K, p[1] / K];
 
 // clearer face: bigger eye, closed eyes as a happy curve, no confusion with a nose
 function drawHead(ctx, P) {
-  const tilt = P.tilt || 0, hc = add(RIG.neck, rot([10, -40], -tilt * 0.5));
+  const tilt = P.tilt || 0, sh = P.shake || 0, hc = add(add(RIG.neck, rot([10, -40], -tilt * 0.5)), [sh * 13, 0]);
   const H = p => J(toWorld(P, add(hc, rot(p, -tilt))));
   [200, 222, 244, 266, 288, 310].forEach((deg, i) => {
     const a = deg * Math.PI / 180, c = [44 * Math.cos(a), 44 * Math.sin(a)];
@@ -19,13 +19,14 @@ function drawHead(ctx, P) {
   });
   const egg = circlePts([0, 0], 40, 42, 12).map(([x, y]) => [x + (x > 0 && y > 0 ? 4 : 0), y]);
   shape(ctx, egg.map(H));
-  const ex = 18, ey = -8;
+  const ex = 18 + sh * 12, ey = -8;
   if (P.eyes === 'closed') stroke(ctx, [[ex - 10, ey - 4], [ex - 3, ey + 1], [ex + 4, ey + 1], [ex + 10, ey - 4]].map(H));   // ‿ shallow: closed, content
   else { const r = P.eyes === 'wide' ? 8.5 : 7; ctx.beginPath(); cr(ctx, circlePts([ex, ey], r, r, 8).map(H), true); ctx.fillStyle = LC; ctx.fill(); }
   const m = P.mouth || 'smile';
   if (m === 'smile') stroke(ctx, [[10, 16], [20, 23], [31, 14]].map(H));
   if (m === 'grin') shape(ctx, [[8, 12], [34, 8], [30, 23], [18, 27]].map(H));
-  if (m === 'flat') stroke(ctx, [[12, 20], [22, 17], [31, 21]].map(H));       // a little "meh"
+  if (m === 'flat') stroke(ctx, [[12 + sh * 8, 26], [22 + sh * 8, 17], [32 + sh * 8, 26]].map(H));   // a clear frown
+  if (P.brow) stroke(ctx, [[ex - 10, ey - 19], [ex + 9, ey - 12]].map(H));        // annoyed brow
   if (m === 'o') stroke(ctx, circlePts([22, 19], 6, 7, 8).map(H), { closed: true });
   return toWorld(P, hc);
 }
@@ -71,19 +72,19 @@ function scene(t) {
     const up = phoneUp(T.phB, T.offB);
     P.hands = { f: mix2([30, -40], holdUp.f, up), b: mix2([-20, -40], holdUp.b, up) };
     S.phone = up; P.tilt = 0.25 * up;
-    if (t > 2.1) { S.badge = { name: 'كابتشينو', pct: '٢٤٪', good: false, a: seg(t, 2.1, 2.35) * (1 - seg(t, 3.1, 3.35)) }; P.mouth = 'flat'; }
-    if (t > 2.5 && t < 3.05) P.tilt = 0.25 + 0.16 * Math.sin((t - 2.5) * 22);
+    if (t > 2.1) { S.badge = { name: 'كابتشينو', pct: '٢٤٪', good: false, a: seg(t, 2.1, 2.35) * (1 - seg(t, 3.1, 3.35)) }; P.mouth = 'flat'; P.brow = true; }
+    if (t > 2.45 && t < 3.15) P.shake = Math.sin((t - 2.45) * 24) * (1 - seg(t, 2.45, 3.15) * 0.4);   // no, no, no
   }
   else if (t < T.onRim) {                                   // climbs the hot cup: hop, grab the rim, pull up
     const u = seg(t, T.climb, T.onRim);
     const g = [XB, GROUND - 112 * K], top = [RIMB[0], RIMB[1] - 112 * K];
-    if (u < 0.35) { const c = ease(u / 0.35); stand(P, XB); P.f = 1; stand(P, XB); P.y += 20 * c / K; P.hands = { f: [40, -60], b: [10, -60] }; }
+    if (u < 0.35) { const c = ease(u / 0.35); stand(P, XB); P.f = 1; stand(P, XB); P.y += 20 * c / K; P.hands = { f: [40, -60], b: [10, -60] }; P.mouth = 'flat'; P.brow = true; }
     else {
       const v = ease((u - 0.35) / 0.65), q = bez(g, [XB + 40, RIMB[1] - 260], top, v);
       P.x = q[0] / K; P.y = q[1] / K; P.f = v < 0.6 ? 1 : -1; P.rot = 0.15 * Math.sin(v * Math.PI);
       P.hands = v < 0.7 ? { f: { w: V([RIMB[0] + 8, RIMB[1] - 4]) }, b: { w: V([RIMB[0] - 12, RIMB[1] - 2]) } } : { f: [60, -150], b: [-50, -150] };
       P.feet = v < 0.8 ? { f: [30, 80], b: [-10, 90] } : { f: { w: V([RIMB[0] - 10, RIMB[1] - 2]) }, b: { w: V([RIMB[0] + 14, RIMB[1] + 4]) } };
-      P.elbow = { f: 1, b: 1 }; P.mouth = 'flat';
+      P.elbow = { f: 1, b: 1 }; P.mouth = 'flat'; P.brow = true;
     }
   }
   else if (t < T.crouch) {                                  // on the rim, he checks the iced latte: ٩٢٪

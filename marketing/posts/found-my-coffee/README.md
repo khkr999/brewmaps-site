@@ -21,7 +21,7 @@ Plate `plates/iced-hot.jpg` (AI-generated, unbranded). `reel.js`.
 | Time | Beat |
 |---|---|
 | 0–1.7s | Walks in, stops beside the hot cappuccino. |
-| 1.8–3.35s | BrewMaps: **كابتشينو · ٢٤٪ على ذوقك** (grey). "Meh", shakes his head. |
+| 1.8–3.35s | BrewMaps: **كابتشينو · ٢٤٪ على ذوقك** (grey). Frown and annoyed brow, shakes his head left-right ("no"). |
 | 3.4–4.35s | Hops up, grabs the rim, pulls himself onto the hot cup. |
 | 4.5–6.0s | On the rim he checks the other drink: **آيس لاتيه · ٩٢٪ على ذوقك** (green). Grin, little hop. |
 | 6.0–7.05s | Crouches and springs off the rim: a long tucked leap across into the iced latte. |
