@@ -14,7 +14,7 @@
 
 Lines (every episode): **نفس الكوفي، مشروبين… / واحد بس على ذوقك.** End card: **مو بس وين تروح… / وش تشرب.**
 
-## Ep. 1 · Ladder — `export/ep1-ladder.mp4`, 13s, silent (add the sound in Instagram)
+## Ep. 1 · Ladder — `export/ep1-ladder.mp4`, 16.6s, silent (add the sound in Instagram)
 
 Plate `plates/iced-hot.jpg` (AI-generated, unbranded). `reel.js`.
 
@@ -27,8 +27,8 @@ Plate `plates/iced-hot.jpg` (AI-generated, unbranded). `reel.js`.
 | 7.2–8.45s | Sets the pouch down, opens the flap, pulls out a folded ladder, plants it on the glass; it extends to the rim. |
 | 8.45–9.6s | Climbs it, rung by rung. |
 | 9.6–10.55s | Hops in; splash; surfaces. |
-| 10.55–11s | Sits up on the ice, knees over the rim. **نفس الكوفي، مشروبين… واحد بس على ذوقك.** |
-| 11–13s | End card: mark / **مو بس وين تروح… وش تشرب.** |
+| 10.4–13.7s | Sits up on the ice, knees over the rim, feet swinging. **نفس الكوفي، مشروبين… واحد بس على ذوقك.** (held ~3s) |
+| 13.7–16.6s | End card (held ~3s): mark / **مو بس وين تروح… وش تشرب.** |
 
 Alt cut, springboard entry: `export/ep1-springboard.mp4` (`reel-springboard.js`), held for ep. 2.
 

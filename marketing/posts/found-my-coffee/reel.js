@@ -2,7 +2,7 @@
 // his hands in his pockets), the iced latte ٩٢٪: he props a tiny ladder against the glass, climbs, and plops in.
 // The Regular's character (../the-regular/rig.js). Plate: plates/iced-hot.jpg (AI-generated, unbranded). Plate pixels.
 
-const DUR = 13.0;
+const DUR = 16.6;
 const K = 0.9;
 const GROUND = 1335;                                // where he walks: the counter, in front of the cups
 const CUP_A = { rim: { cx: 260, cy: 978, rx: 152, ry: 36 }, cof: { cx: 262, cy: 1030, rx: 140, ry: 22 }, l: 108, r: 413, bot: 1322, glass: true };
@@ -64,7 +64,7 @@ function cupFront(ctx, C) {
   ctx.moveTo(R.cx + R.rx - 8, R.cy + 4); ctx.ellipse(R.cx, R.cy + 4, R.rx - 8, R.ry, 0, 0, Math.PI); ctx.closePath();   // the inner front wall
 }
 
-const T = { inB: 1.6, phB: 1.7, offB: 3.3, walkA: 3.35, atA: 5.75, phA: 5.85, unpack: 7.2, plant: 7.65, extend: 8.45, top: 9.6, land: 9.95, up: 10.2, lounge: 10.55, end: 11.0 };
+const T = { inB: 1.6, phB: 1.7, offB: 3.3, walkA: 3.35, atA: 5.75, phA: 5.85, unpack: 7.2, plant: 7.65, extend: 8.45, top: 9.6, land: 9.95, up: 10.2, lounge: 10.55, end: 13.7 };
 const XB = 955, XA = 545;
 const LAD = { b: [492, 1336], t: [424, 972] };              // the tiny ladder: foot on the counter, top on the glass rim
 
@@ -279,7 +279,7 @@ function renderReel(ctx, layer, t, assets) {
   ctx.restore();
 
   // the line, once he's in
-  const a = seg(t, 7.7, 8.1) * (1 - seg(t, T.end - 0.2, T.end + 0.1));
+  const a = seg(t, 10.4, 10.9) * (1 - seg(t, T.end - 0.2, T.end + 0.2));   // after he surfaces, held ~3s
   if (a > 0) {
     ctx.save(); ctx.globalAlpha = a; ctx.direction = 'rtl'; ctx.textAlign = 'center';
     ctx.shadowColor = 'rgba(0,0,0,.6)'; ctx.shadowBlur = 24; ctx.fillStyle = '#F4EFE6'; ctx.font = '800 74px "Tajawal"';
@@ -287,7 +287,7 @@ function renderReel(ctx, layer, t, assets) {
     ctx.restore();
   }
   // end card
-  const e = seg(t, T.end, T.end + 0.45);
+  const e = seg(t, T.end, T.end + 0.6);
   if (e > 0) {
     ctx.save(); ctx.globalAlpha = e; ctx.fillStyle = 'rgba(16,36,18,.95)'; ctx.fillRect(0, 0, 1080, 1920);
     const m = assets.mark, mw = 150, mh = mw * m.height / m.width;
