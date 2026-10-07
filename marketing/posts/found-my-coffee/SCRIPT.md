@@ -1,6 +1,6 @@
 # على ذوقك · Ep. 1 "The Ladder" — second-by-second script
 
-16.6s · 9:16 · silent master (sound added in Instagram). Same café, two drinks: a hot cappuccino (right) and an
+18.5s · 9:16 · with music and SFX (`export/ep1-ladder-flag.mp4`). Same café, two drinks: a hot cappuccino (right) and an
 iced latte in a short glass (left), on a dark wooden counter. Slow push-in on the counter for the whole piece.
 
 | Time | Action | On screen |
@@ -18,17 +18,22 @@ iced latte in a short glass (left), on a dark wooden counter. Slow push-in on th
 | 6.6–7.2 | A little happy hop; phone goes away. | badge fades at 7.1 |
 | 7.2–7.45 | Crouches and sets the pouch on the counter. | — |
 | 7.45–7.6 | Opens the flap. | — |
-| 7.6–7.85 | Pulls a folded ladder straight out of the pouch. | — |
+| 7.6–7.85 | Pulls a folded ladder straight out of the pouch; a rolled-up green flag is tied to its top. | — |
 | 7.85–8.05 | Carries it over and plants it against the glass. | — |
-| 8.05–8.45 | The ladder extends up to the rim in three steps; he watches it rise. | — |
-| 8.45–9.6 | Climbs it rung by rung. | — |
-| 9.6–9.95 | At the top, a little hop over the rim, into the glass. | — |
-| 9.95–10.2 | Splash: drops fly up, ripples across the ice. He's under. | — |
-| 10.2–10.55 | Surfaces, sitting up on the ice. | — |
-| 10.4–10.9 | Flops one leg over the rim, then the other; eyes close, happy grin. The line fades in. | **نفس الكوفي، مشروبين…** / **واحد بس على ذوقك.** |
-| 10.9–13.7 | Holds: he lounges, feet swinging gently. (~3s to read) | line held, fades out at 13.5–13.9 |
-| 13.7–14.3 | End card fades in (BrewMaps green). | BrewMaps mark |
-| 14.3–16.6 | Holds (~2.5s to read). | **مو بس وين تروح…** / **وش تشرب.** / مجاني على الآب ستور وجوجل بلاي |
+| 8.05–8.45 | The ladder extends up to the rim in three clicks; on the last one the flag snaps open: the BrewMaps flag. | BrewMaps flag |
+| 8.45–9.6 | Climbs it rung by rung, the flag flying over the glass. | — |
+| 9.6–9.75 | At the top he takes the flag off the ladder. | — |
+| 9.75–9.9 | Raises it over his head like a summit flag. | — |
+| 9.9–10.0 | Plants it on the rim of the iced latte. It wobbles. | — |
+| 10.0–10.4 | A little hop over the rim, into the glass. | — |
+| 10.4–10.65 | Splash: drops fly up, ripples across the ice, the flag shakes. He's under. | — |
+| 10.65–11.4 | Surfaces, sits up on the ice, flops one leg over the rim, then the other. | — |
+| 11.45–11.65 | Done with the ladder: reaches over and pushes it with his foot. | — |
+| 11.65–12.4 | The ladder tips over and clatters onto the counter. The flag stays on his drink. | — |
+| 12.25–12.75 | Eyes closed, happy grin. The line fades in. | **نفس الكوفي، مشروبين…** / **واحد بس على ذوقك.** |
+| 12.75–15.6 | Holds: he lounges, feet swinging, the flag waving beside him. (~3s to read) | line held, fades out at 15.4–15.8 |
+| 15.6–16.2 | End card fades in (BrewMaps green). | BrewMaps mark |
+| 16.2–18.5 | Holds (~2.3s to read). | **مو بس وين تروح…** / **وش تشرب.** / مجاني على الآب ستور وجوجل بلاي |
 
 **Message:** BrewMaps doesn't only find cafés, it knows your taste: two drinks from the same place, scored for *him*.
 **Caption:** نفس الكوفي… بس مو نفس الذوق ☕️ · BrewMaps مجاني على الآب ستور وجوجل بلاي. الرابط في البايو.

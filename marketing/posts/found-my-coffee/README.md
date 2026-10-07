@@ -14,11 +14,15 @@
 
 Lines (every episode): **نفس الكوفي، مشروبين… / واحد بس على ذوقك.** End card: **مو بس وين تروح… / وش تشرب.**
 
-## Ep. 1 · Ladder — `export/ep1-ladder.mp4`, 16.6s, silent master
+## Ep. 1 · Ladder + flag — `export/ep1-ladder-flag.mp4`, 18.5s, with sound
 
 Plate `plates/iced-hot.jpg` (AI-generated, unbranded). `reel.js`. Script: `SCRIPT.md` / `export/ep1-ladder-script.docx`.
-Sound: frame-accurate music + SFX cue sheet in `SOUND-DESIGN.md` / `export/ep1-ladder-sound-design.docx` (mix gets baked into the MP4).
-**With sound: `export/ep1-ladder-sound.mp4`** (mix `export/ep1-ladder-mix.wav`, −17 LUFS, −1.2 dBFS peak). Built by `python3 sound.py <tmpdir> export/ep1-ladder-mix.wav`: the score is composed in MIDI and rendered with the FluidR3 GM soundfont (fluidsynth); the SFX are synthesised and placed on exact frames.
+The BrewMaps flag from The Regular (same forest green + real mark) rides rolled up on the ladder, snaps open on the last
+click, and he plants it on the glass rim before hopping in; then he kicks the ladder over. The flag stays on his drink.
+Sound: `sound.py` (mix `export/ep1-ladder-flag-mix.wav`, −17.5 LUFS, −1.2 dBFS peak). Every cue time comes from
+`events.js`, which reads the animation (it draws on twos), so the mix follows any timing change. The score is composed in
+MIDI and rendered with the FluidR3 GM soundfont (fluidsynth); the SFX are synthesised. Cue sheet: `SOUND-DESIGN.md`.
+Previous cut (no flag, 16.6s): `reel-ladder-v2.js` → `export/ep1-ladder.mp4` (silent) / `export/ep1-ladder-sound.mp4`.
 
 | Time | Beat |
 |---|---|
@@ -26,11 +30,13 @@ Sound: frame-accurate music + SFX cue sheet in `SOUND-DESIGN.md` / `export/ep1-l
 | 1.7–3.3s | **كابتشينو · ٢٤٪ على ذوقك** (grey). Sad: worried brow, frown; a cartoon head-turn "no" (profile → to camera → other side → back). |
 | 3.35–5.75s | The sad walk: one hand in his pocket, the pouch drooping in the other, slumped, head down. |
 | 5.85–7.2s | **آيس لاتيه · ٩٢٪ على ذوقك** (green). Head up, grin, hop. |
-| 7.2–8.45s | Sets the pouch down, opens the flap, pulls out a folded ladder, plants it on the glass; it extends to the rim. |
+| 7.2–8.45s | Sets the pouch down, opens the flap, pulls out a folded ladder (a rolled flag on top), plants it on the glass; it extends to the rim and the flag snaps open. |
 | 8.45–9.6s | Climbs it, rung by rung. |
-| 9.6–10.55s | Hops in; splash; surfaces. |
-| 10.4–13.7s | Sits up on the ice, knees over the rim, feet swinging. **نفس الكوفي، مشروبين… واحد بس على ذوقك.** (held ~3s) |
-| 13.7–16.6s | End card (held ~3s): mark / **مو بس وين تروح… وش تشرب.** |
+| 9.6–10.0s | At the top: takes the flag, raises it over his head, plants it on the rim. |
+| 10.04–10.65s | Hops in; splash; surfaces. |
+| 11.0–12.4s | Sits up on the ice, knees over the rim; pushes the ladder with his foot, it tips over and clatters onto the counter. |
+| 12.25–15.6s | Lounging, flag waving beside him. **نفس الكوفي، مشروبين… واحد بس على ذوقك.** (held ~3s) |
+| 15.6–18.5s | End card (held ~2.3s): mark / **مو بس وين تروح… وش تشرب.** |
 
 Alt cut, springboard entry: `export/ep1-springboard.mp4` (`reel-springboard.js`), held for ep. 2.
 
