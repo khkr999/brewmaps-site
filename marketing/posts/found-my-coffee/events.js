@@ -37,10 +37,11 @@ const ev = {
   clicks: [1, 2, 3].map(k => first(F => F.t < T.extend + 0.1 && L(F) >= FOLD + (LAD_L - FOLD) * (k - 0.12) / 3)),
   unfurl: first(F => F.S.flag && F.S.flag.open > 0),
   rungs: [1, 2, 3, 4, 5, 6].map(n => at(T.extend + (T.top - T.extend) * n / 7)),
-  reach: after(T.top), lift: after(T.lift), flagIn: at(T.planted), jump: after(T.hop),
+  pocket: after(T.top), pull: after(T.pocket), flagIn: at(T.planted), jump: after(T.hop),
   splash: first(F => F.S.splash > 0), surface: first(F => F.t >= T.up && !F.P.hidden),
   legs: [at(T.lounge + 0.22), at(T.lounge + 0.36)],
   kick: after(T.kick), push: after(T.push), clatter: at(T.fallen), bounce: at(T.fallen + 0.25),
+  pool: after(T.pool), floating: at(T.floating), ripples: [0, 1, 2, 3, 4, 5].map(i => after(T.pool + 0.35 + i * 0.95)).filter(t => t < T.end),
   line: after(T.line), endCard: after(T.end), endFull: at(T.end + 0.6),
 };
 console.log(JSON.stringify(ev, null, 1));

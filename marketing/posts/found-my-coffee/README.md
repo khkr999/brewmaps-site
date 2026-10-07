@@ -14,29 +14,33 @@
 
 Lines (every episode): **نفس الكوفي، مشروبين… / واحد بس على ذوقك.** End card: **مو بس وين تروح… / وش تشرب.**
 
-## Ep. 1 · Ladder + flag — `export/ep1-ladder-flag.mp4`, 18.5s, with sound
+## Ep. 1 · Ladder + flag — `export/ep1-ladder-flag.mp4`, 19s, with sound
 
-Plate `plates/iced-hot.jpg` (AI-generated, unbranded). `reel.js`. Script: `SCRIPT.md` / `export/ep1-ladder-script.docx`.
-The BrewMaps flag from The Regular (same forest green + real mark) rides rolled up on the ladder, snaps open on the last
-click, and he plants it on the glass rim before hopping in; then he kicks the ladder over. The flag stays on his drink.
-Sound: `sound.py` (mix `export/ep1-ladder-flag-mix.wav`, −17.5 LUFS, −1.2 dBFS peak). Every cue time comes from
+Plate `plates/iced-hot-v2.jpg`: the AI-generated, unbranded `plates/iced-hot.jpg` graded by `enhance.py` so the drinks look
+delicious (richer crema and swirl, sheen, condensation on the glass). Soft animated steam rises off the cappuccino.
+`reel.js`. Script: `SCRIPT.md` / `export/ep1-ladder-script.docx`. Badges: 24% light green, 92% dark green.
+At the top of the ladder he pulls the BrewMaps flag (same forest green + real mark as The Regular) out of his pocket,
+it snaps open above him, and he plants it on the glass rim before hopping in. Later he pushes the ladder over with his
+foot and floats on his back in the latte like it's a pool. The flag stays on his drink.
+Sound: `sound.py` (mix `export/ep1-ladder-flag-mix.wav`, −17.3 LUFS, −1.2 dBFS peak). Every cue time comes from
 `events.js`, which reads the animation (it draws on twos), so the mix follows any timing change. The score is composed in
 MIDI and rendered with the FluidR3 GM soundfont (fluidsynth); the SFX are synthesised. Cue sheet: `SOUND-DESIGN.md`.
-Previous cut (no flag, 16.6s): `reel-ladder-v2.js` → `export/ep1-ladder.mp4` (silent) / `export/ep1-ladder-sound.mp4`.
+Earlier cuts: `reel-ladder-flag-v1.js` (flag rolled on the ladder, 18.5s); `reel-ladder-v2.js` (no flag, 16.6s) →
+`export/ep1-ladder.mp4` (silent) / `export/ep1-ladder-sound.mp4`.
 
 | Time | Beat |
 |---|---|
 | 0–1.6s | Walks in carrying a small green pouch in one hand. |
-| 1.7–3.3s | **كابتشينو · ٢٤٪ على ذوقك** (grey). Sad: worried brow, frown; a cartoon head-turn "no" (profile → to camera → other side → back). |
+| 1.7–3.3s | **كابتشينو · ٢٤٪ على ذوقك** (light green). Sad: worried brow, frown; a cartoon head-turn "no". |
 | 3.35–5.75s | The sad walk: one hand in his pocket, the pouch drooping in the other, slumped, head down. |
-| 5.85–7.2s | **آيس لاتيه · ٩٢٪ على ذوقك** (green). Head up, grin, hop. |
-| 7.2–8.45s | Sets the pouch down, opens the flap, pulls out a folded ladder (a rolled flag on top), plants it on the glass; it extends to the rim and the flag snaps open. |
+| 5.85–7.2s | **آيس لاتيه · ٩٢٪ على ذوقك** (dark green). Head up, grin, hop. |
+| 7.2–8.45s | Sets the pouch down, opens the flap, pulls out a folded ladder, plants it on the glass; it extends to the rim. |
 | 8.45–9.6s | Climbs it, rung by rung. |
-| 9.6–10.0s | At the top: takes the flag, raises it over his head, plants it on the rim. |
-| 10.04–10.65s | Hops in; splash; surfaces. |
-| 11.0–12.4s | Sits up on the ice, knees over the rim; pushes the ladder with his foot, it tips over and clatters onto the counter. |
-| 12.25–15.6s | Lounging, flag waving beside him. **نفس الكوفي، مشروبين… واحد بس على ذوقك.** (held ~3s) |
-| 15.6–18.5s | End card (held ~2.3s): mark / **مو بس وين تروح… وش تشرب.** |
+| 9.6–10.28s | At the top: a flag out of his pocket, up, snaps open, planted on the rim. |
+| 10.4–11.0s | Hops in; splash; surfaces. |
+| 11.35–12.7s | Sits up, knees over the rim; pushes the ladder with his foot, it tips over and clatters onto the counter. |
+| 12.58–16.1s | Slides back in and floats like it's a pool, the flag beside him. **نفس الكوفي، مشروبين… واحد بس على ذوقك.** (held ~3s) |
+| 16.1–19.0s | End card (held ~2.3s): mark / **مو بس وين تروح… وش تشرب.** |
 
 Alt cut, springboard entry: `export/ep1-springboard.mp4` (`reel-springboard.js`), held for ep. 2.
 

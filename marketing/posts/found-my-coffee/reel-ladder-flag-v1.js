@@ -2,7 +2,7 @@
 // his hands in his pockets), the iced latte ٩٢٪: he props a tiny ladder against the glass, climbs, and plops in.
 // The Regular's character (../the-regular/rig.js). Plate: plates/iced-hot.jpg (AI-generated, unbranded). Plate pixels.
 
-const DUR = 19.0;
+const DUR = 18.5;
 const K = 0.9;
 const GROUND = 1335;                                // where he walks: the counter, in front of the cups
 const CUP_A = { rim: { cx: 260, cy: 978, rx: 152, ry: 36 }, cof: { cx: 262, cy: 1030, rx: 140, ry: 22 }, l: 108, r: 413, bot: 1322, glass: true };
@@ -65,8 +65,7 @@ function cupFront(ctx, C) {
 }
 
 const T = { inB: 1.6, phB: 1.7, offB: 3.3, walkA: 3.35, atA: 5.75, phA: 5.85, unpack: 7.2, plant: 7.65, extend: 8.45, top: 9.6,
-  pocket: 9.76, pulled: 9.96, unfurled: 10.12, stab: 10.16, planted: 10.28, hop: 10.4, land: 10.76, up: 11.0, lounge: 11.35,
-  kick: 11.8, push: 11.97, fallen: 12.45, pool: 12.58, floating: 13.18, line: 13.05, end: 16.1 };
+  lift: 9.72, stab: 9.88, planted: 10.0, hop: 10.04, land: 10.4, up: 10.65, lounge: 11.0, kick: 11.45, push: 11.62, fallen: 12.1, line: 12.25, end: 15.6 };
 const RIMF = [410, 962];                                    // where the flag stands: the back of the glass rim, flying into the gap between the drinks
 const XB = 955, XA = 545;
 const LAD = { b: [492, 1336], t: [424, 972] };              // the tiny ladder: foot on the counter, top on the glass rim
@@ -95,21 +94,25 @@ function drawLadder(ctx, b, t, rungs) {                           // plate point
 }
 // The BrewMaps flag from The Regular (rig.js drawFlag), with a pole length and how far it's unfurled (0 = rolled up).
 function flagX(ctx, base, lean = 0, t = 0, dir = 1, open = 1, pole = 132) {
-  const sz = clamp(pole / 132, 0.25, 1), top = add(base, rot([0, -pole], lean)), fw = (12 + 100 * open) * sz, fh = 76 * sz, wave = k => 5 * open * Math.sin(t * 9 - k * 2.4);
+  const top = add(base, rot([0, -pole], lean)), fw = 12 + 100 * open, fh = 76, wave = k => 5 * open * Math.sin(t * 9 - k * 2.4);
   stroke(ctx, [J(base), J(top)], { smooth: false });
   const edge = [0, .33, .66, 1].map(k => [dir * k * fw, wave(k) * k]);
   const pts = [...edge, ...edge.slice().reverse().map(([x, y]) => [x, y + fh])].map(p => J(add(top, rot(p, lean))));
   shape(ctx, pts, { smooth: false, fill: FOREST });
   const m = ASSETS.mark;
-  if (m && open > 0.55 && sz > 0.95) {
+  if (m && open > 0.55) {
     const mw = 70, mh = mw * m.height / m.width, c = add(top, rot([dir * fw / 2, fh / 2 + wave(.5) * .5], lean));
     ctx.save(); ctx.globalAlpha = Math.min(1, (open - 0.55) / 0.35); ctx.translate(c[0], c[1]); ctx.rotate(lean); ctx.drawImage(m, -mw / 2, -mh / 2, mw, mh); ctx.restore();
   }
 }
 const LAD_L = len([LAD.t[0] - LAD.b[0], LAD.t[1] - LAD.b[1]]);
+function attachedFlag(lad, t) {                             // rolled up on the ladder's top; snaps open on the last click
+  const ext = clamp((len([lad.t[0] - lad.b[0], lad.t[1] - lad.b[1]]) - FOLD) / (LAD_L - FOLD), 0, 1);
+  return { base: V(lad.t), lean: 0, open: easeOut(seg(t, T.extend - 0.04, T.extend + 0.16)), pole: 132 * (0.5 + 0.5 * ext), dir: -1 };   // flies over the glass, clear of him
+}
 function plantedFlag(t) {                                    // on the rim: wobbles when planted, when he splashes, when the ladder goes
   const w = (t0, a, d, f) => t > t0 ? a * Math.exp(-(t - t0) * d) * Math.sin((t - t0) * f) : 0;
-  return { base: V(RIMF), lean: w(T.planted, 0.16, 7, 30) + w(T.land, 0.1, 5, 26) + w(T.push, 0.05, 6, 28) + w(T.pool + 0.3, 0.05, 5, 24), open: 1, pole: 132, dir: 1, back: t >= T.land };      // in front of him until he's in the drink
+  return { base: V(RIMF), lean: w(T.planted, 0.16, 7, 30) + w(T.land, 0.1, 5, 26) + w(T.push, 0.05, 6, 28), open: 1, pole: 132, dir: 1, back: t >= T.land };      // in front of him until he's in the drink
 }
 function ladderAt(t) {                                       // pushed off the rim with his foot: tips over and lands on the counter
   const n = Math.round(LAD_L / 46);
@@ -186,7 +189,7 @@ function scene(t) {
       S.bag.at = down;
     } else if (t < 7.84) {                                  // opens it, lifts the folded ladder straight out
       const lb = [BAG[0], BAG[1] - 30 - 120 * pull], lt = [BAG[0] - 6, BAG[1] - 30 - 120 * pull - FOLD];
-      if (pull > 0) S.lad = { b: lb, t: lt };
+      if (pull > 0) { S.lad = { b: lb, t: lt }; S.flag = attachedFlag(S.lad, t); }
       P.hands = { f: pull > 0 ? { w: V(mix2(lb, lt, 0.4)) } : { w: V([BAG[0] - 20, BAG[1] - 40]) }, b: { w: V([BAG[0] + 26, BAG[1] - 44]) } }; P.elbow = { f: 1, b: 1 };
       P.tilt = -0.25;
     } else {                                                // carries it over, plants it on the glass, it extends
@@ -197,6 +200,7 @@ function scene(t) {
       const grip = mix2(S.lad.b, add(S.lad.b, scl(dir, FOLD)), 0.6);
       P.hands = { f: { w: V(grip) }, b: { w: V(add(grip, [14, 18])) } }; P.elbow = { f: 1, b: 1 };
       P.tilt = move >= 1 ? -0.2 - 0.25 * grow : 0;
+      S.flag = attachedFlag(S.lad, t);
     }
   }
   else if (t < T.top) {                                     // climbs, rung by rung
@@ -207,23 +211,20 @@ function scene(t) {
     P.feet = { f: { w: V(ladderPt(s + 0.02 * Math.sin(ph))) }, b: { w: V(ladderPt(s - 0.02 * Math.sin(ph))) } };
     P.hands = { f: { w: V(ladderPt(Math.min(1, s + 0.32 + 0.04 * Math.sin(ph + 1.5)))) }, b: { w: V(ladderPt(Math.min(1, s + 0.28 - 0.04 * Math.sin(ph + 1.5)))) } };
     P.elbow = { f: 1, b: 1 }; P.mouth = 'grin'; P.eyes = 'open';
+    S.flag = attachedFlag(S.lad, t);
   }
-  else if (t < T.hop) {                                     // at the top: a flag out of his back pocket, up, open, planted on the rim
+  else if (t < T.hop) {                                     // at the top: takes the flag off the ladder, raises it, plants it on the rim
     S.lad = { b: LAD.b, t: LAD.t }; S.bag = { at: 1, open: 1 };
     const F0 = ladderPt(0.9);
-    P.x = (F0[0] + 12) / K; P.y = (F0[1] - 112 * K) / K + 14 * ease(seg(t, T.stab, T.planted)) / K; P.rot = -0.12 * (1 - ease(seg(t, T.top, T.pocket)));
+    P.x = (F0[0] + 12) / K; P.y = (F0[1] - 112 * K) / K + 14 * ease(seg(t, T.stab, T.planted)) / K; P.rot = -0.12 * (1 - ease(seg(t, T.top, T.lift)));
     P.feet = { f: { w: V(ladderPt(0.92)) }, b: { w: V(ladderPt(0.88)) } };
     P.elbow = { f: 1, b: 1 }; P.mouth = 'grin'; P.eyes = 'open';
-    const rest = toWorld(P, [30, -40]), pocket = toWorld(P, [20, -2]), high = toWorld(P, [92, -222]), grip1 = add(V(RIMF), [0, -30]);   // front pocket → up and out over the glass
-    const h = t < T.pocket ? mix2(rest, pocket, ease(seg(t, T.top, T.pocket)))
-      : t < T.pulled ? mix2(pocket, high, ease(seg(t, T.pocket, T.pulled)))
-      : t < T.stab ? high : mix2(high, grip1, easeIn(seg(t, T.stab, T.planted)));
-    P.hands = { f: { w: h }, b: { w: V(ladderPt(1)) } };                  // front hand: pocket, flag; the other holds the ladder
-    if (t >= T.pulled && t < T.stab) P.mouth = 'o';
-    if (t >= T.pocket) {
-      const pole = 30 + 102 * easeOut(seg(t, T.pocket + 0.02, T.pulled)), open = easeOut(seg(t, T.pulled, T.unfurled));
-      S.flag = t < T.planted ? { base: add(h, [0, Math.min(30, pole * 0.3)]), lean: 0, open, pole, dir: t < T.stab ? -1 : 1 } : plantedFlag(t);
-    }
+    const grip0 = add(V(LAD.t), [0, -30]), high = toWorld(P, [-34, -258]), grip1 = add(V(RIMF), [0, -30]);   // grips low on the pole: flag flies above his head
+    const h = t < T.lift ? mix2(toWorld(P, [-22, -34]), grip0, ease(seg(t, T.top, T.lift)))
+      : t < T.stab ? mix2(grip0, high, ease(seg(t, T.lift, T.stab))) : mix2(high, grip1, easeIn(seg(t, T.stab, T.planted)));
+    P.hands = { b: { w: h }, f: { w: V(ladderPt(1)) } };                  // back arm carries the flag, behind his head
+    if (t >= T.lift && t < T.stab) P.mouth = 'o';
+    S.flag = t < T.lift ? attachedFlag(S.lad, t) : t < T.planted ? { base: add(h, [0, 30]), lean: 0, open: 1, pole: 132, dir: 1 } : plantedFlag(t);
   }
   else if (t < T.land) {                                    // a little hop over the rim, in he goes
     S.lad = { b: LAD.b, t: LAD.t }; S.bag = { at: 1, open: 1 };
@@ -248,27 +249,8 @@ function scene(t) {
       p = mix2(p, out, ease(seg(t, T.push, T.push + 0.12))); p = mix2(p, rest, ease(seg(t, T.push + 0.25, T.push + 0.55)));
       P.feet.f = { w: p };
     }
-    if (t > T.pool) {                                         // ladder gone: slides back in and floats, hands behind his head
-      const e = ease(seg(t, T.pool, T.floating)), Q = { ...P };
-      poolPose(Q, t);
-      const W0 = { hf: P.hands.f.w, hb: P.hands.b.w, ff: P.feet.f.w, fb: P.feet.b.w };
-      for (const k of ['x', 'y', 'rot', 'tilt']) P[k] = mix(P[k], Q[k], e);
-      P.hands = { f: { w: mix2(W0.hf, Q.hands.f.w, e) }, b: { w: mix2(W0.hb, Q.hands.b.w, e) } };
-      P.feet = { f: { w: mix2(W0.ff, Q.feet.f.w, e) }, b: { w: mix2(W0.fb, Q.feet.b.w, e) } };
-      if (e > 0.5) { P.knee = Q.knee; P.elbow = Q.elbow; }
-      S.ripples = [0, 1, 2, 3, 4, 5].map(i => T.pool + 0.35 + i * 0.95).filter(t0 => t > t0 && t < t0 + 1.6).map(t0 => seg(t, t0, t0 + 1.6));
-    }
   }
   return { P, S };
-}
-
-// floating on his back like it's a pool: head resting on the far rim, hands behind his head, knees and toes out of the coffee
-function poolPose(P, t) {
-  const bob = Math.sin(t * 2.0) * 3, sway = Math.sin(t * 1.3) * 0.03;
-  P.f = 1; P.eyes = 'closed'; P.mouth = 'grin';
-  [P.x, P.y] = V([296, 1004 + bob]); P.rot = -1.2 + sway; P.tilt = -0.35;
-  P.hands = { f: { w: toWorld(P, [-34, -214]) }, b: { w: toWorld(P, [-18, -226]) } }; P.elbow = { f: -1, b: -1 };
-  P.feet = { f: { w: V([392, 990 + bob * 0.5]) }, b: { w: V([410, 996 + bob * 0.5]) } }; P.knee = { f: -1, b: -1 };
 }
 
 // sitting up on the ice: hips above the milk, so his legs run cleanly from hip to rim and over
@@ -295,28 +277,11 @@ function badge(ctx, x, y, B) {
   if (!B || B.a <= 0) return;
   const s = B.a < 1 ? 0.7 + 0.45 * Math.sin(B.a * Math.PI * 0.8) : 1;
   ctx.save(); ctx.translate(x, y); ctx.scale(s, s); ctx.globalAlpha = Math.min(1, B.a * 2);
-  ctx.beginPath(); ctx.roundRect(-150, -62, 300, 124, 30); ctx.fillStyle = B.good ? '#163514' : '#BFD9AE'; ctx.fill();
+  ctx.beginPath(); ctx.roundRect(-150, -62, 300, 124, 30); ctx.fillStyle = B.good ? '#25461C' : '#5B5F57'; ctx.fill();
   ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(244,239,230,.9)'; ctx.stroke();
   ctx.direction = 'rtl'; ctx.textAlign = 'center';
-  ctx.font = '700 32px "Tajawal"'; ctx.fillStyle = B.good ? 'rgba(244,239,230,.85)' : 'rgba(22,53,20,.75)'; ctx.fillText(B.name, 0, -12);
-  ctx.font = '800 42px "Tajawal"'; ctx.fillStyle = B.good ? '#A9D19A' : '#163514'; ctx.fillText(B.pct + ' على ذوقك', 0, 38);
-  ctx.restore();
-}
-
-// soft steam rising off the hot cappuccino: a few blurred wisps on their own slow loops
-function drawSteam(ctx, t) {
-  ctx.save(); ctx.globalCompositeOperation = 'screen'; ctx.lineCap = 'round'; ctx.filter = 'blur(7px)';
-  for (let i = 0; i < 5; i++) {
-    const ph = i * 1.9, cyc = (t * 0.32 + i * 0.21) % 1, x0 = 790 + i * 22, base = 985 - cyc * 60, hgt = 230 + 40 * (i % 2);
-    const g = ctx.createLinearGradient(0, base, 0, base - hgt), a = 0.55 * Math.sin(Math.PI * cyc);
-    g.addColorStop(0, 'rgba(255,248,238,0)'); g.addColorStop(0.25, `rgba(255,248,238,${a})`); g.addColorStop(1, 'rgba(255,248,238,0)');
-    ctx.beginPath();
-    for (let k = 0; k <= 30; k++) {
-      const u = k / 30, x = x0 + (6 + 30 * u) * Math.sin(u * 5 + t * 1.2 + ph) + 14 * u * Math.sin(t * 0.6 + ph), y = base - u * hgt;
-      k ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
-    }
-    ctx.strokeStyle = g; ctx.lineWidth = 18 + 9 * (i % 3); ctx.stroke();
-  }
+  ctx.font = '700 32px "Tajawal"'; ctx.fillStyle = 'rgba(244,239,230,.85)'; ctx.fillText(B.name, 0, -12);
+  ctx.font = '800 42px "Tajawal"'; ctx.fillStyle = B.good ? '#A9D19A' : '#E3DFD5'; ctx.fillText(B.pct + ' على ذوقك', 0, 38);
   ctx.restore();
 }
 
@@ -357,18 +322,12 @@ function renderReel(ctx, layer, t, assets) {
       lc.beginPath(); lc.ellipse(C.cx, C.cy, 20 + (C.rx - 30) * k, 5 + (C.ry - 8) * k, 0, 0, 7); lc.stroke(); });
     lc.globalAlpha = 1; lc.setTransform(K, 0, 0, K, 0, 0);
   }
-  if (S.ripples) {                                         // lazy pool ripples around him
-    lc.setTransform(1, 0, 0, 1, 0, 0); lc.strokeStyle = LC; lc.lineWidth = 3; const C = CUP_A.cof;
-    S.ripples.forEach(u => { lc.globalAlpha = 0.7 * (1 - u); lc.beginPath(); lc.ellipse(250, C.cy + 2, 30 + 95 * u, 6 + 13 * u, 0, 0, 7); lc.stroke(); });
-    lc.globalAlpha = 1; lc.setTransform(K, 0, 0, K, 0, 0);
-  }
   lc.setTransform(1, 0, 0, 1, 0, 0); LINE = 6.5;
 
   const z = 1.1 + 0.05 * ease(seg(t, 0, T.end));
   ctx.save(); ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
   ctx.translate(540, 1100); ctx.scale(z, z); ctx.translate(-540, -1100);
   ctx.drawImage(assets.plate, 0, 0, 1080, 1920);
-  drawSteam(ctx, t);
   ctx.filter = 'drop-shadow(0px 0px 1.5px rgba(20,16,10,.5)) drop-shadow(0px 3px 6px rgba(20,16,10,.35))';
   ctx.drawImage(layer, 0, 0);
   ctx.filter = 'none';

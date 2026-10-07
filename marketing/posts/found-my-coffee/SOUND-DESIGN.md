@@ -78,35 +78,34 @@ Brand line on screen: **نفس الكوفي، مشروبين… واحد بس ع
 
 ---
 
-## Flag cut (18.5s, `export/ep1-ladder-flag.mp4`): what changed
+## Flag cut (19s, `export/ep1-ladder-flag.mp4`): what changed
 
-The flag cut keeps everything above up to the climb, then adds the flag beats and the ladder kick, and moves the
-ending later. The exact time of every cue is computed from the animation by `events.js` (the reel draws on twos, so a
-cue sits on the first frame that shows the change); `sound.py` places all sounds from that list. Times below are
-seconds (SS:FF at 24 fps).
+Same as above up to the climb; then the flag from his pocket, the ladder kick, and the pool float, with the ending moved
+later. Every cue time is computed from the animation by `events.js` (the reel draws on twos, so a cue sits on the first
+frame that shows the change); `sound.py` places all sounds from that list. Times are seconds (SS:FF at 24 fps).
 
 | Time | Picture | Sound |
 |---|---|---|
-| 7.67 (07:16) | Ladder comes out of the pouch with a rolled-up flag tied to its top | Magical fwip (as before) |
+| 7.67 (07:16) | Folded ladder out of the pouch | Magical fwip |
 | 8.17 (08:04) · 8.33 (08:08) · 8.50 (08:12) | Three telescoping clicks | Clicks, each a tone higher, doubled by rising pizz notes |
-| 8.50 (08:12) | The flag snaps open on the last click | Fabric snap/flutter, 0.26s, −9 |
-| 8.67 (08:16) – 9.50 (09:12) | Climbs | Six rung taps (frames from the animation) |
-| 9.67 (09:16) | Takes the flag off the ladder | Small cloth rustle, −20 |
-| 9.75 (09:18) | Raises it over his head | Flag whoosh with flutter, −12; pizz flick B→C# |
-| 10.00 (10:00) | Plants it on the rim | Wooden pole thunk + glass tink + soft spring wobble, −8. Music: a short D-major brand fanfare (pizz chord + glockenspiel A–D–F#, the logo notes) |
-| 10.08 (10:02) | Hops off the ladder | Cloth "hup" whoosh. Music stops 0.05s later: silence before the splash |
-| 10.42 (10:10) | SPLASH | Hero splash, 0 dB (loudest moment), ice, droplets, bubbles |
-| 10.67 (10:16) | Surfaces | Shloop + ice clinks |
-| 10.71 (10:17) | — | Payoff music re-enters: 8 beats (≈97 BPM) landing on the end card |
-| 11.25 (11:06) · 11.42 (11:10) | Legs flop over the rim | Two tiny wet flops |
-| 11.50 (11:12) · 11.67 (11:16) | Pushes the ladder with his foot | Small foot whoosh, wooden tap |
-| 11.67 (11:16) – 12.17 (12:04) | Ladder tips over | Accelerating fall whoosh, −17 |
-| 12.17 (12:04) | Lands on the counter | Clatter: four wooden hits over 0.11s (rails, then rungs), −6; music ducks 4 dB |
-| 12.30 (12:07) | Small bounce | Wooden tap, −15 |
-| 12.33 (12:08) | The line fades in | Music only; two very soft ice tinkles while it holds |
-| 15.67 (15:16) | End card | Brand whoosh peaks here; D-major button chord |
-| 16.25 (16:06) · 16.42 (16:10) · 16.58 (16:14) | End card fully on | Sonic logo A–D–F# |
-| 18.30 | — | Silent to the end so the loop restarts clean |
+| 8.67 (08:16) – 9.50 (09:12) | Climbs | Six rung taps |
+| 9.67 (09:16) | Hand into his pocket | Small fabric rustle, −19 |
+| 9.83 (09:20) | Pulls out a tiny rolled flag, the pole telescopes as he raises it | Swish up, −15, plus three tiny rising pole clicks (an echo of the ladder) |
+| 10.00 (10:00) | The flag snaps open above him | Fabric snap/flutter, −9; pizz flick B→C# |
+| 10.33 (10:08) | Plants it on the rim | Wooden pole thunk + glass tink + soft spring wobble, −8. Music: a short D-major brand fanfare (pizz chord + glockenspiel A–D–F#, the logo notes) |
+| 10.42 (10:10) | Hops in | Cloth "hup" whoosh. Music stops 0.05s later: silence before the splash |
+| 10.83 (10:20) | SPLASH | Hero splash, 0 dB (loudest moment), ice, droplets, bubbles |
+| 11.00 (11:00) | Surfaces | Shloop + ice clinks |
+| 11.12 (11:03) | — | Payoff music re-enters: 8 beats landing on the end card |
+| 11.83 (11:20) · 12.00 (12:00) | Pushes the ladder with his foot | Small foot whoosh, wooden tap |
+| 12.00 (12:00) – 12.50 (12:12) | Ladder tips over | Accelerating fall whoosh, −17 |
+| 12.50 (12:12) | Lands on the counter | Clatter: four wooden hits over 0.11s, −6; music ducks 4 dB |
+| 12.58 (12:14) – 13.25 (13:06) | Slides back in, floats on his back like a pool | Soft slosh with a few bubbles, −15 |
+| 13.00 · 13.92 · 14.83 · 15.83 | Each lazy ripple | Gentle lap, −22 |
+| 13.08 (13:02) | The line fades in | Music; two very soft ice tinkles while it holds |
+| 16.17 (16:04) | End card | Brand whoosh peaks here; D-major button chord |
+| 16.75 (16:18) · 16.92 (16:22) · 17.08 (17:02) | End card fully on | Sonic logo A–D–F# |
+| 18.80 | — | Silent to the end so the loop restarts clean |
 
-Measured on the final mix (short-term loudness): splash −9.7 LUFS, 92% chime −12.2, bonk −13.8, logo −13.8,
-flag plant −15.6, ladder clatter −17.8, line hold −23. Integrated −17.5 LUFS, peak −1.2 dBFS.
+Measured on the final mix (short-term loudness): splash −10.4 LUFS, 92% chime −11.7, bonk −13.4, logo −13.1,
+flag plant −14.9, ladder clatter −16.8, pool hold −21.7. Integrated −17.3 LUFS, peak −1.2 dBFS.

@@ -99,7 +99,7 @@ for t0, t1, c, notes in regions:
 mel5 = [(B2 + .3, 'F#5', 84), (B2 + .6, 'A5', 88), (B2 + .75, 'G5', 72), (B2 + .9, 'F#5', 78), (pop, 'G5', 88), (pop + .3, 'B5', 82), (pop + .45, 'A5', 70),
         (plant, 'A5', 86)] + [(t, n, 62 + 6 * i) for i, (t, n) in enumerate(zip(clicks, ['C#5', 'E5', 'A5']))] \
        + [(t, n, 60 + 5 * i) for i, (t, n) in enumerate(zip(rungs, ['D5', 'E5', 'F#5', 'G5', 'A5', 'B5']))] \
-       + [(E['lift'], 'B5', 78, .08), (E['lift'] + .04, 'C#6', 86, .12)]
+       + [(E['unfurl'], 'B5', 78, .08), (E['unfurl'] + .04, 'C#6', 86, .12)]
 mel += ns(mel5, dur=.22)
 mel += chord(E['flagIn'], .35, ['D3', 'A3', 'F#4', 'D5'], 84)                       # the flag goes in: a little brand fanfare
 glk = ns([(B2 + .3, 'F#5', 46), (B2 + .6, 'A5', 50), (pop, 'G5', 50), (pop + .3, 'B5', 46), (plant, 'A5', 50)]
@@ -285,13 +285,16 @@ for i, tc in enumerate(clicks):
     place(whoosh(0.07, 1500 * k, 4500 * k, peak=0.9, bw=0.3), tc - 0.07, -17, pan_x(470))
     clk = hp(noise(0.08), 3000) * env(0.08, 0.0003, 0.002) + modal([1900 * k, 3350 * k, 5100 * k], [0.03, 0.02, 0.012], [1, .6, .4], 0.08)
     place(clk, tc, -7, pan_x(470))
-place(flutter(0.26), clicks[2] + 0.02, -9, pan_x(400))
 # rung taps, alternating, gently rising
 for i, tr_ in enumerate(rungs):
     place(wood(520 * 2 ** (i / 12), 0.1, 0.025), tr_, -15, pan_x(470) + (0.06 if i % 2 else -0.06))
-# at the top: grabs the flag, raises it, plants it on the rim
-place(canvas(0.1, 40, 600, 3500), E['reach'], -20, pan_x(430))
-place(whoosh(0.14, 600, 2600, peak=0.7, bw=0.5) + 0.5 * norm(flutter(0.19, 26))[:int(0.19 * SR)], E['lift'], -12, pan_x(430))
+# at the top: a flag out of his pocket, the pole telescopes as he raises it, it snaps open, he plants it on the rim
+place(canvas(0.16, 50, 600, 3500), E['pocket'] + 0.06, -19, pan_x(430))
+place(whoosh(0.18, 700, 2800, peak=0.8, bw=0.5), E['pull'], -15, pan_x(420))
+for i in range(3):                                      # three tiny pole clicks, rising (an echo of the ladder)
+    k = 2 ** ((4 + 2 * i) / 12); tci = E['pull'] + 0.04 + i * 0.05
+    place(hp(noise(0.05), 3500) * env(0.05, 0.0003, 0.0015) + modal([2600 * k, 4300 * k], [0.02, 0.012], [1, .5], 0.05), tci, -15, pan_x(420))
+place(flutter(0.26), E['unfurl'], -9, pan_x(380))
 wob = np.sin(2 * np.pi * np.cumsum(150 * (1 + 0.08 * np.sin(2 * np.pi * 14 * tt(0.4)))) / SR) * env(0.4, 0.003, 0.11)
 place(wood(260, 0.15, 0.04), E['flagIn'], -8, pan_x(410)); place(glass(3400, 0.35), E['flagIn'] + 0.003, -15, pan_x(410))
 place(wob, E['flagIn'] + 0.01, -16, pan_x(410))
@@ -330,7 +333,15 @@ place(whoosh(fall_d, 250, 1300, peak=0.97, bw=0.6, curve=2.2)[:int(fall_d * SR)]
 for dt, f, lvl in [(0, 380, -6), (0.035, 520, -10), (0.07, 450, -12), (0.11, 600, -16)]:      # rails, then rungs rattling
     place(wood(f, 0.16, 0.035), E['clatter'] + dt, lvl, pan_x(620) + rng.uniform(-.1, .1))
 place(wood(480, 0.12, 0.03), E['bounce'] - 0.12, -15, pan_x(620))
-place(glass(3600, 0.3), E['line'] + 0.6, -25, pan_x(300)); place(glass(3000, 0.3), E['line'] + 1.8, -26, pan_x(300))
+# ladder gone: he slides back into the coffee and floats like it's a pool; lazy lapping with each ripple
+sl = whoosh(0.45, 900, 300, peak=0.35, bw=0.8)
+for _ in range(10): b = bubble(rng.uniform(300, 800), 0.06, 1.6); o = int(rng.uniform(0.05, 0.35) * SR); sl[o:o + len(b)] += 0.25 * b
+place(sl, E['pool'] + 0.1, -15, pan_x(300))
+for tr0 in E['ripples']:
+    lap = lp(noise(0.5), 900) * np.sin(np.pi * np.linspace(0, 1, int(0.5 * SR))) ** 2
+    for _ in range(3): b = bubble(rng.uniform(350, 700), 0.05, 1.5); o = int(rng.uniform(0.05, 0.4) * SR); lap[o:o + len(b)] += 0.6 * b
+    place(lap, tr0, -22 - rng.uniform(0, 2), pan_x(260))
+place(glass(3600, 0.3), E['floating'] + 0.5, -25, pan_x(300)); place(glass(3000, 0.3), E['floating'] + 1.9, -26, pan_x(300))
 # brand whoosh into the end card, then the sonic logo
 bw_d = 0.55
 place(whoosh(bw_d, 300, 1800, peak=0.47, bw=0.8, curve=0.8), E['endCard'] - 0.26, -8, 0)
