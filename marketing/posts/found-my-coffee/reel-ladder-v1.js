@@ -2,7 +2,7 @@
 // his hands in his pockets), the iced latte ٩٢٪: he props a tiny ladder against the glass, climbs, and plops in.
 // The Regular's character (../the-regular/rig.js). Plate: plates/iced-hot.jpg (AI-generated, unbranded). Plate pixels.
 
-const DUR = 13.0;
+const DUR = 12.4;
 const K = 0.9;
 const GROUND = 1335;                                // where he walks: the counter, in front of the cups
 const CUP_A = { rim: { cx: 260, cy: 978, rx: 152, ry: 36 }, cof: { cx: 262, cy: 1030, rx: 140, ry: 22 }, l: 108, r: 413, bot: 1322, glass: true };
@@ -11,11 +11,6 @@ const V = p => [p[0] / K, p[1] / K];
 
 // clearer face: bigger eye, closed eyes as a happy curve, no confusion with a nose
 function drawHead(ctx, P) {
-  if (P.front) return drawHeadFront(ctx, P);
-  if (P.headF && P.headF !== P.f) {                         // the head turned the other way; it stays where it was
-    const hc0 = add(RIG.neck, rot([10, -40], -(P.tilt || 0) * 0.5)), q = rot(hc0, P.rot || 0);
-    return drawHead(ctx, { ...P, f: P.headF, headF: 0, x: P.x + (P.f - P.headF) * q[0] });
-  }
   const tilt = P.tilt || 0, sh = P.shake || 0, hc = add(add(RIG.neck, rot([10, -40], -tilt * 0.5)), [sh * 13, 0]);
   const H = p => J(toWorld(P, add(hc, rot(p, -tilt))));
   [200, 222, 244, 266, 288, 310].forEach((deg, i) => {
@@ -36,21 +31,6 @@ function drawHead(ctx, P) {
   return toWorld(P, hc);
 }
 
-function drawHeadFront(ctx, P) {                           // facing the camera, mid-turn
-  const tilt = P.tilt || 0, hc = add(RIG.neck, rot([10, -40], -tilt * 0.5));
-  const c = toWorld(P, hc), H = p => J(add(c, rot(p, P.rot || 0)));
-  [200, 230, 260, 290, 320, 350].forEach((deg, i) => {
-    const a = deg * Math.PI / 180, cc = [42 * Math.cos(a), 42 * Math.sin(a)];
-    stroke(ctx, circlePts(cc, 8.5 + (i % 2), 8.5, 7).map(H), { closed: true });
-  });
-  shape(ctx, circlePts([0, 0], 41, 42, 12).map(H));
-  const ey = -6 + (P.down || 0) * 4;
-  for (const ex of [-13, 13]) { ctx.beginPath(); cr(ctx, circlePts([ex, ey], 6, 6, 8).map(H), true); ctx.fillStyle = LC; ctx.fill(); }
-  if (P.brow) { stroke(ctx, [[-21, ey - 12], [-7, ey - 17]].map(H)); stroke(ctx, [[7, ey - 17], [21, ey - 12]].map(H)); }
-  stroke(ctx, [[-9, 22], [0, 16], [9, 22]].map(H));
-  return c;
-}
-
 function cupFront(ctx, C) {
   const R = C.rim;
   ctx.beginPath();
@@ -64,7 +44,7 @@ function cupFront(ctx, C) {
   ctx.moveTo(R.cx + R.rx - 8, R.cy + 4); ctx.ellipse(R.cx, R.cy + 4, R.rx - 8, R.ry, 0, 0, Math.PI); ctx.closePath();   // the inner front wall
 }
 
-const T = { inB: 1.6, phB: 1.7, offB: 3.3, walkA: 3.35, atA: 5.75, phA: 5.85, unpack: 7.2, plant: 7.65, extend: 8.45, top: 9.6, land: 9.95, up: 10.2, lounge: 10.55, end: 11.0 };
+const T = { inB: 1.6, phB: 1.7, offB: 3.3, walkA: 3.35, atA: 5.75, phA: 5.85, ladder: 7.25, climb: 7.85, top: 9.0, land: 9.35, up: 9.6, lounge: 9.95, end: 10.4 };
 const XB = 955, XA = 545;
 const LAD = { b: [492, 1336], t: [424, 972] };              // the tiny ladder: foot on the counter, top on the glass rim
 
@@ -82,17 +62,13 @@ function stand(P, x) {
 }
 
 function ladderPt(s) { return mix2(LAD.b, LAD.t, s); }
-const FOLD = 120;                                          // folded length
-function drawLadder(ctx, b, t) {                           // plate points: foot, top
-  if (!b) return;
-  const d = [t[0] - b[0], t[1] - b[1]], L = len(d), n = [-d[1] / L * 18, d[0] / L * 18], W = p => J(V(p), 0.8);
-  for (const sgn of [-1, 1]) stroke(ctx, [W(add(b, scl(n, sgn))), W(add(t, scl(n, sgn)))], { smooth: false, width: LINE * 0.9 });
-  const k = Math.max(2, Math.round(L / 46));
-  for (let i = 1; i < k; i++) { const p = mix2(b, t, i / k); stroke(ctx, [W(add(p, n)), W(add(p, scl(n, -1)))], { smooth: false, width: LINE * 0.8 }); }
-}
-function backLadder(P) {                                    // folded on his back: follows the torso
-  const a = toWorld(P, [-56, -150]), c = toWorld(P, [-56, -20]);
-  return { b: scl(c, K), t: scl(a, K) };
+function drawLadder(ctx, a) {                               // a = 0 lying on the counter → 1 leaning on the glass
+  if (a <= 0) return;
+  const top = mix2([LAD.b[0] - 360, LAD.b[1] - 6], LAD.t, ease(a)), d = [top[0] - LAD.b[0], top[1] - LAD.b[1]], L = len(d);
+  const n = [-d[1] / L * 22, d[0] / L * 22];
+  const W = p => J(V(p), 0.8);
+  for (const sgn of [-1, 1]) stroke(ctx, [W(add(LAD.b, scl(n, sgn))), W(add(top, scl(n, sgn)))], { smooth: false, width: LINE * 0.9 });
+  for (let k = 1; k <= 7; k++) { const p = mix2(LAD.b, top, k / 8); stroke(ctx, [W(add(p, n)), W(add(p, scl(n, -1)))], { smooth: false, width: LINE * 0.8 }); }
 }
 
 function sadWalk(P, t, t0, t1, x0, x1) {                   // slow, hands in pockets, head down, shoulders slumped
@@ -106,7 +82,7 @@ function sadWalk(P, t, t0, t1, x0, x1) {                   // slow, hands in poc
 
 function scene(t) {
   const P = { f: -1, rot: 0, tilt: 0, eyes: 'open', mouth: 'smile', hands: {}, feet: {} };
-  const S = { phone: 0, badge: null, lounge: false, clip: false, lad: null };
+  const S = { phone: 0, badge: null, lounge: false, clip: false, ladder: 0 };
   const holdUp = { f: [78, -96], b: [62, -88] };
   const phoneUp = (t0, t1) => ease(seg(t, t0, t0 + 0.25)) * (1 - ease(seg(t, t1 - 0.2, t1)));
   if (t < T.inB) { walk(P, t, 0, T.inB, 1180, XB); }
@@ -116,14 +92,11 @@ function scene(t) {
     P.hands = { f: mix2([30, -40], holdUp.f, up), b: mix2([-20, -40], holdUp.b, up) };
     S.phone = up; P.tilt = 0.25 * up;
     if (t > 2.05) { S.badge = { name: 'كابتشينو', pct: '٢٤٪', good: false, a: seg(t, 2.05, 2.3) * (1 - seg(t, 3.05, 3.3)) }; P.mouth = 'flat'; P.brow = true; }
-    if (t > 2.45 && t < 3.25) {                           // "no": turn to camera, the other way, back
-      const k = Math.floor((t - 2.45) / 0.1), seq = ['f', 'r', 'f', 'o', 'f', 'r', 'f', 'o'][k] || 'o';
-      if (seq === 'f') P.front = true; if (seq === 'r') P.headF = -P.f;
-    }
+    if (t > 2.45 && t < 3.2) P.shake = Math.sin((t - 2.45) * 15) * (1 - seg(t, 2.45, 3.2) * 0.5);
     if (t > 3.05) { P.tilt = mix(P.tilt, -0.32, seg(t, 3.05, 3.3)); P.down = seg(t, 3.05, 3.3); }
   }
   else if (t < T.atA) { sadWalk(P, t, T.walkA, T.atA, XB, XA); }
-  else if (t < T.unpack) {                                  // the iced latte: ٩٢٪ — he perks right up
+  else if (t < T.ladder) {                                  // the iced latte: ٩٢٪ — he perks right up
     stand(P, XA);
     const up = phoneUp(T.phA, 7.1);
     P.hands = { f: mix2([14, -16], holdUp.f, up), b: mix2([-12, -14], holdUp.b, up) };
@@ -132,22 +105,14 @@ function scene(t) {
     if (t > 6.25) { S.badge = { name: 'آيس لاتيه', pct: '٩٢٪', good: true, a: seg(t, 6.25, 6.5) * (1 - seg(t, 6.95, 7.15)) }; P.mouth = 'grin'; P.eyes = 'wide'; P.brow = false; }
     if (t > 6.6 && t < 6.9) P.y -= 18 * Math.sin((t - 6.6) / 0.3 * Math.PI) / K;
   }
-  else if (t < T.extend) {                                  // takes the folded ladder off his back, plants it, it telescopes up
-    stand(P, XA); P.mouth = 'grin';
-    const off = ease(seg(t, T.unpack, T.plant)), grow = seg(t, T.plant + 0.1, T.extend - 0.05);
-    const L0 = FOLD, L1 = len([LAD.t[0] - LAD.b[0], LAD.t[1] - LAD.b[1]]);
-    const clicks = Math.min(3, Math.floor(grow * 3 + 0.0001)), sub = ease(clamp(grow * 3 - clicks, 0, 1));
-    const L = mix(L0, L1, (clicks + (clicks < 3 ? sub : 0)) / 3);
-    const dir = scl([LAD.t[0] - LAD.b[0], LAD.t[1] - LAD.b[1]], 1 / L1);
-    const bk = backLadder(P), pb = mix2(bk.b, LAD.b, off), pt = mix2(bk.t, add(LAD.b, scl(dir, L0)), off);
-    S.lad = { b: pb, t: off < 1 ? pt : add(LAD.b, scl(dir, L)) };
-    const grip = mix2(pb, pt, 0.55);
-    P.hands = off < 1 ? { f: { w: V(grip) }, b: { w: V(add(grip, [10, 14])) } } : { f: { w: V(mix2(LAD.b, add(LAD.b, scl(dir, L0)), 0.7)) }, b: [-20, -40] };
-    P.elbow = { f: 1, b: 1 }; P.tilt = off >= 1 ? -0.2 - 0.25 * grow : 0;     // watches it rise
+  else if (t < T.climb) {                                   // pulls out a tiny ladder and leans it on the glass
+    stand(P, XA + 40); S.ladder = seg(t, T.ladder + 0.15, T.climb - 0.1);
+    P.hands = { f: { w: V(mix2([XA - 40, GROUND - 40], [460, 1150], ease(S.ladder))) }, b: { w: V(mix2([XA - 20, GROUND - 40], [470, 1180], ease(S.ladder))) } };
+    P.elbow = { f: 1, b: 1 }; P.mouth = 'grin';
   }
   else if (t < T.top) {                                     // climbs, rung by rung
-    S.lad = { b: LAD.b, t: LAD.t };
-    const u = seg(t, T.extend, T.top), s = 0.04 + 0.86 * u, ph = u * Math.PI * 7;
+    S.ladder = 1;
+    const u = seg(t, T.climb, T.top), s = 0.04 + 0.86 * u, ph = u * Math.PI * 7;
     const F = ladderPt(s), lift = 18 * Math.max(0, Math.sin(ph));
     P.x = (F[0] + 12) / K; P.y = (F[1] - 112 * K - lift * 0.3) / K; P.rot = -0.12;
     P.feet = { f: { w: V(ladderPt(s + 0.02 * Math.sin(ph))) }, b: { w: V(ladderPt(s - 0.02 * Math.sin(ph))) } };
@@ -155,7 +120,7 @@ function scene(t) {
     P.elbow = { f: 1, b: 1 }; P.mouth = 'grin'; P.eyes = 'open';
   }
   else if (t < T.land) {                                    // at the top: a little hop over the rim, in he goes
-    S.lad = { b: LAD.b, t: LAD.t };
+    S.ladder = 1;
     const u = seg(t, T.top, T.land), p0 = add(ladderPt(0.9), [12, -112 * K]), p2 = [300, 1090];
     const q = bez(p0, [380, 820], p2, u);
     P.x = q[0] / K; P.y = q[1] / K; P.rot = -0.3 - 0.6 * u;
@@ -164,12 +129,12 @@ function scene(t) {
     P.mouth = 'o'; P.eyes = 'wide'; S.clip = u > 0.5;
   }
   else if (t < T.lounge) {
-    S.lad = { b: LAD.b, t: LAD.t }; S.clip = true; S.splash = seg(t, T.land, T.land + 0.5);
+    S.ladder = 1; S.clip = true; S.splash = seg(t, T.land, T.land + 0.5);
     if (t < T.up) P.hidden = true;
     loungePose(P, t, easeOut(seg(t, T.up, T.lounge)), 0, 0);
   }
   else {
-    S.lad = { b: LAD.b, t: LAD.t }; S.lounge = true; S.clip = true; S.splash = seg(t, T.land, T.land + 0.5);
+    S.ladder = 1; S.lounge = true; S.clip = true; S.splash = seg(t, T.land, T.land + 0.5);
     loungePose(P, t, 1, easeOut(seg(t, T.lounge, T.lounge + 0.22)), easeOut(seg(t, T.lounge + 0.14, T.lounge + 0.36)));
   }
   return { P, S };
@@ -215,10 +180,8 @@ function renderReel(ctx, layer, t, assets) {
   const lc = layer.getContext('2d');
   lc.setTransform(1, 0, 0, 1, 0, 0); lc.clearRect(0, 0, 1080, 1920);
   lc.setTransform(K, 0, 0, K, 0, 0); LINE = 5.6 / K;
-  const lad = S.lad || (P.hidden ? null : backLadder(P));
-  if (lad && !S.lad) drawLadder(lc, lad.b, lad.t);          // on his back: behind him
+  drawLadder(lc, S.ladder);
   const r = P.hidden ? { hand: [0, 0] } : drawCharacter(lc, P);
-  if (S.lad) { lc.save(); drawLadder(lc, S.lad.b, S.lad.t); lc.restore(); }
   if (S.clip) {
     lc.setTransform(1, 0, 0, 1, 0, 0); lc.globalCompositeOperation = 'destination-out'; lc.fillStyle = '#000';
     lc.globalAlpha = 0.55; cupFront(lc, CUP_A); lc.fill('nonzero');                       // seen through the glass, faintly
