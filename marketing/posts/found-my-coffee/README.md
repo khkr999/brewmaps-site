@@ -14,9 +14,10 @@
 
 Lines (every episode): **نفس الكوفي، مشروبين… / واحد بس على ذوقك.** End card: **مو بس وين تروح… / وش تشرب.**
 
-## Ep. 1 · Ladder — `export/ep1-ladder.mp4`, 16.6s, silent (add the sound in Instagram)
+## Ep. 1 · Ladder — `export/ep1-ladder.mp4`, 16.6s, silent master
 
-Plate `plates/iced-hot.jpg` (AI-generated, unbranded). `reel.js`.
+Plate `plates/iced-hot.jpg` (AI-generated, unbranded). `reel.js`. Script: `SCRIPT.md` / `export/ep1-ladder-script.docx`.
+Sound: frame-accurate music + SFX cue sheet in `SOUND-DESIGN.md` / `export/ep1-ladder-sound-design.docx` (mix gets baked into the MP4).
 
 | Time | Beat |
 |---|---|
