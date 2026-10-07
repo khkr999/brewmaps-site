@@ -1,41 +1,34 @@
 # على ذوقك · Ep. 1 "The Ladder" — second-by-second script
 
-19s · 9:16 · with music and SFX (`export/ep1-ladder-flag.mp4`). Same café, two drinks: a hot cappuccino (right) and an
-iced latte in a short glass (left), on a dark wooden counter. Slow push-in on the counter for the whole piece.
+15.2s · 9:16 · with music and SFX (`export/ep1-ladder-flag.mp4`). Same café, two drinks: a hot cappuccino (right) and an
+iced latte in a short glass (left), on a dark wooden counter. First half fast (search → effort → find), then FLOP BACK → complete peace.
 
 | Time | Action | On screen |
 |---|---|---|
-| 0.0–1.0 | He walks in from the right edge, a small green pouch swinging in one hand. | — |
-| 1.0–1.6 | Slows down and stops beside the hot cappuccino. | — |
-| 1.7–2.0 | Lifts his phone (BrewMaps) towards the cappuccino. | — |
-| 2.0–2.4 | The score pops up above him. His face drops: worried brow, small frown. | **كابتشينو · ٢٤٪ على ذوقك** (light green) |
-| 2.4–3.3 | A slow cartoon head-turn "no": profile → to camera → other side → back. Phone comes down, head lowers. | badge fades at 3.3 |
-| 3.3–4.0 | The sad walk begins: one hand in his pocket, the pouch drooping in the other, shoulders slumped. | — |
-| 4.0–5.0 | Slow, heavy steps along the counter, head down. | — |
-| 5.0–5.75 | Arrives beside the iced latte and stops. | — |
-| 5.85–6.2 | Head comes up; lifts the phone towards the iced latte. | — |
-| 6.2–6.6 | The score pops up. Eyes wide, big grin. | **آيس لاتيه · ٩٢٪ على ذوقك** (dark green) |
-| 6.6–7.2 | A little happy hop; phone goes away. | badge fades at 7.1 |
-| 7.2–7.45 | Crouches and sets the pouch on the counter. | — |
-| 7.45–7.6 | Opens the flap. | — |
-| 7.6–7.85 | Pulls a folded ladder straight out of the pouch. | — |
-| 7.85–8.05 | Carries it over and plants it against the glass. | — |
-| 8.05–8.45 | The ladder extends up to the rim in three clicks. | — |
-| 8.45–9.6 | Climbs it rung by rung. | — |
-| 9.6–9.76 | At the top, one hand on the ladder, he reaches into his pocket. | — |
-| 9.76–9.96 | Pulls out a tiny rolled-up flag; its pole telescopes as he raises it out over the glass. | — |
-| 9.96–10.12 | The flag snaps open above him: the BrewMaps flag. | BrewMaps flag |
-| 10.16–10.28 | Plants it on the rim of the iced latte. It wobbles. | — |
-| 10.4–10.76 | A little hop over the rim, into the glass. | — |
-| 10.76–11.0 | Splash: drops fly up, ripples across the ice, the flag shakes. He is under. | — |
-| 11.0–11.75 | Surfaces, sits up on the ice, flops one leg over the rim, then the other. | — |
-| 11.8–12.0 | Done with the ladder: pushes it with his foot. | — |
-| 12.0–12.7 | The ladder tips over and clatters onto the counter. The flag stays on his drink. | — |
-| 12.58–13.18 | He slides back into the coffee and relaxes like at a pool's edge: leaning back on the far rim, elbows on the edge, head back, eyes open, grinning, a knee out of the coffee. | — |
-| 13.05–13.55 | Lazy ripples around him. The line fades in. | **نفس الكوفي، مشروبين…** / **واحد بس على ذوقك.** |
-| 13.55–16.1 | Holds (~3s to read): relaxing, bobbing gently, the flag waving beside him. | Line held, fades out at 15.9–16.3 |
-| 16.1–16.7 | End card fades in (BrewMaps green). | BrewMaps mark |
-| 16.7–19.0 | Holds (~2.3s to read). | **مو بس وين تروح…** / **وش تشرب.** / **مجاني على الآب ستور وجوجل بلاي** |
+| 0.0–1.05 | He walks in from the right, quick and light, a small pouch (white line art) in one hand. | — |
+| 1.1–1.4 | Lifts his phone (BrewMaps) to the hot cappuccino. | — |
+| 1.4–1.6 | The score pops up. His face drops: worried brow, small frown. | **كابتشينو · ٢٤٪ على ذوقك** / (light green badge) |
+| 1.62–2.1 | A quick head-shake "no". | — |
+| 2.2–2.45 | Phone down, head lowers. | — |
+| 2.45–3.95 | The sad walk: hand in his pocket, pouch drooping, head down. | — |
+| 4.0–4.3 | Head comes up; phone to the iced latte. | — |
+| 4.3–4.55 | The score pops up. Eyes wide, big grin. | **آيس لاتيه · ٩٢٪ على ذوقك** / (dark green badge) |
+| 4.55–4.8 | A happy hop. | — |
+| 5.0–5.3 | Sets the pouch down, flips it open. | — |
+| 5.3–5.6 | Pulls out a folded ladder, plants it against the glass. | — |
+| 5.62–5.92 | It extends to the rim in three clicks. | — |
+| 5.92–6.62 | Climbs, fast, rung by rung. | — |
+| 6.62–6.96 | At the top: the BrewMaps flag out of his pocket; it snaps open above him. | BrewMaps flag |
+| 6.98–7.08 | Plants it on the rim. Found it. | — |
+| 7.14–7.28 | A satisfied glance to camera. Small smile. | — |
+| 7.28–7.68 | Turns his back to the drink and flops backward into it, arms flung open. His feet knock the ladder away. | — |
+| 7.68–8.0 | Splash. He lands floating across the coffee like a pool: head back, arms spread wide past the rim, open hands, legs loose. The ladder clatters onto the counter. | — |
+| 8.0–8.7 | Complete peace. Almost motionless. The joke lands before any text. | — |
+| 8.25–8.7 | The line fades in: a small setup, then one big statement. | **نفس الكوفي، مشروبين…** / **واحد بس على ذوقك.** |
+| 8.7–11.9 | Holds (~3s): floating, the slowest bob, faint ripples; the camera eases in on him. | Line held |
+| 11.9–12.8 | The scene washes into BrewMaps green. He stays, faintly, still floating. | — |
+| 12.35–12.9 | The end line, the Brew Maps lockup and the store line come in. | **مو بس وين تروح…** / **وش تشرب.** / Brew Maps / **مجاني على الآب ستور وجوجل بلاي** |
+| 12.9–15.2 | Holds (~2.3s to read). | — |
 
-**Message:** BrewMaps doesn't only find cafés, it knows your taste: two drinks from the same place, scored for *him*.
+**Message:** Finding the right coffee shouldn't take this much effort. BrewMaps finds it for you — now relax. Two drinks from the same place, scored for *his* taste.
 **Caption:** نفس الكوفي… بس مو نفس الذوق ☕️ · BrewMaps مجاني على الآب ستور وجوجل بلاي. الرابط في البايو.

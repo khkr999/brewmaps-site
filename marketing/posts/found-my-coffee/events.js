@@ -4,7 +4,7 @@
 const vm = require('vm'), fs = require('fs'), path = require('path');
 const ctx = { Math, console }; vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(__dirname, '../the-regular/rig.js'), 'utf8') + '\n' + fs.readFileSync(path.join(__dirname, 'reel.js'), 'utf8')
-  + '\nthis.scene = scene; this.T = T; this.DUR = DUR; this.GROUND = GROUND; this.K = K; this.FOLD = FOLD; this.LAD_L = LAD_L;', ctx);
+  + '\nthis.scene = scene; this.T = T; this.DUR = DUR; this.GROUND = GROUND; this.K = K; this.FOLD = FOLD; this.LAD_L = LAD_L; this.CLIMB = CLIMB;', ctx);
 const { scene, T, DUR, GROUND, K, FOLD, LAD_L } = ctx;
 
 const FR = Math.round(DUR * 24), td = f => Math.floor(f / 2) / 12, sec = f => +(f / 24).toFixed(4);
@@ -28,20 +28,18 @@ const ev = {
   DUR, T,
   steps: steps.filter(s => !s.sad && s.t < T.inB), sad: steps.filter(s => s.sad),
   stop: at(T.inB - 0.1),
-  phone1: after(T.phB), badge1: first(F => F.S.badge && !F.S.badge.good), phoneDown1: after(T.offB - 0.2),
-  no: frames.filter((F, i) => i && F.P.front && !frames[i - 1].P.front).map(F => sec(F.f)),
+  phone1: after(T.phB), badge1: first(F => F.S.badge && !F.S.badge.good), phoneDown1: after(T.offB - 0.18),
+  no: frames.filter((F, i) => i && F.t < T.walkA && F.P.front && !frames[i - 1].P.front).map(F => sec(F.f)),
   phone2: after(T.phA), badge2: first(F => F.S.badge && F.S.badge.good),
-  hop: after(6.6), hopLand: at(6.9),
+  hop: after(T.hop), hopLand: at(T.hop + 0.25),
   bagDown: first(F => F.S.bag && F.S.bag.at >= 0.97), pop: first(F => F.S.bag && F.S.bag.open > 0),
   ladderOut: first(F => F.S.lad), planted: first(F => F.S.lad && F.S.lad.b[0] === 492 && F.S.lad.b[1] === 1336),
   clicks: [1, 2, 3].map(k => first(F => F.t < T.extend + 0.1 && L(F) >= FOLD + (LAD_L - FOLD) * (k - 0.12) / 3)),
-  unfurl: first(F => F.S.flag && F.S.flag.open > 0),
-  rungs: [1, 2, 3, 4, 5, 6].map(n => at(T.extend + (T.top - T.extend) * n / 7)),
-  pocket: after(T.top), pull: after(T.pocket), flagIn: at(T.planted), jump: after(T.hop),
-  splash: first(F => F.S.splash > 0), surface: first(F => F.t >= T.up && !F.P.hidden),
-  legs: [at(T.lounge + 0.22), at(T.lounge + 0.36)],
-  kick: after(T.kick), push: after(T.push), clatter: at(T.fallen), bounce: at(T.fallen + 0.25),
-  pool: after(T.pool), floating: at(T.floating), ripples: [0, 1, 2, 3, 4, 5].map(i => after(T.pool + 0.35 + i * 0.95)).filter(t => t < T.end),
-  line: after(T.line), endCard: after(T.end), endFull: at(T.end + 0.6),
+  rungs: Array.from({ length: ctx.CLIMB - 1 }, (_, i) => at(T.extend + (T.top - T.extend) * (i + 1) / ctx.CLIMB)),
+  pocket: after(T.top), pull: after(T.pocket), unfurl: first(F => F.S.flag && F.S.flag.open > 0), flagIn: at(T.planted),
+  turn: after(T.turn), flop: after(T.flop), splash: first(F => F.S.splash > 0), settled: at(T.settled),
+  push: after(T.push), clatter: at(T.fallen), bounce: at(T.fallen + 0.25),
+  ripples: [0, 1, 2, 3].map(i => T.settled + i * 2.4).filter(t => t < T.end).map(after),
+  line: after(T.line), endCard: after(T.end), endFull: at(T.end + 1.0),
 };
 console.log(JSON.stringify(ev, null, 1));

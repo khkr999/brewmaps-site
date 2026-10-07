@@ -62,62 +62,59 @@ def ns(seq, dur=0.25, vel=80):                          # [(t, note[, vel[, dur]
 chord = lambda t, d, notes, v: [(t, d, n, v) for n in notes]
 
 B1, B2 = E['badge1'], E['badge2']                       # the 24% and the 92%
+WALK0, WALK1 = E['T']['walkA'], E['T']['atA']           # the sad walk
 RISE_END = B2 - 2 * FRAME                               # two near-silent frames before the 92%
-STOP = E['jump'] + 0.05                                 # music stops as he hops off the ladder…
-SPL = E['splash']                                       # …the splash lands in silence
-M6 = SPL + 0.29                                         # payoff re-enters, 8 beats to the end card
-BEAT6 = (E['endCard'] - M6) / 8
+STOP = E['flop']                                        # the fanfare rings while he turns and smiles; silence as he falls…
+SPL = E['splash']                                       # …the splash lands in that silence
+M6 = SPL + 0.35                                         # then peace: slow, soft, sparse
+BEAT6 = 0.76
 g6 = lambda b: M6 + b * BEAT6
+END = E['endCard']
 
-# M1 · Curious (0–badge1): sneaky staccato pizz, marimba doubling, walking pizz bass. Thins from 1.45.
-mel = ns([(0.04, 'A4', 62, .12), (0.15, 'C#5', 70, .12), (0.25, 'D5', 92), (0.55, 'A4', 70), (0.85, 'B4', 82), (1.00, 'C#5', 66, .12),
-          (1.15, 'D5', 80), (1.45, 'F#5', 84), (1.75, 'E5', 66)])
-offs = chord(0.55, .2, ['D4', 'F#4'], 52) + chord(1.15, .2, ['D4', 'G4'], 50)
-mar = ns([(0.25, 'D5', 62, .4), (0.85, 'B4', 58, .4), (1.15, 'D5', 56, .4)])
-bass = ns([(0.25, 'D2', 96, .4), (0.85, 'A2', 88, .4), (1.45, 'F#2', 84, .4)])
-# M2 · Deflate: sour muted pizz cluster on the 24%, then a held soft low D (bowed) that overlaps the bassoon
+# M1 · Curious, quick (0 → the 24%): sneaky staccato pizz, marimba doubling, walking pizz bass, a 0.4s beat
+b1 = lambda b: B1 + b * 0.4
+mel = ns([(b1(-3.3), 'A4', 62, .1), (b1(-3.12), 'C#5', 70, .1), (b1(-3), 'D5', 92), (b1(-2.5), 'A4', 70), (b1(-2), 'B4', 82), (b1(-1.75), 'C#5', 66, .1),
+          (b1(-1.5), 'D5', 80), (b1(-1), 'F#5', 84), (b1(-0.5), 'E5', 66)], dur=.2)
+offs = chord(b1(-2.5), .18, ['D4', 'F#4'], 52) + chord(b1(-1.5), .18, ['D4', 'G4'], 50)
+mar = ns([(b1(-3), 'D5', 62, .35), (b1(-2), 'B4', 58, .35), (b1(-1.5), 'D5', 56, .35)])
+bass = ns([(b1(-3), 'D2', 96, .35), (b1(-2), 'A2', 88, .35), (b1(-1), 'F#2', 84, .35)])
+# M2 · Deflate: sour muted pizz cluster on the 24%, then a held soft low D that overlaps the bassoon
 sour = chord(B1, .3, ['D3', 'F3', 'G#3'], 58)
-held = [(B1, 1.90, 'D2', 58)]
-# M3 · Glum (half time, D minor lament): bassoon D–C–Bb–A, pizz roots; low-passed below
-bsn = ns([(3.85, 'D3', 62, .58), (4.45, 'C3', 58, .58), (5.05, 'A#2', 56, .58), (5.65, 'A2', 60, .58)])
-bass += ns([(3.85, 'D2', 72, .4), (4.45, 'C2', 64, .4), (5.65, 'A1', 70, .4)])
-# M4 · Hope: tremolo swell + rising pizz run on A7, cut two frames before the 92%
-trem = chord(5.75, RISE_END - 5.75, ['A3', 'C#4', 'E4', 'A4'], 70)
-trem_cc = [(5.75 + i * (RISE_END - 5.75) / 20, mido.Message('control_change', control=11, value=int(30 + 97 * (i / 20) ** 1.5))) for i in range(21)]
-run = ns([(5.80 + i * (RISE_END - 5.84) / 5, n, 60 + 5 * i, .1) for i, n in enumerate(['A3', 'C#4', 'E4', 'G4', 'A4', 'C#5'])])
-mel += run
-# M5 · Bright (92% → hop): the theme in D major, fuller. Chords follow the action.
+held = [(B1, WALK0 + 0.45 - B1, 'D2', 58)]
+# M3 · Glum: D minor lament on bassoon over the sad walk, pizz roots; low-passed below
+bsn = ns([(WALK0 + 0.05 + i * 0.37, n, v, .36) for i, (n, v) in enumerate([('D3', 62), ('C3', 58), ('A#2', 56), ('A2', 60)])])
+bass += ns([(WALK0 + 0.05, 'D2', 72, .3), (WALK0 + 0.42, 'C2', 64, .3), (WALK0 + 1.16, 'A1', 70, .3)])
+# M4 · Hope: tremolo swell + a rising pizz run on A7, cut two frames before the 92%
+trem = chord(WALK1, RISE_END - WALK1, ['A3', 'C#4', 'E4', 'A4'], 70)
+trem_cc = [(WALK1 + i * (RISE_END - WALK1) / 20, mido.Message('control_change', control=11, value=int(30 + 97 * (i / 20) ** 1.5))) for i in range(21)]
+mel += ns([(WALK1 + 0.02 + i * (RISE_END - WALK1 - 0.06) / 5, n, 60 + 5 * i, .08) for i, n in enumerate(['A3', 'C#4', 'E4', 'G4', 'A4', 'C#5'])])
+# M5 · Bright and busy (92% → the flag): the theme in D major; chords follow the action; brand fanfare when the flag goes in
 pop, plant, clicks, rungs = E['pop'], E['planted'], E['clicks'], E['rungs']
 regions = [(B2, pop, 'D', ['D4', 'F#4', 'A4']), (pop, plant, 'G', ['D4', 'G4', 'B4']), (plant, rungs[0], 'A', ['C#4', 'E4', 'A4']),
-           (rungs[0], rungs[4], 'G', ['D4', 'G4', 'B4']), (rungs[4], E['flagIn'], 'A', ['C#4', 'E4', 'A4']), (E['flagIn'], STOP, 'D', ['D4', 'F#4', 'A4'])]
+           (rungs[0], rungs[2], 'G', ['D4', 'G4', 'B4']), (rungs[2], E['flagIn'], 'A', ['C#4', 'E4', 'A4']), (E['flagIn'], STOP, 'D', ['D4', 'F#4', 'A4'])]
 ROOT = {'D': ('D2', 'D3'), 'G': ('G2', 'D3'), 'A': ('A2', 'E3')}
 pad = []
 for t0, t1, c, notes in regions:
     pad += chord(t0, t1 - t0, notes, 64 if c != 'D' or t0 == B2 else 70)
-    for i, t in enumerate(np.arange(t0, t1 - 0.05, 0.3)):
-        bass += [(float(t), .28, ROOT[c][i % 2], 96 if i % 2 == 0 else 74)]
-mel5 = [(B2 + .3, 'F#5', 84), (B2 + .6, 'A5', 88), (B2 + .75, 'G5', 72), (B2 + .9, 'F#5', 78), (pop, 'G5', 88), (pop + .3, 'B5', 82), (pop + .45, 'A5', 70),
+    for i, t in enumerate(np.arange(t0, t1 - 0.04, 0.25)):
+        bass += [(float(t), .22, ROOT[c][i % 2], 96 if i % 2 == 0 else 74)]
+mel5 = [(B2 + .25, 'F#5', 84), (B2 + .5, 'A5', 88), (B2 + .62, 'G5', 72), (B2 + .75, 'F#5', 78), (pop, 'G5', 88), (pop + .12, 'B5', 82),
         (plant, 'A5', 86)] + [(t, n, 62 + 6 * i) for i, (t, n) in enumerate(zip(clicks, ['C#5', 'E5', 'A5']))] \
-       + [(t, n, 60 + 5 * i) for i, (t, n) in enumerate(zip(rungs, ['D5', 'E5', 'F#5', 'G5', 'A5', 'B5']))] \
+       + [(t, n, 62 + 5 * i) for i, (t, n) in enumerate(zip(rungs, ['D5', 'F#5', 'G5', 'A5']))] \
        + [(E['unfurl'], 'B5', 78, .08), (E['unfurl'] + .04, 'C#6', 86, .12)]
-mel += ns(mel5, dur=.22)
-mel += chord(E['flagIn'], .35, ['D3', 'A3', 'F#4', 'D5'], 84)                       # the flag goes in: a little brand fanfare
-glk = ns([(B2 + .3, 'F#5', 46), (B2 + .6, 'A5', 50), (pop, 'G5', 50), (pop + .3, 'B5', 46), (plant, 'A5', 50)]
-         + [(t, n, 34 + 3 * i) for i, (t, n) in enumerate(zip(rungs, ['D6', 'E6', 'F#6', 'G6', 'A6', 'B6']))]
-         + [(E['flagIn'] + i * .05, n, 62 + 6 * i, .5) for i, n in enumerate(['A5', 'D6', 'F#6'])], dur=.3)
-# M6 · Payoff (after the splash → end card): resolved and relaxed, 8 beats; the ladder clatters around beat 2½
-bass += ns([(g6(0), 'D2', 84), (g6(1), 'A2', 74), (g6(2), 'G2', 80), (g6(3), 'D2', 72), (g6(4), 'F#2', 76), (g6(5), 'A2', 70),
-            (g6(6), 'A1', 80), (g6(7), 'A2', 72), (g6(8), 'D2', 84, .6)], dur=.4)
-pad += (chord(g6(0), 2 * BEAT6, ['D4', 'F#4', 'A4'], 56) + chord(g6(2), 2 * BEAT6, ['D4', 'G4', 'B4'], 56)
-        + chord(g6(4), 2 * BEAT6, ['D4', 'F#4', 'A4'], 54) + chord(g6(6), 2 * BEAT6, ['C#4', 'E4', 'G4', 'A4'], 56)
-        + chord(g6(8), 1.9, ['D4', 'F#4', 'A4'], 54))
-pad_cc = [(g6(8) + i * 0.1, mido.Message('control_change', control=11, value=int(127 * (1 - i / 19) ** 1.4))) for i in range(20)]
-cel = ns([(g6(0), 'D5', 70, .3), (g6(.5), 'F#5', 72, .3), (g6(1), 'A5', 80, .6), (g6(2), 'B5', 76, .3), (g6(2.5), 'A5', 70, .3), (g6(3), 'G5', 72, .6),
-          (g6(4), 'F#5', 70, .3), (g6(4.5), 'E5', 66, .3), (g6(5), 'D5', 70, .6), (g6(6), 'E5', 70, .3), (g6(6.5), 'F#5', 70, .3), (g6(7), 'G5', 74, .3),
-          (g6(7.5), 'E5', 66, .3), (g6(8), 'D5', 78, 1.2), (g6(8), 'A5', 60, 1.2)])
-mel += ns([(g6(0), 'D5', 56), (g6(1), 'A4', 50), (g6(2), 'B4', 52), (g6(3), 'G4', 50), (g6(4), 'F#4', 50), (g6(5), 'D4', 48), (g6(6), 'E4', 50), (g6(7), 'G4', 50)])
-mel += chord(g6(8), .5, ['D3', 'A3', 'F#4', 'D5'], 72)                                  # the button, on the end card
-glk += [(g6(8), .5, 'D6', 40)]
+mel += ns(mel5, dur=.2)
+mel += chord(E['flagIn'], .3, ['D3', 'A3', 'F#4', 'D5'], 84)                       # the flag goes in: a little brand fanfare
+glk = ns([(B2 + .25, 'F#5', 46), (B2 + .5, 'A5', 50), (pop, 'G5', 50), (plant, 'A5', 50)]
+         + [(t, n, 34 + 3 * i) for i, (t, n) in enumerate(zip(rungs, ['D6', 'F#6', 'G6', 'A6']))]
+         + [(E['flagIn'] + i * .05, n, 62 + 6 * i, .45) for i, n in enumerate(['A5', 'D6', 'F#6'])], dur=.3)
+# M6 · Complete peace (after the splash): one soft open chord, a few slow celesta notes, a low pizz now and then. No pulse.
+pad += chord(M6, END + 1.2 - M6, ['D4', 'F#4', 'A4', 'E5'], 46)
+pad_cc = [(END - 0.2 + i * 0.08, mido.Message('control_change', control=11, value=int(127 * (1 - i / 19) ** 1.4))) for i in range(20)]
+cel = ns([(g6(0), 'A5', 58, 1.3), (g6(1.2), 'F#5', 52, 1.1), (g6(2.4), 'E5', 50, 1.2), (g6(3.6), 'D5', 54, 1.6)])
+bass += ns([(g6(0), 'D2', 60, .5), (g6(2.4), 'G2', 52, .5), (g6(3.6), 'A1', 54, .5)])
+pad += chord(END + 0.45, 2.0, ['D4', 'F#4', 'A4'], 50)                                  # resolves as the end line appears
+mel += chord(END + 0.45, .5, ['D3', 'A3', 'F#4', 'D5'], 60)
+glk += [(END + 0.45, .5, 'D6', 34)]
 
 music = {
     'pizz': render('m_pizz', [(0, PIZZ, mel + offs + sour, [])]),
@@ -131,8 +128,9 @@ music = {
 fx_chime = render('fx_chime', [(0, GLOCK, ns([(B2, 'A5', 96), (B2 + .045, 'D6', 104), (B2 + .09, 'F#6', 112, .8)], dur=.6), []),
                                (1, CELESTA, ns([(B2, 'A5', 90), (B2 + .045, 'D6', 96), (B2 + .09, 'F#6', 104, .9)], dur=.6), [])])
 no = E['no']
-bend = [(no[3] + 0.02 + i * 0.01, mido.Message('pitchwheel', pitch=int(-8191 * min(1, i / 20) ** 1.3))) for i in range(21)] + [(no[3] + 0.6, mido.Message('pitchwheel', pitch=0))]
-fx_desc = render('fx_desc', [(0, BASSOON, ns([(no[0], 'A3', 58, .16), (no[1], 'G3', 56, .16), (no[2], 'F3', 54, .16), (no[3], 'E3', 56, .25)]), bend)])
+NO_NOTES = ['A3', 'G3', 'F3', 'E3'][:len(no)]
+bend = [(no[-1] + 0.02 + i * 0.01, mido.Message('pitchwheel', pitch=int(-8191 * min(1, i / 20) ** 1.3))) for i in range(21)] + [(no[-1] + 0.6, mido.Message('pitchwheel', pitch=0))]
+fx_desc = render('fx_desc', [(0, BASSOON, ns([(t, n, 58 - 2 * i, .14 if i < len(no) - 1 else .25) for i, (t, n) in enumerate(zip(no, NO_NOTES))]), bend)])
 fx_bonknotes = render('fx_bonk', [(0, PIZZ, ns([(B1, 'F3', 100, .12), (B1 + .075, 'D3', 92, .2)]), [])])
 L0 = E['endFull']; logo_t = [L0, L0 + 4 * FRAME, L0 + 8 * FRAME]
 fx_logo = render('fx_logo', [(0, CELESTA, ns([(logo_t[0], 'A4', 96, .5), (logo_t[1], 'D5', 100, .5), (logo_t[2], 'F#5', 106, 1.3)]), []),
@@ -255,12 +253,12 @@ for i, s in enumerate(E['sad']):
     place(step(heavy=True), s['t'], -11, pan_x(s['x']))
     if i % 2: place(canvas(0.28, 18, 600, 3000), s['t'] + 0.03, -22, pan_x(s['x']))
 # riser → (two near-silent frames) → chime
-r_d = RISE_END - 5.75
+r_d = RISE_END - WALK1
 riser = whoosh(r_d, 800, 7000, peak=1.0, bw=0.5, curve=1.6)[:int(r_d * SR)]
 shim = sum(np.sin(2 * np.pi * np.cumsum(np.full(int(r_d * SR), f) * (1 + 0.6 * tt(r_d) / r_d)) / SR) for f in (1320, 1980, 2640)) * (tt(r_d) / r_d) ** 2.5
 riser = norm(riser) + 0.18 * norm(shim)
 riser[-int(0.004 * SR):] *= np.linspace(1, 0, int(0.004 * SR))
-place(riser, 5.75, -9, 0.05)
+place(riser, WALK1, -9, 0.05)
 place(whoosh(0.25, 600, 3200, peak=0.7), E['phone2'], -10, pan_x(560))
 place(fx_chime, 0, -12)
 sparkle(B2 + 0.08, 0.5, 14, 3500, 9000, -15, pan=pan_x(545))
@@ -274,7 +272,7 @@ place(canvas(0.2, 45), E['bagDown'] - 0.21, -18, pan_x(604)); place(lp(step(heav
 popfx = bp(noise(0.06), 600, 2400) * env(0.06, 0.0005, 0.006) + 0.7 * np.sin(2 * np.pi * np.cumsum(np.linspace(1250, 700, int(.06 * SR))) / SR) * env(0.06, 0.001, 0.012)
 place(popfx, pop, -7, pan_x(604))
 place(canvas(0.13, 30, 400, 2500), pop + 0.02, -18, pan_x(604))
-# magical fwip: the ladder (and its rolled-up flag) out of the pouch
+# magical fwip: the ladder out of the pouch
 place(whoosh(0.2, 700, 7000, peak=0.6, bw=0.45), E['ladderOut'], -6, pan_x(600))
 sparkle(E['ladderOut'] + 0.03, 0.17, 9, 2600, 8000, -13, rising=True, pan=pan_x(580))
 # plant against the glass
@@ -298,8 +296,10 @@ place(flutter(0.26), E['unfurl'], -9, pan_x(380))
 wob = np.sin(2 * np.pi * np.cumsum(150 * (1 + 0.08 * np.sin(2 * np.pi * 14 * tt(0.4)))) / SR) * env(0.4, 0.003, 0.11)
 place(wood(260, 0.15, 0.04), E['flagIn'], -8, pan_x(410)); place(glass(3400, 0.35), E['flagIn'] + 0.003, -15, pan_x(410))
 place(wob, E['flagIn'] + 0.01, -16, pan_x(410))
-# hop over the rim
-place(whoosh(0.12, 900, 2400, peak=0.5), E['jump'], -14, pan_x(420))
+# found it: a glance, he turns his back to the drink, and flops backward into it; his feet knock the ladder away
+place(canvas(0.12, 40, 700, 3500), E['turn'] + 0.08, -21, pan_x(440))
+flop_d = SPL - E['flop']
+place(whoosh(flop_d, 1700, 380, peak=0.88, bw=0.7, curve=0.8)[:int(flop_d * SR)], E['flop'], -11, pan_x(380))
 # THE SPLASH
 sd = 0.7; st = tt(sd)
 grain = np.zeros(len(st))
@@ -316,35 +316,24 @@ for k in range(6):                                      # ice cubes knocking
 for _ in range(38):                                     # droplets falling back
     u = rng.uniform(0, 1) ** 1.6
     place(bubble(rng.uniform(1400, 3600), 0.02, 2.2), SPL + 0.09 + 0.4 * u, -14 - 8 * u - rng.uniform(0, 5), pan_x(300) + rng.uniform(-.35, .35))
-for _ in range(9):                                      # muffled bubbles while he's under
-    place(lp(bubble(rng.uniform(260, 620), 0.05, 1.8), 1200), rng.uniform(SPL + 0.06, E['surface'] - 0.02), -16 - rng.uniform(0, 5), pan_x(300))
-# surfaces: shloop + two ice clinks; legs flop over the rim
-shl = whoosh(0.22, 1800, 400, peak=0.25, bw=0.6); b = bubble(500, 0.08, 1.6); o = int(0.03 * SR); shl[o:o + len(b)] += 0.6 * b
-place(shl, E['surface'], -13, pan_x(300))
-place(glass(2600, 0.25), E['surface'] + 0.04, -18, pan_x(320)); place(glass(3300, 0.25), E['surface'] + 0.12, -20, pan_x(280))
-for tl in E['legs']:
-    fl = lp(noise(0.06), 1500) * env(0.06, 0.002, 0.015); b = bubble(700, 0.04, 1.5); fl[:len(b)] += 0.4 * b
-    place(fl, tl, -17, pan_x(380))
-# done with the ladder: a push with his foot, it tips over and clatters onto the counter
-place(whoosh(0.1, 700, 1600, peak=0.6), E['kick'], -20, pan_x(440))
-place(wood(640, 0.08, 0.02), E['push'], -15, pan_x(440))
+# the ladder: knocked by his feet as he goes, tips over, clatters onto the counter
+place(wood(640, 0.08, 0.02), E['push'] + 0.03, -15, pan_x(440))
 fall_d = E['clatter'] - E['push']
-place(whoosh(fall_d, 250, 1300, peak=0.97, bw=0.6, curve=2.2)[:int(fall_d * SR)], E['push'], -17, pan_x(560))
-for dt, f, lvl in [(0, 380, -6), (0.035, 520, -10), (0.07, 450, -12), (0.11, 600, -16)]:      # rails, then rungs rattling
+place(whoosh(fall_d, 250, 1300, peak=0.97, bw=0.6, curve=2.2)[:int(fall_d * SR)], E['push'], -19, pan_x(560))
+for dt, f, lvl in [(0, 380, -8), (0.035, 520, -12), (0.07, 450, -14), (0.11, 600, -17)]:      # rails, then rungs rattling
     place(wood(f, 0.16, 0.035), E['clatter'] + dt, lvl, pan_x(620) + rng.uniform(-.1, .1))
-place(wood(480, 0.12, 0.03), E['bounce'] - 0.12, -15, pan_x(620))
-# ladder gone: he slides back into the coffee and floats like it's a pool; lazy lapping with each ripple
-sl = whoosh(0.45, 900, 300, peak=0.35, bw=0.8)
-for _ in range(10): b = bubble(rng.uniform(300, 800), 0.06, 1.6); o = int(rng.uniform(0.05, 0.35) * SR); sl[o:o + len(b)] += 0.25 * b
-place(sl, E['pool'] + 0.1, -15, pan_x(300))
+place(wood(480, 0.12, 0.03), E['bounce'] - 0.12, -17, pan_x(620))
+# complete peace: a soft settle, then only the faintest lapping with each slow ripple
+st_ = lp(noise(0.6), 800) * np.sin(np.pi * np.linspace(0, 1, int(0.6 * SR))) ** 2
+for _ in range(4): b = bubble(rng.uniform(350, 700), 0.05, 1.5); o = int(rng.uniform(0.05, 0.4) * SR); st_[o:o + len(b)] += 0.4 * b
+place(st_, E['settled'] - 0.15, -20, pan_x(300))
 for tr0 in E['ripples']:
-    lap = lp(noise(0.5), 900) * np.sin(np.pi * np.linspace(0, 1, int(0.5 * SR))) ** 2
-    for _ in range(3): b = bubble(rng.uniform(350, 700), 0.05, 1.5); o = int(rng.uniform(0.05, 0.4) * SR); lap[o:o + len(b)] += 0.6 * b
-    place(lap, tr0, -22 - rng.uniform(0, 2), pan_x(260))
-place(glass(3600, 0.3), E['floating'] + 0.5, -25, pan_x(300)); place(glass(3000, 0.3), E['floating'] + 1.9, -26, pan_x(300))
+    lap = lp(noise(0.6), 800) * np.sin(np.pi * np.linspace(0, 1, int(0.6 * SR))) ** 2
+    for _ in range(2): b = bubble(rng.uniform(350, 650), 0.05, 1.5); o = int(rng.uniform(0.1, 0.45) * SR); lap[o:o + len(b)] += 0.5 * b
+    place(lap, tr0 + 0.4, -25, pan_x(280))
+place(glass(3600, 0.3), E['settled'] + 1.3, -26, pan_x(300)); place(glass(3000, 0.3), E['settled'] + 2.9, -27, pan_x(300))
 # brand whoosh into the end card, then the sonic logo
-bw_d = 0.55
-place(whoosh(bw_d, 300, 1800, peak=0.47, bw=0.8, curve=0.8), E['endCard'] - 0.26, -8, 0)
+place(whoosh(0.95, 250, 1200, peak=0.55, bw=0.9, curve=0.8), END - 0.05, -14, 0)          # a soft swell as it washes into green
 place(fx_logo, 0, -11)
 
 # room tone: very low, clean café air
@@ -361,29 +350,30 @@ def rms_norm(x):
 W = {'pizz': 1.0, 'bass': 0.8, 'marimba': 0.45, 'bassoon': 0.75, 'strings': 0.38, 'bells': 0.42}
 mus = sum(W[k] * rms_norm(v) for k, v in music.items())
 sh = np.zeros((N, 2))                                   # brushes / shaker in the bright section: 16ths, 8th accents
-for i in range(int((STOP - 0.05 - B2) / 0.15) + 1):
-    t0 = B2 + i * 0.15; d = 0.06
+for i in range(int((STOP - 0.05 - B2) / 0.125) + 1):
+    t0 = B2 + i * 0.125; d = 0.05
     s = hp(noise(d), 5000) * env(d, 0.004, 0.018) * (1.0 if i % 2 == 0 else 0.55)
     j = int(t0 * SR); sh[j:j + len(s)] += np.stack([s * 0.9, s * 0.7], -1)
 mus = mus + 0.18 * sh / np.abs(sh).max() * np.abs(mus).max()
 mus = reverb(mus, ir(1.3, 5000), 0.22)
+SAD_END = E['sad'][-1]['t']
 def cutoff(t):                                          # low-pass: deflate on the 24%, glum, opening back up for the 92%
     if t < B1: return 20000
     if t < B1 + 0.3: return 20000 * (1500 / 20000) ** ((t - B1) / 0.3)
-    if t < 3.35: return 1500
-    if t < 5.43: return 2000
-    if t < RISE_END: return 2000 * (20000 / 2000) ** ((t - 5.43) / (RISE_END - 5.43))
+    if t < WALK0: return 1500
+    if t < SAD_END: return 2000
+    if t < RISE_END: return 2000 * (20000 / 2000) ** ((t - SAD_END) / (RISE_END - SAD_END))
     return 20000
 mus = tv_filter(mus, cutoff, 'lowpass')
 ramp = lambda pts: np.interp(TT, [p[0] for p in pts], [p[1] for p in pts])
-g = ramp([(0, -12), (B1 - 0.04, -12), (B1 + 0.02, -16), (3.30, -16), (3.40, -14), (5.75, -14), (RISE_END, -8), (B2, -10), (E['flagIn'] - 0.02, -10),
-          (E['flagIn'] + 0.02, -9), (M6, -11), (M6 + 0.8, -8), (E['endCard'] - 0.05, -8), (E['endCard'] + 0.05, -12), (L0, -12), (L0 + 0.1, -16), (DUR, -16)])
+g = ramp([(0, -12), (B1 - 0.04, -12), (B1 + 0.02, -16), (WALK0 - 0.05, -16), (WALK0 + 0.05, -14), (WALK1, -14), (RISE_END, -8), (B2, -10),
+          (E['flagIn'] - 0.02, -10), (E['flagIn'] + 0.02, -9), (M6, -11), (M6 + 1.0, -9), (END, -9), (END + 0.45, -10), (L0, -13), (L0 + 0.1, -16), (DUR, -16)])
 gate = np.clip(TT / 0.04, 0, 1)
 gate = gate * (1 - np.clip((TT - RISE_END) / 0.008, 0, 1) * (TT < B2))
 gate = gate * np.where(TT < STOP, 1, np.where(TT < M6, np.clip(1 - (TT - STOP) / 0.02, 0, 1), np.clip((TT - M6) / 0.25, 0, 1)))
 duck = np.zeros(N)
 for t0, depth, hold in [(B1, 4, .25), (B2, 3, .3), (E['hop'], 3, .15), (pop, 3, .12), (E['ladderOut'], 3, .2)] + [(c, 2.5, .1) for c in clicks] \
-        + [(E['flagIn'], 2, .2), (E['clatter'], 4, .25), (E['endCard'] - .1, 3, .25)]:
+        + [(E['flagIn'], 2, .2), (L0, 3, .4)]:
     a = np.clip((TT - t0) / 0.005, 0, 1) * np.where(TT < t0 + hold, 1, np.exp(-(TT - t0 - hold) / 0.25))
     duck = np.maximum(duck, depth * a)
 mus = mus / np.abs(mus).max() * REF * (db(g - duck) * gate)[:, None]

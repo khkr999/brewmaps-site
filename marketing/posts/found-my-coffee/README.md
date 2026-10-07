@@ -14,34 +14,37 @@
 
 Lines (every episode): **نفس الكوفي، مشروبين… / واحد بس على ذوقك.** End card: **مو بس وين تروح… / وش تشرب.**
 
-## Ep. 1 · Ladder + flag — `export/ep1-ladder-flag.mp4`, 19s, with sound
+## Ep. 1 · Ladder + flag + the flop — `export/ep1-ladder-flag.mp4`, 15.2s, with sound
 
-Plate `plates/iced-hot-v2.jpg`: the AI-generated, unbranded `plates/iced-hot.jpg` graded by `enhance.py` so the drinks look
-delicious (richer crema and swirl, sheen, condensation on the glass). Soft animated steam rises off the cappuccino.
-`reel.js`. Script: `SCRIPT.md` / `export/ep1-ladder-script.docx`. Badges: 24% light green, 92% dark green.
-At the top of the ladder he pulls the BrewMaps flag (same forest green + real mark as The Regular) out of his pocket,
-it snaps open above him, and he plants it on the glass rim before hopping in. Later he pushes the ladder over with his
-foot and relaxes in the latte like at a pool's edge (leaning back on the far rim, elbows on the edge, eyes open,
-grinning). The flag stays on his drink.
-Sound: `sound.py` (mix `export/ep1-ladder-flag-mix.wav`, −17.3 LUFS, −1.2 dBFS peak). Every cue time comes from
-`events.js`, which reads the animation (it draws on twos), so the mix follows any timing change. The score is composed in
-MIDI and rendered with the FluidR3 GM soundfont (fluidsynth); the SFX are synthesised. Cue sheet: `SOUND-DESIGN.md`.
-Earlier cuts: `reel-ladder-flag-v2.js` (floating asleep on his back); `reel-ladder-flag-v1.js` (flag rolled on the ladder, 18.5s); `reel-ladder-v2.js` (no flag, 16.6s) →
-`export/ep1-ladder.mp4` (silent) / `export/ep1-ladder-sound.mp4`.
+search → effort → find → FLOP BACK → complete peace. The first half is quick (the 24%, a sad walk, the 92%, the ladder,
+the climb, the BrewMaps flag out of his pocket and planted on the rim). Then a satisfied glance, he turns his back to the
+drink and flops backward into it (his feet knock the ladder away), and floats across the iced latte like it's a pool:
+head back, arms spread wide past the rim, open hands, legs loose, almost motionless. The camera eases in on him; the line
+comes only after the joke lands (small setup, one big statement on a soft scrim); then the scene washes into BrewMaps
+green with him still faintly there, and the end line + Brew Maps lockup come in.
+
+- `reel.js`: the scene. The float is its own drawing (`drawFloater`, seen from above like a pool float, same line style,
+  slightly larger, heavier line). Green is kept for BrewMaps things only (phone, badges, flag); the pouch is white line art.
+- Plate `plates/iced-hot-v2.jpg` (graded by `enhance.py` from the AI-generated, unbranded `plates/iced-hot.jpg`) + animated steam.
+- Sound: `sound.py` → `export/ep1-ladder-flag-mix.wav` (−17.6 LUFS, −1.2 dBFS peak). Cue times come from `events.js`,
+  which reads the animation (it draws on twos). Busy, bright pizzicato through the effort; a brand fanfare as the flag
+  goes in; silence while he falls; the splash; then a slow, sparse "peace" chord. Cue sheet: `SOUND-DESIGN.md`.
+- Script: `SCRIPT.md` / `export/ep1-ladder-script.docx`.
+- Earlier cuts: `reel-ladder-flag-v3.js` (pool-edge lean, 19s), `reel-ladder-flag-v2.js` (floating asleep),
+  `reel-ladder-flag-v1.js` (flag rolled on the ladder), `reel-ladder-v2.js` (no flag) → `export/ep1-ladder.mp4` / `-sound.mp4`.
 
 | Time | Beat |
 |---|---|
-| 0–1.6s | Walks in carrying a small green pouch in one hand. |
-| 1.7–3.3s | **كابتشينو · ٢٤٪ على ذوقك** (light green). Sad: worried brow, frown; a cartoon head-turn "no". |
-| 3.35–5.75s | The sad walk: one hand in his pocket, the pouch drooping in the other, slumped, head down. |
-| 5.85–7.2s | **آيس لاتيه · ٩٢٪ على ذوقك** (dark green). Head up, grin, hop. |
-| 7.2–8.45s | Sets the pouch down, opens the flap, pulls out a folded ladder, plants it on the glass; it extends to the rim. |
-| 8.45–9.6s | Climbs it, rung by rung. |
-| 9.6–10.28s | At the top: a flag out of his pocket, up, snaps open, planted on the rim. |
-| 10.4–11.0s | Hops in; splash; surfaces. |
-| 11.35–12.7s | Sits up, knees over the rim; pushes the ladder with his foot, it tips over and clatters onto the counter. |
-| 12.58–16.1s | Slides back in and relaxes like at a pool's edge, the flag beside him. **نفس الكوفي، مشروبين… واحد بس على ذوقك.** (held ~3s) |
-| 16.1–19.0s | End card (held ~2.3s): mark / **مو بس وين تروح… وش تشرب.** |
+| 0–1.05s | Walks in, quick, pouch in hand. |
+| 1.1–2.45s | **كابتشينو · ٢٤٪ على ذوقك** (light green). A quick "no". |
+| 2.45–3.95s | The sad walk. |
+| 4.0–4.8s | **آيس لاتيه · ٩٢٪ على ذوقك** (dark green). Hop. |
+| 5.0–6.62s | Pouch, ladder, three clicks, a fast climb. |
+| 6.62–7.08s | The BrewMaps flag out of his pocket, open, planted on the rim. |
+| 7.14–7.68s | A satisfied glance; he flops backward into the drink, knocking the ladder away. |
+| 7.68–8.0s | Splash: floating across the latte like a pool. |
+| 8.25–11.9s | Almost motionless. **نفس الكوفي، مشروبين… / واحد بس على ذوقك.** |
+| 11.9–15.2s | Washes into green, he stays faintly: **مو بس وين تروح… وش تشرب.** + Brew Maps lockup. |
 
 Alt cut, springboard entry: `export/ep1-springboard.mp4` (`reel-springboard.js`), held for ep. 2.
 
