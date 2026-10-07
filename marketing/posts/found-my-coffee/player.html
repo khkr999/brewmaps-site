@@ -1,0 +1,19 @@
+<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="../../assets/fonts/tajawal.css">
+<link rel="stylesheet" href="../../assets/fonts/dmsans.css">
+<style>html,body{margin:0;background:#000}</style>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script src="../the-regular/rig.js"></script>
+<script src="reel.js"></script>
+<script>
+const img = src => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = src; });
+const ctx = document.getElementById('c').getContext('2d'), layer = document.createElement('canvas');
+layer.width = 1080; layer.height = 1920;
+window.DURATION = DUR;
+window.ready = (async () => {
+  await Promise.all([document.fonts.load('800 70px "Tajawal"', 'الكوفي'), document.fonts.load('500 36px "Tajawal"', 'مجاني')]);
+  window.assets = { plate: await img('plates/cup.jpg'), mark: await img('plates/mark-cream.png') };
+  ASSETS = window.assets;
+})();
+window.frame = t => { renderReel(ctx, layer, t, window.assets); return document.getElementById('c').toDataURL('image/png'); };
+</script>
