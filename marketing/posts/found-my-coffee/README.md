@@ -6,30 +6,31 @@
 
 | Ep | Drinks (rejected → match) | The way in |
 |---|---|---|
-| **1 · Springboard** (done) | hot cappuccino ٢٤٪ → iced latte ٩٢٪ | climbs the rejected cup and leaps off its rim |
-| 2 · Ladder | V60 → Spanish latte | props a tiny ladder against the glass, climbs, steps in |
+| **1 · Ladder** (done) | hot cappuccino ٢٤٪ → iced latte ٩٢٪ | sad walk off, then props a tiny ladder against the glass, climbs, hops in |
+| 2 · Springboard (built as an alt cut of ep. 1, re-shoot with new drinks) | V60 → Spanish latte | climbs the rejected cup and leaps off its rim |
 | 3 · Pole vault | espresso → matcha | vaults over the rim on a stirrer |
 | 4 · Sugar stairs | flat white → cortado | stacks sugar cubes into steps |
 | 5 · Spoon slide | cold brew → iced mocha | slides down a spoon resting on the rim |
 
 Lines (every episode): **نفس الكوفي، مشروبين… / واحد بس على ذوقك.** End card: **مو بس وين تروح… / وش تشرب.**
 
-## Ep. 1 · Springboard — `export/ep1-springboard.mp4`, 11.3s
+## Ep. 1 · Ladder — `export/ep1-ladder.mp4`, 12.4s
 
 Plate `plates/iced-hot.jpg` (AI-generated, unbranded). `reel.js`.
 
 | Time | Beat |
 |---|---|
-| 0–1.7s | Walks in, stops beside the hot cappuccino. |
-| 1.8–3.35s | BrewMaps: **كابتشينو · ٢٤٪ على ذوقك** (grey). Frown and annoyed brow, shakes his head left-right ("no"). |
-| 3.4–4.35s | Hops up, grabs the rim, pulls himself onto the hot cup. |
-| 4.5–6.0s | On the rim he checks the other drink: **آيس لاتيه · ٩٢٪ على ذوقك** (green). Grin, little hop. |
-| 6.0–7.05s | Crouches and springs off the rim: a long tucked leap across into the iced latte. |
-| 7.05–7.66s | Splash, a beat under, then he surfaces. |
-| 7.66–9.3s | Sits up on the ice, knees over the rim, feet dangling. **نفس الكوفي، مشروبين… واحد بس على ذوقك.** |
-| 9.3–11.3s | End card: mark / **مو بس وين تروح… وش تشرب.** / مجاني على الآب ستور وجوجل بلاي |
+| 0–1.6s | Walks in to the hot cappuccino. |
+| 1.7–3.3s | BrewMaps: **كابتشينو · ٢٤٪ على ذوقك** (grey). Sad, not angry: worried brow, small frown, a slow left-right "no". |
+| 3.35–5.75s | The sad walk: hands in his pockets, shoulders slumped, head down, slow steps to the iced latte. |
+| 5.85–7.2s | Checks it: **آيس لاتيه · ٩٢٪ على ذوقك** (green). Head comes up, grin, little hop. |
+| 7.25–7.85s | Pulls out a tiny ladder and leans it on the glass. |
+| 7.85–9.0s | Climbs it, rung by rung. |
+| 9.0–9.95s | Hops over the rim into the ice; splash; surfaces. |
+| 9.95–10.4s | Sits up on the ice, knees over the rim. **نفس الكوفي، مشروبين… واحد بس على ذوقك.** |
+| 10.4–12.4s | End card: mark / **مو بس وين تروح… وش تشرب.** / مجاني على الآب ستور وجوجل بلاي |
 
-Percentages are illustrative.
+Alt cut, springboard entry: `export/ep1-springboard.mp4` (`reel-springboard.js`), held for ep. 2.
 
 ---
 
