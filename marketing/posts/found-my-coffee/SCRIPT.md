@@ -31,9 +31,9 @@ iced latte in a short glass (left), on a dark wooden counter. Slow push-in on th
 | 11.0–11.75 | Surfaces, sits up on the ice, flops one leg over the rim, then the other. | — |
 | 11.8–12.0 | Done with the ladder: pushes it with his foot. | — |
 | 12.0–12.7 | The ladder tips over and clatters onto the counter. The flag stays on his drink. | — |
-| 12.58–13.18 | He slides back into the coffee and floats on his back like it is a pool: head on the rim, knees up, eyes closed. | — |
+| 12.58–13.18 | He slides back into the coffee and relaxes like at a pool's edge: leaning back on the far rim, elbows on the edge, head back, eyes open, grinning, a knee out of the coffee. | — |
 | 13.05–13.55 | Lazy ripples around him. The line fades in. | **نفس الكوفي، مشروبين…** / **واحد بس على ذوقك.** |
-| 13.55–16.1 | Holds (~3s to read): floating, bobbing gently, the flag waving beside him. | Line held, fades out at 15.9–16.3 |
+| 13.55–16.1 | Holds (~3s to read): relaxing, bobbing gently, the flag waving beside him. | Line held, fades out at 15.9–16.3 |
 | 16.1–16.7 | End card fades in (BrewMaps green). | BrewMaps mark |
 | 16.7–19.0 | Holds (~2.3s to read). | **مو بس وين تروح…** / **وش تشرب.** / **مجاني على الآب ستور وجوجل بلاي** |
 

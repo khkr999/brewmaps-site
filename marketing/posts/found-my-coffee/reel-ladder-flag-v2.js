@@ -255,23 +255,21 @@ function scene(t) {
       for (const k of ['x', 'y', 'rot', 'tilt']) P[k] = mix(P[k], Q[k], e);
       P.hands = { f: { w: mix2(W0.hf, Q.hands.f.w, e) }, b: { w: mix2(W0.hb, Q.hands.b.w, e) } };
       P.feet = { f: { w: mix2(W0.ff, Q.feet.f.w, e) }, b: { w: mix2(W0.fb, Q.feet.b.w, e) } };
-      if (e > 0.5) { P.knee = Q.knee; P.elbow = Q.elbow; P.eyes = Q.eyes; P.mouth = Q.mouth; P.brow = Q.brow; }
+      if (e > 0.5) { P.knee = Q.knee; P.elbow = Q.elbow; }
       S.ripples = [0, 1, 2, 3, 4, 5].map(i => T.pool + 0.35 + i * 0.95).filter(t0 => t > t0 && t < t0 + 1.6).map(t0 => seg(t, t0, t0 + 1.6));
     }
   }
   return { P, S };
 }
 
-// relaxing like at a pool's edge: leaning back against the far rim, elbows on the edge, head back, eyes open, grinning,
-// a knee poking out of the coffee. Awake and enjoying it, not asleep. Bobs and drifts a little.
+// floating on his back like it's a pool: head resting on the far rim, hands behind his head, knees and toes out of the coffee
 function poolPose(P, t) {
-  const bob = Math.sin(t * 2.0) * 3, drift = Math.sin(t * 0.8) * 3, sway = Math.sin(t * 1.3) * 0.03;
-  P.f = 1; P.eyes = 'open'; P.mouth = POOL.mouth; P.brow = false; P.down = 0;
-  [P.x, P.y] = V([POOL.hip[0] + drift, POOL.hip[1] + bob]); P.rot = POOL.rot + sway; P.tilt = POOL.tilt;
-  P.hands = { f: { w: V(add(POOL.hf, [drift, bob])) }, b: { w: V(add(POOL.hb, [drift * 0.5, bob * 0.5])) } }; P.elbow = { f: POOL.ef, b: POOL.eb };
-  P.feet = { f: { w: V(add(POOL.ff, [drift, bob])) }, b: { w: V(add(POOL.fb, [drift, bob * 0.5])) } }; P.knee = { f: POOL.kf, b: POOL.kb };
+  const bob = Math.sin(t * 2.0) * 3, sway = Math.sin(t * 1.3) * 0.03;
+  P.f = 1; P.eyes = 'closed'; P.mouth = 'grin';
+  [P.x, P.y] = V([296, 1004 + bob]); P.rot = -1.2 + sway; P.tilt = -0.35;
+  P.hands = { f: { w: toWorld(P, [-34, -214]) }, b: { w: toWorld(P, [-18, -226]) } }; P.elbow = { f: -1, b: -1 };
+  P.feet = { f: { w: V([392, 990 + bob * 0.5]) }, b: { w: V([410, 996 + bob * 0.5]) } }; P.knee = { f: -1, b: -1 };
 }
-var POOL = { hip: [244, 1030], rot: -0.78, tilt: -0.45, mouth: 'grin', hf: [110, 962], hb: [136, 970], ef: -1, eb: -1, ff: [330, 986], fb: [344, 996], kf: -1, kb: -1 };
 
 // sitting up on the ice: hips above the milk, so his legs run cleanly from hip to rim and over
 function loungePose(P, t, e, l1, l2) {
@@ -361,7 +359,7 @@ function renderReel(ctx, layer, t, assets) {
   }
   if (S.ripples) {                                         // lazy pool ripples around him
     lc.setTransform(1, 0, 0, 1, 0, 0); lc.strokeStyle = LC; lc.lineWidth = 3; const C = CUP_A.cof;
-    S.ripples.forEach(u => { lc.globalAlpha = 0.7 * (1 - u); lc.beginPath(); lc.ellipse(262, C.cy + 2, 30 + 95 * u, 6 + 13 * u, 0, 0, 7); lc.stroke(); });
+    S.ripples.forEach(u => { lc.globalAlpha = 0.7 * (1 - u); lc.beginPath(); lc.ellipse(250, C.cy + 2, 30 + 95 * u, 6 + 13 * u, 0, 0, 7); lc.stroke(); });
     lc.globalAlpha = 1; lc.setTransform(K, 0, 0, K, 0, 0);
   }
   lc.setTransform(1, 0, 0, 1, 0, 0); LINE = 6.5;

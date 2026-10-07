@@ -100,7 +100,7 @@ frame that shows the change); `sound.py` places all sounds from that list. Times
 | 11.83 (11:20) · 12.00 (12:00) | Pushes the ladder with his foot | Small foot whoosh, wooden tap |
 | 12.00 (12:00) – 12.50 (12:12) | Ladder tips over | Accelerating fall whoosh, −17 |
 | 12.50 (12:12) | Lands on the counter | Clatter: four wooden hits over 0.11s, −6; music ducks 4 dB |
-| 12.58 (12:14) – 13.25 (13:06) | Slides back in, floats on his back like a pool | Soft slosh with a few bubbles, −15 |
+| 12.58 (12:14) – 13.25 (13:06) | Slides back in, relaxes against the far rim like a pool's edge | Soft slosh with a few bubbles, −15 |
 | 13.00 · 13.92 · 14.83 · 15.83 | Each lazy ripple | Gentle lap, −22 |
 | 13.08 (13:02) | The line fades in | Music; two very soft ice tinkles while it holds |
 | 16.17 (16:04) | End card | Brand whoosh peaks here; D-major button chord |

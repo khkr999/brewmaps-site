@@ -21,11 +21,12 @@ delicious (richer crema and swirl, sheen, condensation on the glass). Soft anima
 `reel.js`. Script: `SCRIPT.md` / `export/ep1-ladder-script.docx`. Badges: 24% light green, 92% dark green.
 At the top of the ladder he pulls the BrewMaps flag (same forest green + real mark as The Regular) out of his pocket,
 it snaps open above him, and he plants it on the glass rim before hopping in. Later he pushes the ladder over with his
-foot and floats on his back in the latte like it's a pool. The flag stays on his drink.
+foot and relaxes in the latte like at a pool's edge (leaning back on the far rim, elbows on the edge, eyes open,
+grinning). The flag stays on his drink.
 Sound: `sound.py` (mix `export/ep1-ladder-flag-mix.wav`, −17.3 LUFS, −1.2 dBFS peak). Every cue time comes from
 `events.js`, which reads the animation (it draws on twos), so the mix follows any timing change. The score is composed in
 MIDI and rendered with the FluidR3 GM soundfont (fluidsynth); the SFX are synthesised. Cue sheet: `SOUND-DESIGN.md`.
-Earlier cuts: `reel-ladder-flag-v1.js` (flag rolled on the ladder, 18.5s); `reel-ladder-v2.js` (no flag, 16.6s) →
+Earlier cuts: `reel-ladder-flag-v2.js` (floating asleep on his back); `reel-ladder-flag-v1.js` (flag rolled on the ladder, 18.5s); `reel-ladder-v2.js` (no flag, 16.6s) →
 `export/ep1-ladder.mp4` (silent) / `export/ep1-ladder-sound.mp4`.
 
 | Time | Beat |
@@ -39,7 +40,7 @@ Earlier cuts: `reel-ladder-flag-v1.js` (flag rolled on the ladder, 18.5s); `reel
 | 9.6–10.28s | At the top: a flag out of his pocket, up, snaps open, planted on the rim. |
 | 10.4–11.0s | Hops in; splash; surfaces. |
 | 11.35–12.7s | Sits up, knees over the rim; pushes the ladder with his foot, it tips over and clatters onto the counter. |
-| 12.58–16.1s | Slides back in and floats like it's a pool, the flag beside him. **نفس الكوفي، مشروبين… واحد بس على ذوقك.** (held ~3s) |
+| 12.58–16.1s | Slides back in and relaxes like at a pool's edge, the flag beside him. **نفس الكوفي، مشروبين… واحد بس على ذوقك.** (held ~3s) |
 | 16.1–19.0s | End card (held ~2.3s): mark / **مو بس وين تروح… وش تشرب.** |
 
 Alt cut, springboard entry: `export/ep1-springboard.mp4` (`reel-springboard.js`), held for ep. 2.
