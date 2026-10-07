@@ -253,60 +253,35 @@ function scene(t) {
 }
 const CLIMB = 5;                                            // climbing: half-strides over the climb (rung taps at each)
 
-// ─── the float: a man floating on his back, completely surrendered (the pool-float reference) ───
-// Drawn in "pool-plane" coordinates (x across his body, y from his head toward his feet, origin mid-torso) and laid onto
-// the coffee with a little perspective (the plane is squashed vertically), so the drink reads as his swimming pool.
-// Arms dropped out to both sides past the cup, loose open hands; head fallen back, face to the sky, eyes closed; one leg
-// straight, one with a small bend, feet falling outward. One fixed pose: only the whole body drifts 1–2 px.
-var FL = { land: [306, 968], c: [262, 972], phi: -0.62, sqFar: 1, sqNear: 1, s: 0.88, headSq: 1, line: 6.2 };
-var POSE = {
-  torso: [[-20, -80], [-40, -70], [-45, -42], [-40, 0], [-38, 40], [-28, 64], [0, 70], [28, 64], [38, 40], [40, 0], [45, -42], [40, -70], [20, -80]],
-  shorts: [[-60, 34], [0, 44], [60, 34]],
-  neck: [[0, -76], [-2, -104]],
-  head: [-4, -140], headTilt: 0.3,
-  armL: [[-40, -62], [-102, -70], [-176, -86]],                 // out past the cup on the head side, soft elbow
-  armR: [[40, -62], [104, -4], [172, 66]],                      // dropped outward toward the hip
-  legL: [[-18, 64], [-34, 132], [-44, 198], [-72, 206]],        // almost straight, foot fallen outward
-  legR: [[18, 64], [50, 124], [52, 190], [80, 194]],            // a small bend at the knee, foot fallen outward
-};
-function poolXY(p, d) {                                    // lying on the coffee: the far half (head) foreshortens more than the near half (feet)
-  const r = rot([p[0] * FL.s, p[1] * FL.s], FL.phi); return [FL.c[0] + r[0] + d[0], FL.c[1] + r[1] * (r[1] < 0 ? FL.sqFar : FL.sqNear) + d[1]];
-}
-function openHand(ctx, w, fd, side) {                       // loose and open: palm, four separated fingers, thumb; wrist dropped
-  const g = [0, 1], m = add(scl(fd, 0.8), scl(g, 0.2)), d = scl(m, 1 / len(m));
-  const palm = add(w, scl(d, 9));
-  shape(ctx, circlePts(palm, 11, 10, 8, Math.atan2(d[1], d[0])).map(p => J(p, 0.5)));
-  [-0.5, -0.17, 0.16, 0.47].forEach((r, i) => {
-    const fdir = rot(d, r), b = add(palm, scl(fdir, 9)), L = [13, 16, 15, 12][i];
-    const mid = add(b, scl(rot(fdir, 0.1 * side), L * 0.55)), tip = add(b, scl(rot(fdir, 0.22 * side), L));
-    stroke(ctx, [b, mid, tip].map(p => J(p, 0.4)), { width: LINE * 0.8 });
-  });
-  const th = rot(d, -1.2 * side), tb = add(palm, scl(th, 8));
-  stroke(ctx, [tb, add(tb, scl(rot(th, 0.4 * side), 10))].map(p => J(p, 0.4)), { width: LINE * 0.8 });
-}
+// ─── the float: a man lying on his back in the coffee, as if it were a swimming pool ───────────────
+// A single 3/4-overhead pose (plates/float-pose.png: generated as line art from the pool-float body language, keyed,
+// lines thinned to the character's weight, mirrored so his head lands where he falls). Head back toward the far side of
+// the cup, eyes closed, arms dropped outward past both sides with open hands, legs loose, feet falling outward. Laid onto
+// the coffee with a little extra foreshortening; his hips and upper legs are under the coffee (a soft patch is erased
+// inside the rim, with a waterline), and anything below the rim shows only faintly through the glass. One fixed pose:
+// the whole figure drifts 1–2 px.
+var FL = { land: [306, 968], c: [262, 968], s: 0.44, sq: 0.62, hip: [47, 32], hipR: [65, 26] };
 function drawFloater(ctx, t) {
-  const d = [1.4 * Math.sin(t * 0.42), 1.1 * Math.sin(t * 0.57 + 1.3)];      // the whole body drifts, 1–2 px; the pose never changes
-  const X = p => J(poolXY(p, d));
-  for (const L of [POSE.legL, POSE.legR]) tube(ctx, L.map(X), RIG.leg * 0.72);
-  for (const [A, side] of [[POSE.armL, -1], [POSE.armR, 1]]) {
-    const pts = A.map(p => poolXY(p, d)), fd = scl([pts[2][0] - pts[1][0], pts[2][1] - pts[1][1]], 1 / len([pts[2][0] - pts[1][0], pts[2][1] - pts[1][1]]));
-    tube(ctx, pts.map(p => J(p)), RIG.arm * 0.78); openHand(ctx, pts[2], fd, side);
-  }
-  tube(ctx, POSE.neck.map(X), 20);                                                  // the neck, released
-  const tp = POSE.torso.map(X);
-  shape(ctx, tp);
-  ctx.save(); ctx.beginPath(); cr(ctx, tp, true); ctx.clip(); stroke(ctx, POSE.shorts.map(X)); ctx.restore();
-  // head: tipped back on a released neck, face to the sky: hair on the crown, closed eyes, a calm mouth, the chin showing
-  const c = poolXY(POSE.head, d), a = FL.phi + POSE.headTilt;
-  const H = (x, y) => J(add(c, rot([x * FL.s, y * FL.s * FL.headSq], a)), 0.8);
-  [204, 228, 252, 276, 300, 324].forEach((deg, i) => {
-    const r = deg * Math.PI / 180, cc = [41 * Math.cos(r), 41 * Math.sin(r)];
-    stroke(ctx, circlePts([0, 0], 8 + (i % 2), 8, 7).map(p => H(cc[0] + p[0], cc[1] + p[1])), { closed: true });
-  });
-  shape(ctx, circlePts([0, 0], 38, 38, 12).map(p => H(p[0], p[1])));
-  for (const sd of [-1, 1]) stroke(ctx, [H(13 * sd - 6, -6), H(13 * sd, -3), H(13 * sd + 6, -6)], { width: LINE * 0.85 });   // eyes closed
-  stroke(ctx, [H(-5, 10), H(0, 11), H(5, 10)], { width: LINE * 0.75 });                                                      // calm mouth
-  stroke(ctx, [H(-14, 24), H(0, 30), H(14, 24)], { width: LINE * 0.7 });                                                     // chin, tipped up
+  const img = ASSETS.float; if (!img) return;
+  const d = [1.3 * Math.sin(t * 0.42), 0.9 * Math.sin(t * 0.57 + 1.3)];
+  const w = img.width * FL.s, h = img.height * FL.s * FL.sq, cx = FL.c[0] + d[0], cy = FL.c[1] + d[1];
+  ctx.drawImage(img, cx - w / 2, cy - h / 2, w, h);
+  // hips and upper legs under the coffee: a soft erase, only inside the rim
+  const R = CUP_A.rim, hx = cx + FL.hip[0], hy = cy + FL.hip[1];
+  ctx.save();
+  ctx.beginPath(); ctx.ellipse(R.cx, R.cy + 2, R.rx - 2, R.ry - 2, 0, 0, Math.PI * 2); ctx.clip();
+  ctx.globalCompositeOperation = 'destination-out';
+  ctx.translate(hx, hy); ctx.scale(1, FL.hipR[1] / FL.hipR[0]);
+  const g = ctx.createRadialGradient(0, 0, 0, 0, 0, FL.hipR[0]); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(0.72, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, FL.hipR[0], 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+  // below the rim, seen faintly through the glass
+  ctx.save(); ctx.globalCompositeOperation = 'destination-out'; ctx.globalAlpha = 0.55; cupFront(ctx, CUP_A); ctx.fill('nonzero'); ctx.restore();
+  // the waterline where he goes under
+  ctx.save(); ctx.strokeStyle = LC; ctx.lineCap = 'round'; ctx.globalAlpha = 0.8; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.ellipse(hx, hy + FL.hipR[1] * 0.5, FL.hipR[0] * 0.92, FL.hipR[0] * 0.2, 0, 0.12 * Math.PI, 0.88 * Math.PI); ctx.stroke();
+  ctx.globalAlpha = 0.45; ctx.beginPath(); ctx.ellipse(hx, hy + FL.hipR[1] * 0.62, FL.hipR[0] * 1.25, FL.hipR[0] * 0.27, 0, 0.25 * Math.PI, 0.75 * Math.PI); ctx.stroke();
+  ctx.restore();
 }
 
 function tinyPhone(ctx, c, s, assets) {
@@ -377,8 +352,6 @@ function renderReel(ctx, layer, t, assets) {
   if (S.float != null && FLC) {
     const fc = FLC.getContext('2d'); fc.setTransform(1, 0, 0, 1, 0, 0); fc.clearRect(0, 0, 1080, 1920);
     LINE = FL.line; drawFloater(fc, t);
-    fc.globalCompositeOperation = 'destination-out'; fc.globalAlpha = 0.55; cupFront(fc, CUP_A); fc.fill('nonzero');   // below the coffee line: seen faintly through the glass
-    fc.globalCompositeOperation = 'source-over'; fc.globalAlpha = 1;
     lc.drawImage(FLC, 0, 0);
   }
   if (S.splash != null && S.splash < 1) {                 // the splash: drops up and out, rings across the coffee
