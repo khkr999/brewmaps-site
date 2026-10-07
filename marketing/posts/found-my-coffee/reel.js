@@ -3,7 +3,7 @@
 // flag, and flops back into it like it's a pool. search → effort → find → FLOP BACK → complete peace.
 // The Regular's character (../the-regular/rig.js). Plate: plates/iced-hot.jpg (AI-generated, unbranded). Plate pixels.
 
-const DUR = 15.2;
+const DUR = 15.3;
 const K = 0.9;
 const GROUND = 1335;                                // where he walks: the counter, in front of the cups
 const CUP_A = { rim: { cx: 260, cy: 978, rx: 152, ry: 36 }, cof: { cx: 262, cy: 1030, rx: 140, ry: 22 }, l: 108, r: 413, bot: 1322, glass: true };
@@ -66,10 +66,10 @@ function cupFront(ctx, C) {
 }
 
 const T = { inB: 1.05, phB: 1.1, b1: 1.4, no0: 1.62, offB: 2.4, walkA: 2.45, atA: 3.95, phA: 4.0, b2: 4.3, hop: 4.55, unpack: 5.0,
-  extend: 5.92, top: 6.62, pocket: 6.72, pulled: 6.86, unfurled: 6.96, stab: 6.98, planted: 7.08, turn: 7.14, flop: 7.28, land: 7.68,
-  settled: 7.98, line: 8.25, end: 11.9 };
+  extend: 5.92, top: 6.62, pocket: 6.72, pulled: 6.86, unfurled: 6.96, stab: 6.98, planted: 7.08, turn: 7.14, flop: 7.28, land: 7.8,
+  settled: 8.1, line: 8.38, end: 12.0 };
 const NO_STEP = 1 / 12, NO = ['f', 'r', 'f', 'o', 'f', 'o'];   // the head-shake "no", one pose per drawing
-T.push = T.flop + 0.04; T.fallen = T.flop + 0.55;
+T.push = T.flop + 0.26; T.fallen = T.push + 0.5;        // the ladder goes as his feet leave it
 const RIMF = [410, 962];                                    // where the flag stands: the back of the glass rim, flying into the gap between the drinks
 const XB = 955, XA = 545;
 const LAD = { b: [492, 1336], t: [424, 972] };              // the tiny ladder: foot on the counter, top on the glass rim
@@ -112,7 +112,7 @@ function flagX(ctx, base, lean = 0, t = 0, dir = 1, open = 1, pole = 132) {
 const LAD_L = len([LAD.t[0] - LAD.b[0], LAD.t[1] - LAD.b[1]]);
 function plantedFlag(t) {                                    // on the rim: wobbles when planted, when he splashes, when the ladder goes
   const w = (t0, a, d, f) => t > t0 ? a * Math.exp(-(t - t0) * d) * Math.sin((t - t0) * f) : 0;
-  return { base: V(RIMF), lean: w(T.planted, 0.16, 7, 30) + w(T.push, 0.05, 6, 28) + w(T.land, 0.1, 5, 26), open: 1, pole: 132, dir: 1, back: t >= T.flop + 0.12 };   // in front of him until he flops away
+  return { base: V(RIMF), lean: w(T.planted, 0.16, 7, 30) + w(T.push, 0.05, 6, 28) + w(T.land, 0.1, 5, 26), open: 1, pole: 132, dir: 1, back: true };               // on the far rim: always behind him
 }
 function ladderAt(t) {                                       // pushed off the rim with his foot: tips over and lands on the counter
   const n = Math.round(LAD_L / 46);
@@ -234,19 +234,18 @@ function scene(t) {
       P.x = H0[0] / K; P.y = H0[1] / K; P.f = 1; P.front = true;   // a satisfied glance to camera: my work here is done
       P.feet = { f: { w: V(ladderPt(0.92)) }, b: { w: V(ladderPt(0.88)) } };
       P.hands = { f: [26, -30], b: [-20, -30] }; P.mouth = 'smile';
-    } else {
-      const u = seg(t, T.flop, T.land), e = easeIn(u), fl = easeOut(seg(u, 0, 0.45));
-      const q = bez(H0, [H0[0] - 10, H0[1] - 46], FL.land, e);
-      P.f = 1; P.x = q[0] / K; P.y = q[1] / K; P.rot = -1.42 * e; P.tilt = -0.45 * e;
-      P.hands = { f: mix2([26, -30], [64, -226], fl), b: mix2([-20, -30], [-70, -196], fl) }; P.elbow = { f: -1, b: 1 };   // arms fling open
-      P.feet = { f: mix2([10, 112], [44, 96], ease(u)), b: mix2([-12, 112], [26, 104], ease(u)) }; P.knee = { f: 1, b: 1 };
-      P.mouth = 'grin'; P.eyes = 'open';
+    } else {                                                // the flop: he tips backward off the ladder, straight into the float pose
+      P.x = H0[0] / K; P.y = H0[1] / K; P.f = 1;
+      P.feet = { f: { w: V(ladderPt(0.92)) }, b: { w: V(ladderPt(0.88)) } };
+      P.hands = { f: [26, -30], b: [-20, -30] }; P.mouth = 'smile';
+      S.fallP = { ...P }; P.hidden = true; S.fall = 0;        // renderReel sets the blend from the true time (on ones)
     }
   }
   else {                                                    // complete peace: floating, almost motionless
-    P.hidden = true; S.bag = null; S.lad = null; S.flag = null;   // the payoff frame is clean: the struggle's props are gone
+    P.hidden = true; S.fall = 1;
+    const fade = 1 - seg(t, T.land, T.land + 0.22);           // the struggle's props leave as he lands: the frame turns clean
+    if (fade > 0) { S.bag = { at: 1, open: 1 }; S.flag = plantedFlag(t); S.lad = ladderAt(t); S.propA = fade; }
     S.splash = seg(t, T.land, T.land + 0.5);
-    S.float = 1;
     S.ripples = [0, 1, 2, 3].map(i => T.settled + i * 2.4).filter(t0 => t > t0 && t < t0 + 2.6).map(t0 => seg(t, t0, t0 + 2.6));
   }
   return { P, S };
@@ -271,46 +270,63 @@ const TRACE = {
   legR: [[488, 436], [620, 546], [734, 640], [800, 652]],
   hipC: [448, 440], across: 0.94, headBack: -0.12,
 };
-function drawFloater(ctx, t) {
-  // Drawn with the character's own parts, at his own scale: the profile head (one eye, hair loops on the crown), the
-  // rig's torso with its shorts line, tube limbs and round hands. Only the joint positions come from the trace.
-  const FS = K * FL.body, d = [1.3 * Math.sin(t * 0.42), 0.9 * Math.sin(t * 0.57 + 1.3)];
-  const cx = FL.c[0] + d[0], cy = FL.c[1] + d[1];
-  const M = ([x, y]) => [(cx + (x - TRACE.o[0]) * FL.s) / FS, (cy + (y - TRACE.o[1]) * FL.s * FL.sq) / FS];
-  const X = p => J(M(p));
+function standJoints(P0) {                                 // the rig's joints for a pose, in screen px (same maths as drawCharacter)
+  const W = p => scl(toWorld(P0, p), K);
+  const arm = which => { const root = which === 'b' ? RIG.shB : RIG.shF; return ik(root, tgt(P0, P0.hands[which]), RIG.upper, RIG.fore, P0.elbow?.[which] ?? -1).map(W); };
+  const leg = which => {
+    const root = which === 'b' ? RIG.hipB : RIG.hipF, [h, k, a] = ik(root, tgt(P0, P0.feet[which]), RIG.thigh, RIG.shin, P0.knee?.[which] ?? 1);
+    const d = [(a[0] - k[0]) / RIG.shin, (a[1] - k[1]) / RIG.shin]; return [h, k, a, add(a, scl([d[1], -d[0]], RIG.toe))].map(W);
+  };
+  return { armL: arm('b'), armR: arm('f'), legL: leg('b'), legR: leg('f'), hip: W([0, 0]), neck: W(RIG.neck), head: W(add(RIG.neck, [10, -40])), rot: 0, across: 1, body: 1 };
+}
+function floatJoints(t) {                                   // the traced float pose, in screen px
+  const d = [1.3 * Math.sin(t * 0.42), 0.9 * Math.sin(t * 0.57 + 1.3)], cx = FL.c[0] + d[0], cy = FL.c[1] + d[1];
+  const M = ([x, y]) => [cx + (x - TRACE.o[0]) * FL.s, cy + (y - TRACE.o[1]) * FL.s * FL.sq];
+  const neck = M(TRACE.neck[0]), head = M(TRACE.head), crown = scl([head[0] - neck[0], head[1] - neck[1]], 1 / len([head[0] - neck[0], head[1] - neck[1]]));
+  return { armL: TRACE.armL.map(M), armR: TRACE.armR.map(M), legL: TRACE.legL.map(M), legR: TRACE.legR.map(M), hip: M(TRACE.hipC), neck, head,
+    rot: Math.atan2(crown[0], -crown[1]) + TRACE.headBack, across: TRACE.across, body: FL.body, hx: cx + FL.hip[0], hy: cy + FL.hip[1] };
+}
+function drawFloater(ctx, t, k = 1, P0 = null) {
+  // Drawn with the character's own parts: the profile head (one eye, hair loops on the crown), the rig's torso with its
+  // shorts line, tube limbs and round hands. k blends every joint from his standing pose on the ladder (0) to the float (1),
+  // so the fall is the same figure tipping back, not a cut.
+  const Fj = floatJoints(t), Sj = P0 && k < 1 ? standJoints(P0) : null;
+  const e = Sj ? easeIn(k) : 1, eh = Sj ? Math.pow(clamp((k - 0.08) / 0.92, 0, 1), 1.8) : 1;   // the head lags: it whips back last
+  const bl = (a, b, u) => Sj ? mix2(a, b, u) : b;
+  const J2 = (A, B, u) => A.map((p, i) => bl(p, B[i], u));
+  const jt = Sj ? { armL: J2(Sj.armL, Fj.armL, e), armR: J2(Sj.armR, Fj.armR, e), legL: J2(Sj.legL, Fj.legL, e), legR: J2(Sj.legR, Fj.legR, e),
+    hip: bl(Sj.hip, Fj.hip, e), neck: bl(Sj.neck, Fj.neck, e), head: bl(Sj.head, Fj.head, eh), rot: mix(0, Fj.rot, eh),
+    across: mix(1, Fj.across, e), body: mix(1, Fj.body, e) } : Fj;
+  const FS = K * jt.body, D = p => [p[0] / FS, p[1] / FS], X = p => J(D(p));
   ctx.save(); ctx.setTransform(FS, 0, 0, FS, 0, 0); LINE = 5.6 / K;
-  for (const L of [TRACE.legL, TRACE.legR]) tube(ctx, L.map(X), RIG.leg);
-  const hands = [];
-  for (const A of [TRACE.armL, TRACE.armR]) { const pts = A.map(M); tube(ctx, pts.map(p => J(p)), RIG.arm); hands.push(pts[2]); }
-  // torso: the rig's own torso, fitted between his hips and his neck (foreshortened along the body, full width across)
-  const hip = M(TRACE.hipC), neck = M(TRACE.neck[0]), ax = [neck[0] - hip[0], neck[1] - hip[1]], L = len(ax), u = scl(ax, 1 / L), v = [-u[1], u[0]];
-  const TW = ([x, y]) => add(hip, add(scl(v, x * TRACE.across), scl(u, -y * L / 160)));
+  for (const L of [jt.legL, jt.legR]) tube(ctx, L.map(X), RIG.leg);
+  for (const A of [jt.armL, jt.armR]) tube(ctx, A.map(X), RIG.arm);
+  const hip = D(jt.hip), neck = D(jt.neck), ax = [neck[0] - hip[0], neck[1] - hip[1]], L = len(ax), u = scl(ax, 1 / L), v = [-u[1], u[0]];
+  const TW = ([x, y]) => add(hip, add(scl(v, x * jt.across), scl(u, -y * L / 160)));
   const tp = RIG.torso.map(p => J(TW(p)));
   shape(ctx, tp);
   ctx.save(); ctx.beginPath(); cr(ctx, tp, true); ctx.clip(); stroke(ctx, [[-60, -30], [0, -22], [64, -32]].map(p => J(TW(p)))); ctx.restore();
-  hands.forEach(w => shape(ctx, circlePts(w, RIG.hand, RIG.hand, 8).map(p => J(p, 0.8))));
-  // head: his profile head, crown toward the far side of the cup, face to the sky; eyes closed, a small resting mouth
-  const hc = M(TRACE.head), crown = scl([hc[0] - neck[0], hc[1] - neck[1]], 1 / len([hc[0] - neck[0], hc[1] - neck[1]]));
-  const P = { f: 1, rot: Math.atan2(crown[0], -crown[1]) + TRACE.headBack, tilt: 0, eyes: 'closed', mouth: 'rest' };
-  const hl = add(RIG.neck, [10, -40]), q = rot(hl, P.rot); P.x = hc[0] - q[0]; P.y = hc[1] - q[1];
+  for (const A of [jt.armL, jt.armR]) shape(ctx, circlePts(D(A[2]), RIG.hand, RIG.hand, 8).map(p => J(p, 0.8)));
+  const hc = D(jt.head), hl = add(RIG.neck, [10, -40]), q = rot(hl, jt.rot);
+  const P = { f: 1, rot: jt.rot, tilt: 0, eyes: k > 0.8 ? 'closed' : 'open', mouth: k > 0.8 ? 'rest' : 'smile', x: hc[0] - q[0], y: hc[1] - q[1] };
   tube(ctx, [TW([4, -150]), toWorld(P, RIG.neck)].map(p => J(p)), 16);
   drawHead(ctx, P);
-  const m0 = toWorld(P, add(hl, [26, 16])), m1 = toWorld(P, add(hl, [28, 24]));
-  stroke(ctx, [J(m0, 0.5), J(m1, 0.5)], { smooth: false, width: LINE * 0.9 });
+  if (k > 0.8) { const m0 = toWorld(P, add(hl, [26, 16])), m1 = toWorld(P, add(hl, [28, 24])); stroke(ctx, [J(m0, 0.5), J(m1, 0.5)], { smooth: false, width: LINE * 0.9 }); }
   ctx.restore(); LINE = FL.line;
-  // hips and upper legs under the coffee: a soft erase, only inside the rim
-  const Rr = CUP_A.rim, hx = cx + FL.hip[0], hy = cy + FL.hip[1];
+  // into the coffee: hips and upper legs go under (a soft erase, only inside the rim), the rest below the rim is faint
+  const w = clamp((k - 0.7) / 0.3, 0, 1); if (w <= 0) return;
+  const Rr = CUP_A.rim, hx = Fj.hx, hy = Fj.hy;
   ctx.save();
   ctx.beginPath(); ctx.ellipse(Rr.cx, Rr.cy + 2, Rr.rx - 2, Rr.ry - 2, 0, 0, Math.PI * 2); ctx.clip();
-  ctx.globalCompositeOperation = 'destination-out';
+  ctx.globalCompositeOperation = 'destination-out'; ctx.globalAlpha = w;
   ctx.translate(hx, hy); ctx.scale(1, FL.hipR[1] / FL.hipR[0]);
   const g = ctx.createRadialGradient(0, 0, 0, 0, 0, FL.hipR[0]); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(0.72, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, FL.hipR[0], 0, Math.PI * 2); ctx.fill();
   ctx.restore();
-  ctx.save(); ctx.globalCompositeOperation = 'destination-out'; ctx.globalAlpha = 0.55; cupFront(ctx, CUP_A); ctx.fill('nonzero'); ctx.restore();   // below the rim: faint through the glass
-  ctx.save(); ctx.strokeStyle = LC; ctx.lineCap = 'round'; ctx.globalAlpha = 0.8; ctx.lineWidth = 3;                                               // the waterline
+  ctx.save(); ctx.globalCompositeOperation = 'destination-out'; ctx.globalAlpha = 0.55 * w; cupFront(ctx, CUP_A); ctx.fill('nonzero'); ctx.restore();
+  ctx.save(); ctx.strokeStyle = LC; ctx.lineCap = 'round'; ctx.globalAlpha = 0.8 * w; ctx.lineWidth = 3;                                            // the waterline
   ctx.beginPath(); ctx.ellipse(hx, hy + FL.hipR[1] * 0.5, FL.hipR[0] * 0.92, FL.hipR[0] * 0.2, 0, 0.12 * Math.PI, 0.88 * Math.PI); ctx.stroke();
-  ctx.globalAlpha = 0.45; ctx.beginPath(); ctx.ellipse(hx, hy + FL.hipR[1] * 0.62, FL.hipR[0] * 1.25, FL.hipR[0] * 0.27, 0, 0.25 * Math.PI, 0.75 * Math.PI); ctx.stroke();
+  ctx.globalAlpha = 0.45 * w; ctx.beginPath(); ctx.ellipse(hx, hy + FL.hipR[1] * 0.62, FL.hipR[0] * 1.25, FL.hipR[0] * 0.27, 0, 0.25 * Math.PI, 0.75 * Math.PI); ctx.stroke();
   ctx.restore();
 }
 function openHand(ctx, w, fd, side) {                       // loose and open: palm, four separated fingers, thumb; wrist dropped
@@ -367,8 +383,8 @@ function drawSteam(ctx, t) {
 const FLC = typeof document !== 'undefined' ? document.createElement('canvas') : null;   // the floater on its own layer
 if (FLC) { FLC.width = 1080; FLC.height = 1920; }
 function camera(t) {                                         // a slow push toward the iced latte at the climax
-  const c = ease(seg(t, T.land - 0.3, T.land + 1.6));
-  return { z: 1.1 + 0.04 * ease(seg(t, 0, T.land - 0.3)) + 0.12 * c, cx: mix(540, 446, c), cy: mix(1100, 1010, c) };
+  const c = ease(seg(t, T.land + 0.15, T.land + 1.7));                                    // held through the fall; eases in once he's settled
+  return { z: 1.1 + 0.04 * ease(seg(t, 0, T.land)) + 0.12 * c, cx: mix(540, 446, c), cy: mix(1100, 1010, c) };
 }
 function renderReel(ctx, layer, t, assets) {
   const td = Math.floor(t * 12) / 12;
@@ -378,6 +394,8 @@ function renderReel(ctx, layer, t, assets) {
   const lc = layer.getContext('2d');
   lc.setTransform(1, 0, 0, 1, 0, 0); lc.clearRect(0, 0, 1080, 1920);
   lc.setTransform(K, 0, 0, K, 0, 0); LINE = 6.1 / K;
+  if (S.fall != null && S.fall < 1) S.fall = easeIn(seg(t, T.flop + 0.06, T.land));      // the fall runs on ones
+  lc.globalAlpha = S.propA ?? 1;
   if (S.bag && S.bag.at >= 1) drawBag(lc, BAG, S.bag.open);
   if (S.flag && S.flag.back) flagX(lc, S.flag.base, S.flag.lean, td, S.flag.dir, S.flag.open, S.flag.pole);
   const r = P.hidden ? { hand: [0, 0] } : drawCharacter(lc, P);
@@ -385,15 +403,16 @@ function renderReel(ctx, layer, t, assets) {
   if (S.lad) { lc.save(); drawLadder(lc, S.lad.b, S.lad.t, S.lad.n); lc.restore(); }
   if (S.flag && !S.flag.back) flagX(lc, S.flag.base, S.flag.lean, td, S.flag.dir, S.flag.open, S.flag.pole);
   if (S.phone > 0) tinyPhone(lc, add(r.hand, [-P.f * -10, -30]), S.phone, assets);
+  lc.globalAlpha = 1;
   lc.setTransform(1, 0, 0, 1, 0, 0);
   if (S.ripples) {                                         // slow, faint rings on the coffee around him
     lc.strokeStyle = LC; lc.lineWidth = 3; const C = CUP_A.cof;
     S.ripples.forEach(u => { lc.globalAlpha = 0.45 * Math.sin(Math.PI * u); lc.beginPath(); lc.ellipse(C.cx + 10, C.cy - 4, 60 + 80 * u, 10 + 12 * u, 0, 0, 7); lc.stroke(); });
     lc.globalAlpha = 1;
   }
-  if (S.float != null && FLC) {
+  if (S.fall != null && FLC) {
     const fc = FLC.getContext('2d'); fc.setTransform(1, 0, 0, 1, 0, 0); fc.clearRect(0, 0, 1080, 1920);
-    LINE = FL.line; drawFloater(fc, t);
+    drawFloater(fc, t, S.fall, S.fallP);
     lc.drawImage(FLC, 0, 0);
   }
   if (S.splash != null && S.splash < 1) {                 // the splash: drops up and out, rings across the coffee
@@ -436,7 +455,7 @@ function renderReel(ctx, layer, t, assets) {
   const w = ease(seg(t, T.end, T.end + 0.9));
   if (w > 0) {
     ctx.save(); ctx.fillStyle = `rgba(16,36,18,${0.94 * w})`; ctx.fillRect(0, 0, 1080, 1920);
-    if (FLC && S.float != null) { ctx.globalAlpha = 0.3 * w; into(); ctx.drawImage(FLC, 0, 0); }
+    if (FLC && S.fall != null) { ctx.globalAlpha = 0.3 * w; into(); ctx.drawImage(FLC, 0, 0); }
     ctx.restore();
     const e = ease(seg(t, T.end + 0.45, T.end + 1.0)), l = ease(seg(t, T.end + 0.7, T.end + 1.2));
     ctx.save(); ctx.globalAlpha = e; ctx.direction = 'rtl'; ctx.textAlign = 'center';
