@@ -1,7 +1,7 @@
 // لقيت كوفيي v2 — he walks in, checks two cups on BrewMaps (٢٤٪ then ٩٢٪), jumps into the match and lounges.
 // The Regular's character (../the-regular/rig.js). Plate: plates/two-cups.jpg (AI-generated, unbranded). Plate pixels.
 
-const DUR = 11;
+const DUR = 11.3;
 const K = 0.9;
 const GROUND = 1335;                                // where he walks: the counter, in front of the cups
 const CUP_A = { rim: { cx: 252, cy: 928, rx: 166, ry: 48 }, cof: { cx: 255, cy: 942, rx: 122, ry: 28 }, l: 87, r: 417, bot: 1245 };
@@ -42,8 +42,8 @@ function cupFront(ctx, C) {
   ctx.moveTo(R.cx + R.rx - 8, R.cy + 4); ctx.ellipse(R.cx, R.cy + 4, R.rx - 8, R.ry, 0, 0, Math.PI); ctx.closePath();   // the inner front wall
 }
 
-const T = { inB: 1.6, phB: 1.7, offB: 3.3, walkA: 3.45, atA: 5.0, phA: 5.1, crouch: 6.55, jump: 6.85, land: 7.35, end: 9.0 };
-const XB = 960, XA = 470;
+const T = { inB: 1.6, phB: 1.7, offB: 3.3, walkA: 3.45, atA: 5.0, phA: 5.1, crouch: 6.55, jump: 6.8, land: 7.38, up: 7.62, lounge: 7.98, end: 9.3 };
+const XB = 960, XA = 535;
 
 function walk(P, t, t0, t1, x0, x1) {
   const u = easeOut(seg(t, t0, t1)), x = mix(x0, x1, u), ph = (x0 - x) / 150 * Math.PI * 2;
@@ -80,27 +80,42 @@ function scene(t) {
     if (t > 5.45) { S.badge = { pct: '٩٢٪', good: true, a: seg(t, 5.45, 5.7) * (1 - seg(t, 6.4, 6.6)) }; P.mouth = 'grin'; P.eyes = 'wide'; }
     if (t > 5.9 && t < 6.25) P.y -= 18 * Math.sin((t - 5.9) / 0.35 * Math.PI) / K;   // a little hop
   }
-  else if (t < T.land) {                                    // crouch, leap, arc into cup A
-    const c = ease(seg(t, T.crouch, T.jump)), u = seg(t, T.jump, T.land);
-    if (t < T.jump) { stand(P, XA); P.y += 22 * c / K; P.rot = -0.12 * c; P.hands = { f: [-10, -60], b: [-40, -60] }; P.mouth = 'grin'; P.eyes = 'wide'; }
-    else {
-      const p0 = [XA, GROUND - 112 * K + 22], p1 = [330, 935], top = [400, 760];
-      const q = bez(p0, top, p1, easeIn(u) * 0.3 + u * 0.7);
-      P.x = q[0] / K; P.y = q[1] / K; P.rot = mix(-0.12, -0.9, u); P.mouth = 'o'; P.eyes = 'wide';
-      P.hands = { f: [-30, -250], b: [30, -250] }; P.feet = { f: [30, 90], b: [-10, 95] }; P.elbow = { f: 1, b: 1 };
-      S.clip = u > 0.8;
+  else if (t < T.land) {                                    // crouch, then a tucked cannonball arc into cup A
+    if (t < T.jump) {
+      const c = ease(seg(t, T.crouch, T.jump)); stand(P, XA);
+      P.y += 26 * c / K; P.rot = -0.1 * c; P.hands = { f: [40, -70], b: [10, -70] }; P.mouth = 'grin'; P.eyes = 'wide';
+    } else {
+      const u = seg(t, T.jump, T.land);
+      const p0 = [XA, GROUND - 112 * K + 24], p2 = [258, 1010], c1 = [500, 470];   // high over the rim, down into the coffee
+      const q = bez(p0, c1, p2, u);
+      P.x = q[0] / K; P.y = q[1] / K; P.rot = -0.25 - 0.9 * u;
+      P.knee = { f: 1, b: 1 }; P.elbow = { f: 1, b: 1 };
+      P.feet = { f: [44, 26], b: [24, 36] };                                    // knees hugged up
+      P.hands = { f: [62, -30], b: [40, -22] };
+      P.mouth = u < 0.5 ? 'grin' : 'o'; P.eyes = u < 0.5 ? 'wide' : 'closed';
+      S.clip = u > 0.42;                                                       // the rim hides him as he drops in
     }
   }
-  else {                                                    // lounging in cup A
-    S.lounge = true; S.clip = true;
+  else if (t < T.lounge) {                                  // under, splash, then surfacing into the lounge
+    S.clip = true; S.splash = seg(t, T.land, T.land + 0.55);
+    if (t < T.up) P.hidden = true;
+    const e = easeOut(seg(t, T.up, T.lounge));
+    P.f = 1; P.eyes = 'closed'; P.mouth = 'grin';
+    [P.x, P.y] = V([336, 922 + 70 * (1 - e)]); P.rot = -1.0; P.tilt = -0.8;
+    P.knee = { f: 1, b: 1 };
+    P.feet = { f: { w: V([350, 990]) }, b: { w: V([330, 995]) } };            // legs still in the cup
+    P.hands = { f: { w: V(mix2([230, 960], [128, 896], e)) }, b: { w: V(mix2([300, 960], [300, 872], e)) } }; P.elbow = { f: -1, b: -1 };
+  }
+  else {                                                    // lounging in cup A; legs flop over the rim one by one
+    S.lounge = true; S.clip = true; S.splash = seg(t, T.land, T.land + 0.55);
     P.f = 1; P.eyes = 'closed'; P.mouth = 'grin';
     const br = Math.sin(t * 2.2) * 0.025;
-    [P.x, P.y] = V([336, 922]); P.rot = -1.0 + br; P.tilt = -0.8 + br;   // head stays nearly upright
+    [P.x, P.y] = V([336, 922]); P.rot = -1.0 + br; P.tilt = -0.8 + br;
     const sw = a => Math.sin(t * 3.1 + a) * 8;
+    const l1 = easeOut(seg(t, T.lounge, T.lounge + 0.22)), l2 = easeOut(seg(t, T.lounge + 0.14, T.lounge + 0.36));
     P.knee = { f: 1, b: 1 };
-    P.feet = { f: { w: V([452 + sw(0), 1010]) }, b: { w: V([436 + sw(1.7), 1022]) } };
+    P.feet = { f: { w: V(mix2([350, 990], [452 + sw(0), 1010], l1)) }, b: { w: V(mix2([330, 995], [436 + sw(1.7), 1022], l2)) } };
     P.hands = { f: { w: V([128, 896]) }, b: { w: V([300, 872]) } }; P.elbow = { f: -1, b: -1 };
-    S.splash = seg(t, T.land, T.land + 0.5);
   }
   return { P, S };
 }
@@ -133,15 +148,21 @@ function renderReel(ctx, layer, t, assets) {
   const lc = layer.getContext('2d');
   lc.setTransform(1, 0, 0, 1, 0, 0); lc.clearRect(0, 0, 1080, 1920);
   lc.setTransform(K, 0, 0, K, 0, 0); LINE = 5.6 / K;
-  const r = drawCharacter(lc, P);
+  const r = P.hidden ? { hand: [0, 0] } : drawCharacter(lc, P);
   if (S.clip) { lc.setTransform(1, 0, 0, 1, 0, 0); lc.globalCompositeOperation = 'destination-out'; lc.fillStyle = '#000'; cupFront(lc, CUP_A); lc.fill('nonzero'); lc.globalCompositeOperation = 'source-over'; lc.setTransform(K, 0, 0, K, 0, 0); }
   if (S.phone > 0) tinyPhone(lc, add(r.hand, [-P.f * -10, -30]), S.phone, assets);
-  if (S.splash != null && S.splash < 1) {                 // a few drops as he lands
+  if (S.splash != null && S.splash < 1) {                 // the splash: drops up and out, ripples across the coffee
     lc.setTransform(1, 0, 0, 1, 0, 0);
-    [[-60, -1], [-20, -1.4], [30, -1.2], [70, -0.9]].forEach(([dx, vy]) => {
-      const u = S.splash, p = [300 + dx * (0.4 + u), 930 + vy * 90 * u + 160 * u * u];
-      lc.globalAlpha = 1 - u; lc.beginPath(); lc.arc(p[0], p[1], 6, 0, 7); lc.fillStyle = LC; lc.fill();
+    const u = S.splash, C = CUP_A.cof;
+    [[-70, 1.5], [-35, 2.0], [0, 2.3], [35, 1.9], [72, 1.4], [-50, 1.1], [52, 1.2]].forEach(([dx, v], i) => {
+      const p = [C.cx + dx * (0.3 + 1.1 * u), C.cy - 10 - v * 210 * u + 420 * u * u];
+      if (p[1] > C.cy + 6) return;
+      lc.globalAlpha = Math.min(1, (1 - u) * 1.6);
+      lc.beginPath(); lc.ellipse(p[0], p[1], 6 + (i % 2) * 2, 8 + (i % 2) * 2, 0, 0, 7); lc.fillStyle = LC; lc.fill();
     });
+    lc.globalAlpha = 1 - u; lc.strokeStyle = LC; lc.lineWidth = 4;
+    [0, 0.28].forEach(d => { const k = clamp(u - d, 0, 1); if (k <= 0) return;
+      lc.beginPath(); lc.ellipse(C.cx, C.cy, 20 + (C.rx - 30) * k, 5 + (C.ry - 8) * k, 0, 0, 7); lc.stroke(); });
     lc.globalAlpha = 1; lc.setTransform(K, 0, 0, K, 0, 0);
   }
   lc.setTransform(1, 0, 0, 1, 0, 0); LINE = 6.5;
@@ -157,7 +178,7 @@ function renderReel(ctx, layer, t, assets) {
   ctx.restore();
 
   // the line, once he's in
-  const a = seg(t, 7.6, 8.0) * (1 - seg(t, T.end - 0.2, T.end + 0.1));
+  const a = seg(t, 7.9, 8.3) * (1 - seg(t, T.end - 0.2, T.end + 0.1));
   if (a > 0) {
     ctx.save(); ctx.globalAlpha = a; ctx.direction = 'rtl'; ctx.textAlign = 'center';
     ctx.shadowColor = 'rgba(0,0,0,.6)'; ctx.shadowBlur = 24; ctx.fillStyle = '#F4EFE6'; ctx.font = '800 74px "Tajawal"';

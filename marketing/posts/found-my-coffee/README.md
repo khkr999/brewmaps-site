@@ -1,6 +1,6 @@
 # لقيت كوفيي — doodle Reel
 
-**v2 (current): `export/found-my-coffee-v2.mp4`, 11s.** Plate `plates/two-cups.jpg` (AI-generated, unbranded). `reel.js`.
+**v2 (current): `export/found-my-coffee-v2.mp4`, 11.3s.** Plate `plates/two-cups.jpg` (AI-generated, unbranded). `reel.js`.
 
 | Time | Beat |
 |---|---|
@@ -8,9 +8,10 @@
 | 1.6–3.4s | Checks BrewMaps: **يناسب ذوقك ٢٤٪** (grey). "Meh" mouth, shakes his head. |
 | 3.4–5.0s | Walks to the other cup. |
 | 5.0–6.6s | Checks again: **يناسب ذوقك ٩٢٪** (green). Wide eyes, grin, a little hop. |
-| 6.6–7.4s | Crouches and jumps into the cup. |
-| 7.4–9.0s | Lounges in it, legs over the rim, eyes closed. Super: **لما تلقى الكوفي اللي يناسبك…** |
-| 9.0–11s | End card: mark / **BrewMaps يلقى لك الكوفي اللي يناسبك.** / مجاني على الآب ستور وجوجل بلاي |
+| 6.55–7.4s | Crouches, then a tucked cannonball: straight up, high over the rim, down into the coffee (the rim hides him as he sinks). |
+| 7.4–8.0s | Splash: drops and two ripples. A beat under, then he surfaces into the lounge. |
+| 8.0–9.3s | Legs flop over the rim one by one; lounges, eyes closed. Super: **لما تلقى الكوفي اللي يناسبك…** |
+| 9.3–11.3s | End card: mark / **BrewMaps يلقى لك الكوفي اللي يناسبك.** / مجاني على الآب ستور وجوجل بلاي |
 
 Face: bigger eye, no ear mark, closed eyes as a shallow curve, head kept upright while lounging.
 
