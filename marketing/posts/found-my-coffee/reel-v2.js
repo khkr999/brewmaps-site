@@ -1,10 +1,10 @@
-// لقيت كوفيي v3 — he checks a hot cappuccino (٢٤٪) and an iced latte (٩٢٪) on BrewMaps, cannonballs into the iced one.
-// The Regular's character (../the-regular/rig.js). Plate: plates/iced-hot.jpg (AI-generated, unbranded). Plate pixels.
+// لقيت كوفيي v2 — he walks in, checks two cups on BrewMaps (٢٤٪ then ٩٢٪), jumps into the match and lounges.
+// The Regular's character (../the-regular/rig.js). Plate: plates/two-cups.jpg (AI-generated, unbranded). Plate pixels.
 
 const DUR = 11.3;
 const K = 0.9;
 const GROUND = 1335;                                // where he walks: the counter, in front of the cups
-const CUP_A = { rim: { cx: 260, cy: 978, rx: 152, ry: 36 }, cof: { cx: 262, cy: 1030, rx: 140, ry: 22 }, l: 108, r: 413, bot: 1322, glass: true };
+const CUP_A = { rim: { cx: 252, cy: 928, rx: 166, ry: 48 }, cof: { cx: 255, cy: 942, rx: 122, ry: 28 }, l: 87, r: 417, bot: 1245 };
 const CUP_B = { cx: 838 };
 const V = p => [p[0] / K, p[1] / K];
 
@@ -43,7 +43,7 @@ function cupFront(ctx, C) {
 }
 
 const T = { inB: 1.6, phB: 1.7, offB: 3.3, walkA: 3.45, atA: 5.0, phA: 5.1, crouch: 6.55, jump: 6.8, land: 7.38, up: 7.62, lounge: 7.98, end: 9.3 };
-const XB = 955, XA = 525;
+const XB = 960, XA = 535;
 
 function walk(P, t, t0, t1, x0, x1) {
   const u = easeOut(seg(t, t0, t1)), x = mix(x0, x1, u), ph = (x0 - x) / 150 * Math.PI * 2;
@@ -86,7 +86,7 @@ function scene(t) {
       P.y += 26 * c / K; P.rot = -0.1 * c; P.hands = { f: [40, -70], b: [10, -70] }; P.mouth = 'grin'; P.eyes = 'wide';
     } else {
       const u = seg(t, T.jump, T.land);
-      const p0 = [XA, GROUND - 112 * K + 24], p2 = [262, 1090], c1 = [490, 520];   // high over the rim, down into the coffee
+      const p0 = [XA, GROUND - 112 * K + 24], p2 = [258, 1010], c1 = [500, 470];   // high over the rim, down into the coffee
       const q = bez(p0, c1, p2, u);
       P.x = q[0] / K; P.y = q[1] / K; P.rot = -0.25 - 0.9 * u;
       P.knee = { f: 1, b: 1 }; P.elbow = { f: 1, b: 1 };
@@ -101,21 +101,21 @@ function scene(t) {
     if (t < T.up) P.hidden = true;
     const e = easeOut(seg(t, T.up, T.lounge));
     P.f = 1; P.eyes = 'closed'; P.mouth = 'grin';
-    [P.x, P.y] = V([340, 990 + 80 * (1 - e)]); P.rot = -1.0; P.tilt = -0.8;
+    [P.x, P.y] = V([336, 922 + 70 * (1 - e)]); P.rot = -1.0; P.tilt = -0.8;
     P.knee = { f: 1, b: 1 };
-    P.feet = { f: { w: V([350, 1060]) }, b: { w: V([330, 1065]) } };          // legs still in the glass
-    P.hands = { f: { w: V(mix2([230, 1030], [132, 950], e)) }, b: { w: V(mix2([300, 1030], [300, 940], e)) } }; P.elbow = { f: -1, b: -1 };
+    P.feet = { f: { w: V([350, 990]) }, b: { w: V([330, 995]) } };            // legs still in the cup
+    P.hands = { f: { w: V(mix2([230, 960], [128, 896], e)) }, b: { w: V(mix2([300, 960], [300, 872], e)) } }; P.elbow = { f: -1, b: -1 };
   }
   else {                                                    // lounging in cup A; legs flop over the rim one by one
     S.lounge = true; S.clip = true; S.splash = seg(t, T.land, T.land + 0.55);
     P.f = 1; P.eyes = 'closed'; P.mouth = 'grin';
     const br = Math.sin(t * 2.2) * 0.025;
-    [P.x, P.y] = V([340, 990]); P.rot = -1.0 + br; P.tilt = -0.8 + br;
+    [P.x, P.y] = V([336, 922]); P.rot = -1.0 + br; P.tilt = -0.8 + br;
     const sw = a => Math.sin(t * 3.1 + a) * 8;
     const l1 = easeOut(seg(t, T.lounge, T.lounge + 0.22)), l2 = easeOut(seg(t, T.lounge + 0.14, T.lounge + 0.36));
     P.knee = { f: 1, b: 1 };
-    P.feet = { f: { w: V(mix2([350, 1060], [458 + sw(0), 1072], l1)) }, b: { w: V(mix2([330, 1065], [442 + sw(1.7), 1086], l2)) } };
-    P.hands = { f: { w: V([132, 950]) }, b: { w: V([300, 940]) } }; P.elbow = { f: -1, b: -1 };
+    P.feet = { f: { w: V(mix2([350, 990], [452 + sw(0), 1010], l1)) }, b: { w: V(mix2([330, 995], [436 + sw(1.7), 1022], l2)) } };
+    P.hands = { f: { w: V([128, 896]) }, b: { w: V([300, 872]) } }; P.elbow = { f: -1, b: -1 };
   }
   return { P, S };
 }
@@ -149,20 +149,13 @@ function renderReel(ctx, layer, t, assets) {
   lc.setTransform(1, 0, 0, 1, 0, 0); lc.clearRect(0, 0, 1080, 1920);
   lc.setTransform(K, 0, 0, K, 0, 0); LINE = 5.6 / K;
   const r = P.hidden ? { hand: [0, 0] } : drawCharacter(lc, P);
-  if (S.clip) {
-    lc.setTransform(1, 0, 0, 1, 0, 0); lc.globalCompositeOperation = 'destination-out'; lc.fillStyle = '#000';
-    lc.globalAlpha = 0.55; cupFront(lc, CUP_A); lc.fill('nonzero');                       // seen through the glass, faintly
-    lc.globalAlpha = 1; lc.beginPath(); lc.rect(CUP_A.l - 4, CUP_A.cof.cy, CUP_A.r - CUP_A.l + 8, CUP_A.bot - CUP_A.cof.cy + 10);
-    lc.moveTo(CUP_A.cof.cx + CUP_A.cof.rx, CUP_A.cof.cy); lc.ellipse(CUP_A.cof.cx, CUP_A.cof.cy, CUP_A.cof.rx, CUP_A.cof.ry, 0, 0, Math.PI * 2);
-    lc.fill('nonzero');                                                                    // under the milk: gone
-    lc.globalCompositeOperation = 'source-over'; lc.setTransform(K, 0, 0, K, 0, 0);
-  }
+  if (S.clip) { lc.setTransform(1, 0, 0, 1, 0, 0); lc.globalCompositeOperation = 'destination-out'; lc.fillStyle = '#000'; cupFront(lc, CUP_A); lc.fill('nonzero'); lc.globalCompositeOperation = 'source-over'; lc.setTransform(K, 0, 0, K, 0, 0); }
   if (S.phone > 0) tinyPhone(lc, add(r.hand, [-P.f * -10, -30]), S.phone, assets);
   if (S.splash != null && S.splash < 1) {                 // the splash: drops up and out, ripples across the coffee
     lc.setTransform(1, 0, 0, 1, 0, 0);
     const u = S.splash, C = CUP_A.cof;
     [[-70, 1.5], [-35, 2.0], [0, 2.3], [35, 1.9], [72, 1.4], [-50, 1.1], [52, 1.2]].forEach(([dx, v], i) => {
-      const p = [C.cx + dx * (0.3 + 1.1 * u), C.cy - 30 - v * 210 * u + 420 * u * u];
+      const p = [C.cx + dx * (0.3 + 1.1 * u), C.cy - 10 - v * 210 * u + 420 * u * u];
       if (p[1] > C.cy + 6) return;
       lc.globalAlpha = Math.min(1, (1 - u) * 1.6);
       lc.beginPath(); lc.ellipse(p[0], p[1], 6 + (i % 2) * 2, 8 + (i % 2) * 2, 0, 0, 7); lc.fillStyle = LC; lc.fill();

@@ -1,6 +1,10 @@
 # لقيت كوفيي — doodle Reel
 
-**v2 (current): `export/found-my-coffee-v2.mp4`, 11.3s.** Plate `plates/two-cups.jpg` (AI-generated, unbranded). `reel.js`.
+**v3 (current): `export/found-my-coffee-v3.mp4`, 11.3s.** Plate `plates/iced-hot.jpg` (AI-generated, unbranded): a hot
+cappuccino (right) and an iced latte in a short glass (left). He checks the hot one first (٢٤٪), then the iced one (٩٢٪), and
+cannonballs into the ice; the glass shows him faintly, the milk hides what's under it. `reel.js`.
+
+v2 (two identical cups): `export/found-my-coffee-v2.mp4`, `reel-v2.js`, plate `plates/two-cups.jpg`. Same beats:
 
 | Time | Beat |
 |---|---|
