@@ -3,7 +3,7 @@
 // flag, and flops back into it like it's a pool. search → effort → find → FLOP BACK → complete peace.
 // The Regular's character (../the-regular/rig.js). Plate: plates/iced-hot.jpg (AI-generated, unbranded). Plate pixels.
 
-const DUR = 18.0;
+const DUR = 18.6;
 const K = 0.9;
 const GROUND = 1335;                                // where he walks: the counter, in front of the cups
 const CUP_A = { rim: { cx: 260, cy: 978, rx: 152, ry: 36 }, cof: { cx: 262, cy: 1030, rx: 140, ry: 22 }, l: 108, r: 413, bot: 1322, glass: true };
@@ -65,11 +65,10 @@ function cupFront(ctx, C) {
   ctx.moveTo(R.cx + R.rx - 8, R.cy + 4); ctx.ellipse(R.cx, R.cy + 4, R.rx - 8, R.ry, 0, 0, Math.PI); ctx.closePath();   // the inner front wall
 }
 
-const T = { inB: 1.05, phB: 1.1, b1: 1.4, no0: 1.62, offB: 2.7, walkA: 2.75, atA: 4.25, phA: 4.3, b2: 4.6, hop: 4.85, unpack: 5.6,
-  extend: 6.52, top: 7.22, pocket: 7.32, pulled: 7.46, unfurled: 7.56, stab: 7.58, planted: 7.68, turn: 7.74, flop: 7.88, land: 8.4,
-  settled: 8.7, line: 8.98, end: 13.6 };
+const T = { inB: 1.05, phB: 1.1, b1: 1.4, no0: 1.62, offB: 2.7, walkA: 2.75, atA: 4.25, phA: 4.3, b2: 4.6, hop: 4.95, unpack: 5.6,
+  extend: 6.85, top: 8.0, pocket: 8.16, pulled: 8.36, unfurled: 8.52, stab: 8.56, planted: 8.68, turn: 8.74, flop: 9.04, land: 9.56,
+  settled: 9.86, kick: 10.16, push: 10.36, fallen: 10.86, gone: 11.2, line: 11.3, end: 15.5 };
 const NO_STEP = 1 / 12, NO = ['f', 'r', 'f', 'o', 'f', 'o'];   // the head-shake "no", one pose per drawing
-T.push = T.flop + 0.26; T.fallen = T.push + 0.5;        // the ladder goes as his feet leave it
 const RIMF = [410, 962];                                    // where the flag stands: the back of the glass rim, flying into the gap between the drinks
 const XB = 955, XA = 545;
 const LAD = { b: [492, 1336], t: [424, 972] };              // the tiny ladder: foot on the counter, top on the glass rim
@@ -182,12 +181,12 @@ function scene(t) {
   else if (t < T.extend) {                                  // bag down → open → folded ladder out → planted → extends (quick)
     stand(P, XA); P.mouth = 'grin';
     const u0 = T.unpack, L1 = LAD_L, dir = scl([LAD.t[0] - LAD.b[0], LAD.t[1] - LAD.b[1]], 1 / L1);
-    const down = ease(seg(t, u0, u0 + 0.16)), open = seg(t, u0 + 0.18, u0 + 0.28), pull = ease(seg(t, u0 + 0.3, u0 + 0.44)), move = ease(seg(t, u0 + 0.46, u0 + 0.6)), grow = seg(t, u0 + 0.62, T.extend);
+    const down = ease(seg(t, u0, u0 + 0.22)), open = seg(t, u0 + 0.25, u0 + 0.4), pull = ease(seg(t, u0 + 0.42, u0 + 0.62)), move = ease(seg(t, u0 + 0.64, u0 + 0.84)), grow = seg(t, u0 + 0.86, T.extend);
     S.bag = { at: 1, open };
-    if (t < u0 + 0.18) {                                    // crouch and set it down beside him
+    if (t < u0 + 0.25) {                                    // crouch and set it down beside him
       P.y += 22 * Math.sin(Math.PI * down) / K; P.hands = { f: [30, -40], b: { w: V(mix2([BAG[0], BAG[1] - 70], [BAG[0], BAG[1] - 40], down)) } }; P.elbow = { b: 1 };
       S.bag.at = down;
-    } else if (t < u0 + 0.46) {                             // opens it, lifts the folded ladder straight out
+    } else if (t < u0 + 0.64) {                             // opens it, lifts the folded ladder straight out
       const lb = [BAG[0], BAG[1] - 30 - 120 * pull], lt = [BAG[0] - 6, BAG[1] - 30 - 120 * pull - FOLD];
       if (pull > 0) S.lad = { b: lb, t: lt };
       P.hands = { f: pull > 0 ? { w: V(mix2(lb, lt, 0.4)) } : { w: V([BAG[0] - 20, BAG[1] - 40]) }, b: { w: V([BAG[0] + 26, BAG[1] - 44]) } }; P.elbow = { f: 1, b: 1 };
@@ -241,16 +240,17 @@ function scene(t) {
       S.fallP = { ...P }; P.hidden = true; S.fall = 0;        // renderReel sets the blend from the true time (on ones)
     }
   }
-  else {                                                    // complete peace: floating, almost motionless
-    P.hidden = true; S.fall = 1;
-    const fade = 1 - seg(t, T.land, T.land + 0.22);           // the struggle's props leave as he lands: the frame turns clean
-    if (fade > 0) { S.bag = { at: 1, open: 1 }; S.flag = plantedFlag(t); S.lad = ladderAt(t); S.propA = fade; }
+  else {                                                    // complete peace: floating. One push sends the ladder away; the flag stays
+    P.hidden = true; S.fall = 1; S.flag = plantedFlag(t);
+    const fade = 1 - seg(t, T.gone, T.gone + 0.4);           // the ladder (down on the counter) and the pouch leave; the frame turns clean
+    if (fade > 0) { S.bag = { at: 1, open: 1 }; S.lad = ladderAt(t); S.propA = fade; }
+    S.kick = { reach: ease(seg(t, T.kick, T.push)), out: ease(seg(t, T.push, T.push + 0.12)), back: ease(seg(t, T.push + 0.3, T.push + 0.7)) };
     S.splash = seg(t, T.land, T.land + 0.5);
     S.ripples = [0, 1, 2, 3].map(i => T.settled + i * 2.4).filter(t0 => t > t0 && t < t0 + 2.6).map(t0 => seg(t, t0, t0 + 2.6));
   }
   return { P, S };
 }
-const CLIMB = 5;                                            // climbing: half-strides over the climb (rung taps at each)
+const CLIMB = 7;                                            // climbing: half-strides over the climb (rung taps at each)
 
 // ─── the float: a man lying on his back in the coffee, as if it were a swimming pool ───────────────
 // The 3/4-overhead pose was found with an image model (plates/float-pose-source.png) and is TRACED here with the
@@ -279,18 +279,23 @@ function standJoints(P0) {                                 // the rig's joints f
   };
   return { armL: arm('b'), armR: arm('f'), legL: leg('b'), legR: leg('f'), hip: W([0, 0]), neck: W(RIG.neck), head: W(add(RIG.neck, [10, -40])), rot: 0, across: 1, body: 1 };
 }
-function floatJoints(t) {                                   // the traced float pose, in screen px
+function floatJoints(t, kick) {                             // the traced float pose, in screen px; kick: his near leg pushes the ladder
   const d = [1.3 * Math.sin(t * 0.42), 0.9 * Math.sin(t * 0.57 + 1.3)], cx = FL.c[0] + d[0], cy = FL.c[1] + d[1];
   const M = ([x, y]) => [cx + (x - TRACE.o[0]) * FL.s, cy + (y - TRACE.o[1]) * FL.s * FL.sq];
   const neck = M(TRACE.neck[0]), head = M(TRACE.head), crown = scl([head[0] - neck[0], head[1] - neck[1]], 1 / len([head[0] - neck[0], head[1] - neck[1]]));
-  return { armL: TRACE.armL.map(M), armR: TRACE.armR.map(M), legL: TRACE.legL.map(M), legR: TRACE.legR.map(M), hip: M(TRACE.hipC), neck, head,
+  let legR = TRACE.legR.map(M);
+  if (kick) {                                               // knee up, foot to the ladder's rail, a shove, and back to rest
+    const touch = [legR[0], [396, 992], [436, 1000], [456, 994]], pushed = [legR[0], [404, 988], [478, 992], [498, 986]];
+    legR = legR.map((p, i) => { let q = mix2(p, touch[i], kick.reach); q = mix2(q, pushed[i], kick.out); return mix2(q, p, kick.back); });
+  }
+  return { armL: TRACE.armL.map(M), armR: TRACE.armR.map(M), legL: TRACE.legL.map(M), legR, hip: M(TRACE.hipC), neck, head,
     rot: Math.atan2(crown[0], -crown[1]) + TRACE.headBack, across: TRACE.across, body: FL.body, hx: cx + FL.hip[0], hy: cy + FL.hip[1] };
 }
-function drawFloater(ctx, t, k = 1, P0 = null) {
+function drawFloater(ctx, t, k = 1, P0 = null, kick = null) {
   // Drawn with the character's own parts: the profile head (one eye, hair loops on the crown), the rig's torso with its
   // shorts line, tube limbs and round hands. k blends every joint from his standing pose on the ladder (0) to the float (1),
   // so the fall is the same figure tipping back, not a cut.
-  const Fj = floatJoints(t), Sj = P0 && k < 1 ? standJoints(P0) : null;
+  const Fj = floatJoints(t, kick), Sj = P0 && k < 1 ? standJoints(P0) : null;
   const e = Sj ? easeIn(k) : 1, eh = Sj ? Math.pow(clamp((k - 0.08) / 0.92, 0, 1), 1.8) : 1;   // the head lags: it whips back last
   const bl = (a, b, u) => Sj ? mix2(a, b, u) : b;
   const J2 = (A, B, u) => A.map((p, i) => bl(p, B[i], u));
@@ -397,10 +402,11 @@ function renderReel(ctx, layer, t, assets) {
   if (S.fall != null && S.fall < 1) S.fall = easeIn(seg(t, T.flop + 0.06, T.land));      // the fall runs on ones
   lc.globalAlpha = S.propA ?? 1;
   if (S.bag && S.bag.at >= 1) drawBag(lc, BAG, S.bag.open);
+  lc.globalAlpha = 1;
   if (S.flag && S.flag.back) flagX(lc, S.flag.base, S.flag.lean, td, S.flag.dir, S.flag.open, S.flag.pole);
   const r = P.hidden ? { hand: [0, 0] } : drawCharacter(lc, P);
   if (!P.hidden && !(S.bag && S.bag.at >= 1)) { const hb = handB(P); drawBag(lc, add(hb, [0, 50]), 0); }
-  if (S.lad) { lc.save(); drawLadder(lc, S.lad.b, S.lad.t, S.lad.n); lc.restore(); }
+  if (S.lad) { lc.save(); lc.globalAlpha = S.propA ?? 1; drawLadder(lc, S.lad.b, S.lad.t, S.lad.n); lc.restore(); }
   if (S.flag && !S.flag.back) flagX(lc, S.flag.base, S.flag.lean, td, S.flag.dir, S.flag.open, S.flag.pole);
   if (S.phone > 0) tinyPhone(lc, add(r.hand, [-P.f * -10, -30]), S.phone, assets);
   lc.globalAlpha = 1;
@@ -412,7 +418,7 @@ function renderReel(ctx, layer, t, assets) {
   }
   if (S.fall != null && FLC) {
     const fc = FLC.getContext('2d'); fc.setTransform(1, 0, 0, 1, 0, 0); fc.clearRect(0, 0, 1080, 1920);
-    drawFloater(fc, t, S.fall, S.fallP);
+    drawFloater(fc, t, S.fall, S.fallP, S.kick);
     lc.drawImage(FLC, 0, 0);
   }
   if (S.splash != null && S.splash < 1) {                 // the splash: drops up and out, rings across the coffee

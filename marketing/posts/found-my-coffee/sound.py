@@ -100,12 +100,12 @@ for t0, t1, c, notes in regions:
         bass += [(float(t), .22, ROOT[c][i % 2], 96 if i % 2 == 0 else 74)]
 mel5 = [(B2 + .25, 'F#5', 84), (B2 + .5, 'A5', 88), (B2 + .62, 'G5', 72), (B2 + .75, 'F#5', 78), (pop, 'G5', 88), (pop + .12, 'B5', 82),
         (plant, 'A5', 86)] + [(t, n, 62 + 6 * i) for i, (t, n) in enumerate(zip(clicks, ['C#5', 'E5', 'A5']))] \
-       + [(t, n, 62 + 5 * i) for i, (t, n) in enumerate(zip(rungs, ['D5', 'F#5', 'G5', 'A5']))] \
+       + [(t, n, 60 + 5 * i) for i, (t, n) in enumerate(zip(rungs, ['D5', 'E5', 'F#5', 'G5', 'A5', 'B5']))] \
        + [(E['unfurl'], 'B5', 78, .08), (E['unfurl'] + .04, 'C#6', 86, .12)]
 mel += ns(mel5, dur=.2)
 mel += chord(E['flagIn'], .3, ['D3', 'A3', 'F#4', 'D5'], 84)                       # the flag goes in: a little brand fanfare
 glk = ns([(B2 + .25, 'F#5', 46), (B2 + .5, 'A5', 50), (pop, 'G5', 50), (plant, 'A5', 50)]
-         + [(t, n, 34 + 3 * i) for i, (t, n) in enumerate(zip(rungs, ['D6', 'F#6', 'G6', 'A6']))]
+         + [(t, n, 34 + 3 * i) for i, (t, n) in enumerate(zip(rungs, ['D6', 'E6', 'F#6', 'G6', 'A6', 'B6']))]
          + [(E['flagIn'] + i * .05, n, 62 + 6 * i, .45) for i, n in enumerate(['A5', 'D6', 'F#6'])], dur=.3)
 # M6 · Complete peace (after the splash): one soft open chord, a few slow celesta notes, a low pizz now and then. No pulse.
 pad += chord(M6, END + 1.2 - M6, ['D4', 'F#4', 'A4', 'E5'], 46)
@@ -316,10 +316,14 @@ for k in range(6):                                      # ice cubes knocking
 for _ in range(38):                                     # droplets falling back
     u = rng.uniform(0, 1) ** 1.6
     place(bubble(rng.uniform(1400, 3600), 0.02, 2.2), SPL + 0.09 + 0.4 * u, -14 - 8 * u - rng.uniform(0, 5), pan_x(300) + rng.uniform(-.35, .35))
-# the ladder: knocked by his feet as he goes (it's gone from the frame once he lands, so no clatter)
-place(wood(640, 0.08, 0.02), E['push'] + 0.03, -15, pan_x(440))
-fall_d = SPL - E['push']
-place(whoosh(fall_d, 250, 1100, peak=0.9, bw=0.6, curve=2.2)[:int(fall_d * SR)], E['push'], -21, pan_x(560))
+# done with the ladder: once he's settled, a foot reaches out and shoves it; it tips over and clatters onto the counter
+place(whoosh(0.12, 500, 1400, peak=0.6), E['kick'], -20, pan_x(440))
+place(wood(640, 0.08, 0.02), E['push'], -14, pan_x(440))
+fall_d = E['clatter'] - E['push']
+place(whoosh(fall_d, 250, 1300, peak=0.97, bw=0.6, curve=2.2)[:int(fall_d * SR)], E['push'], -19, pan_x(560))
+for dt, f, lvl in [(0, 380, -9), (0.035, 520, -13), (0.07, 450, -15), (0.11, 600, -18)]:      # rails, then rungs rattling
+    place(wood(f, 0.16, 0.035), E['clatter'] + dt, lvl, pan_x(620) + rng.uniform(-.1, .1))
+place(wood(480, 0.12, 0.03), E['bounce'] - 0.12, -18, pan_x(620))
 # complete peace: a soft settle, then only the faintest lapping with each slow ripple
 st_ = lp(noise(0.6), 800) * np.sin(np.pi * np.linspace(0, 1, int(0.6 * SR))) ** 2
 for _ in range(4): b = bubble(rng.uniform(350, 700), 0.05, 1.5); o = int(rng.uniform(0.05, 0.4) * SR); st_[o:o + len(b)] += 0.4 * b
@@ -370,7 +374,7 @@ gate = gate * (1 - np.clip((TT - RISE_END) / 0.008, 0, 1) * (TT < B2))
 gate = gate * np.where(TT < STOP, 1, np.where(TT < M6, np.clip(1 - (TT - STOP) / 0.02, 0, 1), np.clip((TT - M6) / 0.25, 0, 1)))
 duck = np.zeros(N)
 for t0, depth, hold in [(B1, 4, .25), (B2, 3, .3), (E['hop'], 3, .15), (pop, 3, .12), (E['ladderOut'], 3, .2)] + [(c, 2.5, .1) for c in clicks] \
-        + [(E['flagIn'], 2, .2), (L0, 3, .4)]:
+        + [(E['flagIn'], 2, .2), (E['clatter'], 3, .25), (L0, 3, .4)]:
     a = np.clip((TT - t0) / 0.005, 0, 1) * np.where(TT < t0 + hold, 1, np.exp(-(TT - t0 - hold) / 0.25))
     duck = np.maximum(duck, depth * a)
 mus = mus / np.abs(mus).max() * REF * (db(g - duck) * gate)[:, None]

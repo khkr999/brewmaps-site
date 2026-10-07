@@ -14,14 +14,15 @@
 
 Lines (every episode): **نفس الكوفي، مشروبين… / واحد بس على ذوقك.** End card: **مو بس وين تروح… / وش تشرب.**
 
-## Ep. 1 · Ladder + flag + the flop — `export/ep1-ladder-flag.mp4`, 18s, with sound
+## Ep. 1 · Ladder + flag + the flop — `export/ep1-ladder-flag.mp4`, 18.6s, with sound
 
 search → effort → find → FLOP BACK → complete peace. The first half is quick (the 24%, a sad walk, the 92%, the ladder,
 the climb, the BrewMaps flag out of his pocket and planted on the rim). Then a satisfied glance, he turns his head away
 and tips backward off the ladder: the same figure all the way, every joint blending from the standing pose into the
-float (his feet knock the ladder as he leaves it). On the splash the props fade out and he floats on the iced latte like
-it's a pool, in a 3/4-overhead pose: head toward the back of the cup, face up, eyes closed, arms dropped outward past
-both sides, hips and legs under the surface with a waterline. One fixed pose; only the whole body drifts 1–2 px. The camera eases in on him; the line
+float. He floats on the iced latte like it's a pool, in a 3/4-overhead pose: head toward the back of the cup, face up,
+eyes closed, arms dropped outward past both sides, hips and legs under the surface with a waterline. Once settled, a
+foot comes up and shoves the ladder over; it clatters onto the counter and, with the pouch, fades out. The flag stays.
+Only the text holds are slow; the action keeps the original pace. The camera eases in on him; the line
 comes only after the joke lands (small setup, one big statement on a soft scrim); then the scene washes into BrewMaps
 green with him still faintly there, and the end line + Brew Maps lockup come in.
 
@@ -41,13 +42,14 @@ green with him still faintly there, and the end line + Brew Maps lockup come in.
 | 0–1.05s | Walks in, quick, pouch in hand. |
 | 1.1–2.7s | **كابتشينو · ٢٤٪ على ذوقك** (light green, held ~1.3s). A quick "no". |
 | 2.75–4.25s | The sad walk. |
-| 4.3–5.1s | **آيس لاتيه · ٩٢٪ على ذوقك** (dark green, held ~1s). Hop. |
-| 5.6–7.22s | Pouch, ladder, three clicks, a fast climb. |
-| 7.22–7.68s | The BrewMaps flag out of his pocket, open, planted on the rim. |
-| 7.74–8.4s | A satisfied glance; he tips backward off the ladder into the float, knocking the ladder away. |
-| 8.4–8.7s | Splash: the props fade, the frame turns clean; he floats on the latte like a pool. |
-| 8.98–13.6s | Almost motionless. **نفس الكوفي، مشروبين… / واحد بس على ذوقك.** (held ~4.2s) |
-| 13.6–18.0s | Washes into green, he stays faintly: **مو بس وين تروح… وش تشرب.** + Brew Maps lockup (~3.2s). |
+| 4.3–5.2s | **آيس لاتيه · ٩٢٪ على ذوقك** (dark green, held ~1s). Hop. |
+| 5.6–8.0s | Pouch, ladder, three clicks, the climb. |
+| 8.0–8.68s | The BrewMaps flag out of his pocket, open, planted on the rim. |
+| 8.74–9.56s | A satisfied glance; he tips backward off the ladder into the float. |
+| 9.56–9.86s | Splash: floating on the latte like a pool, the flag beside him. |
+| 10.16–11.6s | A foot shoves the ladder over; it clatters onto the counter and fades with the pouch. |
+| 11.3–15.5s | Almost motionless. **نفس الكوفي، مشروبين… / واحد بس على ذوقك.** (held ~3.8s) |
+| 15.5–18.6s | Washes into green, he stays faintly: **مو بس وين تروح… وش تشرب.** + Brew Maps lockup. |
 
 Alt cut, springboard entry: `export/ep1-springboard.mp4` (`reel-springboard.js`), held for ep. 2.
 

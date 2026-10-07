@@ -38,7 +38,7 @@ const ev = {
   rungs: Array.from({ length: ctx.CLIMB - 1 }, (_, i) => at(T.extend + (T.top - T.extend) * (i + 1) / ctx.CLIMB)),
   pocket: after(T.top), pull: after(T.pocket), unfurl: first(F => F.S.flag && F.S.flag.open > 0), flagIn: at(T.planted),
   turn: after(T.turn), flop: after(T.flop), splash: first(F => F.S.splash > 0), settled: at(T.settled),
-  push: after(T.push), clatter: at(T.fallen), bounce: at(T.fallen + 0.25),
+  kick: after(T.kick), push: after(T.push), clatter: at(T.fallen), bounce: at(T.fallen + 0.25), gone: after(T.gone),
   ripples: [0, 1, 2, 3].map(i => T.settled + i * 2.4).filter(t => t < T.end).map(after),
   line: after(T.line), endCard: after(T.end), endFull: at(T.end + 1.0),
 };
