@@ -14,7 +14,7 @@
 
 Lines (every episode): **نفس الكوفي، مشروبين… / واحد بس على ذوقك.** End card: **مو بس وين تروح… / وش تشرب.**
 
-## Ep. 1 · Ladder + flag + the flop — `export/ep1-ladder-flag.mp4`, 15.3s, with sound
+## Ep. 1 · Ladder + flag + the flop — `export/ep1-ladder-flag.mp4`, 18s, with sound
 
 search → effort → find → FLOP BACK → complete peace. The first half is quick (the 24%, a sad walk, the 92%, the ladder,
 the climb, the BrewMaps flag out of his pocket and planted on the rim). Then a satisfied glance, he turns his head away
@@ -39,15 +39,15 @@ green with him still faintly there, and the end line + Brew Maps lockup come in.
 | Time | Beat |
 |---|---|
 | 0–1.05s | Walks in, quick, pouch in hand. |
-| 1.1–2.45s | **كابتشينو · ٢٤٪ على ذوقك** (light green). A quick "no". |
-| 2.45–3.95s | The sad walk. |
-| 4.0–4.8s | **آيس لاتيه · ٩٢٪ على ذوقك** (dark green). Hop. |
-| 5.0–6.62s | Pouch, ladder, three clicks, a fast climb. |
-| 6.62–7.08s | The BrewMaps flag out of his pocket, open, planted on the rim. |
-| 7.14–7.8s | A satisfied glance; he tips backward off the ladder into the float, knocking the ladder away. |
-| 7.8–8.1s | Splash: the props fade, the frame turns clean; he floats on the latte like a pool. |
-| 8.38–12.0s | Almost motionless. **نفس الكوفي، مشروبين… / واحد بس على ذوقك.** |
-| 12.0–15.3s | Washes into green, he stays faintly: **مو بس وين تروح… وش تشرب.** + Brew Maps lockup. |
+| 1.1–2.7s | **كابتشينو · ٢٤٪ على ذوقك** (light green, held ~1.3s). A quick "no". |
+| 2.75–4.25s | The sad walk. |
+| 4.3–5.1s | **آيس لاتيه · ٩٢٪ على ذوقك** (dark green, held ~1s). Hop. |
+| 5.6–7.22s | Pouch, ladder, three clicks, a fast climb. |
+| 7.22–7.68s | The BrewMaps flag out of his pocket, open, planted on the rim. |
+| 7.74–8.4s | A satisfied glance; he tips backward off the ladder into the float, knocking the ladder away. |
+| 8.4–8.7s | Splash: the props fade, the frame turns clean; he floats on the latte like a pool. |
+| 8.98–13.6s | Almost motionless. **نفس الكوفي، مشروبين… / واحد بس على ذوقك.** (held ~4.2s) |
+| 13.6–18.0s | Washes into green, he stays faintly: **مو بس وين تروح… وش تشرب.** + Brew Maps lockup (~3.2s). |
 
 Alt cut, springboard entry: `export/ep1-springboard.mp4` (`reel-springboard.js`), held for ep. 2.
 

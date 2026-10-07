@@ -3,7 +3,7 @@
 // flag, and flops back into it like it's a pool. search → effort → find → FLOP BACK → complete peace.
 // The Regular's character (../the-regular/rig.js). Plate: plates/iced-hot.jpg (AI-generated, unbranded). Plate pixels.
 
-const DUR = 15.3;
+const DUR = 18.0;
 const K = 0.9;
 const GROUND = 1335;                                // where he walks: the counter, in front of the cups
 const CUP_A = { rim: { cx: 260, cy: 978, rx: 152, ry: 36 }, cof: { cx: 262, cy: 1030, rx: 140, ry: 22 }, l: 108, r: 413, bot: 1322, glass: true };
@@ -65,9 +65,9 @@ function cupFront(ctx, C) {
   ctx.moveTo(R.cx + R.rx - 8, R.cy + 4); ctx.ellipse(R.cx, R.cy + 4, R.rx - 8, R.ry, 0, 0, Math.PI); ctx.closePath();   // the inner front wall
 }
 
-const T = { inB: 1.05, phB: 1.1, b1: 1.4, no0: 1.62, offB: 2.4, walkA: 2.45, atA: 3.95, phA: 4.0, b2: 4.3, hop: 4.55, unpack: 5.0,
-  extend: 5.92, top: 6.62, pocket: 6.72, pulled: 6.86, unfurled: 6.96, stab: 6.98, planted: 7.08, turn: 7.14, flop: 7.28, land: 7.8,
-  settled: 8.1, line: 8.38, end: 12.0 };
+const T = { inB: 1.05, phB: 1.1, b1: 1.4, no0: 1.62, offB: 2.7, walkA: 2.75, atA: 4.25, phA: 4.3, b2: 4.6, hop: 4.85, unpack: 5.6,
+  extend: 6.52, top: 7.22, pocket: 7.32, pulled: 7.46, unfurled: 7.56, stab: 7.58, planted: 7.68, turn: 7.74, flop: 7.88, land: 8.4,
+  settled: 8.7, line: 8.98, end: 13.6 };
 const NO_STEP = 1 / 12, NO = ['f', 'r', 'f', 'o', 'f', 'o'];   // the head-shake "no", one pose per drawing
 T.push = T.flop + 0.26; T.fallen = T.push + 0.5;        // the ladder goes as his feet leave it
 const RIMF = [410, 962];                                    // where the flag stands: the back of the glass rim, flying into the gap between the drinks

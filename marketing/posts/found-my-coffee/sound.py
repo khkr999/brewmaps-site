@@ -110,8 +110,8 @@ glk = ns([(B2 + .25, 'F#5', 46), (B2 + .5, 'A5', 50), (pop, 'G5', 50), (plant, '
 # M6 · Complete peace (after the splash): one soft open chord, a few slow celesta notes, a low pizz now and then. No pulse.
 pad += chord(M6, END + 1.2 - M6, ['D4', 'F#4', 'A4', 'E5'], 46)
 pad_cc = [(END - 0.2 + i * 0.08, mido.Message('control_change', control=11, value=int(127 * (1 - i / 19) ** 1.4))) for i in range(20)]
-cel = ns([(g6(0), 'A5', 58, 1.3), (g6(1.2), 'F#5', 52, 1.1), (g6(2.4), 'E5', 50, 1.2), (g6(3.6), 'D5', 54, 1.6)])
-bass += ns([(g6(0), 'D2', 60, .5), (g6(2.4), 'G2', 52, .5), (g6(3.6), 'A1', 54, .5)])
+cel = ns([(g6(0), 'A5', 58, 1.3), (g6(1.2), 'F#5', 52, 1.1), (g6(2.4), 'E5', 50, 1.2), (g6(3.6), 'D5', 54, 1.6), (g6(5.0), 'F#5', 46, 1.4)])
+bass += ns([(g6(0), 'D2', 60, .5), (g6(2.4), 'G2', 52, .5), (g6(3.6), 'A1', 54, .5), (g6(5.0), 'D2', 50, .5)])
 pad += chord(END + 0.45, 2.0, ['D4', 'F#4', 'A4'], 50)                                  # resolves as the end line appears
 mel += chord(END + 0.45, .5, ['D3', 'A3', 'F#4', 'D5'], 60)
 glk += [(END + 0.45, .5, 'D6', 34)]
