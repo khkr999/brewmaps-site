@@ -1,4 +1,22 @@
-# لقيت كوفيي — doodle Reel, 9s
+# لقيت كوفيي — doodle Reel
+
+**v2 (current): `export/found-my-coffee-v2.mp4`, 11s.** Plate `plates/two-cups.jpg` (AI-generated, unbranded). `reel.js`.
+
+| Time | Beat |
+|---|---|
+| 0–1.6s | Walks in from the right to the first cup. |
+| 1.6–3.4s | Checks BrewMaps: **يناسب ذوقك ٢٤٪** (grey). "Meh" mouth, shakes his head. |
+| 3.4–5.0s | Walks to the other cup. |
+| 5.0–6.6s | Checks again: **يناسب ذوقك ٩٢٪** (green). Wide eyes, grin, a little hop. |
+| 6.6–7.4s | Crouches and jumps into the cup. |
+| 7.4–9.0s | Lounges in it, legs over the rim, eyes closed. Super: **لما تلقى الكوفي اللي يناسبك…** |
+| 9.0–11s | End card: mark / **BrewMaps يلقى لك الكوفي اللي يناسبك.** / مجاني على الآب ستور وجوجل بلاي |
+
+Face: bigger eye, no ear mark, closed eyes as a shallow curve, head kept upright while lounging.
+
+---
+
+## v1 (9s, single cup): `export/found-my-coffee.mp4`, `reel-v1.js`, plate `plates/cup.jpg`
 
 `export/found-my-coffee.mp4`, 1080×1920, 24fps. The Regular's character (`../the-regular/rig.js`) lounging in a cup,
 after a Pinterest reference (doodle draped over a cup). Brand post: the plate is AI-generated (Figma AI) and unbranded.
