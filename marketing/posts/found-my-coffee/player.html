@@ -12,7 +12,7 @@ layer.width = 1080; layer.height = 1920;
 window.DURATION = DUR;
 window.ready = (async () => {
   await Promise.all([document.fonts.load('800 70px "Tajawal"', 'الكوفي'), document.fonts.load('500 36px "Tajawal"', 'مجاني')]);
-  window.assets = { plate: await img('plates/iced-hot-v2.jpg'), mark: await img('plates/mark-cream.png'), lockup: await img('plates/lockup-cream.png'), float: await img('plates/float-pose.png') };
+  window.assets = { plate: await img('plates/iced-hot-v2.jpg'), mark: await img('plates/mark-cream.png'), lockup: await img('plates/lockup-cream.png') };
   ASSETS = window.assets;
 })();
 window.frame = t => { renderReel(ctx, layer, t, window.assets); return document.getElementById('c').toDataURL('image/png'); };

@@ -254,34 +254,75 @@ function scene(t) {
 const CLIMB = 5;                                            // climbing: half-strides over the climb (rung taps at each)
 
 // ─── the float: a man lying on his back in the coffee, as if it were a swimming pool ───────────────
-// A single 3/4-overhead pose (plates/float-pose.png: generated as line art from the pool-float body language, keyed,
-// lines thinned to the character's weight, mirrored so his head lands where he falls). Head back toward the far side of
-// the cup, eyes closed, arms dropped outward past both sides with open hands, legs loose, feet falling outward. Laid onto
-// the coffee with a little extra foreshortening; his hips and upper legs are under the coffee (a soft patch is erased
-// inside the rim, with a waterline), and anything below the rim shows only faintly through the glass. One fixed pose:
-// the whole figure drifts 1–2 px.
-var FL = { land: [306, 968], c: [262, 968], s: 0.44, sq: 0.62, hip: [47, 32], hipR: [65, 26] };
+// The 3/4-overhead pose was found with an image model (plates/float-pose-source.png) and is TRACED here with the
+// character's own drawing code: same head and hair loops, tube limbs, line weight and boil as the rest of the reel.
+// Joint positions below are in that reference image's pixels (mirrored, 869×845), mapped onto the cup with a little
+// extra foreshortening. Head back toward the far side of the cup, eyes closed, arms dropped outward past both sides with
+// loose open hands, legs loose, feet falling outward. His hips and upper legs are under the coffee (soft erase inside the
+// rim + a waterline); below the rim he shows faintly through the glass. One fixed pose: the whole figure drifts 1–2 px.
+var FL = { land: [306, 968], c: [262, 968], s: 0.44, sq: 0.62, hip: [47, 32], hipR: [65, 26], line: 6.1, headR: 33 };
+const TRACE = {
+  o: [434.5, 422.5],
+  head: [272, 128], neck: [[300, 196], [312, 236]],
+  torso: [[262, 232], [292, 330], [350, 440], [418, 478], [470, 470], [522, 368], [452, 252], [400, 226], [338, 214]],
+  shorts: [[330, 420], [430, 412], [540, 352]],
+  armL: [[282, 282], [190, 380], [100, 482]], armR: [[436, 244], [564, 274], [684, 300]],
+  legL: [[410, 452], [462, 592], [486, 716], [530, 784]],
+  legR: [[488, 436], [620, 546], [734, 640], [800, 652]],
+  faceAng: -0.64,
+};
 function drawFloater(ctx, t) {
-  const img = ASSETS.float; if (!img) return;
-  const d = [1.3 * Math.sin(t * 0.42), 0.9 * Math.sin(t * 0.57 + 1.3)];
-  const w = img.width * FL.s, h = img.height * FL.s * FL.sq, cx = FL.c[0] + d[0], cy = FL.c[1] + d[1];
-  ctx.drawImage(img, cx - w / 2, cy - h / 2, w, h);
+  const d = [1.3 * Math.sin(t * 0.42), 0.9 * Math.sin(t * 0.57 + 1.3)];      // the whole figure drifts 1–2 px; the pose never changes
+  const cx = FL.c[0] + d[0], cy = FL.c[1] + d[1];
+  const M = ([x, y]) => [cx + (x - TRACE.o[0]) * FL.s, cy + (y - TRACE.o[1]) * FL.s * FL.sq];
+  const X = p => J(M(p));
+  for (const L of [TRACE.legL, TRACE.legR]) tube(ctx, L.map(X), RIG.leg * 0.8);
+  const hands = [];
+  for (const [A, side] of [[TRACE.armL, -1], [TRACE.armR, 1]]) {
+    const pts = A.map(M); tube(ctx, pts.map(p => J(p)), RIG.arm * 0.82);
+    const v = [pts[2][0] - pts[1][0], pts[2][1] - pts[1][1]]; hands.push([pts[2], scl(v, 1 / len(v)), side]);
+  }
+  const tp = TRACE.torso.map(X);
+  shape(ctx, tp);
+  ctx.save(); ctx.beginPath(); cr(ctx, tp, true); ctx.clip(); stroke(ctx, TRACE.shorts.map(X)); ctx.restore();
+  hands.forEach(([w, fd, side]) => openHand(ctx, w, fd, side));
+  tube(ctx, TRACE.neck.map(X), 15);
+  // head: the character's own head, face up and tipped back: hair loops on the crown, two closed eyes, a neutral mouth
+  const c = M(TRACE.head), R = FL.headR, fa = TRACE.faceAng;           // fa turns the face's "up" toward the crown (up-left)
+  const H = (x, y) => J(add(c, rot([x * R / 40, y * R / 40], fa)), 0.7);
+  [196, 220, 244, 268, 292, 316, 340].forEach((deg, i) => {
+    const r = deg * Math.PI / 180, cc = [43 * Math.cos(r), 43 * Math.sin(r)];
+    stroke(ctx, circlePts([0, 0], 8.5 + (i % 2), 8.5, 7).map(p => H(cc[0] + p[0], cc[1] + p[1])), { closed: true });
+  });
+  shape(ctx, circlePts([0, 0], 40, 41, 12).map(p => H(p[0], p[1])));
+  for (const ex of [-15, 15]) stroke(ctx, [H(ex - 7, -2), H(ex, 2), H(ex + 7, -2)], { width: LINE * 0.9 });   // eyes closed, at ease
+  stroke(ctx, [H(-6, 18), H(0, 19), H(6, 18)], { width: LINE * 0.8 });                                     // neutral mouth
   // hips and upper legs under the coffee: a soft erase, only inside the rim
-  const R = CUP_A.rim, hx = cx + FL.hip[0], hy = cy + FL.hip[1];
+  const Rr = CUP_A.rim, hx = cx + FL.hip[0], hy = cy + FL.hip[1];
   ctx.save();
-  ctx.beginPath(); ctx.ellipse(R.cx, R.cy + 2, R.rx - 2, R.ry - 2, 0, 0, Math.PI * 2); ctx.clip();
+  ctx.beginPath(); ctx.ellipse(Rr.cx, Rr.cy + 2, Rr.rx - 2, Rr.ry - 2, 0, 0, Math.PI * 2); ctx.clip();
   ctx.globalCompositeOperation = 'destination-out';
   ctx.translate(hx, hy); ctx.scale(1, FL.hipR[1] / FL.hipR[0]);
   const g = ctx.createRadialGradient(0, 0, 0, 0, 0, FL.hipR[0]); g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(0.72, 'rgba(0,0,0,1)'); g.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, FL.hipR[0], 0, Math.PI * 2); ctx.fill();
   ctx.restore();
-  // below the rim, seen faintly through the glass
-  ctx.save(); ctx.globalCompositeOperation = 'destination-out'; ctx.globalAlpha = 0.55; cupFront(ctx, CUP_A); ctx.fill('nonzero'); ctx.restore();
-  // the waterline where he goes under
-  ctx.save(); ctx.strokeStyle = LC; ctx.lineCap = 'round'; ctx.globalAlpha = 0.8; ctx.lineWidth = 3;
+  ctx.save(); ctx.globalCompositeOperation = 'destination-out'; ctx.globalAlpha = 0.55; cupFront(ctx, CUP_A); ctx.fill('nonzero'); ctx.restore();   // below the rim: faint through the glass
+  ctx.save(); ctx.strokeStyle = LC; ctx.lineCap = 'round'; ctx.globalAlpha = 0.8; ctx.lineWidth = 3;                                               // the waterline
   ctx.beginPath(); ctx.ellipse(hx, hy + FL.hipR[1] * 0.5, FL.hipR[0] * 0.92, FL.hipR[0] * 0.2, 0, 0.12 * Math.PI, 0.88 * Math.PI); ctx.stroke();
   ctx.globalAlpha = 0.45; ctx.beginPath(); ctx.ellipse(hx, hy + FL.hipR[1] * 0.62, FL.hipR[0] * 1.25, FL.hipR[0] * 0.27, 0, 0.25 * Math.PI, 0.75 * Math.PI); ctx.stroke();
   ctx.restore();
+}
+function openHand(ctx, w, fd, side) {                       // loose and open: palm, four separated fingers, thumb; wrist dropped
+  const g = [0, 1], m = add(scl(fd, 0.7), scl(g, 0.3)), dd = scl(m, 1 / len(m));
+  const palm = add(w, scl(dd, 8));
+  shape(ctx, circlePts(palm, 10, 9, 8, Math.atan2(dd[1], dd[0])).map(p => J(p, 0.5)));
+  [-0.5, -0.17, 0.16, 0.47].forEach((r, i) => {
+    const fdir = rot(dd, r), b = add(palm, scl(fdir, 8)), L = [11, 14, 13, 10][i];
+    const mid = add(b, scl(rot(fdir, 0.12 * side), L * 0.55)), tip = add(b, scl(rot(fdir, 0.26 * side), L));
+    stroke(ctx, [b, mid, tip].map(p => J(p, 0.4)), { width: LINE * 0.8 });
+  });
+  const th = rot(dd, -1.2 * side), tb = add(palm, scl(th, 7));
+  stroke(ctx, [tb, add(tb, scl(rot(th, 0.4 * side), 9))].map(p => J(p, 0.4)), { width: LINE * 0.8 });
 }
 
 function tinyPhone(ctx, c, s, assets) {
