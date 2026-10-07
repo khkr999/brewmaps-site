@@ -18,6 +18,7 @@ Lines (every episode): **نفس الكوفي، مشروبين… / واحد بس
 
 Plate `plates/iced-hot.jpg` (AI-generated, unbranded). `reel.js`. Script: `SCRIPT.md` / `export/ep1-ladder-script.docx`.
 Sound: frame-accurate music + SFX cue sheet in `SOUND-DESIGN.md` / `export/ep1-ladder-sound-design.docx` (mix gets baked into the MP4).
+**With sound: `export/ep1-ladder-sound.mp4`** (mix `export/ep1-ladder-mix.wav`, −17 LUFS, −1.2 dBFS peak). Built by `python3 sound.py <tmpdir> export/ep1-ladder-mix.wav`: the score is composed in MIDI and rendered with the FluidR3 GM soundfont (fluidsynth); the SFX are synthesised and placed on exact frames.
 
 | Time | Beat |
 |---|---|
