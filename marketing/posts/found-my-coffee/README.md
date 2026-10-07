@@ -14,22 +14,21 @@
 
 Lines (every episode): **نفس الكوفي، مشروبين… / واحد بس على ذوقك.** End card: **مو بس وين تروح… / وش تشرب.**
 
-## Ep. 1 · Ladder — `export/ep1-ladder.mp4`, 13s, with sound
+## Ep. 1 · Ladder — `export/ep1-ladder.mp4`, 13s, silent (add the sound in Instagram)
 
-Plate `plates/iced-hot.jpg` (AI-generated, unbranded). Animation `reel.js`; sound `audio.py` → `audio/mix.wav`
-(synthesized here: cozy lo-fi + effects, timed to the same beats). Mux: loudnorm to -15 LUFS, AAC 192k.
+Plate `plates/iced-hot.jpg` (AI-generated, unbranded). `reel.js`.
 
-| Time | Picture | Sound |
-|---|---|---|
-| 0–1.6s | Walks in, a small folded ladder on his back. | Lo-fi (Fmaj7), light footsteps |
-| 1.7–3.3s | **كابتشينو · ٢٤٪ على ذوقك** (grey). Sad: worried brow, frown; a cartoon head-turn "no" (profile → to camera → other side → back). | Phone tap; a muted sad trombone "wah-wah-wahh"; chord drops to Fm6 |
-| 3.35–5.75s | The sad walk: hands in pockets, slumped, head down. | Music goes minor (Dm7 → Am7), muffled, no drums; heavy slow shuffle |
-| 5.85–7.2s | **آيس لاتيه · ٩٢٪ على ذوقك** (green). Head up, grin, hop. | Bright four-note chime, drums back (Cmaj9), a little boing |
-| 7.2–8.45s | Takes the ladder off his back, plants it; it telescopes up to the rim in three clicks. | Rustle, wooden clack, click-click-click |
-| 8.45–9.6s | Climbs it rung by rung. | Wooden rung taps |
-| 9.6–10.55s | Hops in; splash; surfaces. | Splash with bubbles, ice clinks |
-| 10.55–11s | Sits up on the ice, knees over the rim. **نفس الكوفي، مشروبين… واحد بس على ذوقك.** | Lo-fi continues |
-| 11–13s | End card: mark / **مو بس وين تروح… وش تشرب.** | Soft two-note chime, music resolves and fades |
+| Time | Beat |
+|---|---|
+| 0–1.6s | Walks in carrying a small green pouch in one hand. |
+| 1.7–3.3s | **كابتشينو · ٢٤٪ على ذوقك** (grey). Sad: worried brow, frown; a cartoon head-turn "no" (profile → to camera → other side → back). |
+| 3.35–5.75s | The sad walk: one hand in his pocket, the pouch drooping in the other, slumped, head down. |
+| 5.85–7.2s | **آيس لاتيه · ٩٢٪ على ذوقك** (green). Head up, grin, hop. |
+| 7.2–8.45s | Sets the pouch down, opens the flap, pulls out a folded ladder, plants it on the glass; it extends to the rim. |
+| 8.45–9.6s | Climbs it, rung by rung. |
+| 9.6–10.55s | Hops in; splash; surfaces. |
+| 10.55–11s | Sits up on the ice, knees over the rim. **نفس الكوفي، مشروبين… واحد بس على ذوقك.** |
+| 11–13s | End card: mark / **مو بس وين تروح… وش تشرب.** |
 
 Alt cut, springboard entry: `export/ep1-springboard.mp4` (`reel-springboard.js`), held for ep. 2.
 

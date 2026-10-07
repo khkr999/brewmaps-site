@@ -74,7 +74,7 @@ function walk(P, t, t0, t1, x0, x1) {
   const G = GROUND / K;
   const foot = (off, a) => ({ w: [P.x + P.f * (off + 24 * Math.sin(a)), G - 16 * Math.max(0, Math.cos(a))] });
   P.feet = { f: foot(6, ph), b: foot(-8, ph + Math.PI) };
-  P.hands = { f: [30, -40 + 10 * Math.sin(ph)], b: [-20, -40 - 10 * Math.sin(ph)] };
+  P.hands = { f: [30, -40 + 10 * Math.sin(ph)], b: [-22, -34 - 8 * Math.sin(ph)] };
 }
 function stand(P, x) {
   P.x = x / K; P.y = (GROUND - 112 * K) / K; const G = GROUND / K;
@@ -90,6 +90,20 @@ function drawLadder(ctx, b, t) {                           // plate points: foot
   const k = Math.max(2, Math.round(L / 46));
   for (let i = 1; i < k; i++) { const p = mix2(b, t, i / k); stroke(ctx, [W(add(p, n)), W(add(p, scl(n, -1)))], { smooth: false, width: LINE * 0.8 }); }
 }
+const BAG = [604, 1338];                                     // where he sets it down (bottom-centre)
+function drawBag(ctx, c, open) {                            // plate coords: bottom-centre; open 0..1
+  const W = p => J(V(add(c, p)), 0.7);
+  const body = [[-34, 0], [-38, -40], [38, -40], [34, 0]].map(W);
+  shape(ctx, body, { smooth: false, fill: '#25461C' });
+  stroke(ctx, [[-20, -40], [-16, -62], [16, -62], [20, -40]].map(W), { width: LINE * 0.8 });          // handle
+  const ang = -2.2 * ease(open), hinge = [-38, -40];
+  const flap = [[0, 0], [76, 0], [70, 18], [6, 18]].map(p => add(hinge, rot(p, ang)));
+  shape(ctx, flap.map(W), { smooth: false, fill: '#25461C' });
+  if (open < 0.5) { ctx.beginPath(); ctx.arc(...W([0, -24]), 4 / K, 0, 7); ctx.fillStyle = LC; ctx.fill(); }  // clasp
+}
+function handB(P) {                                          // where his back hand is, in plate pixels
+  return scl(toWorld(P, ik(RIG.shB, tgt(P, P.hands.b), RIG.upper, RIG.fore, P.elbow?.b ?? -1)[2]), K);
+}
 function backLadder(P) {                                    // folded on his back: follows the torso
   const a = toWorld(P, [-56, -150]), c = toWorld(P, [-56, -20]);
   return { b: scl(c, K), t: scl(a, K) };
@@ -100,7 +114,7 @@ function sadWalk(P, t, t0, t1, x0, x1) {                   // slow, hands in poc
   P.x = x / K; P.y = (GROUND - 112 * K) / K - 2 * Math.abs(Math.sin(ph)) + 6;
   const G = GROUND / K, foot = (off, a) => ({ w: [P.x + P.f * (off + 16 * Math.sin(a)), G - 9 * Math.max(0, Math.cos(a))] });
   P.feet = { f: foot(6, ph), b: foot(-8, ph + Math.PI) };
-  P.hands = { f: [14, -16], b: [-12, -14] }; P.elbow = { f: 1, b: -1 };      // in the pockets
+  P.hands = { f: [14, -16], b: [-18, -28] }; P.elbow = { f: 1, b: -1 };      // one hand in his pocket, the bag drooping in the other
   P.rot = 0.1; P.tilt = -0.32; P.down = 1; P.mouth = 'flat'; P.brow = true; P.eyes = 'open';
 }
 
@@ -113,7 +127,7 @@ function scene(t) {
   else if (t < T.walkA) {                                   // the hot cappuccino: ٢٤٪ for him. Sad, a slow "no"
     stand(P, XB);
     const up = phoneUp(T.phB, T.offB);
-    P.hands = { f: mix2([30, -40], holdUp.f, up), b: mix2([-20, -40], holdUp.b, up) };
+    P.hands = { f: mix2([30, -40], holdUp.f, up), b: [-22, -34] };
     S.phone = up; P.tilt = 0.25 * up;
     if (t > 2.05) { S.badge = { name: 'كابتشينو', pct: '٢٤٪', good: false, a: seg(t, 2.05, 2.3) * (1 - seg(t, 3.05, 3.3)) }; P.mouth = 'flat'; P.brow = true; }
     if (t > 2.45 && t < 3.25) {                           // "no": turn to camera, the other way, back
@@ -126,27 +140,37 @@ function scene(t) {
   else if (t < T.unpack) {                                  // the iced latte: ٩٢٪ — he perks right up
     stand(P, XA);
     const up = phoneUp(T.phA, 7.1);
-    P.hands = { f: mix2([14, -16], holdUp.f, up), b: mix2([-12, -14], holdUp.b, up) };
+    P.hands = { f: mix2([14, -16], holdUp.f, up), b: [-22, -34] };
     S.phone = up; P.tilt = mix(-0.32, 0.25, ease(seg(t, T.atA, T.phA + 0.2))); P.down = 1 - seg(t, T.atA, T.phA + 0.2);
     P.mouth = 'flat'; P.brow = t < 6.25;
     if (t > 6.25) { S.badge = { name: 'آيس لاتيه', pct: '٩٢٪', good: true, a: seg(t, 6.25, 6.5) * (1 - seg(t, 6.95, 7.15)) }; P.mouth = 'grin'; P.eyes = 'wide'; P.brow = false; }
     if (t > 6.6 && t < 6.9) P.y -= 18 * Math.sin((t - 6.6) / 0.3 * Math.PI) / K;
   }
-  else if (t < T.extend) {                                  // takes the folded ladder off his back, plants it, it telescopes up
+  else if (t < T.extend) {                                  // bag down → open → folded ladder out → planted → extends
     stand(P, XA); P.mouth = 'grin';
-    const off = ease(seg(t, T.unpack, T.plant)), grow = seg(t, T.plant + 0.1, T.extend - 0.05);
-    const L0 = FOLD, L1 = len([LAD.t[0] - LAD.b[0], LAD.t[1] - LAD.b[1]]);
-    const clicks = Math.min(3, Math.floor(grow * 3 + 0.0001)), sub = ease(clamp(grow * 3 - clicks, 0, 1));
-    const L = mix(L0, L1, (clicks + (clicks < 3 ? sub : 0)) / 3);
-    const dir = scl([LAD.t[0] - LAD.b[0], LAD.t[1] - LAD.b[1]], 1 / L1);
-    const bk = backLadder(P), pb = mix2(bk.b, LAD.b, off), pt = mix2(bk.t, add(LAD.b, scl(dir, L0)), off);
-    S.lad = { b: pb, t: off < 1 ? pt : add(LAD.b, scl(dir, L)) };
-    const grip = mix2(pb, pt, 0.55);
-    P.hands = off < 1 ? { f: { w: V(grip) }, b: { w: V(add(grip, [10, 14])) } } : { f: { w: V(mix2(LAD.b, add(LAD.b, scl(dir, L0)), 0.7)) }, b: [-20, -40] };
-    P.elbow = { f: 1, b: 1 }; P.tilt = off >= 1 ? -0.2 - 0.25 * grow : 0;     // watches it rise
+    const L1 = len([LAD.t[0] - LAD.b[0], LAD.t[1] - LAD.b[1]]), dir = scl([LAD.t[0] - LAD.b[0], LAD.t[1] - LAD.b[1]], 1 / L1);
+    const down = ease(seg(t, 7.2, 7.42)), open = seg(t, 7.45, 7.6), pull = ease(seg(t, 7.62, 7.82)), move = ease(seg(t, 7.84, 8.04)), grow = seg(t, 8.06, T.extend);
+    S.bag = { at: 1, open };
+    if (t < 7.45) {                                         // crouch and set it down beside him
+      P.y += 22 * Math.sin(Math.PI * down) / K; P.hands = { f: [30, -40], b: { w: V(mix2([BAG[0], BAG[1] - 70], [BAG[0], BAG[1] - 40], down)) } }; P.elbow = { b: 1 };
+      S.bag.at = down;
+    } else if (t < 7.84) {                                  // opens it, lifts the folded ladder straight out
+      const lb = [BAG[0], BAG[1] - 30 - 120 * pull], lt = [BAG[0] - 6, BAG[1] - 30 - 120 * pull - FOLD];
+      if (pull > 0) S.lad = { b: lb, t: lt };
+      P.hands = { f: pull > 0 ? { w: V(mix2(lb, lt, 0.4)) } : { w: V([BAG[0] - 20, BAG[1] - 40]) }, b: { w: V([BAG[0] + 26, BAG[1] - 44]) } }; P.elbow = { f: 1, b: 1 };
+      P.tilt = -0.25;
+    } else {                                                // carries it over, plants it on the glass, it extends
+      const from = { b: [BAG[0], BAG[1] - 150], t: [BAG[0] - 6, BAG[1] - 150 - FOLD] }, to = { b: LAD.b, t: add(LAD.b, scl(dir, FOLD)) };
+      const clicks = Math.min(3, Math.floor(grow * 3 + 1e-4)), sub = ease(clamp(grow * 3 - clicks, 0, 1));
+      const L = mix(FOLD, L1, (clicks + (clicks < 3 ? sub : 0)) / 3);
+      S.lad = move < 1 ? { b: mix2(from.b, to.b, move), t: mix2(from.t, to.t, move) } : { b: LAD.b, t: add(LAD.b, scl(dir, L)) };
+      const grip = mix2(S.lad.b, add(S.lad.b, scl(dir, FOLD)), 0.6);
+      P.hands = { f: { w: V(grip) }, b: { w: V(add(grip, [14, 18])) } }; P.elbow = { f: 1, b: 1 };
+      P.tilt = move >= 1 ? -0.2 - 0.25 * grow : 0;
+    }
   }
   else if (t < T.top) {                                     // climbs, rung by rung
-    S.lad = { b: LAD.b, t: LAD.t };
+    S.lad = { b: LAD.b, t: LAD.t }; S.bag = { at: 1, open: 1 };
     const u = seg(t, T.extend, T.top), s = 0.04 + 0.86 * u, ph = u * Math.PI * 7;
     const F = ladderPt(s), lift = 18 * Math.max(0, Math.sin(ph));
     P.x = (F[0] + 12) / K; P.y = (F[1] - 112 * K - lift * 0.3) / K; P.rot = -0.12;
@@ -155,7 +179,7 @@ function scene(t) {
     P.elbow = { f: 1, b: 1 }; P.mouth = 'grin'; P.eyes = 'open';
   }
   else if (t < T.land) {                                    // at the top: a little hop over the rim, in he goes
-    S.lad = { b: LAD.b, t: LAD.t };
+    S.lad = { b: LAD.b, t: LAD.t }; S.bag = { at: 1, open: 1 };
     const u = seg(t, T.top, T.land), p0 = add(ladderPt(0.9), [12, -112 * K]), p2 = [300, 1090];
     const q = bez(p0, [380, 820], p2, u);
     P.x = q[0] / K; P.y = q[1] / K; P.rot = -0.3 - 0.6 * u;
@@ -164,12 +188,12 @@ function scene(t) {
     P.mouth = 'o'; P.eyes = 'wide'; S.clip = u > 0.5;
   }
   else if (t < T.lounge) {
-    S.lad = { b: LAD.b, t: LAD.t }; S.clip = true; S.splash = seg(t, T.land, T.land + 0.5);
+    S.lad = { b: LAD.b, t: LAD.t }; S.bag = { at: 1, open: 1 }; S.clip = true; S.splash = seg(t, T.land, T.land + 0.5);
     if (t < T.up) P.hidden = true;
     loungePose(P, t, easeOut(seg(t, T.up, T.lounge)), 0, 0);
   }
   else {
-    S.lad = { b: LAD.b, t: LAD.t }; S.lounge = true; S.clip = true; S.splash = seg(t, T.land, T.land + 0.5);
+    S.lad = { b: LAD.b, t: LAD.t }; S.bag = { at: 1, open: 1 }; S.lounge = true; S.clip = true; S.splash = seg(t, T.land, T.land + 0.5);
     loungePose(P, t, 1, easeOut(seg(t, T.lounge, T.lounge + 0.22)), easeOut(seg(t, T.lounge + 0.14, T.lounge + 0.36)));
   }
   return { P, S };
@@ -215,9 +239,9 @@ function renderReel(ctx, layer, t, assets) {
   const lc = layer.getContext('2d');
   lc.setTransform(1, 0, 0, 1, 0, 0); lc.clearRect(0, 0, 1080, 1920);
   lc.setTransform(K, 0, 0, K, 0, 0); LINE = 5.6 / K;
-  const lad = S.lad || (P.hidden ? null : backLadder(P));
-  if (lad && !S.lad) drawLadder(lc, lad.b, lad.t);          // on his back: behind him
+  if (S.bag && S.bag.at >= 1) drawBag(lc, BAG, S.bag.open);
   const r = P.hidden ? { hand: [0, 0] } : drawCharacter(lc, P);
+  if (!P.hidden && !(S.bag && S.bag.at >= 1)) { const hb = handB(P); drawBag(lc, add(hb, [0, 50]), 0); }
   if (S.lad) { lc.save(); drawLadder(lc, S.lad.b, S.lad.t); lc.restore(); }
   if (S.clip) {
     lc.setTransform(1, 0, 0, 1, 0, 0); lc.globalCompositeOperation = 'destination-out'; lc.fillStyle = '#000';
