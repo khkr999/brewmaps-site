@@ -1,6 +1,6 @@
 # على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v7)
 
-v7: new music after the reference sound the client sent: a soft sine pluck (fundamental plus octave, a 30ms
+v7: new music after the supplied reference sound: a soft sine pluck (fundamental plus octave, a 30ms
 attack, a short decay) playing the same hypnotic three-note figure in F# (C#–E#–F#, turning through D# and G#), at
 the reference's pace (one note every 0.22s). The picture is retimed onto that note grid, so every cut lands on a note:
 each drink shot is 7 notes (two figures and a turn into the cut), the question holds 8 notes, and the montage cuts
@@ -31,8 +31,7 @@ pace; the app demonstration is about 1.1s longer so the search and the line can 
 - Plates: AI-generated macro photographs (`plates/*.png` → `plates/*.jpg` at 1080×1920). No glass, rim, café or brand.
   The map inside the phone is the real app map crop (`../coffee-routine-update/img/appmap.png`).
 - `timing.js` holds the cut times and copy; `render.js` writes 24 fps PNGs; `sound.py` builds the mix from the same
-  timing: the calm celesta-and-strings bed with a chord on every cut, a soft pizzicato pulse on the beat grid and a
-  bass note per cut; drink ASMR on the cuts (ice clinks, fizz, an ice cube as the question's words rise, ice cracking on the montage),
+  timing: the pluck arpeggio on its note grid (see v7 above) with a soft low note per cut; drink ASMR on the cuts (ice clinks, fizz, an ice cube as the question's words rise, ice cracking on the montage),
   then the phone rising, the tap, every keystroke on its frame, the send, the result tone and the line. Accents are
   quantised to the frame where the picture changes. −17 LUFS.
 - Encode: `ffmpeg -framerate 24 -i <dir>/f_%04d.png -c:v libx264 -pix_fmt yuv420p -crf 17 -movflags +faststart`, then mux `export/cold-drinks-mix.wav`.
