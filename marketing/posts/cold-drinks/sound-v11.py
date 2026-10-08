@@ -10,7 +10,7 @@ import numpy as np, soundfile as sf, pyloudnorm
 from scipy.signal import butter, sosfilt, fftconvolve
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TM = json.loads(subprocess.run(['node', '-e', "const m=require(process.argv[1]);console.log(JSON.stringify(m))", os.path.join(HERE, 'timing.js')], check=True, capture_output=True, text=True).stdout)
+TM = json.loads(subprocess.run(['node', '-e', "const m=require(process.argv[1]);console.log(JSON.stringify(m))", os.path.join(HERE, 'timing-v11.js')], check=True, capture_output=True, text=True).stdout)
 SHOT, N_SHOTS, T, APP, BEAT = TM['SHOT'], len(TM['SHOTS']), TM['T'], TM['APP'], TM['BEAT']
 SR = 48000; DUR = T['end']; N = int(DUR * SR)
 WORK, OUT = sys.argv[1], sys.argv[2]; os.makedirs(WORK, exist_ok=True)
@@ -101,7 +101,7 @@ PH = [  # (phrase notes, bass root) — one phrase per shot: two figures and a t
     (B + B + [('G#4', 'G#5')], 'G#1'), (A + C + [('C#6', 'C#5')], 'C#2'),
     (B + B + [('F5', 'F4'), ('F#5', 'F#4')], 'B1'),                 # the question: 8 notes, rising into the bridge
     (A + A + [('F5', 'F4'), ('G#4', 'G#5')], 'C#2'),                # the montage: 8 notes
-    (A + A + [('G#4', 'G#5')], 'F#2'), (A + A + [('D#5', 'D#6')], 'B1'), (B + B + [('G#4', 'G#5')], 'D#2'), (C + [('C#6', 'C#5')], 'C#2'),   # the demo: 25 notes, then the chord
+    (A + A + [('G#4', 'G#5')], 'F#2'), (A + A + [('D#5', 'D#6')], 'B1'), (B + B + [('G#4', 'G#5')], 'D#2'),   # the demo: 21 notes, then the chord
 ]
 k0 = 0; seq = []
 for notes, root in PH:
@@ -113,7 +113,7 @@ for k, (n, p), first in seq:
     if k < kq: v *= 0.95
     if kp + 4 <= k < kp + 12: v *= 0.72                # quieter under the typing, so the keys read
     put(pluck(n, p, v), t, 0.5, 0.12 * ((k % 3) - 1))
-kc = kp + 25                                         # the last chord: F# major, rolled, ringing under the hold
+kc = kp + 21                                         # the last chord: F# major, rolled, ringing under the hold
 for j, (n, p) in enumerate([('F#4', 'F#5'), ('A#4', 'A#5'), ('C#5', 'C#6'), ('F#5', 'F#4')]):
     put(pluck(n, p, 0.8, 1.6), OFF + kc * NOTE + 0.035 * j, 0.5, -0.15 + 0.1 * j)
 put(bass('F#2', 1.0, 1.4), OFF + kc * NOTE, 0.1)
@@ -140,33 +140,34 @@ def place_rms(sig, t0, rel_db, pan=0.0):                   # long textures: set 
     i = int(round(t0 * SR)); k = min(len(s), N - i)
     if k > 0: SFX[i:i + k] += s[:k]
 # the opening: an ice-in-water knock on every cut, over a quiet bed of ice moving in water
-def onset(x): return int(np.argmax(np.abs(x) > 0.5 * np.abs(x).max()))       # the attack: first sample above half the peak
-def on_frame(sig, t, rel, pan=0.0): place(sig, t - onset(sig) / SR, rel, pan)          # place a sound so its attack lands exactly on t
-SWITCH = cut(ICE, 7.31, 0.55, fin=0.002, fout=0.25)                                   # one clean ice-in-water knock, used on every drink switch
-LIGHT = cut(ICE, 19.26, 0.40, fin=0.002, fout=0.2)                                    # a lighter one for the quick montage cuts
-for i, t in enumerate(cuts[1:]): on_frame(SWITCH, t, -22, [0.12, -0.12, 0.08, -0.08][i])
-# v12: the ice bed is a smooth texture now: its loudness is evened out so no stray knock sounds between the cuts
-bed = lp(ICE[int(2.0 * SR):int(2.0 * SR) + N].copy(), 5000)
-ev = np.sqrt(np.maximum(lp(bed ** 2, 4), 0)); bed = bed / (ev + 0.15 * ev.mean())
-benv = np.interp(np.arange(N) / SR, [0, 0.35, T['product'], T['typeStart'], DUR], [-60, -36, -36, -46, -46])
-bed = bed / np.abs(bed).max() * db(benv) * REF; SFX[:, 0] += bed * np.cos(np.pi / 4); SFX[:, 1] += bed * np.sin(np.pi / 4)
+for i, (t, (a, d)) in enumerate(zip(cuts, [(5.30, 0.7), (21.18, 0.7), (7.34, 0.75), (20.90, 0.6), (12.61, 0.6)])):
+    place(cut(ICE, a - 0.01, d), t, -22, [-0.15, 0.15, -0.1, 0.1, 0][i])
+# v11: the ice keeps moving the whole time: one continuous take of ice moving in water, its peaks softened, clearly
+# present under the drinks, the question and the montage, then lower under the phone so the clicks read
+bed = ICE[int(2.0 * SR):int(2.0 * SR) + N].copy(); r = np.sqrt(np.mean(bed ** 2)); bed = bed / r; bed = 3.5 * np.tanh(bed / 3.5)
+benv = np.interp(np.arange(N) / SR, [0, 0.35, T['product'], T['typeStart'], DUR], [-60, -30, -30, -39, -39])
+bed = bed * db(benv) * REF; SFX[:, 0] += bed * np.cos(np.pi / 4); SFX[:, 1] += bed * np.sin(np.pi / 4)
 kick = lambda: np.sin(2 * np.pi * np.cumsum(np.linspace(150, 48, int(0.25 * SR))) / SR) * env(0.25, 0.002, 0.07)
 # the question: coffee poured over ice as the karkadeh pulls into the green, its fullest moment on the words; the fizz stays under
 pour = cut(POUR, 0.9, 2.3, fin=0.25, fout=0.7)
 c = np.sqrt(np.mean(pour ** 2)) * db(10); pour = c * np.tanh(pour / c)               # tame the pour's splashes: no spike above the texture
-place_rms(pour[int((T['question'] - (tq - 0.68)) * SR):] * np.minimum(1, np.arange(len(pour) - int((T['question'] - (tq - 0.68)) * SR)) / (0.06 * SR)), T['question'], -31, 0.0)   # starts on the cut into the question, its fullest moment on the words
-fizz = cut(POUR, 5.0, T['bridge'] - T['question'] - 0.7, fin=0.3, fout=0.4); place_rms(fizz, T['question'] + 0.7, -43, 0.0)   # under the question only; gone before the montage
-on_frame(SWITCH, FR(T['bridge']), -23, 0.0)                                                     # the first crop surfacing, on the downbeat
-for k, t in enumerate(flashes[1:]): on_frame(LIGHT, t, -24, (-1) ** k * 0.2)
-for k, t in enumerate(flashes): on_frame(kick(), t, -23)
+place_rms(pour, tq - 0.68, -31, 0.0)
+fizz = cut(POUR, 5.0, 4.0, fin=0.4, fout=1.2); place_rms(fizz, T['question'] + 1.4, -41, 0.0)
+place(whoosh(0.62, 400, 3000, 0.55), T['bridge'] - 0.34, -20)                                # rising as the first crop surfaces, peaking on the downbeat
+for k, t in enumerate(flashes[1:]): place(cut(ICE, [5.39, 19.28, 21.50][k] - 0.01, 0.42, fout=0.12), t, -24, (-1) ** k * 0.25)
+for k, t in enumerate(flashes): place(kick(), t, -21 if k else -22)
 place(whoosh(0.75, 280, 1500, 0.5), T['phoneIn'] - 0.02, -18)                                # the phone rising from below
 thud = lp(noise(0.12), 900) * env(0.12, 0.002, 0.03); place(thud, T['phoneIn'] + 0.6, -24)   # and settling
 # the phone: the supplied clicks (sfx/). A single soft click as the field is tapped, the four halves of the two mouse
 # clicks (press and release of each) rotating as keystrokes, and the press-and-release click on send
 SCLICK, CLICK, M1, M2 = load('simple-click.wav'), load('click.wav'), load('mouse-clicks-v1.wav'), load('mouse-clicks-v2.wav')
-KEYS = [cut(M1, 0.645, 0.08, 0.001, 0.03), cut(M2, 0.415, 0.09, 0.001, 0.03), cut(M1, 0.735, 0.07, 0.001, 0.03), cut(M2, 0.575, 0.05, 0.001, 0.02)]   # trimmed: this half had a second tick at 65ms
+place(cut(SCLICK, 0.0, 0.15, fin=0.001, fout=0.05), T['tap'], -20)                           # the tap into the field
+KEYS = [cut(M1, 0.645, 0.08, 0.001, 0.03), cut(M2, 0.415, 0.09, 0.001, 0.03), cut(M1, 0.735, 0.07, 0.001, 0.03), cut(M2, 0.575, 0.09, 0.001, 0.03)]
 for k, tk in enumerate(T['keys']):                                                           # every keystroke, on the frame it appears
-    on_frame(KEYS[(k * 3 + k // 4) % 4], tk, -27 - rng.uniform(0, 1.5), rng.uniform(-.1, .1))   # tk is an exact frame time
+    place(KEYS[(k * 3 + k // 4) % 4], FR(tk) - 0.004, -27 - rng.uniform(0, 2.5), rng.uniform(-.1, .1))
+place(cut(CLICK, 0.145, 0.18, 0.001, 0.05), T['submit'] - 0.008, -21)                         # send
+for k, tg in enumerate([T['result'] + 1.0, T['card'] + 0.35]):           # ice settling, faintly, between the actions
+    place(cut(ICE, [0.96, 1.28][k] - 0.01, 0.5), tg, -30, rng.uniform(-.4, .4))
 
 
 
@@ -181,8 +182,7 @@ for t0 in [T['result']]:
     a = np.clip((TT - t0) / 0.004, 0, 1) * np.where(TT < t0 + 0.1, 1, np.exp(-(TT - t0 - 0.1) / 0.25)); duck = np.maximum(duck, 1.2 * a)
 music = music / np.abs(music).max() * REF * db(g - duck)[:, None]
 SFXL = np.stack([lp(SFX[:, c], 6500) for c in range(2)], -1)                  # v8: softer edges on every effect
-sfx = reverb(SFXL, ir(1.0, 5000), 0.24) * db(-4)
-sf.write(os.path.join(WORK, 'sfx-stem.wav'), (SFX / np.abs(SFX).max() * 0.8).astype(np.float32), SR)   # dry effects, for checking sync                             # and the whole effects bus 4 dB down, a touch more room
+sfx = reverb(SFXL, ir(1.0, 5000), 0.24) * db(-4)                             # and the whole effects bus 4 dB down, a touch more room
 SILENT = DUR - 0.05
 mix = (music + sfx) * (0.5 + 0.5 * np.cos(np.pi * np.clip((TT - (T['end'] - 0.6)) / 0.58, 0, 1)))[:, None]   # an even 0.6s audio fade to silence on the last frame
 meter = pyloudnorm.Meter(SR); lufs = meter.integrated_loudness(mix)

@@ -1,4 +1,4 @@
-// على ذوقك · "Cold drinks" v12 (timing as v7, demo slowed slightly, keys on frames): v6 retimed onto the note grid of the new track (a soft three-note pluck arpeggio after
+// على ذوقك · "Cold drinks" v7: v6 retimed onto the note grid of the new track (a soft three-note pluck arpeggio after
 // the reference sound): the question holds 8 notes, the montage cuts every 2 notes; ends at 17.0s on a steady frame. Shared by player.html (picture) and sound.py (which reads it through node),
 // so both always agree.
 var SHOT = 1.55;
@@ -22,19 +22,17 @@ T.flash = 2 * NOTE;                                         // the montage cuts 
 T.product = T.bridge + 8 * NOTE;                            // 11.29: the phone is already rising
 T.phoneIn = T.product - 0.13;                               // the phone enters from below the frame
 T.tap = T.product + 3 * NOTE;                               // the field takes focus
-T.typeStart = T.product + 4 * NOTE; T.typeEnd = T.product + 13 * NOTE;   // v12: 2.0s of typing (about 13 characters a second)
-T.submit = T.product + 14 * NOTE;                           // sent; a short search
-T.result = T.product + 16 * NOTE;                           // 14.84: the map and the three results
-T.message = T.product + 18 * NOTE;                          // 15.28: the line above the phone, then everything holds
-T.card = T.product + 25 * NOTE;                             // 16.83: the music lands on its last chord under the hold
-T.end = T.card + 1.0;                                       // 17.83: the demo is ~0.8s slower than v11; the opening is unchanged
-// keystrokes: one character per video frame it appears on (24 fps), uneven like a real thumb, a little longer before
-// each new word. Each time is an exact frame time, so the picture and the click land on the same frame.
+T.typeStart = T.product + 4 * NOTE; T.typeEnd = T.product + 11 * NOTE;   // 1.55s of typing
+T.submit = T.product + 12 * NOTE;                           // sent; a short search
+T.result = T.product + 14 * NOTE;                           // 14.39: the map and the three results
+T.message = T.product + 16 * NOTE;                          // 14.84: the line above the phone, then everything holds
+T.end = 17.0;                                               // the reel ends on the held final frame
+T.card = T.product + 21 * NOTE;                             // 15.94: the music lands on its last chord under the hold (picture unchanged)
+// keystroke times: uneven like a real thumb, a little longer before each new word, last key exactly at typeEnd
 T.keys = (function () {
-  var q = APP.query, w = [], s = 0, f0 = Math.ceil(T.typeStart * 24), f1 = Math.floor(T.typeEnd * 24);
+  var q = APP.query, w = [], s = 0;
   for (var i = 0; i < q.length; i++) { var x = 1 + 0.35 * Math.sin(i * 2.7) + 0.2 * Math.sin(i * 7.3) + (i > 0 && q[i - 1] === ' ' ? 0.9 : 0); w.push(x); s += x; }
-  var out = [], acc = 0, prev = f0 - 1;
-  for (var j = 0; j < q.length; j++) { acc += w[j]; var f = Math.max(prev + 1, Math.round(f0 + (f1 - f0) * acc / s)); out.push(f / 24); prev = f; }
+  var out = [], acc = 0; for (var j = 0; j < q.length; j++) { acc += w[j]; out.push(T.typeStart + (T.typeEnd - T.typeStart) * acc / s); }
   return out;
 })();
 if (typeof module !== 'undefined') module.exports = { SHOT, SHOTS, PLATES, QUESTION, BRIDGE, APP, BEAT, NOTE, T };

@@ -1,4 +1,13 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v11)
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v12)
+
+v12: the v11 warp is removed. It moved the whole photo and could not look like real ice. The drink shots now hold
+still on a locked camera and cut hard on the note, as in the reference, until the moving footage in
+`FOOTAGE.md` replaces them. Sound: one clean ice-in-water knock on every drink switch with its attack on the cut
+frame, measured at 0ms. Lighter knocks on the montage cuts, also at 0ms. Nothing starts before a cut: the pour now
+starts on the cut into the question. The ice bed is evened out so no stray knocks sound between cuts. The coffee fizz
+sits under the question only. Typing: one click per character on the exact frame it appears (27 for 27, all within
+4ms). There are no tap or send clicks, and nothing after the last character. Ending: typing 2.0s, results and line
+later, held longer. 17.8s (opening unchanged). v11 is kept as `export/cold-drinks-v11.mp4`.
 
 v11: the ice moves, on screen and in the sound. Every drink photo is drawn through a slow, flowing WebGL displacement
 (large smooth noise cells, so a cube shifts and bobs as one piece while the drink swirls round it; about 10–20px/s; one
