@@ -1,4 +1,9 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 16.3s, 9:16, with sound (v17)
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 16.3s, 9:16, with sound (v18)
+
+v18: the drink switch is the supplied air woosh (`sfx/air-woosh.wav`). It rises into its loudest moment on the cut frame,
+with the ice knock landing on the cut, on every drink change, into the question and as the first montage crop surfaces.
+The quick montage cuts get a short cut of it. The splash is gone. Picture as v17; v17 is kept as
+`export/cold-drinks-v17.mp4`.
 
 v17: the search-bar typing uses the supplied simple click (`sfx/simple-click.wav`), the same click on every character,
 on the frame the character appears (27 for 27, within 2ms), same level as before. Everything else as v16, which is kept

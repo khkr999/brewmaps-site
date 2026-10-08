@@ -153,16 +153,8 @@ def mixed(*parts):
 SPLASH = cut(POUR, 1.57, 0.42, fin=0.002, fout=0.22)
 def align(x): return np.roll(np.pad(x, (int(0.05 * SR), 0)), -onset(np.pad(x, (int(0.05 * SR), 0))) + int(0.05 * SR))   # attack at a fixed 50ms point
 DROP = mixed((align(SPLASH), 0), (align(SWITCH), -1))          # v15: the ice in it a little louder
-# v18: the drink switch is the supplied air woosh (sfx/air-woosh.wav), its loudest moment on the cut frame, with the ice
-# knock landing on the cut under it. The splash is gone.
-WOOSH_SRC = load('air-woosh.wav')
-WOOSH = cut(WOOSH_SRC, 0.25, 1.15, fin=0.05, fout=0.3)                              # rises ~0.45s into its peak, then fades
-WOOSH_S = cut(WOOSH_SRC, 0.50, 0.42, fin=0.03, fout=0.15)                           # a short one for the quick montage cuts
-def peak_at(x): e = np.sqrt(np.convolve(x ** 2, np.ones(int(0.01 * SR)) / int(0.01 * SR), 'same')); return int(np.argmax(e))
-def on_peak(sig, t, rel, pan=0.0): place(sig, t - peak_at(sig) / SR, rel, pan)          # place a woosh so its peak lands exactly on t
-def switch(t, rel=-14, pan=0.0): on_peak(WOOSH, t, rel, pan); on_frame(SWITCH, t, rel - 6, -pan)
-for i, t in enumerate(cuts[1:]): switch(t, -11, [0.15, -0.15, 0.1][i % 3])
-switch(FR(T['question']), -12, 0.0)                                                  # into the question
+for i, t in enumerate(cuts[1:]): on_frame(DROP, t, -11, [0.1, -0.1, 0.06, -0.06][i])
+on_frame(DROP, FR(T['question']), -14, 0.0)                                                  # into the question
 # v12: the ice bed is a smooth texture now: its loudness is evened out so no stray knock sounds between the cuts
 bed = lp(ICE[int(2.0 * SR):int(2.0 * SR) + N].copy(), 5000)
 ev = np.sqrt(np.maximum(lp(bed ** 2, 4), 0)); bed = bed / (ev + 0.15 * ev.mean())
@@ -174,9 +166,9 @@ pour = cut(POUR, 0.9, 2.3, fin=0.25, fout=0.7)
 c = np.sqrt(np.mean(pour ** 2)) * db(10); pour = c * np.tanh(pour / c)               # tame the pour's splashes: no spike above the texture
 place_rms(pour[int((T['question'] - (tq - 0.68)) * SR):] * np.minimum(1, np.arange(len(pour) - int((T['question'] - (tq - 0.68)) * SR)) / (0.06 * SR)), T['question'], -31, 0.0)   # starts on the cut into the question, its fullest moment on the words
 fizz = cut(POUR, 5.0, T['bridge'] - T['question'] - 0.7, fin=0.3, fout=0.4); place_rms(fizz, T['question'] + 0.7, -43, 0.0)   # under the question only; gone before the montage
-switch(FR(T['bridge']), -12, 0.0)                                                     # the first crop surfacing, on the downbeat
+on_frame(DROP, FR(T['bridge']), -14, 0.0)                                                     # the first crop surfacing, on the downbeat
 DROP_S = mixed((align(cut(POUR, 1.57, 0.26, fin=0.002, fout=0.14)), 0), (align(LIGHT), -1))
-for k, t in enumerate(flashes[1:]): on_peak(WOOSH_S, t, -15, (-1) ** k * 0.25); on_frame(LIGHT, t, -23, 0.0)   # the quick montage cuts: a shorter, lighter drop
+for k, t in enumerate(flashes[1:]): on_frame(DROP_S, t, -16, (-1) ** k * 0.2)   # the quick montage cuts: a shorter, lighter drop
 for k, t in enumerate(flashes): on_frame(kick(), t, -23)
 place(whoosh(0.75, 280, 1500, 0.5), T['phoneIn'] - 0.02, -18)                                # the phone rising from below
 thud = lp(noise(0.12), 900) * env(0.12, 0.002, 0.03); place(thud, T['phoneIn'] + 0.6, -24)   # and settling
