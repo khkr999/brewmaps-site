@@ -47,7 +47,6 @@ def reverb(x, h, wet): return x + wet * np.stack([fftconvolve(x[:, c], h[:, c])[
 SFX = np.zeros((N, 2))
 def place(sig, t0, rel_db, pan=0.0):
     s = norm(sig) * REF * db(rel_db)
-    s = s * np.minimum(1, np.arange(len(s)) / (0.003 * SR)).reshape((-1,) + (1,) * (s.ndim - 1))   # a 3ms fade-in: no hard clicks
     if s.ndim == 1: th = (pan + 1) * np.pi / 4; s = np.stack([s * np.cos(th), s * np.sin(th)], -1)
     i = int(round(t0 * SR)); k = min(len(s), N - i)
     if k > 0: SFX[i:i + k] += s[:k]
@@ -136,16 +135,16 @@ def icedrop(t0):
     place(st, t0 + 0.05, -21, 0.1)
 icedrop(tq - 0.03); place(whoosh(0.6, 300, 1500, 0.55), T['question'] - 0.04, -22)   # a soft swell under the focus pull; the cube lands with the words
 place(whoosh(0.62, 400, 3000, 0.55), T['bridge'] - 0.34, -17)                                # rising as the first crop surfaces, peaking on the downbeat
-for k, t in enumerate(flashes): place(glass(3000 + 300 * k, 0.2), t, -18, (-1) ** k * 0.3); place(kick(), t, -18 if k else -19)
+for k, t in enumerate(flashes): place(glass(3000 + 300 * k, 0.2), t, -15, (-1) ** k * 0.3); place(kick(), t, -14 if k else -15)
 crack = hp(noise(0.14), 2200) * env(0.14, 0.0005, 0.014) + 0.6 * modal([3600, 5900], [0.035, 0.02], [1, .5], 0.14)   # ice cracking on the second crop
-place(crack, flashes[1] + 0.04, -21, 0.2)
+place(crack, flashes[1] + 0.04, -15, 0.2)
 place(whoosh(0.75, 280, 1500, 0.5), T['phoneIn'] - 0.02, -16)                                # the phone rising from below
 thud = lp(noise(0.12), 900) * env(0.12, 0.002, 0.03); place(thud, T['phoneIn'] + 0.6, -24)   # and settling
 click = lambda f: hp(noise(0.02), 2500) * env(0.02, 0.0003, 0.003) + 0.4 * modal([f], [0.012], [1], 0.02)
-place(click(1800), T['tap'], -18)                                                            # the tap into the field
+place(click(1800), T['tap'], -15)                                                            # the tap into the field
 for k, tk in enumerate(T['keys']):                                                           # every keystroke, on the frame it appears
-    place(hp(noise(0.03), 3000) * env(0.03, 0.0004, 0.004), FR(tk), -24 - rng.uniform(0, 2), rng.uniform(-.1, .1))
-place(click(1300), T['submit'], -17); place(bubble(700, 0.06, 1.6), T['submit'] + 0.01, -23)  # send
+    place(hp(noise(0.03), 3000) * env(0.03, 0.0004, 0.004), FR(tk), -21 - rng.uniform(0, 3), rng.uniform(-.1, .1))
+place(click(1300), T['submit'], -14); place(bubble(700, 0.06, 1.6), T['submit'] + 0.01, -21)  # send
 for k, tg in enumerate([T['result'] + 1.0, T['card'] + 0.35]):           # ice settling, faintly, between the actions
     place(glass(rng.uniform(2200, 3400), 0.45), tg, -25 - rng.uniform(0, 2), rng.uniform(-.4, .4))
 
@@ -159,10 +158,9 @@ music = reverb(music, ir(1.6, 4500), 0.22)
 g = ramp([(0, -30), (0.08, -11), (T['question'], -11), (tq, -10), (T['product'], -11), (T['typeStart'], -12), (T['submit'], -11.5), (DUR, -11.5)])
 duck = np.zeros(N)
 for t0 in cuts + flashes + [T['result']]:
-    a = np.clip((TT - t0) / 0.004, 0, 1) * np.where(TT < t0 + 0.1, 1, np.exp(-(TT - t0 - 0.1) / 0.25)); duck = np.maximum(duck, 1.2 * a)
+    a = np.clip((TT - t0) / 0.004, 0, 1) * np.where(TT < t0 + 0.1, 1, np.exp(-(TT - t0 - 0.1) / 0.25)); duck = np.maximum(duck, 2.5 * a)
 music = music / np.abs(music).max() * REF * db(g - duck)[:, None]
-SFXL = np.stack([lp(SFX[:, c], 6500) for c in range(2)], -1)                  # v8: softer edges on every effect
-sfx = reverb(SFXL, ir(1.0, 5000), 0.24) * db(-4)                             # and the whole effects bus 4 dB down, a touch more room
+sfx = reverb(SFX, ir(0.8, 6000), 0.16)
 SILENT = DUR - 0.05
 mix = (music + sfx) * (0.5 + 0.5 * np.cos(np.pi * np.clip((TT - (T['end'] - 0.6)) / 0.58, 0, 1)))[:, None]   # an even 0.6s audio fade to silence on the last frame
 meter = pyloudnorm.Meter(SR); lufs = meter.integrated_loudness(mix)

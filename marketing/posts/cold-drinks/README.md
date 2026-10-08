@@ -1,4 +1,8 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v7)
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v8)
+
+v8: v7 with the effects (ice, typing, taps, whooshes) about 4 dB lower overall, the montage hits and the ice crack
+3–6 dB lower again, every effect's onset rounded off and its top end softened, so they sit under the music. Picture
+and music unchanged; v7 is kept as `export/cold-drinks-v7.mp4`.
 
 v7: new music after the supplied reference sound: a soft sine pluck (fundamental plus octave, a 30ms
 attack, a short decay) playing the same hypnotic three-note figure in F# (C#–E#–F#, turning through D# and G#), at
