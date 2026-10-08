@@ -1,14 +1,12 @@
 <!doctype html><meta charset="utf-8">
 <link rel="stylesheet" href="../../assets/fonts/tajawal.css">
-<link rel="stylesheet" href="../../assets/fonts/playfair.css">
 <link rel="stylesheet" href="../../assets/fonts/dmsans.css">
 <style>html,body{margin:0;background:#000}</style>
 <canvas id="c" width="1080" height="1920"></canvas>
 <script src="timing.js"></script>
 <script>
-// v3 = the v1 opening + the v2 ending. Five near-still macro shots on a slow push, hard cuts every 1.55s, a centred
-// name (Arabic over small letter-spaced serif caps); the last shot holds while its name gives way to the question.
-// Then the bridge (four flashes), BrewMaps doing something (Ask BrewMaps: a query typed, one result), and a one-second card.
+// v2: the hook first, five quick drinks with big Arabic names in varied framings and positions, a four-flash bridge,
+// then BrewMaps doing something (Ask BrewMaps: a query typed, one result), then a one-second card.
 const CREAM = '#F4EFE6', PALE = '#A9D19A', FOREST = '#163514', INK = '#1a1a1a';
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
 const ease = u => u * u * (3 - 2 * u), easeOut = u => 1 - (1 - u) * (1 - u), mix = (a, b, u) => a + (b - a) * u;
@@ -17,46 +15,19 @@ const ctx = document.getElementById('c').getContext('2d');
 let A = {};
 window.DURATION = T.end;
 window.ready = (async () => {
-  await Promise.all([document.fonts.load('400 76px "Tajawal"', 'آيس'), document.fonts.load('800 92px "Tajawal"', 'ذوقك'), document.fonts.load('500 40px "Tajawal"', 'درهم'), document.fonts.load('500 28px "Playfair Display"', 'ICED'), document.fonts.load('600 36px "DM Sans"', 'Ask')]);
-  A.plates = await Promise.all(SHOTS.map(s => img(s.plate)));
-  A.byKey = {}; for (const k in PLATES) A.byKey[k] = await img(PLATES[k]);
+  await Promise.all([document.fonts.load('800 110px "Tajawal"', 'ذوقك'), document.fonts.load('700 96px "Tajawal"', 'آيس'), document.fonts.load('500 40px "Tajawal"', 'درهم'), document.fonts.load('600 36px "DM Sans"', 'Ask')]);
+  A.plates = {}; for (const k in PLATES) A.plates[k] = await img(PLATES[k]);
   A.mark = await img('../find-rate-earn-carousel/img/mark-cream.png');
   A.lockup = await img('../find-rate-earn-carousel/img/lockup-cream.png');
   A.map = await img('../coffee-routine-update/img/appmap.png');
 })();
 
-// ── the v1 opening ──────────────────────────────────────────────────────────
-function shotAt(t) {
-  const i = Math.min(SHOTS.length - 1, Math.floor(t / SHOT));
-  return { i, u: i === SHOTS.length - 1 ? (t - i * SHOT) / (T.bridge - i * SHOT) : (t - i * SHOT) / SHOT };
-}
-function drawPlate(i, u) {                                  // slow push: 1.00 → 1.07, with a little drift, never stopping
-  const s = SHOTS[i], z = 1.0 + 0.075 * u, dx = s.drift[0] * 26 * u, dy = s.drift[1] * 26 * u;
-  ctx.save(); ctx.translate(540 + dx, 960 + dy); ctx.scale(z, z); ctx.translate(-540, -960);
-  ctx.drawImage(A.plates[i], 0, 0, 1080, 1920); ctx.restore();
-  const g = ctx.createRadialGradient(540, 960, 300, 540, 960, 1150);
-  g.addColorStop(0, 'rgba(0,0,0,0.18)'); g.addColorStop(1, 'rgba(0,0,0,0.42)');
-  ctx.fillStyle = g; ctx.fillRect(0, 0, 1080, 1920);
-}
-function name(i, a) {                                       // centred: the Arabic name (a little larger than v1) over small spaced serif caps
-  if (a <= 0) return;
-  const s = SHOTS[i];
-  ctx.save(); ctx.globalAlpha = a; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-  ctx.shadowColor = 'rgba(0,0,0,0.35)'; ctx.shadowBlur = 16;
-  ctx.direction = 'rtl'; ctx.fillStyle = CREAM; ctx.font = '400 78px "Tajawal"'; ctx.fillText(s.ar, 540, 948);
-  ctx.direction = 'ltr'; ctx.fillStyle = 'rgba(244,239,230,0.78)'; ctx.font = '500 28px "Playfair Display"';
-  const sp = 0.42 * 28, w = ctx.measureText(s.en).width + sp * (s.en.length - 1); let x = 540 - w / 2;
-  ctx.textAlign = 'left'; for (const ch of s.en) { ctx.fillText(ch, x, 1012); x += ctx.measureText(ch).width + sp; }
-  ctx.restore();
-}
-
-// ── the v2 ending ───────────────────────────────────────────────────────────
-function plate(key, z, c, u, drift = [0, 0]) {
-  const im = A.byKey[key], zz = z + 0.06 * u, cx = c[0] * 1080, cy = c[1] * 1920;
+function plate(key, z, c, u, drift = [0, 0]) {            // a framing: zoom z (+0.06 over the shot), centred on c, with a little drift
+  const im = A.plates[key], zz = z + 0.06 * u, cx = c[0] * 1080, cy = c[1] * 1920;
   ctx.save(); ctx.translate(540 + drift[0] * 22 * u, 960 + drift[1] * 22 * u); ctx.scale(zz, zz); ctx.translate(-cx, -cy);
   ctx.drawImage(im, 0, 0, 1080, 1920); ctx.restore();
 }
-function scrim(y, h, a) {
+function scrim(y, h, a) {                                  // a soft dark band behind text, no heavy shadows
   const g = ctx.createLinearGradient(0, y - h / 2, 0, y + h / 2);
   g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(0.5, `rgba(0,0,0,${a})`); g.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = g; ctx.fillRect(0, y - h / 2, 1080, h);
@@ -65,7 +36,13 @@ function arabic(text, x, y, size, weight, align, a = 1, color = CREAM) {
   ctx.save(); ctx.globalAlpha = a; ctx.direction = 'rtl'; ctx.textAlign = align; ctx.fillStyle = color;
   ctx.font = `${weight} ${size}px "Tajawal"`; ctx.fillText(text, x, y); ctx.restore();
 }
-function drawPhone(t) {                                    // Ask BrewMaps: the query typed, then results over the real map
+function brandCue(a) {                                     // the one subtle brand cue through the drinks: a small mark, top centre
+  if (a <= 0) return; const m = A.mark, w = 54, h = w * m.height / m.width;
+  ctx.save(); ctx.globalAlpha = 0.55 * a; ctx.drawImage(m, 540 - w / 2, 150, w, h); ctx.restore();
+}
+const POS = { 'low-right': [1000, 1500, 'right'], 'high-left': [80, 520, 'left'], 'centre': [540, 985, 'center'], 'low-left': [80, 1500, 'left'], 'high-centre': [540, 520, 'center'] };
+
+function drawPhone(t) {                                    // Ask BrewMaps: the query typed, then one result over the real map
   const u = seg(t, T.product, T.product + 0.35), lift = (1 - easeOut(u)) * 90;
   const W = 760, H = 1640, x = 540 - W / 2, y = 440 + lift, r = 86;
   ctx.save(); ctx.globalAlpha = easeOut(u);
@@ -74,27 +51,30 @@ function drawPhone(t) {                                    // Ask BrewMaps: the 
   ctx.shadowColor = 'transparent';
   ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.roundRect(x, y, W, H, r); ctx.fill();
   ctx.save(); ctx.beginPath(); ctx.roundRect(x, y, W, H, r); ctx.clip();
-  ctx.fillStyle = '#111'; ctx.beginPath(); ctx.roundRect(540 - 70, y + 22, 140, 38, 19); ctx.fill();
+  ctx.fillStyle = '#111'; ctx.beginPath(); ctx.roundRect(540 - 70, y + 22, 140, 38, 19); ctx.fill();                 // the island
+  // header
   const m = A.mark, mw = 46, mh = mw * m.height / m.width;
   ctx.save(); ctx.filter = 'brightness(0.18)'; ctx.drawImage(m, x + 54, y + 112, mw, mh); ctx.restore();
   ctx.fillStyle = INK; ctx.font = '600 36px "DM Sans"'; ctx.textAlign = 'left'; ctx.direction = 'ltr'; ctx.fillText('Ask BrewMaps', x + 118, y + 146);
+  // the search pill
   const px = x + 44, py = y + 200, pw = W - 88, ph = 104;
   ctx.fillStyle = '#F1F1F1'; ctx.beginPath(); ctx.roundRect(px, py, pw, ph, 52); ctx.fill();
   const n = Math.round(APP.query.length * ease(seg(t, T.typeStart, T.typeEnd)));
   const typed = APP.query.slice(0, n), caret = t < T.result && Math.floor(t * 6) % 2 === 0;
   arabic(typed + (caret ? '|' : ''), px + pw - 36, py + 68, 40, '500', 'right', 1, INK);
   if (n === 0) arabic('اسأل عن أي كوفي…', px + pw - 36, py + 68, 40, '400', 'right', 0.5, '#777');
+  // the result
   const rv = seg(t, T.result, T.result + 0.3), ry = py + ph + 36 + (1 - easeOut(rv)) * 40;
   if (rv > 0) {
     ctx.save(); ctx.globalAlpha = rv;
     arabic(APP.results, px + pw, ry + 36, 34, '500', 'right', 1, '#6b6b6b');
     const cy = ry + 64, ch = 380;
     ctx.beginPath(); ctx.roundRect(px, cy, pw, ch, 34); ctx.clip();
-    const mp = A.map, s = pw / mp.width; ctx.drawImage(mp, px, cy, pw, mp.height * s);
+    const mp = A.map, s = pw / mp.width; ctx.drawImage(mp, px, cy, pw, mp.height * s);                                // the real app map
     ctx.restore(); ctx.save(); ctx.globalAlpha = rv;
     ctx.strokeStyle = '#E6E6E6'; ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect(px, cy, pw, ch, 34); ctx.stroke();
     const rows = [[APP.top, APP.match, FOREST, PALE, 1], ['سبانيش لاتيه · ١٩ درهم · ٩ دقايق', '٨٥٪ على ذوقك', '#E7EFE2', FOREST, 0.85], ['سبانيش لاتيه · ١٧ درهم · ١٢ دقيقة', '٧٨٪ على ذوقك', '#EFEFEF', '#555', 0.7]];
-    rows.forEach(([line, match, bg, fg, al], k) => {
+    rows.forEach(([line, match, bg, fg, al], k) => {                                                                   // the results: the top match, then two more
       const by = cy + ch + 30 + k * 172, rk = seg(rv, 0.3 * k, 0.3 * k + 0.7);
       ctx.save(); ctx.globalAlpha = rv * al * rk;
       ctx.fillStyle = k === 0 ? '#F7F7F7' : '#FAFAFA'; ctx.beginPath(); ctx.roundRect(px, by, pw, 150, 30); ctx.fill();
@@ -111,14 +91,18 @@ function drawPhone(t) {                                    // Ask BrewMaps: the 
 
 window.frame = t => {
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 1080, 1920);
-  if (t < T.bridge) {                                      // the opening: five slow shots, then the question over the last one
-    const { i, u } = shotAt(t);
-    drawPlate(i, u);
-    const inShot = t - i * SHOT;
-    if (t < T.question) name(i, seg(inShot, 0.06, 0.28));
-    else name(i, 1 - seg(t, T.question, T.question + 0.3));
-    const q = seg(t, T.question + 0.3, T.question + 0.7);
-    if (q > 0) { ctx.save(); ctx.shadowColor = 'rgba(0,0,0,0.45)'; ctx.shadowBlur = 20; arabic('أي واحد على ذوقك؟', 540, 985, 92, '800', 'center', q); ctx.restore(); }
+  if (t < T.drinks) {                                      // the hook, on the strongest shot
+    plate(HOOK.plate, HOOK.z, HOOK.c, t / BEAT, [0.4, -0.6]);
+    scrim(900, 520, 0.42);
+    arabic(HOOK.text, 540, 940, 112, '800', 'center', seg(t, 0, 0.12));
+    brandCue(seg(t, 0.2, 0.5));
+  } else if (t < T.bridge) {                               // five drinks, 0.8s each
+    const i = Math.min(SHOTS.length - 1, Math.floor((t - T.drinks) / BEAT)), s = SHOTS[i], u = (t - T.drinks - i * BEAT) / BEAT;
+    plate(s.plate, s.z, s.c, u, s.drift);
+    const [x, y, al] = POS[s.pos];
+    scrim(y - 30, 340, 0.36);
+    arabic(s.ar, x, y, 100, '700', al, seg(u, 0.04, 0.22));
+    brandCue(1);
   } else if (t < T.product) {                              // the bridge: four flashes, one line
     const k = Math.min(3, Math.floor((t - T.bridge) / (BEAT / 4))), [key, z, c] = BRIDGE.flashes[k];
     plate(key, z, c, (t - T.bridge) / BEAT, [0, 0]);
