@@ -1,4 +1,13 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v13)
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v14)
+
+v14: the drinks are real moving footage, from the drink video the client supplied (their call to use it; client
+confirmed they want it used). `prep_clips.py` takes that video and, for each of its six shots, inpaints out the
+burned-in drink name, crops 3:4 to 9:16, upscales to 1080×1920 and retimes to 24 fps with frame blending (about 0.84×;
+the karkadeh 0.61× since it also carries the dissolve into the green). The lineup follows the footage: آيس لاتيه,
+ماتشا لاتيه, كولد برو, ليموناضة (in place of Spanish latte, which the footage doesn't have), كركديه مثلج. The montage
+uses later moments of the same clips. Camera locked, hard cuts on the note, as in the reference. Timing and sound as
+v13 (switch sounds frame-exact). Frames are generated into `clips/<key>/` (ignored by git); `clips/*.mp4` are
+previews. v13 is kept as `export/cold-drinks-v13.mp4`.
 
 v13: an audible drink-switch sound. A splash from the pour recording (one clean attack) layered with the ice knock,
 like a cube dropped into the next drink. The same sound plays on every drink switch, into the question and on the

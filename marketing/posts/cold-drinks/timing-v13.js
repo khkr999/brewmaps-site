@@ -2,16 +2,16 @@
 // the reference sound): the question holds 8 notes, the montage cuts every 2 notes; ends at 17.0s on a steady frame. Shared by player.html (picture) and sound.py (which reads it through node),
 // so both always agree.
 var SHOT = 1.55;
-var SHOTS = [                                                // v14: real moving footage (clips/, see prep_clips.py)
-  { clip: 'latte',    ar: 'آيس لاتيه',     en: 'ICED LATTE',     drift: [0, 0] },
-  { clip: 'matcha',   ar: 'ماتشا لاتيه',   en: 'MATCHA LATTE',   drift: [0, 0] },
-  { clip: 'brew',     ar: 'كولد برو',      en: 'COLD BREW',      drift: [0, 0] },
-  { clip: 'lemonade', ar: 'ليموناضة',      en: 'LEMONADE',       drift: [0, 0] },
-  { clip: 'karkadeh', ar: 'كركديه مثلج',   en: 'ICED KARKADEH',  drift: [0, 0] },
+var SHOTS = [
+  { plate: 'plates/iced-latte.jpg',    ar: 'آيس لاتيه',     en: 'ICED LATTE',     drift: [-1, 0.4] },
+  { plate: 'plates/matcha.jpg',        ar: 'ماتشا لاتيه',   en: 'MATCHA LATTE',   drift: [1, -0.3] },
+  { plate: 'plates/cold-brew.jpg',     ar: 'كولد برو',      en: 'COLD BREW',      drift: [-0.6, -1] },
+  { plate: 'plates/spanish-latte.jpg', ar: 'سبانيش لاتيه',  en: 'SPANISH LATTE',  drift: [0.8, 0.8] },
+  { plate: 'plates/karkadeh.jpg',      ar: 'كركديه مثلج',   en: 'ICED KARKADEH',  drift: [-0.4, 1] },
 ];
-var CLIPS = ['latte', 'matcha', 'brew', 'lemonade', 'karkadeh', 'unicorn'];
+var PLATES = { latte: 'plates/iced-latte.jpg', matcha: 'plates/matcha.jpg', brew: 'plates/cold-brew.jpg', spanish: 'plates/spanish-latte.jpg', karkadeh: 'plates/karkadeh.jpg' };
 var QUESTION = { text: 'أي واحد على ذوقك؟' };
-var BRIDGE = { lines: ['BrewMaps', 'يختارلك مشروبك المفضل'], flashes: [['latte', 1.18, [0.46, 0.44]], ['matcha', 1.18, [0.5, 0.56]], ['unicorn', 1.18, [0.55, 0.47]], ['brew', 1.18, [0.5, 0.44]]], offset: 0.55 };   // montage: crops of the same clips, a later moment
+var BRIDGE = { lines: ['BrewMaps', 'يختارلك مشروبك المفضل'], flashes: [['latte', 1.6, [0.3, 0.3]], ['matcha', 1.5, [0.6, 0.7]], ['spanish', 1.7, [0.5, 0.5]], ['karkadeh', 1.6, [0.7, 0.35]]] };
 var APP = { query: 'سبانيش لاتيه أقل من ٢٠ درهم', message: ['BrewMaps يلقى لك الكوفي', 'اللي على ذوقك'], results: '٣ كوفيهات قريبة', top: 'سبانيش لاتيه · ١٨ درهم · ٦ دقايق', match: '٩٢٪ على ذوقك' };
 var BEAT = SHOT / 2;
 var NOTE = SHOT / 7;                                        // 0.2214: the arpeggio's note grid (3-note figure, close to the reference's 0.209s). Every shot is 7 notes, so every cut lands on a note
@@ -37,4 +37,4 @@ T.keys = (function () {
   for (var j = 0; j < q.length; j++) { acc += w[j]; var f = Math.max(prev + 1, Math.round(f0 + (f1 - f0) * acc / s)); out.push(f / 24); prev = f; }
   return out;
 })();
-if (typeof module !== 'undefined') module.exports = { SHOT, SHOTS, CLIPS, QUESTION, BRIDGE, APP, BEAT, NOTE, T };
+if (typeof module !== 'undefined') module.exports = { SHOT, SHOTS, PLATES, QUESTION, BRIDGE, APP, BEAT, NOTE, T };

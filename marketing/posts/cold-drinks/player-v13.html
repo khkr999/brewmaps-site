@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="../../assets/fonts/dmsans.css">
 <style>html,body{margin:0;background:#000}</style>
 <canvas id="c" width="1080" height="1920"></canvas>
-<script src="timing.js"></script>
+<script src="timing-v13.js"></script>
 <script>
 // v5: the v4 cut, polished. Five near-still macro shots on a carried push with clean cuts on the downbeat and a centred
 // name; the karkadeh pulls focus into the green and the question rises in word by word; the first crop comes back into
@@ -25,8 +25,8 @@ let A = {};
 window.DURATION = T.end;
 window.ready = (async () => {
   await Promise.all([document.fonts.load('500 86px "Tajawal"', 'آيس'), document.fonts.load('800 92px "Tajawal"', 'ذوقك'), document.fonts.load('500 40px "Tajawal"', 'درهم'), document.fonts.load('600 38px "Playfair Display"', 'ICED'), document.fonts.load('600 36px "DM Sans"', 'Ask'), document.fonts.load('600 72px "DM Sans"', 'BrewMaps')]);
-  const nfr = await (await fetch('clips/frames.json')).json();          // v14: every clip as its 24fps frames
-  A.clip = {}; for (const k of CLIPS) A.clip[k] = await Promise.all(Array.from({ length: nfr[k] }, (_, j) => img(`clips/${k}/f_${String(j).padStart(3, '0')}.jpg`)));
+  A.plates = await Promise.all(SHOTS.map(s => img(s.plate)));
+  A.byKey = {}; for (const k in PLATES) A.byKey[k] = await img(PLATES[k]);
   A.mark = await img('../find-rate-earn-carousel/img/mark-cream.png');
   A.lockup = await img('../find-rate-earn-carousel/img/lockup-cream.png');
   A.map = await img('../coffee-routine-update/img/appmap.png');
@@ -40,12 +40,11 @@ function shotAt(t) {
   const i = Math.min(SHOTS.length - 1, Math.floor(t / SHOT));
   return { i, u: i === SHOTS.length - 1 ? (t - i * SHOT) / (T.bridge - i * SHOT) : (t - i * SHOT) / SHOT };
 }
-const frameOf = (key, local) => { const fs = A.clip[key]; return fs[Math.max(0, Math.min(fs.length - 1, Math.round(local * 24)))]; };
-function drawPlate(i, u, zb = 1.0, blur = 0, local = 0) {              // slow push: zb → zb+0.06 over the shot, a little drift; the push never resets at a cut
+function drawPlate(i, u, zb = 1.0, blur = 0) {              // slow push: zb → zb+0.06 over the shot, a little drift; the push never resets at a cut
   const s = SHOTS[i], z = zb + 0.06 * u, dx = s.drift[0] * 22 * u, dy = s.drift[1] * 22 * u;
   ctx.save(); if (blur > 0.2) ctx.filter = `blur(${blur.toFixed(1)}px)`;
   ctx.translate(540 + dx, 960 + dy); ctx.scale(z, z); ctx.translate(-540, -960);
-  ctx.drawImage(frameOf(SHOTS[i].clip, local), 0, 0, 1080, 1920); ctx.restore();
+  ctx.drawImage(A.plates[i], 0, 0, 1080, 1920); ctx.restore();
   const g = ctx.createRadialGradient(540, 960, 300, 540, 960, 1150);
   g.addColorStop(0, 'rgba(0,0,0,0.18)'); g.addColorStop(1, 'rgba(0,0,0,0.42)');
   ctx.fillStyle = g; ctx.fillRect(0, 0, 1080, 1920);
@@ -64,8 +63,8 @@ function name(i, a, dy = 0) {                               // centred: the Arab
 }
 
 // ── the v2 ending ───────────────────────────────────────────────────────────
-function plate(key, z, c, u, drift = [0, 0], blur = 0, local = 0) {
-  const im = frameOf(key, local), zz = z + 0.06 * u, lim = v => Math.max(0.5 / zz, Math.min(1 - 0.5 / zz, v)), cx = lim(c[0]) * 1080, cy = lim(c[1]) * 1920;   // a crop always fills the frame
+function plate(key, z, c, u, drift = [0, 0], blur = 0) {
+  const im = A.byKey[key], zz = z + 0.06 * u, cx = c[0] * 1080, cy = c[1] * 1920;
   ctx.save(); if (blur > 0.2) ctx.filter = `blur(${blur.toFixed(1)}px)`;
   ctx.translate(540 + drift[0] * 22 * u, 960 + drift[1] * 22 * u); ctx.scale(zz, zz); ctx.translate(-cx, -cy);
   ctx.drawImage(im, 0, 0, 1080, 1920); ctx.restore();
@@ -172,7 +171,7 @@ const surface = t => sineInOut(seg(t, T.bridge - 0.26, T.bridge + 0.34));
 const pullOut = t => easeInOut(seg(t, T.product - 0.26, T.product + 0.1));
 function lastFlash(t) {
   const [key, z, c] = BRIDGE.flashes[3], o = pullOut(t), k = t - T.bridge, fu = k - 3 * FLASH;
-  plate(key, z * (1 + 0.08 * o), c, 0, [0, 0], 22 * o, BRIDGE.offset + t - (T.bridge + 3 * FLASH));
+  plate(key, z * (1 + 0.08 * o), c, 0, [0, 0], 22 * o);
   if (o > 0) { ctx.fillStyle = GREEN(o); ctx.fillRect(0, 0, 1080, 1920); }
 }
 
@@ -180,14 +179,14 @@ window.frame = t => {
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.filter = 'none'; ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 1080, 1920);
   if (t < T.question) {                                    // the opening: clean cuts on the downbeat, the push carries, names ease in and out
     const i = Math.min(SHOTS.length - 1, Math.floor(t / SHOT)), u = (t - i * SHOT) / SHOT;
-    drawPlate(i, 0, 1.0, 0, t - i * SHOT);                 // the footage plays; locked camera, as in the reference
+    drawPlate(i, 0, 1.0);                                  // locked camera: no push, no drift
     const { a, dy } = nameLife(u, SHOT); name(i, a, dy);
   } else if (t < T.bridge) {                               // the question: the karkadeh pulls focus into the green; the words rise in
     const k = t - T.question, f = sineInOut(seg(k, 0, 0.58)), p = sineInOut(seg(k, 0.06, 0.62));   // defocus leads, the green follows
-    if (p < 1) drawPlate(SHOTS.length - 1, 1.6 * easeIn(seg(k, 0, 0.62)), 1.0, 22 * f, t - (SHOTS.length - 1) * SHOT);   // the focus pull into the green
+    if (p < 1) drawPlate(SHOTS.length - 1, 1.6 * easeIn(seg(k, 0, 0.62)), 1.0, 22 * f);   // the focus pull into the green
     ctx.fillStyle = GREEN(p); ctx.fillRect(0, 0, 1080, 1920);
     const b = surface(t);                                  // the first crop starts surfacing under the last of the words
-    if (b > 0) { const [key, z, c] = BRIDGE.flashes[0]; ctx.save(); ctx.globalAlpha = b; plate(key, z * (1 + 0.1 * (1 - b)), c, 0, [0, 0], 22 * (1 - b), BRIDGE.offset + t - (T.bridge - 0.26)); ctx.restore(); }
+    if (b > 0) { const [key, z, c] = BRIDGE.flashes[0]; ctx.save(); ctx.globalAlpha = b; plate(key, z * (1 + 0.1 * (1 - b)), c, 0, [0, 0], 22 * (1 - b)); ctx.restore(); }
     question(k);
   } else if (t < T.product) {                              // the bridge: out of the green into focus, then a clean cut on every 8th
     const k = t - T.bridge, fi = Math.min(3, Math.floor(k / FLASH)), fu = k - fi * FLASH;
@@ -196,7 +195,7 @@ window.frame = t => {
       const [key, z, c] = BRIDGE.flashes[fi];
       let zz = z, bl = 0;                                                  // plain hard cuts, as in the reference
       if (fi === 0) { const f = surface(t); zz = z * (1 + 0.1 * (1 - f)); bl = 22 * (1 - f); }   // the first: out of the green, into focus
-      plate(key, zz, c, 0, [0, 0], bl, BRIDGE.offset + (fi === 0 ? t - (T.bridge - 0.26) : t - (T.bridge + fi * FLASH)));
+      plate(key, zz, c, 0, [0, 0], bl);
       if (fi === 0) { ctx.fillStyle = GREEN(1 - surface(t)); ctx.fillRect(0, 0, 1080, 1920); }
     }
     const a = easeOut(seg(k, 0.06, 0.55)), ao = easeInOut(seg(t, T.product - 0.38, T.product - 0.12)), aa = a * (1 - ao);
