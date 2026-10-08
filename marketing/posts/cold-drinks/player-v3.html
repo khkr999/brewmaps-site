@@ -11,13 +11,7 @@
 // Then the bridge (four flashes), BrewMaps doing something (Ask BrewMaps: a query typed, one result), and a one-second card.
 const CREAM = '#F4EFE6', PALE = '#A9D19A', FOREST = '#163514', INK = '#1a1a1a';
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
-const ease = u => u * u * (3 - 2 * u), mix = (a, b, u) => a + (b - a) * u;
-// the reel's motion language: a smooth cubic ease-out for entrances (fast start, long soft settle), a quintic
-// ease-in-out for exits and dissolves, and a tiny overshoot only where something physically lands (the phone)
-const easeOut = u => 1 - Math.pow(1 - u, 3);
-const easeInOut = u => u < 0.5 ? 16 * u * u * u * u * u : 1 - Math.pow(-2 * u + 2, 5) / 2;
-const easeIn = u => u * u * u;
-const settle = u => 1 + 2.2 * Math.pow(1 - u, 2.4) * Math.sin(u * Math.PI * 1.35) * -0.06;   // overshoots 2%, settles
+const ease = u => u * u * (3 - 2 * u), easeOut = u => 1 - (1 - u) * (1 - u), mix = (a, b, u) => a + (b - a) * u;
 const img = src => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = src; });
 const ctx = document.getElementById('c').getContext('2d');
 let A = {};
@@ -36,18 +30,18 @@ function shotAt(t) {
   const i = Math.min(SHOTS.length - 1, Math.floor(t / SHOT));
   return { i, u: i === SHOTS.length - 1 ? (t - i * SHOT) / (T.bridge - i * SHOT) : (t - i * SHOT) / SHOT };
 }
-function drawPlate(i, u, zb = 1.0) {                        // slow push: zb → zb+0.06 over the shot, a little drift; the push never resets at a cut
-  const s = SHOTS[i], z = zb + 0.06 * u, dx = s.drift[0] * 22 * u, dy = s.drift[1] * 22 * u;
+function drawPlate(i, u) {                                  // slow push: 1.00 → 1.07, with a little drift, never stopping
+  const s = SHOTS[i], z = 1.0 + 0.075 * u, dx = s.drift[0] * 26 * u, dy = s.drift[1] * 26 * u;
   ctx.save(); ctx.translate(540 + dx, 960 + dy); ctx.scale(z, z); ctx.translate(-540, -960);
   ctx.drawImage(A.plates[i], 0, 0, 1080, 1920); ctx.restore();
   const g = ctx.createRadialGradient(540, 960, 300, 540, 960, 1150);
   g.addColorStop(0, 'rgba(0,0,0,0.18)'); g.addColorStop(1, 'rgba(0,0,0,0.42)');
   ctx.fillStyle = g; ctx.fillRect(0, 0, 1080, 1920);
 }
-function name(i, a, dy = 0) {                               // centred: the Arabic name over small spaced serif caps; rides on dy
+function name(i, a) {                                       // centred: the Arabic name (a little larger than v1) over small spaced serif caps
   if (a <= 0) return;
   const s = SHOTS[i];
-  ctx.save(); ctx.globalAlpha = a; ctx.translate(0, dy); ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  ctx.save(); ctx.globalAlpha = a; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
   scrim(975, 520, 0.38);
   ctx.shadowColor = 'rgba(0,0,0,0.4)'; ctx.shadowBlur = 18;
   ctx.direction = 'rtl'; ctx.fillStyle = CREAM; ctx.font = '500 88px "Tajawal"'; ctx.fillText(s.ar, 540, 944);
@@ -72,11 +66,10 @@ function arabic(text, x, y, size, weight, align, a = 1, color = CREAM) {
   ctx.save(); ctx.globalAlpha = a; ctx.direction = 'rtl'; ctx.textAlign = align; ctx.fillStyle = color;
   ctx.font = `${weight} ${size}px "Tajawal"`; ctx.fillText(text, x, y); ctx.restore();
 }
-function drawPhone(t, res = 0) {                           // Ask BrewMaps: rises and settles, the query types, results slide in on the same curve
-  const u = seg(t, T.product, T.product + 0.8), e = easeOut(u), lift = (1 - e) * 140 + res * 90, sc = 0.985 + 0.015 * settle(u);
+function drawPhone(t) {                                    // Ask BrewMaps: the query typed, then results over the real map
+  const u = seg(t, T.product, T.product + 0.7), lift = (1 - easeOut(u)) * 110;
   const W = 760, H = 1640, x = 540 - W / 2, y = 440 + lift, r = 86;
-  ctx.save(); ctx.globalAlpha = Math.min(1, e * 1.6) * (1 - res * 0.6);
-  ctx.translate(540, y + H / 2); ctx.scale(sc, sc); ctx.translate(-540, -(y + H / 2));
+  ctx.save(); ctx.globalAlpha = easeOut(u);
   ctx.shadowColor = 'rgba(0,0,0,0.45)'; ctx.shadowBlur = 60; ctx.shadowOffsetY = 20;
   ctx.fillStyle = '#111'; ctx.beginPath(); ctx.roundRect(x - 14, y - 14, W + 28, H + 28, r + 14); ctx.fill();
   ctx.shadowColor = 'transparent';
@@ -92,7 +85,7 @@ function drawPhone(t, res = 0) {                           // Ask BrewMaps: rise
   const typed = APP.query.slice(0, n), caret = t < T.result && Math.floor(t * 6) % 2 === 0;
   arabic(typed + (caret ? '|' : ''), px + pw - 36, py + 68, 40, '500', 'right', 1, INK);
   if (n === 0) arabic('اسأل عن أي كوفي…', px + pw - 36, py + 68, 40, '400', 'right', 0.5, '#777');
-  const rv = easeOut(seg(t, T.result, T.result + 0.6)), ry = py + ph + 36 + (1 - rv) * 36;
+  const rv = seg(t, T.result, T.result + 0.5), ry = py + ph + 36 + (1 - easeOut(rv)) * 40;
   if (rv > 0) {
     ctx.save(); ctx.globalAlpha = rv;
     arabic(APP.results, px + pw, ry + 36, 34, '500', 'right', 1, '#6b6b6b');
@@ -103,8 +96,8 @@ function drawPhone(t, res = 0) {                           // Ask BrewMaps: rise
     ctx.strokeStyle = '#E6E6E6'; ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect(px, cy, pw, ch, 34); ctx.stroke();
     const rows = [[APP.top, APP.match, FOREST, PALE, 1], ['سبانيش لاتيه · ١٩ درهم · ٩ دقايق', '٨٥٪ على ذوقك', '#E7EFE2', FOREST, 0.85], ['سبانيش لاتيه · ١٧ درهم · ١٢ دقيقة', '٧٨٪ على ذوقك', '#EFEFEF', '#555', 0.7]];
     rows.forEach(([line, match, bg, fg, al], k) => {
-      const rk = easeOut(seg(t, T.result + 0.12 * k, T.result + 0.12 * k + 0.5)), by = cy + ch + 30 + k * 172 + (1 - rk) * 24;
-      ctx.save(); ctx.globalAlpha = al * rk;
+      const by = cy + ch + 30 + k * 172, rk = seg(rv, 0.25 * k, 0.25 * k + 0.5);
+      ctx.save(); ctx.globalAlpha = rv * al * rk;
       ctx.fillStyle = k === 0 ? '#F7F7F7' : '#FAFAFA'; ctx.beginPath(); ctx.roundRect(px, by, pw, 150, 30); ctx.fill();
       if (k === 0) { ctx.strokeStyle = '#DCE8D5'; ctx.lineWidth = 2; ctx.stroke(); }
       arabic(line, px + pw - 32, by + 62, 36, '700', 'right', 1, INK);
@@ -117,56 +110,36 @@ function drawPhone(t, res = 0) {                           // Ask BrewMaps: rise
   ctx.restore(); ctx.restore();
 }
 
-// a name's life inside its shot: in over 0.45s (up 18px, eased), hold, out over 0.3s (up 10px) ending at the cut
-function nameLife(u, dur) {
-  const tin = 0.45 / dur, tout = 0.3 / dur;
-  if (u < tin) { const k = easeOut(u / tin); return { a: k, dy: 18 * (1 - k) }; }
-  if (u > 1 - tout) { const k = easeInOut((u - (1 - tout)) / tout); return { a: 1 - k, dy: -10 * k }; }
-  return { a: 1, dy: 0 };
-}
-// a cut: the incoming picture dissolves in over 4 frames so the eye never sees a hard jump (the push carries on)
-const CUT_MIX = 4 / 24;
-
 window.frame = t => {
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 1080, 1920);
-  const zb = 1.0 + 0.012 * Math.floor(t / SHOT);            // the carried push: each shot starts where the last one left off
-  if (t < T.question) {                                    // the opening: five shots, one motion language
-    const i = Math.min(SHOTS.length - 1, Math.floor(t / SHOT)), u = (t - i * SHOT) / SHOT;
-    drawPlate(i, u, zb);
-    if (i > 0 && u * SHOT < CUT_MIX) {                     // the previous shot, dissolving out
-      ctx.save(); ctx.globalAlpha = 1 - easeOut(u * SHOT / CUT_MIX); drawPlate(i - 1, 1, zb - 0.012); ctx.restore();
-    }
-    const { a, dy } = nameLife(u, SHOT); name(i, a, dy);
-  } else if (t < T.bridge) {                               // the question: the drink settles into the green; the line arrives on the lift
-    const k = t - T.question, d = easeInOut(seg(k, 0, 0.6));
-    drawPlate(SHOTS.length - 1, 1 + k / SHOT, zb - 0.012);
+  if (t < T.question) {                                    // the opening: five slow shots, names centred
+    const { i, u } = shotAt(t);
+    drawPlate(i, u);
+    name(i, seg(t - i * SHOT, 0.06, 0.28));
+  } else if (t < T.bridge) {                               // the question: the last drink dissolves into the green, the line eases in
+    const d = ease(seg(t, T.question, T.question + 0.5));
+    drawPlate(SHOTS.length - 1, 1 + (t - T.question) / SHOT);
     ctx.fillStyle = `rgba(16,36,18,${d})`; ctx.fillRect(0, 0, 1080, 1920);
-    const qa = easeOut(seg(k, 0.35, 0.95)), qs = 0.96 + 0.04 * qa;      // scales from 96% as it eases in: arrives, doesn't pop
-    ctx.save(); ctx.translate(540, 960); ctx.scale(qs, qs); ctx.translate(-540, -960);
-    arabic(QUESTION.text, 540, 990 + (1 - qa) * 28, 104, '800', 'center', qa);
-    ctx.restore();
-    const qo = easeInOut(seg(k, 2 * BEAT - 0.3, 2 * BEAT));            // and leaves before the bridge, up and out
-    if (qo > 0) { ctx.fillStyle = `rgba(16,36,18,${qo})`; ctx.fillRect(0, 0, 1080, 1920); }
-  } else if (t < T.product) {                              // the bridge: four crops, each dissolving into the next; the lockup rides steady
-    const k = t - T.bridge, fi = Math.min(3, Math.floor(k / (BEAT / 2))), fu = (k - fi * BEAT / 2) / (BEAT / 2);
-    const [key, z, c] = BRIDGE.flashes[fi];
-    plate(key, z, c, k / (2 * BEAT), [0, 0]);
-    if (fi > 0 && fu * BEAT / 2 < CUT_MIX) { const [pk, pz, pc] = BRIDGE.flashes[fi - 1]; ctx.save(); ctx.globalAlpha = 1 - easeOut(fu * BEAT / 2 / CUT_MIX); plate(pk, pz, pc, k / (2 * BEAT), [0, 0]); ctx.restore(); }
-    if (k < CUT_MIX) { ctx.fillStyle = `rgba(16,36,18,${1 - easeOut(k / CUT_MIX)})`; ctx.fillRect(0, 0, 1080, 1920); }   // in from the green
+    const qa = ease(seg(t, T.question + 0.2, T.question + 0.65));
+    arabic(QUESTION.text, 540, 990 + (1 - qa) * 24, 104, '800', 'center', qa);
+  } else if (t < T.product) {                              // the bridge: four flashes, two lines
+    const k = Math.min(3, Math.floor((t - T.bridge) / (BEAT / 2))), [key, z, c] = BRIDGE.flashes[k];
+    plate(key, z, c, (t - T.bridge) / (2 * BEAT), [0, 0]);
     scrim(960, 560, 0.45);
-    const a = easeOut(seg(k, 0.05, 0.5)), ao = easeInOut(seg(k, 2 * BEAT - 0.3, 2 * BEAT)), aa = a * (1 - ao);
-    const L = A.lockup, lw = 400, lh = lw * L.height / L.width, dy = 18 * (1 - a) - 10 * ao;
-    ctx.save(); ctx.globalAlpha = aa; ctx.drawImage(L, (1080 - lw) / 2, 860 + dy, lw, lh); ctx.restore();
-    arabic(BRIDGE.lines[1], 540, 1050 + dy, 74, '800', 'center', aa, PALE);
-    if (ao > 0) { ctx.fillStyle = `rgba(16,36,18,${ao})`; ctx.fillRect(0, 0, 1080, 1920); }   // out to the green for the phone
-  } else {                                                 // the product, then the resolve
+    const a = ease(seg(t, T.bridge, T.bridge + 0.3));
+    const L = A.lockup, lw = 400, lh = lw * L.height / L.width;
+    ctx.save(); ctx.globalAlpha = a; ctx.drawImage(L, (1080 - lw) / 2, 860 + (1 - a) * 16, lw, lh); ctx.restore();
+    arabic(BRIDGE.lines[1], 540, 1050 + (1 - a) * 16, 74, '800', 'center', a, PALE);
+  } else if (t < T.card) {                                 // the product moment, calmer
     ctx.fillStyle = 'rgb(16,36,18)'; ctx.fillRect(0, 0, 1080, 1920);
-    const mv = easeOut(seg(t, T.message, T.message + 0.6)), mdy = 16 * (1 - mv);
-    const res = easeInOut(seg(t, T.card, T.end - 0.25));   // the resolve: the message lifts away, the phone sinks back, the green goes to black
-    const ma = mv * (1 - res);
-    if (ma > 0) { arabic(APP.message[0], 540, 215 + mdy - 24 * res, 70, '800', 'center', ma); arabic(APP.message[1], 540, 305 + mdy - 24 * res, 70, '800', 'center', ma, PALE); }
-    drawPhone(t, res);
-    if (res > 0) { ctx.fillStyle = `rgba(0,0,0,${easeIn(res)})`; ctx.fillRect(0, 0, 1080, 1920); }
+    const mv = seg(t, T.message, T.message + 0.5);
+    if (mv > 0) { arabic(APP.message[0], 540, 215, 70, '800', 'center', mv); arabic(APP.message[1], 540, 305, 70, '800', 'center', mv, PALE); }
+    drawPhone(t);
+  } else {                                                 // the end: the phone holds, then everything fades out
+    ctx.fillStyle = 'rgb(16,36,18)'; ctx.fillRect(0, 0, 1080, 1920);
+    arabic(APP.message[0], 540, 215, 70, '800', 'center', 1); arabic(APP.message[1], 540, 305, 70, '800', 'center', 1, PALE);
+    drawPhone(t);
+    ctx.fillStyle = `rgba(0,0,0,${ease(seg(t, T.card, T.end - 0.05))})`; ctx.fillRect(0, 0, 1080, 1920);
   }
   return document.getElementById('c').toDataURL('image/png');
 };

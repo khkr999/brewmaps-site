@@ -53,22 +53,22 @@ for i, t in enumerate(cuts):
     cel += [(t + 0.05, 1.4, CH[i][-1], 56), (t + B, 1.0, CH[i][1], 42)]
     bass += [(t, 1.1, ROOT[i], 70)]
     for k in range(4): pz.append((t + k * B / 2, 0.18, CH[i][k % 3], 46 if k % 2 == 0 else 32))     # the pulse: pizz on 8ths, accents on the beat
-tq = T['question'] + 0.55                                                                            # the question: the lift lands as the line arrives, not on the dissolve
+tq = T['question']                                                                                   # the question: a lift
 pad += chord(tq + 0.02, 2 * B + 0.3, ['E4', 'G4', 'B4', 'D5'], 46); cel += [(tq + 0.3, 1.4, 'B5', 58), (tq + B, 1.0, 'G5', 46)]
 bass += [(tq, 1.1, 'E1', 72)]
-for k in range(3): pz.append((tq + k * B / 2, 0.18, ['E4', 'G4', 'B4'][k % 3], 44 if k % 2 == 0 else 30))
+for k in range(4): pz.append((tq + k * B / 2, 0.18, ['E4', 'G4', 'B4'][k % 3], 44 if k % 2 == 0 else 30))
 tb = T['bridge']                                                                                     # the bridge: pumping on 8ths
 pad += chord(tb + 0.02, 2 * B + 0.1, ['A3', 'D4', 'E4', 'G4'], 48)
 for k in range(4): bass.append((tb + k * B / 2, 0.22, 'A1', 78 - 5 * k)); pz.append((tb + k * B / 2, 0.15, ['A4', 'D5', 'E5', 'G5'][k], 56 - 4 * k))
 tp = T['product']                                                                                    # the phone: thinner, slow
-pad += chord(tp, T['card'] - tp + 0.2, ['D4', 'F#4', 'A4', 'E5'], 42) + chord(T['card'] + 0.02, T['end'] - T['card'], ['D4', 'F#4', 'A4'], 40)   # resolves to the plain triad as the phone sinks
-cel += [(tp + B, 1.3, 'A5', 46), (tp + 3 * B, 1.3, 'F#5', 42), (tp + 5 * B, 1.6, 'E5', 40), (T['card'] + 0.05, 1.6, 'D5', 44)]
-bass += [(tp, 1.4, 'D2', 60), (tp + 4 * B, 1.4, 'D2', 54), (T['card'] + 0.02, 1.3, 'D1', 56)]
+pad += chord(tp, T['card'] - tp + 0.6, ['D4', 'F#4', 'A4', 'E5'], 42)
+cel += [(tp + B, 1.3, 'A5', 46), (tp + 3 * B, 1.3, 'F#5', 42), (tp + 5 * B, 1.6, 'E5', 40), (tp + 7 * B, 1.6, 'D5', 40)]
+bass += [(tp, 1.4, 'D2', 60), (tp + 4 * B, 1.4, 'D2', 54)]
 for k in range(int((T['card'] - tp) / B)): pz.append((tp + k * B, 0.18, ['D4', 'A4', 'F#4'][k % 3], 34))   # the pulse eases to quarter notes
-pad_cc = [(T['card'] + 0.3 + i * 0.045, mido.Message('control_change', control=11, value=int(127 * (1 - i / 19) ** 1.4))) for i in range(20)]
+pad_cc = [(T['card'] - 0.1 + i * 0.04, mido.Message('control_change', control=11, value=int(127 * (1 - i / 19) ** 1.2))) for i in range(20)]
 vib = [(T['result'] + 0.02, 0.8, 'A5', 48)]
 music = (render('m_pad', [(0, STR, pad, pad_cc)]) * 0.9 + render('m_cel', [(1, CELESTA, cel, [])]) * 0.55
-         + render('m_pz', [(2, PIZZ, pz, [])]) * 0.72 + render('m_bass', [(3, ABASS, bass, [])]) * 0.7 + render('m_vib', [(4, VIBES, vib, [])]) * 0.5)
+         + render('m_pz', [(2, PIZZ, pz, [])]) * 0.6 + render('m_bass', [(3, ABASS, bass, [])]) * 0.7 + render('m_vib', [(4, VIBES, vib, [])]) * 0.5)
 L0 = T['card'] + 0.4; logo_t = [L0, L0 + 5 / 24, L0 + 10 / 24]
 fx_logo = render('fx_logo', [(0, CELESTA, [(logo_t[0], .5, 'A4', 96), (logo_t[1], .5, 'D5', 100), (logo_t[2], 1.1, 'F#5', 106)], []),
                              (1, VIBES, [(logo_t[0], .5, 'A4', 70), (logo_t[1], .5, 'D5', 74), (logo_t[2], 1.1, 'F#5', 80)], []),
@@ -124,7 +124,7 @@ def icedrop(t0):
     st = lp(noise(0.5), 3000) * env(0.5, 0.02, 0.12)
     for _ in range(6): b = bubble(rng.uniform(900, 2000), 0.03, 2.0); o = int(rng.uniform(0.05, 0.4) * SR); st[o:o + len(b)] += 2.0 * b
     place(st, t0 + 0.05, -21, 0.1)
-icedrop(T['question'] + 0.52); place(whoosh(0.9, 300, 1800, 0.5), T['question'] - 0.05, -19)   # a long soft swell under the dissolve; the cube lands with the line
+icedrop(T['question'] + 0.25); place(whoosh(0.7, 400, 2200, 0.45), T['question'] - 0.1, -18)
 place(whoosh(BEAT, 400, 3200, 0.3), T['bridge'] - 0.1, -16)
 for k, t in enumerate(flashes): place(glass(3000 + 300 * k, 0.2), t, -15, (-1) ** k * 0.3); place(kick(), t, -14)
 crack = hp(noise(0.14), 2200) * env(0.14, 0.0005, 0.014) + 0.6 * modal([3600, 5900], [0.035, 0.02], [1, .5], 0.14)   # ice cracking on the second flash
@@ -147,14 +147,14 @@ ramp = lambda pts: np.interp(TT, [p[0] for p in pts], [p[1] for p in pts])
 music = music / np.abs(music).max()
 music = reverb(music, ir(1.6, 4500), 0.22)
 g = ramp([(0, -30), (0.15, -12), (T['question'], -12), (T['question'] + 0.5, -11), (T['bridge'] - 0.05, -11), (T['bridge'] + 0.05, -11),
-          (T['product'] - 0.05, -11), (T['product'] + 0.3, -14), (T['card'], -14), (T['card'] + 0.4, -13), (T['end'] - 0.3, -22), (T['end'] - 0.05, -40), (DUR, -40)])
+          (T['product'] - 0.05, -11), (T['product'] + 0.3, -14), (T['card'], -14), (T['end'] - 0.1, -40), (DUR, -40)])
 duck = np.zeros(N)
-for t0 in cuts + flashes + [T['question'] + 0.55, T['result']]:
+for t0 in cuts + flashes + [T['question'], T['result']]:
     a = np.clip((TT - t0) / 0.004, 0, 1) * np.where(TT < t0 + 0.1, 1, np.exp(-(TT - t0 - 0.1) / 0.25)); duck = np.maximum(duck, 2.5 * a)
 music = music / np.abs(music).max() * REF * db(g - duck)[:, None]
 sfx = reverb(SFX, ir(0.8, 6000), 0.16)
 SILENT = DUR - 0.05
-mix = (music + sfx) * (1 - np.clip((TT - (T['end'] - 0.45)) / 0.4, 0, 1) ** 2)[:, None]
+mix = (music + sfx) * np.clip((T['end'] - 0.05 - TT) / (T['end'] - 0.05 - T['card']), 0, 1)[:, None]
 meter = pyloudnorm.Meter(SR); lufs = meter.integrated_loudness(mix)
 mix = mix * db(-17.0 - lufs)
 thr = db(-1.2); a = np.abs(mix).max(axis=1); need = np.minimum(1, thr / np.maximum(a, 1e-9))
