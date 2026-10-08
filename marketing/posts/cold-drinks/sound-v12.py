@@ -144,17 +144,7 @@ def onset(x): return int(np.argmax(np.abs(x) > 0.5 * np.abs(x).max()))       # t
 def on_frame(sig, t, rel, pan=0.0): place(sig, t - onset(sig) / SR, rel, pan)          # place a sound so its attack lands exactly on t
 SWITCH = cut(ICE, 7.31, 0.55, fin=0.002, fout=0.25)                                   # one clean ice-in-water knock, used on every drink switch
 LIGHT = cut(ICE, 19.26, 0.40, fin=0.002, fout=0.2)                                    # a lighter one for the quick montage cuts
-# v13: the drink-switch sound: a splash from the pour recording (one clean attack, short tail) with the ice knock under it,
-# like a cube dropped into the next drink. Same sound on every switch, its attack on the cut frame.
-def mixed(*parts):
-    n = max(len(p) for p, _ in parts); out = np.zeros(n)
-    for p, g in parts: out[:len(p)] += p / np.abs(p).max() * db(g)
-    return out
-SPLASH = cut(POUR, 1.57, 0.42, fin=0.002, fout=0.22)
-def align(x): return np.roll(np.pad(x, (int(0.05 * SR), 0)), -onset(np.pad(x, (int(0.05 * SR), 0))) + int(0.05 * SR))   # attack at a fixed 50ms point
-DROP = mixed((align(SPLASH), 0), (align(SWITCH), -5))
-for i, t in enumerate(cuts[1:]): on_frame(DROP, t, -12, [0.1, -0.1, 0.06, -0.06][i])
-on_frame(DROP, FR(T['question']), -14, 0.0)                                                  # into the question
+for i, t in enumerate(cuts[1:]): on_frame(SWITCH, t, -22, [0.12, -0.12, 0.08, -0.08][i])
 # v12: the ice bed is a smooth texture now: its loudness is evened out so no stray knock sounds between the cuts
 bed = lp(ICE[int(2.0 * SR):int(2.0 * SR) + N].copy(), 5000)
 ev = np.sqrt(np.maximum(lp(bed ** 2, 4), 0)); bed = bed / (ev + 0.15 * ev.mean())
@@ -166,9 +156,8 @@ pour = cut(POUR, 0.9, 2.3, fin=0.25, fout=0.7)
 c = np.sqrt(np.mean(pour ** 2)) * db(10); pour = c * np.tanh(pour / c)               # tame the pour's splashes: no spike above the texture
 place_rms(pour[int((T['question'] - (tq - 0.68)) * SR):] * np.minimum(1, np.arange(len(pour) - int((T['question'] - (tq - 0.68)) * SR)) / (0.06 * SR)), T['question'], -31, 0.0)   # starts on the cut into the question, its fullest moment on the words
 fizz = cut(POUR, 5.0, T['bridge'] - T['question'] - 0.7, fin=0.3, fout=0.4); place_rms(fizz, T['question'] + 0.7, -43, 0.0)   # under the question only; gone before the montage
-on_frame(DROP, FR(T['bridge']), -14, 0.0)                                                     # the first crop surfacing, on the downbeat
-DROP_S = mixed((align(cut(POUR, 1.57, 0.26, fin=0.002, fout=0.14)), 0), (align(LIGHT), -5))
-for k, t in enumerate(flashes[1:]): on_frame(DROP_S, t, -16, (-1) ** k * 0.2)   # the quick montage cuts: a shorter, lighter drop
+on_frame(SWITCH, FR(T['bridge']), -23, 0.0)                                                     # the first crop surfacing, on the downbeat
+for k, t in enumerate(flashes[1:]): on_frame(LIGHT, t, -24, (-1) ** k * 0.2)
 for k, t in enumerate(flashes): on_frame(kick(), t, -23)
 place(whoosh(0.75, 280, 1500, 0.5), T['phoneIn'] - 0.02, -18)                                # the phone rising from below
 thud = lp(noise(0.12), 900) * env(0.12, 0.002, 0.03); place(thud, T['phoneIn'] + 0.6, -24)   # and settling

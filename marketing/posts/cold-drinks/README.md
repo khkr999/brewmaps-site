@@ -1,4 +1,10 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v12)
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v13)
+
+v13: an audible drink-switch sound. A splash from the pour recording (one clean attack) layered with the ice knock,
+like a cube dropped into the next drink. The same sound plays on every drink switch, into the question and on the
+first montage crop, with a shorter, lighter version on the quick montage cuts. Every attack is on its cut frame
+(measured 0ms). It is clearly heard but peaks no higher than the music. Picture as v12; v12 is kept as
+`export/cold-drinks-v12.mp4`.
 
 v12: the v11 warp is removed. It moved the whole photo and could not look like real ice. The drink shots now hold
 still on a locked camera and cut hard on the note, as in the reference, until the moving footage in
