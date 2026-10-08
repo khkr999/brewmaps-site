@@ -1,0 +1,23 @@
+// على ذوقك · "Cold drinks" v3: the calm v1 opening (five slow shots, names centred, 1.55s each, then the question
+// over the last drink) and the v2 ending (the bridge, Ask BrewMaps, the one-second card).
+// Shared by player.html (picture) and sound.py (which reads it through node), so both always agree.
+var SHOT = 1.55;
+var SHOTS = [
+  { plate: 'plates/iced-latte.jpg',    ar: 'آيس لاتيه',     en: 'ICED LATTE',     drift: [-1, 0.4] },
+  { plate: 'plates/matcha.jpg',        ar: 'ماتشا لاتيه',   en: 'MATCHA LATTE',   drift: [1, -0.3] },
+  { plate: 'plates/cold-brew.jpg',     ar: 'كولد برو',      en: 'COLD BREW',      drift: [-0.6, -1] },
+  { plate: 'plates/spanish-latte.jpg', ar: 'سبانيش لاتيه',  en: 'SPANISH LATTE',  drift: [0.8, 0.8] },
+  { plate: 'plates/karkadeh.jpg',      ar: 'كركديه مثلج',   en: 'ICED KARKADEH',  drift: [-0.4, 1] },
+];
+var PLATES = { latte: 'plates/iced-latte.jpg', matcha: 'plates/matcha.jpg', brew: 'plates/cold-brew.jpg', spanish: 'plates/spanish-latte.jpg', karkadeh: 'plates/karkadeh.jpg' };
+var QUESTION = { plate: 'brew', z: 1.28, c: [0.5, 0.52], text: 'أي واحد على ذوقك؟' };     // its own shot, not the karkadeh running on
+var BRIDGE = { lines: ['BrewMaps', 'يختارلك مشروبك المفضل'], flashes: [['latte', 1.6, [0.3, 0.3]], ['matcha', 1.5, [0.6, 0.7]], ['spanish', 1.7, [0.5, 0.5]], ['karkadeh', 1.6, [0.7, 0.35]]] };
+var APP = { query: 'سبانيش لاتيه أقل من ٢٠ درهم', message: ['BrewMaps يلقى لك الكوفي', 'اللي على ذوقك'], results: '٣ كوفيهات قريبة', top: 'سبانيش لاتيه · ١٨ درهم · ٦ دقايق', match: '٩٢٪ على ذوقك' };
+var BEAT = SHOT / 2;                                        // 0.775: the music grid. Every shot is two beats, so every cut is a downbeat
+var T = { question: SHOTS.length * SHOT };                  // 7.75: cut to the question's own shot
+T.bridge = T.question + 2 * BEAT;                           // 9.3: four flashes, one line
+T.product = T.bridge + 2 * BEAT;                            // 10.85: the phone rises
+T.typeStart = T.product + 0.6; T.typeEnd = T.product + 1.9; T.result = T.product + 2.3; T.message = T.product + 2.7;
+T.card = T.product + 7.5 * BEAT;                            // 16.66: the resolve begins (no logo card)
+T.end = T.card + 1.2;                                       // 17.86: the phone settles back down as the music resolves, then black
+if (typeof module !== 'undefined') module.exports = { SHOT, SHOTS, PLATES, QUESTION, BRIDGE, APP, BEAT, T };
