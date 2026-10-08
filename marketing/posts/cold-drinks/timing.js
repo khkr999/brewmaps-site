@@ -11,7 +11,7 @@ var SHOTS = [
 ];
 var PLATES = { latte: 'plates/iced-latte.jpg', matcha: 'plates/matcha.jpg', brew: 'plates/cold-brew.jpg', spanish: 'plates/spanish-latte.jpg', karkadeh: 'plates/karkadeh.jpg' };
 var BRIDGE = { text: 'مهما كان مزاجك…', flashes: [['latte', 1.6, [0.3, 0.3]], ['matcha', 1.5, [0.6, 0.7]], ['brew', 1.7, [0.5, 0.5]], ['karkadeh', 1.6, [0.7, 0.35]]] };
-var APP = { query: 'سبانيش لاتيه تحت ٢٠ درهم', message: ['BrewMaps يلقى لك الكوفي', 'اللي على ذوقك'], results: '٣ كوفيهات قريبة', top: 'سبانيش لاتيه · ١٨ درهم · ٦ دقايق', match: '٩٢٪ على ذوقك' };
+var APP = { query: 'سبانيش لاتيه أقل من ٢٠ درهم', message: ['BrewMaps يلقى لك الكوفي', 'اللي على ذوقك'], results: '٣ كوفيهات قريبة', top: 'سبانيش لاتيه · ١٨ درهم · ٦ دقايق', match: '٩٢٪ على ذوقك' };
 var BEAT = 0.8;
 var T = { question: SHOTS.length * SHOT };                  // 7.75: the last name gives way to the question, the shot holds
 T.bridge = T.question + 1.6;                                // 9.35

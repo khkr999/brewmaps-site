@@ -135,7 +135,7 @@ window.frame = t => {
     const e = easeOut(seg(t, T.card, T.card + 0.5)), c2 = easeOut(seg(t, T.card + 0.35, T.card + 0.85));
     const L = A.lockup, lw = 460, lh = lw * L.height / L.width;
     ctx.save(); ctx.globalAlpha = e; ctx.drawImage(L, (1080 - lw) / 2, 790 + (1 - e) * 20, lw, lh); ctx.restore();
-    arabic('اكتشف كوفيك', 540, 1060 + (1 - c2) * 20, 96, '800', 'center', c2);
+    arabic('يلقى لك كوفيك المفضل', 540, 1060 + (1 - c2) * 20, 88, '800', 'center', c2);
   }
   return document.getElementById('c').toDataURL('image/png');
 };
