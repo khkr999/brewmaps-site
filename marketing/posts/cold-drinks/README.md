@@ -1,4 +1,8 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 16.3s, 9:16, with sound (v15)
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 16.3s, 9:16, with sound (v16)
+
+v16: v15 with the ripple switch removed. The drinks cut hard on the note again, as in v14, with the splash on each cut. Four
+drinks, Spanish latte label and the louder ice are kept. v15 (with the ripple) is kept as `export/cold-drinks-v15.mp4`
+and `player-v15.html`.
 
 v15: four drinks (lemonade removed): سبانيش لاتيه (the first clip, relabelled), ماتشا لاتيه, كولد برو, كركديه مثلج.
 Each drink switch is now a transition: the next drink opens out of the last one from the centre like an ice cube
