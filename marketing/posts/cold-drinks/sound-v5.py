@@ -10,7 +10,7 @@ import numpy as np, soundfile as sf, mido, pyloudnorm
 from scipy.signal import butter, sosfilt, fftconvolve
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TM = json.loads(subprocess.run(['node', '-e', "const m=require(process.argv[1]);console.log(JSON.stringify(m))", os.path.join(HERE, 'timing.js')], check=True, capture_output=True, text=True).stdout)
+TM = json.loads(subprocess.run(['node', '-e', "const m=require(process.argv[1]);console.log(JSON.stringify(m))", os.path.join(HERE, 'timing-v5.js')], check=True, capture_output=True, text=True).stdout)
 SHOT, N_SHOTS, T, APP, BEAT = TM['SHOT'], len(TM['SHOTS']), TM['T'], TM['APP'], TM['BEAT']
 SR = 48000; DUR = T['end']; N = int(DUR * SR)
 SF2 = '/usr/share/sounds/sf2/FluidR3_GM.sf2'
@@ -64,8 +64,8 @@ pad += chord(tb + 0.02, 2 * B + 0.1, ['A3', 'D4', 'E4', 'G4'], 48)
 for k in range(4): bass.append((tb + k * B / 2, 0.22, 'A1', 78 - 5 * k)); pz.append((tb + k * B / 2, 0.15, ['A4', 'D5', 'E5', 'G5'][k], 56 - 4 * k))
 tp = T['product']                                                                                    # the phone: thinner, slow
 pad += chord(tp, T['card'] - tp + 0.2, ['D4', 'F#4', 'A4', 'E5'], 42) + chord(T['card'] + 0.02, T['end'] - T['card'], ['D4', 'F#4', 'A4'], 40)   # resolves to the plain triad as the phone sinks
-cel += [(tp + B, 1.3, 'A5', 44), (tp + 3 * B, 1.3, 'F#5', 40), (T['message'] + 0.02, 1.6, 'A5', 64), (T['message'] + B, 1.0, 'F#5', 42), (T['card'] + 0.05, 1.8, 'D5', 44)]
-bass += [(tp, 1.4, 'D2', 60), (tp + 4 * B, 1.4, 'D2', 54), (T['card'] + 0.02, 1.4, 'D1', 56)]
+cel += [(tp + B, 1.3, 'A5', 44), (tp + 3 * B, 1.3, 'F#5', 40), (T['message'] + 0.02, 1.6, 'A5', 64), (T['message'] + 2 * B, 1.4, 'F#5', 42), (T['card'] + 0.05, 1.8, 'D5', 44)]
+bass += [(tp, 1.4, 'D2', 60), (tp + 4 * B, 1.4, 'D2', 54), (tp + 8 * B, 1.2, 'A1', 50), (T['card'] + 0.02, 1.4, 'D1', 56)]
 for k in range(int((T['card'] - tp) / B)): pz.append((tp + k * B, 0.18, ['D4', 'A4', 'F#4'][k % 3], 34))   # the pulse eases to quarter notes
 pad_cc = [(T['card'] + 0.3 + i * 0.045, mido.Message('control_change', control=11, value=int(127 * (1 - i / 19) ** 1.4))) for i in range(20)]
 vib = [(T['result'] + 0.02, 0.8, 'A5', 48), (T['message'] + 0.02, 1.2, 'F#5', 56)]
@@ -134,7 +134,7 @@ place(click(1800), T['tap'], -15)                                               
 for k, tk in enumerate(T['keys']):                                                           # every keystroke, on the frame it appears
     place(hp(noise(0.03), 3000) * env(0.03, 0.0004, 0.004), FR(tk), -21 - rng.uniform(0, 3), rng.uniform(-.1, .1))
 place(click(1300), T['submit'], -14); place(bubble(700, 0.06, 1.6), T['submit'] + 0.01, -21)  # send
-for k, tg in enumerate([T['result'] + 1.0, T['card'] + 0.35]):           # ice settling, faintly, between the actions
+for k, tg in enumerate([T['result'] + 1.2, T['message'] + 0.9, T['card'] - 0.7]):           # ice settling, faintly, between the actions
     place(glass(rng.uniform(2200, 3400), 0.45), tg, -25 - rng.uniform(0, 2), rng.uniform(-.4, .4))
 place(fx_result, 0, -14)
 
@@ -146,14 +146,14 @@ ramp = lambda pts: np.interp(TT, [p[0] for p in pts], [p[1] for p in pts])
 music = music / np.abs(music).max()
 music = reverb(music, ir(1.6, 4500), 0.22)
 g = ramp([(0, -30), (0.15, -12), (T['question'], -12), (T['question'] + 0.5, -11), (T['bridge'] - 0.05, -11), (T['bridge'] + 0.05, -11),
-          (T['product'] - 0.05, -11), (T['product'] + 0.3, -14), (T['card'], -14), (T['card'] + 0.3, -13), (T['end'] - 0.05, -24), (DUR, -24)])
+          (T['product'] - 0.05, -11), (T['product'] + 0.3, -14), (T['card'], -14), (T['card'] + 0.4, -13), (T['end'] - 0.3, -22), (T['end'] - 0.05, -40), (DUR, -40)])
 duck = np.zeros(N)
 for t0 in cuts + flashes + [T['result']]:
     a = np.clip((TT - t0) / 0.004, 0, 1) * np.where(TT < t0 + 0.1, 1, np.exp(-(TT - t0 - 0.1) / 0.25)); duck = np.maximum(duck, 2.5 * a)
 music = music / np.abs(music).max() * REF * db(g - duck)[:, None]
 sfx = reverb(SFX, ir(0.8, 6000), 0.16)
 SILENT = DUR - 0.05
-mix = (music + sfx) * (0.5 + 0.5 * np.cos(np.pi * np.clip((TT - (T['end'] - 0.6)) / 0.58, 0, 1)))[:, None]   # an even 0.6s audio fade to silence on the last frame
+mix = (music + sfx) * (1 - np.clip((TT - (T['end'] - 0.45)) / 0.4, 0, 1) ** 2)[:, None]
 meter = pyloudnorm.Meter(SR); lufs = meter.integrated_loudness(mix)
 mix = mix * db(-17.0 - lufs)
 thr = db(-1.2); a = np.abs(mix).max(axis=1); need = np.minimum(1, thr / np.maximum(a, 1e-9))
