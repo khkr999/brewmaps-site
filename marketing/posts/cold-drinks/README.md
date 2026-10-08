@@ -1,4 +1,8 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v8)
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v9)
+
+v9: the glassy ice clinks (and the ice crack) replaced by a soft ice-into-water sound: a low plop, a short soft
+splash and a few droplets, kept quiet under the music. Everything else as v8, which is kept as
+`export/cold-drinks-v8.mp4`.
 
 v8: v7 with the effects (ice, typing, taps, whooshes) about 4 dB lower overall, the montage hits and the ice crack
 3–6 dB lower again, every effect's onset rounded off and its top end softened, so they sit under the music. Picture

@@ -31,15 +31,6 @@ def norm(x): p = np.abs(x).max(); return x / p if p > 0 else x
 def noise(d): return rng.standard_normal(int(d * SR))
 def modal(freqs, decays, amps, d, jit=0.02):
     t = tt(d); return sum(a * np.sin(2 * np.pi * f * (1 + jit * rng.uniform(-1, 1)) * t + rng.uniform(0, 6)) * np.exp(-t / dc) for f, dc, a in zip(freqs, decays, amps))
-def splash(size=1.0, d=0.5):                               # v9: an ice cube dropped into water: a low plop, a soft short splash, a few droplets
-    out = np.zeros(int(d * SR)); put_ = lambda x, o, a: out.__setitem__(slice(int(o * SR), int(o * SR) + len(x)), out[int(o * SR):int(o * SR) + len(x)] + a * x[:max(0, len(out) - int(o * SR))])
-    put_(bubble(rng.uniform(430, 560) / size ** 0.5, 0.08 * size, 1.1), 0.0, 1.0)                      # the plop
-    sp = bp(noise(0.12), 700, 3200) * env(0.12, 0.003, 0.035 * size) * (0.4 + 0.6 * lp(np.abs(noise(0.12)), 60) / 0.5)
-    put_(sp, 0.004, 0.35)                                                                              # the splash, short and soft
-    put_(lp(noise(0.06), 350) * env(0.06, 0.002, 0.015), 0.0, 0.45)                                    # the low thunk of the cube
-    for k in range(int(4 + 3 * size)):                                                                # droplets falling back
-        put_(bubble(rng.uniform(1000, 2400), rng.uniform(0.015, 0.03), 2.0), rng.uniform(0.04, 0.3), 0.3 * rng.uniform(0.5, 1) / (1 + k * 0.25))
-    return lp(out, 5000)
 def glass(f, d=0.5): return modal([f, f * 1.47, f * 2.13, f * 2.9], [0.14, 0.09, 0.06, 0.04], [1, .6, .35, .2], d)
 def bubble(f0, d=0.03, rise=2.5):
     t = tt(d); f = f0 * (1 + rise * t / d); return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / (d / 3)) * np.minimum(1, t / 0.0015)
@@ -127,24 +118,27 @@ sf.write(os.path.join(WORK, 'music-stem.wav'), (music / np.abs(music).max() * 0.
 # the opening: an ice clink on every cut, faint fizz and ice-settle underneath
 for i, t in enumerate(cuts):
     f = [2300, 2700, 1900, 2500, 2100][i]
-    place(splash(1.0), t + 0.01, -18, rng.uniform(-.2, .2))
+    place(glass(f, 0.5), t + 0.02, -11, rng.uniform(-.2, .2)); place(glass(f * 1.19, 0.35), t + 0.07, -14, rng.uniform(-.2, .2))
 for i, t in enumerate(cuts):
     d = SHOT
     fz = hp(noise(d), 5000) * (0.5 + 0.5 * rng.uniform(0, 1, int(d * SR)) ** 6)
     for _ in range(int(14 * d)): b = bubble(rng.uniform(1800, 4200), 0.02, 2.2); o = int(rng.uniform(0, d - 0.05) * SR); fz[o:o + len(b)] += 2.5 * b
     place(fz * np.minimum(1, tt(d) / 0.3), t, -31, rng.uniform(-.3, .3))
-    if rng.uniform() < 0.5: place(splash(0.45), t + rng.uniform(0.6, d - 0.2), -30, rng.uniform(-.4, .4))
+    if rng.uniform() < 0.8: place(glass(rng.uniform(2600, 3400), 0.4), t + rng.uniform(0.6, d - 0.2), -24, rng.uniform(-.4, .4))
 # the ending: whoosh into the bridge, four ice ticks and a soft thump each, into the product, typing, the result tone
 kick = lambda: np.sin(2 * np.pi * np.cumsum(np.linspace(150, 48, int(0.25 * SR))) / SR) * env(0.25, 0.002, 0.07)
 # the question: an ice cube dropped into a glass (plunk, two knocks, a settle), then a soft whoosh
 def icedrop(t0):
-    place(splash(1.4, 0.6), t0, -15, 0.0)
+    place(bubble(260, 0.1, 1.3), t0, -11, 0.0); place(glass(2400, 0.4), t0 + 0.012, -10, -0.1)
+    place(glass(1900, 0.5), t0 + 0.09, -13, 0.15); place(glass(2900, 0.3), t0 + 0.16, -16, -0.2)
     st = lp(noise(0.5), 3000) * env(0.5, 0.02, 0.12)
     for _ in range(6): b = bubble(rng.uniform(900, 2000), 0.03, 2.0); o = int(rng.uniform(0.05, 0.4) * SR); st[o:o + len(b)] += 2.0 * b
-    place(st, t0 + 0.05, -24, 0.1)
+    place(st, t0 + 0.05, -21, 0.1)
 icedrop(tq - 0.03); place(whoosh(0.6, 300, 1500, 0.55), T['question'] - 0.04, -22)   # a soft swell under the focus pull; the cube lands with the words
 place(whoosh(0.62, 400, 3000, 0.55), T['bridge'] - 0.34, -17)                                # rising as the first crop surfaces, peaking on the downbeat
-for k, t in enumerate(flashes): place(splash(0.7), t, -22, (-1) ** k * 0.3); place(kick(), t, -18 if k else -19)
+for k, t in enumerate(flashes): place(glass(3000 + 300 * k, 0.2), t, -18, (-1) ** k * 0.3); place(kick(), t, -18 if k else -19)
+crack = hp(noise(0.14), 2200) * env(0.14, 0.0005, 0.014) + 0.6 * modal([3600, 5900], [0.035, 0.02], [1, .5], 0.14)   # ice cracking on the second crop
+place(crack, flashes[1] + 0.04, -21, 0.2)
 place(whoosh(0.75, 280, 1500, 0.5), T['phoneIn'] - 0.02, -16)                                # the phone rising from below
 thud = lp(noise(0.12), 900) * env(0.12, 0.002, 0.03); place(thud, T['phoneIn'] + 0.6, -24)   # and settling
 click = lambda f: hp(noise(0.02), 2500) * env(0.02, 0.0003, 0.003) + 0.4 * modal([f], [0.012], [1], 0.02)
@@ -153,7 +147,7 @@ for k, tk in enumerate(T['keys']):                                              
     place(hp(noise(0.03), 3000) * env(0.03, 0.0004, 0.004), FR(tk), -24 - rng.uniform(0, 2), rng.uniform(-.1, .1))
 place(click(1300), T['submit'], -17); place(bubble(700, 0.06, 1.6), T['submit'] + 0.01, -23)  # send
 for k, tg in enumerate([T['result'] + 1.0, T['card'] + 0.35]):           # ice settling, faintly, between the actions
-    place(splash(0.5), tg, -30, rng.uniform(-.4, .4))
+    place(glass(rng.uniform(2200, 3400), 0.45), tg, -25 - rng.uniform(0, 2), rng.uniform(-.4, .4))
 
 
 
