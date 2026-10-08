@@ -10,7 +10,7 @@ import numpy as np, soundfile as sf, pyloudnorm
 from scipy.signal import butter, sosfilt, fftconvolve
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TM = json.loads(subprocess.run(['node', '-e', "const m=require(process.argv[1]);console.log(JSON.stringify(m))", os.path.join(HERE, 'timing.js')], check=True, capture_output=True, text=True).stdout)
+TM = json.loads(subprocess.run(['node', '-e', "const m=require(process.argv[1]);console.log(JSON.stringify(m))", os.path.join(HERE, 'timing-v10.js')], check=True, capture_output=True, text=True).stdout)
 SHOT, N_SHOTS, T, APP, BEAT = TM['SHOT'], len(TM['SHOTS']), TM['T'], TM['APP'], TM['BEAT']
 SR = 48000; DUR = T['end']; N = int(DUR * SR)
 WORK, OUT = sys.argv[1], sys.argv[2]; os.makedirs(WORK, exist_ok=True)
@@ -141,12 +141,8 @@ def place_rms(sig, t0, rel_db, pan=0.0):                   # long textures: set 
     if k > 0: SFX[i:i + k] += s[:k]
 # the opening: an ice-in-water knock on every cut, over a quiet bed of ice moving in water
 for i, (t, (a, d)) in enumerate(zip(cuts, [(5.30, 0.7), (21.18, 0.7), (7.34, 0.75), (20.90, 0.6), (12.61, 0.6)])):
-    place(cut(ICE, a - 0.01, d), t, -22, [-0.15, 0.15, -0.1, 0.1, 0][i])
-# v11: the ice keeps moving the whole time: one continuous take of ice moving in water, its peaks softened, clearly
-# present under the drinks, the question and the montage, then lower under the phone so the clicks read
-bed = ICE[int(2.0 * SR):int(2.0 * SR) + N].copy(); r = np.sqrt(np.mean(bed ** 2)); bed = bed / r; bed = 3.5 * np.tanh(bed / 3.5)
-benv = np.interp(np.arange(N) / SR, [0, 0.35, T['product'], T['typeStart'], DUR], [-60, -30, -30, -39, -39])
-bed = bed * db(benv) * REF; SFX[:, 0] += bed * np.cos(np.pi / 4); SFX[:, 1] += bed * np.sin(np.pi / 4)
+    place(cut(ICE, a - 0.01, d), t, -20, [-0.15, 0.15, -0.1, 0.1, 0][i])
+bed = cut(ICE, 22.2, 6.3, fin=0.6, fout=0.8); place_rms(bed, 1.4, -38, 0.0)
 kick = lambda: np.sin(2 * np.pi * np.cumsum(np.linspace(150, 48, int(0.25 * SR))) / SR) * env(0.25, 0.002, 0.07)
 # the question: coffee poured over ice as the karkadeh pulls into the green, its fullest moment on the words; the fizz stays under
 pour = cut(POUR, 0.9, 2.3, fin=0.25, fout=0.7)
@@ -158,14 +154,11 @@ for k, t in enumerate(flashes[1:]): place(cut(ICE, [5.39, 19.28, 21.50][k] - 0.0
 for k, t in enumerate(flashes): place(kick(), t, -21 if k else -22)
 place(whoosh(0.75, 280, 1500, 0.5), T['phoneIn'] - 0.02, -18)                                # the phone rising from below
 thud = lp(noise(0.12), 900) * env(0.12, 0.002, 0.03); place(thud, T['phoneIn'] + 0.6, -24)   # and settling
-# the phone: the supplied clicks (sfx/). A single soft click as the field is tapped, the four halves of the two mouse
-# clicks (press and release of each) rotating as keystrokes, and the press-and-release click on send
-SCLICK, CLICK, M1, M2 = load('simple-click.wav'), load('click.wav'), load('mouse-clicks-v1.wav'), load('mouse-clicks-v2.wav')
-place(cut(SCLICK, 0.0, 0.15, fin=0.001, fout=0.05), T['tap'], -20)                           # the tap into the field
-KEYS = [cut(M1, 0.645, 0.08, 0.001, 0.03), cut(M2, 0.415, 0.09, 0.001, 0.03), cut(M1, 0.735, 0.07, 0.001, 0.03), cut(M2, 0.575, 0.09, 0.001, 0.03)]
+click = lambda f: hp(noise(0.02), 2500) * env(0.02, 0.0003, 0.003) + 0.4 * modal([f], [0.012], [1], 0.02)
+place(click(1800), T['tap'], -18)                                                            # the tap into the field
 for k, tk in enumerate(T['keys']):                                                           # every keystroke, on the frame it appears
-    place(KEYS[(k * 3 + k // 4) % 4], FR(tk) - 0.004, -27 - rng.uniform(0, 2.5), rng.uniform(-.1, .1))
-place(cut(CLICK, 0.145, 0.18, 0.001, 0.05), T['submit'] - 0.008, -21)                         # send
+    place(hp(noise(0.03), 3000) * env(0.03, 0.0004, 0.004), FR(tk), -24 - rng.uniform(0, 2), rng.uniform(-.1, .1))
+place(click(1300), T['submit'], -17); place(bubble(700, 0.06, 1.6), T['submit'] + 0.01, -23)  # send
 for k, tg in enumerate([T['result'] + 1.0, T['card'] + 0.35]):           # ice settling, faintly, between the actions
     place(cut(ICE, [0.96, 1.28][k] - 0.01, 0.5), tg, -30, rng.uniform(-.4, .4))
 

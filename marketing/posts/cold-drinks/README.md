@@ -1,4 +1,11 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v10)
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v11)
+
+v11: the ice moves, on screen and in the sound. Every drink photo is drawn through a slow, flowing WebGL displacement
+(large smooth noise cells, so a cube shifts and bobs as one piece while the drink swirls round it; about 10–20px/s; one
+clock for the whole reel so the motion never resets at a cut). A continuous take of ice moving in water runs under the
+whole reel, lower under the phone. The supplied clicks (`sfx/`) are on the phone: a soft click on the tap into the
+field, the press and release halves of the two mouse clicks rotating as keystrokes, the press-and-release click on send.
+v10 is kept as `export/cold-drinks-v10.mp4`.
 
 v10: the drink sounds are now the two supplied recordings in `sfx/` (ice moving in water; coffee poured over ice,
 fizzy). A short ice-in-water knock on each cut over a quiet bed of ice moving in water; the pour as the karkadeh pulls
