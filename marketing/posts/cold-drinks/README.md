@@ -1,4 +1,7 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 16.3s, 9:16, with sound (v18)
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 16.3s, 9:16, with sound (v19)
+
+v19: the woosh only on the four drink changes and into the question. The montage (from about 0:08) has no woosh,
+only a light ice knock on each quick cut. v18 is kept as `export/cold-drinks-v18.mp4`.
 
 v18: the drink switch is the supplied air woosh (`sfx/air-woosh.wav`). It rises into its loudest moment on the cut frame,
 with the ice knock landing on the cut, on every drink change, into the question and as the first montage crop surfaces.

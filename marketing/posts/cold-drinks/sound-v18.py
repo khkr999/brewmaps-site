@@ -174,9 +174,9 @@ pour = cut(POUR, 0.9, 2.3, fin=0.25, fout=0.7)
 c = np.sqrt(np.mean(pour ** 2)) * db(10); pour = c * np.tanh(pour / c)               # tame the pour's splashes: no spike above the texture
 place_rms(pour[int((T['question'] - (tq - 0.68)) * SR):] * np.minimum(1, np.arange(len(pour) - int((T['question'] - (tq - 0.68)) * SR)) / (0.06 * SR)), T['question'], -31, 0.0)   # starts on the cut into the question, its fullest moment on the words
 fizz = cut(POUR, 5.0, T['bridge'] - T['question'] - 0.7, fin=0.3, fout=0.4); place_rms(fizz, T['question'] + 0.7, -43, 0.0)   # under the question only; gone before the montage
-on_frame(SWITCH, FR(T['bridge']), -18, 0.0)   # v19: no woosh in the montage, just the ice knock                                                     # the first crop surfacing, on the downbeat
+switch(FR(T['bridge']), -12, 0.0)                                                     # the first crop surfacing, on the downbeat
 DROP_S = mixed((align(cut(POUR, 1.57, 0.26, fin=0.002, fout=0.14)), 0), (align(LIGHT), -1))
-for k, t in enumerate(flashes[1:]): on_frame(LIGHT, t, -21, (-1) ** k * 0.2)   # v19: the quick montage cuts keep only a light ice knock   # the quick montage cuts: a shorter, lighter drop
+for k, t in enumerate(flashes[1:]): on_peak(WOOSH_S, t, -15, (-1) ** k * 0.25); on_frame(LIGHT, t, -23, 0.0)   # the quick montage cuts: a shorter, lighter drop
 for k, t in enumerate(flashes): on_frame(kick(), t, -23)
 place(whoosh(0.75, 280, 1500, 0.5), T['phoneIn'] - 0.02, -18)                                # the phone rising from below
 thud = lp(noise(0.12), 900) * env(0.12, 0.002, 0.03); place(thud, T['phoneIn'] + 0.6, -24)   # and settling
