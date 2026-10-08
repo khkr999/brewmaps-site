@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="../../assets/fonts/dmsans.css">
 <style>html,body{margin:0;background:#000}</style>
 <canvas id="c" width="1080" height="1920"></canvas>
-<script src="timing.js"></script>
+<script src="timing-v6.js"></script>
 <script>
 // v5: the v4 cut, polished. Five near-still macro shots on a carried push with clean cuts on the downbeat and a centred
 // name; the karkadeh pulls focus into the green and the question rises in word by word; the first crop comes back into
@@ -160,7 +160,7 @@ function nameLife(u, dur) {
   return { a: 1, dy: 0 };
 }
 const GREEN = a => `rgba(16,36,18,${a})`;
-const FLASH = T.flash;                                     // the montage: one crop every two notes of the arpeggio
+const FLASH = BEAT / 2;                                    // the montage: one crop per 8th note
 const sineInOut = u => 0.5 - 0.5 * Math.cos(Math.PI * u);  // for the focus pulls: moves from the first frame, no dead start
 // the first crop surfaces out of the green on one continuous curve that spans the question/bridge boundary
 const surface = t => sineInOut(seg(t, T.bridge - 0.26, T.bridge + 0.34));

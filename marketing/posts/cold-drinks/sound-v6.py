@@ -1,4 +1,4 @@
-"""على ذوقك · "Cold drinks" v7: the mix. A soft pluck arpeggio after the reference sound (see the music section), with
+"""على ذوقك · "Cold drinks" v5: the mix. The calm celesta-and-strings bed with a pizz pulse on the beat grid, a chord and
 an ice clink on every cut; a swell under the focus pull into the question, the lift and an ice cube as its words rise;
 a rising swell as the first crop surfaces, ice ticks on the montage cuts; the phone rising, the tap, every keystroke,
 the send, the result tone, the line; then the resolve. Every accent is placed on the frame where its picture lands
@@ -6,20 +6,72 @@ the send, the result tone, the line; then the resolve. Every accent is placed on
 Usage: python3 sound.py <workdir> <out.wav>
 """
 import json, os, subprocess, sys
-import numpy as np, soundfile as sf, pyloudnorm
+import numpy as np, soundfile as sf, mido, pyloudnorm
 from scipy.signal import butter, sosfilt, fftconvolve
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TM = json.loads(subprocess.run(['node', '-e', "const m=require(process.argv[1]);console.log(JSON.stringify(m))", os.path.join(HERE, 'timing.js')], check=True, capture_output=True, text=True).stdout)
+TM = json.loads(subprocess.run(['node', '-e', "const m=require(process.argv[1]);console.log(JSON.stringify(m))", os.path.join(HERE, 'timing-v6.js')], check=True, capture_output=True, text=True).stdout)
 SHOT, N_SHOTS, T, APP, BEAT = TM['SHOT'], len(TM['SHOTS']), TM['T'], TM['APP'], TM['BEAT']
 SR = 48000; DUR = T['end']; N = int(DUR * SR)
+SF2 = '/usr/share/sounds/sf2/FluidR3_GM.sf2'
 WORK, OUT = sys.argv[1], sys.argv[2]; os.makedirs(WORK, exist_ok=True)
 rng = np.random.default_rng(11)
 db = lambda d: 10 ** (d / 20); REF = db(-1)
 FR = lambda t: np.ceil(t * 24 - 1e-6) / 24                 # the first frame on which a cut is visible
 cuts = [FR(i * SHOT) for i in range(N_SHOTS)]
-flashes = [T['bridge']] + [FR(T['bridge'] + i * T['flash']) for i in range(1, 4)]   # the first crop surfaces on the downbeat; the rest are cuts
-tq = T['question'] + 2 * TM['NOTE']                        # the question's first words are up: the lift lands here, on a note
+flashes = [T['bridge']] + [FR(T['bridge'] + i * BEAT / 2) for i in range(1, 4)]   # the first crop surfaces on the downbeat; the rest are cuts
+tq = T['words'] + 0.22                                     # the question's first words are up: the lift lands here
+
+# ---------------------------------------------------------------- music -------------------------
+# New track: a warm, understated groove on the cut grid (BEAT = half a shot, so every cut is a downbeat). Electric piano
+# comping, a soft upright-ish bass on the roots, a brushed shaker on 8ths with a rim click on 2 and 4, and a sparse vibes
+# motif answering each cut. One chord per drink; the question lifts; the bridge pumps; the product thins to EP and bass;
+# the resolve settles on a plain D triad as the frame goes to black.
+NAMES = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11}
+def m(n): return 12 * (int(n[-1]) + 1) + NAMES[n[0]] + (1 if '#' in n else -1 if n[1] == 'b' else 0)
+def render(name, parts, gain=0.5):
+    mf = mido.MidiFile(ticks_per_beat=800); tr = mido.MidiTrack(); mf.tracks.append(tr)
+    tr.append(mido.MetaMessage('set_tempo', tempo=800000))
+    ev = []
+    for ch, prog, notes, extra in parts:
+        ev += [(0, 0, mido.Message('program_change', channel=ch, program=prog)), (0, 0, mido.Message('control_change', channel=ch, control=7, value=110))]
+        for t, d, n, v in notes: ev += [(t, 2, mido.Message('note_on', channel=ch, note=m(n), velocity=v)), (t + d, 1, mido.Message('note_off', channel=ch, note=m(n), velocity=0))]
+        for t, msg in extra: ev.append((t, 0, msg.copy(channel=ch)))
+    ev.sort(key=lambda e: (e[0], e[1])); now = 0
+    for t, _, msg in ev: tick = int(round(t * 1000)); tr.append(msg.copy(time=max(0, tick - now))); now = max(now, tick)
+    tr.append(mido.MetaMessage('end_of_track', time=2000)); mid, wav = f'{WORK}/{name}.mid', f'{WORK}/{name}.wav'; mf.save(mid)
+    subprocess.run(['fluidsynth', '-ni', '-q', '-o', 'synth.reverb.active=0', '-o', 'synth.chorus.active=0', '-g', str(gain), '-r', str(SR), '-F', wav, SF2, mid], check=True, capture_output=True)
+    x, _ = sf.read(wav); out = np.zeros((N, 2)); k = min(N, len(x)); out[:k] = x[:k]; return out
+chord = lambda t, d, notes, v: [(t, d, n, v) for n in notes]
+STR, CELESTA, VIBES, PIZZ, PAD, ABASS = 48, 8, 11, 45, 89, 32
+B = BEAT
+# The calm bed from before (celesta + soft strings), kept, with the sync made audible: a soft pizz pulse on the beat
+# grid (BEAT = half a shot, so every cut is a downbeat) and a low bass note on each cut. One open chord per drink,
+# a lift on the question, pumping through the bridge, thinner under the phone, fading out at the end.
+CH = [['D4', 'F#4', 'A4', 'E5'], ['B3', 'D4', 'F#4', 'E5'], ['G3', 'D4', 'F#4', 'A4'], ['A3', 'C#4', 'E4', 'G4'], ['D4', 'F#4', 'A4', 'C#5']]
+ROOT = ['D2', 'B1', 'G1', 'A1', 'D2']
+pad, cel, pz, bass = [], [], [], []
+for i, t in enumerate(cuts):
+    pad += chord(t + 0.02, SHOT + 0.3, CH[i], 44)
+    cel += [(t + 0.05, 1.4, CH[i][-1], 56), (t + B, 1.0, CH[i][1], 42)]
+    bass += [(t, 1.1, ROOT[i], 70)]
+    for k in range(4): pz.append((t + k * B / 2, 0.18, CH[i][k % 3], 46 if k % 2 == 0 else 32))     # the pulse: pizz on 8ths, accents on the beat
+pad += chord(tq + 0.02, 2 * B + 0.3, ['E4', 'G4', 'B4', 'D5'], 54); cel += [(tq + 0.02, 1.6, 'B5', 66), (tq + B, 1.0, 'G5', 48)]
+bass += [(tq, 1.1, 'E1', 72)]
+for k in range(3): pz.append((tq + k * B / 2, 0.18, ['E4', 'G4', 'B4'][k % 3], 44 if k % 2 == 0 else 30))
+tb = T['bridge']                                                                                     # the bridge: pumping on 8ths
+pad += chord(tb + 0.02, 2 * B + 0.1, ['A3', 'D4', 'E4', 'G4'], 48)
+for k in range(4): bass.append((tb + k * B / 2, 0.22, 'A1', 78 - 5 * k)); pz.append((tb + k * B / 2, 0.15, ['A4', 'D5', 'E5', 'G5'][k], 56 - 4 * k))
+tp = T['product']                                                                                    # the phone: thinner, slow
+pad += chord(tp, T['card'] - tp + 0.2, ['D4', 'F#4', 'A4', 'E5'], 42) + chord(T['card'] + 0.02, T['end'] - T['card'], ['D4', 'F#4', 'A4'], 40)   # resolves to the plain triad as the phone sinks
+cel += [(tp + B, 1.3, 'A5', 44), (tp + 3 * B, 1.3, 'F#5', 40), (T['message'] + 0.02, 1.6, 'A5', 64), (T['message'] + B, 1.0, 'F#5', 42), (T['card'] + 0.05, 1.8, 'D5', 44)]
+bass += [(tp, 1.4, 'D2', 60), (tp + 4 * B, 1.4, 'D2', 54), (T['card'] + 0.02, 1.4, 'D1', 56)]
+for k in range(int((T['card'] - tp) / B)): pz.append((tp + k * B, 0.18, ['D4', 'A4', 'F#4'][k % 3], 34))   # the pulse eases to quarter notes
+pad_cc = [(T['card'] + 0.3 + i * 0.045, mido.Message('control_change', control=11, value=int(127 * (1 - i / 19) ** 1.4))) for i in range(20)]
+vib = [(T['result'] + 0.02, 0.8, 'A5', 48), (T['message'] + 0.02, 1.2, 'F#5', 56)]
+music = (render('m_pad', [(0, STR, pad, pad_cc)]) * 0.9 + render('m_cel', [(1, CELESTA, cel, [])]) * 0.55
+         + render('m_pz', [(2, PIZZ, pz, [])]) * 0.72 + render('m_bass', [(3, ABASS, bass, [])]) * 0.7 + render('m_vib', [(4, VIBES, vib, [])]) * 0.5)
+fx_result = render('fx_result', [(0, CELESTA, [(T['result'], .6, 'D6', 70), (T['result'] + 0.1, .9, 'A6', 76)], [])])
 
 # ---------------------------------------------------------------- DSP ---------------------------
 def lp(x, f): return sosfilt(butter(2, f, 'lowpass', fs=SR, output='sos'), x)
@@ -51,73 +103,10 @@ def place(sig, t0, rel_db, pan=0.0):
     i = int(round(t0 * SR)); k = min(len(s), N - i)
     if k > 0: SFX[i:i + k] += s[:k]
 
-# ---------------------------------------------------------------- music -------------------------
-# After the reference sound: a soft sine pluck (fundamental plus its octave, 30ms attack, short decay) playing a
-# hypnotic three-note figure in F# (C#–E#–F#, with D# and G# turns), one note every NOTE = SHOT/7 seconds, so
-# every cut and every montage flash lands on a note. A soft sine bass marks each phrase (each cut), a warm pad lifts
-# the question, the result and the line get a high sparkle, and the
-# figure lands on an F# major chord under the final hold.
-NAMES = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11}
-def midi(n): return 12 * (int(n[-1]) + 1) + NAMES[n[0]] + (1 if '#' in n else -1 if n[1] == 'b' else 0)
-def hz(n): return 440 * 2 ** ((midi(n) - 69) / 12)
-NOTE = TM['NOTE']; OFF = 0.02                          # the grid sits 20ms late so a note never leads its frame
-MUS = np.zeros((N, 2))
-def put(sig, t0, gain=1.0, pan=0.0):
-    i = int(round(t0 * SR)); k = min(len(sig), N - i)
-    if k <= 0: return
-    if sig.ndim == 1: th = (pan + 1) * np.pi / 4; sig = np.stack([sig * np.cos(th), sig * np.sin(th)], -1)
-    MUS[i:i + k] += gain * sig[:k]
-def pluck(n, partner, vel=1.0, dur=1.0):
-    t = tt(dur); f, p = hz(n), hz(partner)
-    e = np.minimum(1, t / 0.028) ** 1.6 * (0.7 * np.exp(-t / 0.10) + 0.3 * np.exp(-t / 0.5))
-    out = []
-    for det in (-0.0016, 0.0016):                        # two voices a few cents apart: width without chorus wobble
-        x = (np.sin(2 * np.pi * f * (1 + det) * t) + 0.85 * np.sin(2 * np.pi * p * (1 - det) * t + 0.4)
-             + np.exp(-t / 0.07) * (0.12 * np.sin(2 * np.pi * 3 * f * t) + 0.04 * np.sin(2 * np.pi * 4 * f * t + 1) + 0.02 * np.sin(2 * np.pi * 5 * f * t + 2)))   # a little tine on the attack, like the reference
-        out.append(x * e * vel)
-    return np.stack(out, -1)
-def bass(n, vel=1.0, dur=1.4):
-    t = tt(dur); f = hz(n); return (np.sin(2 * np.pi * f * t) + 0.22 * np.sin(4 * np.pi * f * t)) * np.minimum(1, t / 0.012) * np.exp(-t / 0.55) * vel
-def pad(notes, dur, att=0.35, rel=0.5, vel=1.0):
-    t = tt(dur); e = np.minimum(1, t / att) * np.clip((dur - t) / rel, 0, 1)
-    x = sum(np.sin(2 * np.pi * hz(n) * (1 + d) * t + k) for k, n in enumerate(notes) for d in (-0.002, 0.002)) / (2 * len(notes))
-    return lp(x * e * vel, 2500)
-def thump(): t = tt(0.3); return np.sin(2 * np.pi * np.cumsum(np.linspace(110, 45, len(t))) / SR) * np.minimum(1, t / 0.004) * np.exp(-t / 0.09)
-A = [('C#5', 'C#6'), ('F5', 'F4'), ('F#5', 'F#4')]
-B = [('D#6', 'D#5'), ('F#5', 'F#4'), ('C#5', 'C#6')]
-C = [('F5', 'F4'), ('F#5', 'F#4'), ('G#4', 'G#5')]
-PH = [  # (phrase notes, bass root) — one phrase per shot: two figures and a turn into the next cut
-    (A + A + [('G#4', 'G#5')], 'F#2'), (A + A + [('D#5', 'D#6')], 'B1'), (B + B + [('F5', 'F4')], 'D#2'),
-    (B + B + [('G#4', 'G#5')], 'G#1'), (A + C + [('C#6', 'C#5')], 'C#2'),
-    (B + B + [('F5', 'F4'), ('F#5', 'F#4')], 'B1'),                 # the question: 8 notes, rising into the bridge
-    (A + A + [('F5', 'F4'), ('G#4', 'G#5')], 'C#2'),                # the montage: 8 notes
-    (A + A + [('G#4', 'G#5')], 'F#2'), (A + A + [('D#5', 'D#6')], 'B1'), (B + B + [('G#4', 'G#5')], 'D#2'),   # the demo: 21 notes, then the chord
-]
-k0 = 0; seq = []
-for notes, root in PH:
-    for j, nn in enumerate(notes): seq.append((k0 + j, nn, j == 0))
-    put(bass(root), OFF + k0 * NOTE, 0.05); k0 += len(notes)
-kq, kb, kp = 35, 43, 51
-for k, (n, p), first in seq:
-    t = OFF + k * NOTE; v = 1.0 if first else 0.82
-    if k < kq: v *= 0.95
-    if kp + 4 <= k < kp + 12: v *= 0.72                # quieter under the typing, so the keys read
-    put(pluck(n, p, v), t, 0.5, 0.12 * ((k % 3) - 1))
-kc = kp + 21                                         # the last chord: F# major, rolled, ringing under the hold
-for j, (n, p) in enumerate([('F#4', 'F#5'), ('A#4', 'A#5'), ('C#5', 'C#6'), ('F#5', 'F#4')]):
-    put(pluck(n, p, 0.8, 1.6), OFF + kc * NOTE + 0.035 * j, 0.5, -0.15 + 0.1 * j)
-put(bass('F#2', 1.0, 1.4), OFF + kc * NOTE, 0.1)
-put(pad(['B3', 'D#4', 'F#4', 'A#4'], 8 * NOTE + 0.4), OFF + kq * NOTE, 0.22)          # the question's lift
-put(pad(['C#4', 'F4', 'G#4', 'B4'], 8 * NOTE + 0.3, att=0.2), OFF + kb * NOTE, 0.14)  # under the montage
-put(pluck('C#6', 'C#7', 0.7, 1.2), T['result'] + 0.01, 0.45, 0.2); put(pluck('F#6', 'F#5', 0.7, 1.2), T['result'] + 0.09, 0.45, -0.2)   # the results
-put(pluck('A#5', 'A#6', 0.6, 1.2), T['message'] + 0.01, 0.4, 0.15)                                                                       # the line
-music = lp(MUS[:, 0], 9000)[:, None] * [1, 0] + lp(MUS[:, 1], 9000)[:, None] * [0, 1]
-sf.write(os.path.join(WORK, 'music-stem.wav'), (music / np.abs(music).max() * 0.8).astype(np.float32), SR)
-
 # the opening: an ice clink on every cut, faint fizz and ice-settle underneath
 for i, t in enumerate(cuts):
     f = [2300, 2700, 1900, 2500, 2100][i]
-    place(glass(f, 0.5), t + 0.02, -11, rng.uniform(-.2, .2)); place(glass(f * 1.19, 0.35), t + 0.07, -14, rng.uniform(-.2, .2))
+    place(glass(f, 0.5), t + 0.02, -9, rng.uniform(-.2, .2)); place(glass(f * 1.19, 0.35), t + 0.07, -14, rng.uniform(-.2, .2))
 for i, t in enumerate(cuts):
     d = SHOT
     fz = hp(noise(d), 5000) * (0.5 + 0.5 * rng.uniform(0, 1, int(d * SR)) ** 6)
@@ -147,6 +136,7 @@ for k, tk in enumerate(T['keys']):                                              
 place(click(1300), T['submit'], -14); place(bubble(700, 0.06, 1.6), T['submit'] + 0.01, -21)  # send
 for k, tg in enumerate([T['result'] + 1.0, T['card'] + 0.35]):           # ice settling, faintly, between the actions
     place(glass(rng.uniform(2200, 3400), 0.45), tg, -25 - rng.uniform(0, 2), rng.uniform(-.4, .4))
+place(fx_result, 0, -14)
 
 
 
@@ -155,7 +145,8 @@ TT = np.arange(N) / SR
 ramp = lambda pts: np.interp(TT, [p[0] for p in pts], [p[1] for p in pts])
 music = music / np.abs(music).max()
 music = reverb(music, ir(1.6, 4500), 0.22)
-g = ramp([(0, -30), (0.08, -11), (T['question'], -11), (tq, -10), (T['product'], -11), (T['typeStart'], -12), (T['submit'], -11.5), (DUR, -11.5)])
+g = ramp([(0, -30), (0.15, -12), (T['question'], -12), (T['question'] + 0.5, -11), (T['bridge'] - 0.05, -11), (T['bridge'] + 0.05, -11),
+          (T['product'] - 0.05, -11), (T['product'] + 0.3, -14), (T['card'], -14), (T['card'] + 0.3, -13), (T['end'] - 0.05, -24), (DUR, -24)])
 duck = np.zeros(N)
 for t0 in cuts + flashes + [T['result']]:
     a = np.clip((TT - t0) / 0.004, 0, 1) * np.where(TT < t0 + 0.1, 1, np.exp(-(TT - t0 - 0.1) / 0.25)); duck = np.maximum(duck, 2.5 * a)

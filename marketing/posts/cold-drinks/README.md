@@ -1,4 +1,12 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v7)
+
+v7: new music after the reference sound the client sent: a soft sine pluck (fundamental plus octave, a 30ms
+attack, a short decay) playing the same hypnotic three-note figure in F# (C#–E#–F#, turning through D# and G#), at
+the reference's pace (one note every 0.22s). The picture is retimed onto that note grid, so every cut lands on a note:
+each drink shot is 7 notes (two figures and a turn into the cut), the question holds 8 notes, and the montage cuts
+every 2 notes. The bass is kept very low as in the reference; a light pad lifts the question; the piece lands on an
+F# major chord under the final hold. Ice and typing effects are unchanged. Still 17.0s, ending on a steady frame. v6
+(previous music) is kept as `export/cold-drinks-v6.mp4`.
 
 v6: v5 with two changes. The question holds 0.2s longer (the montage and the demo follow 0.2s later). The reel ends at
 17.0s on the held final frame (results and line) with the audio fading to silence. There is no fade to black, so the
@@ -29,7 +37,7 @@ pace; the app demonstration is about 1.1s longer so the search and the line can 
   quantised to the frame where the picture changes. −17 LUFS.
 - Encode: `ffmpeg -framerate 24 -i <dir>/f_%04d.png -c:v libx264 -pix_fmt yuv420p -crf 17 -movflags +faststart`, then mux `export/cold-drinks-mix.wav`.
 - Earlier cuts, sources kept beside them: v1 (`*-v1.*`, 13.6s), v2 (`*-v2.*`, 9.2s, hook first), v3 (`*-v3.*`, 17.4s,
-  pre-motion-pass), v4 (`*-v4.*`, 17.9s, first motion pass), v5 (`*-v5.*`, 19.0s, faded to black) → `export/cold-drinks-v1.mp4` … `-v5.mp4`.
+  pre-motion-pass), v4 (`*-v4.*`, 17.9s, first motion pass), v5 (`*-v5.*`, 19.0s, faded to black), v6 (`*-v6.*`, 17.0s, orchestral bed) → `export/cold-drinks-v1.mp4` … `-v6.mp4`.
 
 ## Caption
 أي واحد على ذوقك؟ 🧊
