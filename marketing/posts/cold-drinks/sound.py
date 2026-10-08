@@ -17,9 +17,13 @@ WORK, OUT = sys.argv[1], sys.argv[2]; os.makedirs(WORK, exist_ok=True)
 rng = np.random.default_rng(11)
 db = lambda d: 10 ** (d / 20); REF = db(-1)
 cuts = [i * SHOT for i in range(N_SHOTS)]
-flashes = [T['bridge'] + i * BEAT / 4 for i in range(4)]
+flashes = [T['bridge'] + i * BEAT / 2 for i in range(4)]
 
 # ---------------------------------------------------------------- music -------------------------
+# New track: a warm, understated groove on the cut grid (BEAT = half a shot, so every cut is a downbeat). Electric piano
+# comping, a soft upright-ish bass on the roots, a brushed shaker on 8ths with a rim click on 2 and 4, and a sparse vibes
+# motif answering each cut. One chord per drink; the question lifts; the bridge pumps; the product thins to EP and bass;
+# the card resolves to D with the BrewMaps sonic logo.
 NAMES = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11}
 def m(n): return 12 * (int(n[-1]) + 1) + NAMES[n[0]] + (1 if '#' in n else -1 if n[1] == 'b' else 0)
 def render(name, parts, gain=0.5):
@@ -36,30 +40,33 @@ def render(name, parts, gain=0.5):
     subprocess.run(['fluidsynth', '-ni', '-q', '-o', 'synth.reverb.active=0', '-o', 'synth.chorus.active=0', '-g', str(gain), '-r', str(SR), '-F', wav, SF2, mid], check=True, capture_output=True)
     x, _ = sf.read(wav); out = np.zeros((N, 2)); k = min(N, len(x)); out[:k] = x[:k]; return out
 chord = lambda t, d, notes, v: [(t, d, n, v) for n in notes]
-STR, CELESTA, VIBES, PIZZ, EP2, PAD, SYNBASS = 48, 8, 11, 45, 5, 89, 39
-# the opening (v1): one slow open chord per drink; the question lifts
-CH = [['D4', 'F#4', 'A4', 'E5'], ['B3', 'D4', 'F#4', 'E5'], ['G3', 'D4', 'F#4', 'A4'], ['A3', 'C#4', 'E4', 'G4'], ['D4', 'F#4', 'A4', 'C#5']]
-pad, cel = [], []
-for i, t in enumerate(cuts):
-    pad += chord(t + 0.02, SHOT + 0.4, CH[i], 44)
-    cel += [(t + 0.05, 1.4, CH[i][-1], 54), (t + 0.8, 1.0, CH[i][1], 40)]
-pad += chord(T['question'] + 0.3, T['bridge'] - T['question'] - 0.2, ['E4', 'G4', 'B4', 'D5'], 46)
-cel += [(T['question'] + 0.35, 1.2, 'B5', 56)]
-pad_cc = [(T['bridge'] - 0.25 + i * 0.012, mido.Message('control_change', control=11, value=int(127 * (1 - i / 19) ** 1.2))) for i in range(20)]
-# the ending (v2): the sus chord pumping through the bridge, thinner warm keys under the product, the card resolves
-keys, pad2, bass = [], [], []
-t0 = T['bridge']
-keys += chord(t0 + 0.01, 0.78, ['A3', 'D4', 'E4', 'G4'], 64); pad2 += chord(t0, BEAT + 0.1, ['A3', 'D4', 'E4'], 40)
-bass += [(t0 + k * BEAT / 4, 0.16, 'A1', 76 - 6 * k) for k in range(4)]
-tp = T['product']
-pad2 += chord(tp, T['card'] - tp + 0.1, ['D4', 'F#4', 'A4', 'E5'], 44)
-keys += [(tp + 0.01, 1.2, 'A4', 44), (tp + BEAT, 1.2, 'F#4', 40), (tp + 2 * BEAT, 1.4, 'E4', 40), (tp + 3 * BEAT, 1.2, 'D4', 38), (tp + 4 * BEAT, 1.4, 'F#4', 40), (tp + 5 * BEAT, 1.2, 'A4', 36)]
-bass += [(tp, 1.4, 'D2', 66), (tp + 2 * BEAT, 1.2, 'D2', 56), (tp + 4 * BEAT, 1.2, 'D2', 52)]
-pad2_cc = [(T['end'] - 0.9 + i * 0.045, mido.Message('control_change', control=11, value=int(127 * (1 - i / 19) ** 1.4))) for i in range(20)]
-pad2 += chord(T['card'], T['end'] - T['card'], ['D4', 'F#4', 'A4'], 48)
+EP1, ABASS, VIBES, CELESTA, PIZZ, PAD = 4, 32, 11, 8, 45, 89
+B = BEAT
+CH = [['G3', 'B3', 'D4', 'F#4'], ['F#3', 'A3', 'C#4', 'E4'], ['E3', 'G3', 'B3', 'D4'], ['A3', 'C#4', 'E4', 'G4'], ['D3', 'F#3', 'A3', 'C#4']]
+ROOT = ['G1', 'F#1', 'E1', 'A1', 'D2']
+MOT = [['D5', 'F#5'], ['C#5', 'E5'], ['B4', 'D5'], ['E5', 'G5'], ['F#5', 'A5']]
+ep, bass, vib = [], [], []
+for i, t in enumerate(cuts):                                                                     # two beats per drink
+    ep += chord(t + 0.01, 0.55, CH[i], 66) + chord(t + 1.5 * B, 0.3, CH[i][1:], 44)             # on the one, a ghost on the "and" of two
+    bass += [(t, 0.7, ROOT[i], 84), (t + B, 0.35, ROOT[i], 56), (t + 1.5 * B, 0.3, CH[i][2].replace('4', '2').replace('3', '2'), 50)]
+    vib += [(t + 0.5 * B, 0.5, MOT[i][0], 58), (t + B, 0.9, MOT[i][1], 50)]
+tq = T['question']                                                                               # the question: a lift, Em9 → A7sus
+ep += chord(tq + 0.01, 0.8, ['E3', 'G3', 'B3', 'F#4'], 70) + chord(tq + B, 0.8, ['A3', 'D4', 'E4', 'G4'], 62)
+bass += [(tq, 0.7, 'E1', 86), (tq + B, 0.7, 'A1', 80)]
+vib += [(tq + 0.5 * B, 0.6, 'B5', 62), (tq + 1.25 * B, 0.9, 'G5', 54)]
+tb = T['bridge']                                                                                 # the bridge: pumping on 8ths
+for k in range(4): bass.append((tb + k * B / 2, 0.22, 'A1', 80 - 5 * k)); ep += chord(tb + k * B / 2 + 0.005, 0.2, ['A3', 'D4', 'E4', 'G4'], 60 - 4 * k)
+tp = T['product']                                                                                # the product: EP and bass only, slow
+for k in range(6):
+    tt_ = tp + k * B
+    if k % 2 == 0: ep += chord(tt_ + 0.01, 1.2, ['D3', 'F#3', 'A3', 'E4'] if k % 4 == 0 else ['G3', 'B3', 'D4', 'F#4'], 50); bass.append((tt_, 1.1, 'D2' if k % 4 == 0 else 'G1', 62))
+vib += [(T['result'] + 0.02, 0.8, 'A5', 48)]
+pad = chord(T['card'], T['end'] - T['card'], ['D4', 'F#4', 'A4'], 50)                             # the card resolves
+pad_cc = [(T['end'] - 0.9 + i * 0.045, mido.Message('control_change', control=11, value=int(127 * (1 - i / 19) ** 1.4))) for i in range(20)]
+ep += chord(T['card'] + 0.01, 1.4, ['D3', 'F#3', 'A3', 'D4'], 58); bass.append((T['card'], 1.4, 'D1', 70))
 L0 = T['card'] + 0.4; logo_t = [L0, L0 + 5 / 24, L0 + 10 / 24]
-music = (render('m_pad', [(0, STR, pad, pad_cc)]) * 0.9 + render('m_cel', [(1, CELESTA, cel, [])]) * 0.55
-         + render('m_keys', [(2, EP2, keys, [])]) * 0.8 + render('m_pad2', [(3, PAD, pad2, pad2_cc)]) * 0.5 + render('m_bass', [(4, SYNBASS, bass, [])]) * 0.9)
+music = (render('m_ep', [(0, EP1, ep, [])]) * 0.85 + render('m_bass', [(1, ABASS, bass, [])]) * 1.0
+         + render('m_vib', [(2, VIBES, vib, [])]) * 0.55 + render('m_pad', [(3, PAD, pad, pad_cc)]) * 0.45)
 fx_logo = render('fx_logo', [(0, CELESTA, [(logo_t[0], .5, 'A4', 96), (logo_t[1], .5, 'D5', 100), (logo_t[2], 1.1, 'F#5', 106)], []),
                              (1, VIBES, [(logo_t[0], .5, 'A4', 70), (logo_t[1], .5, 'D5', 74), (logo_t[2], 1.1, 'F#5', 80)], []),
                              (2, PIZZ, [(logo_t[0], .2, 'A3', 54), (logo_t[1], .2, 'D4', 56), (logo_t[2], .3, 'F#4', 58)], [])])
@@ -100,13 +107,14 @@ for i, t in enumerate(cuts):
     f = [2300, 2700, 1900, 2500, 2100][i]
     place(glass(f, 0.5), t + 0.02, -9, rng.uniform(-.2, .2)); place(glass(f * 1.19, 0.35), t + 0.07, -14, rng.uniform(-.2, .2))
 for i, t in enumerate(cuts):
-    d = SHOT if i < N_SHOTS - 1 else T['bridge'] - t
+    d = SHOT
     fz = hp(noise(d), 5000) * (0.5 + 0.5 * rng.uniform(0, 1, int(d * SR)) ** 6)
     for _ in range(int(14 * d)): b = bubble(rng.uniform(1800, 4200), 0.02, 2.2); o = int(rng.uniform(0, d - 0.05) * SR); fz[o:o + len(b)] += 2.5 * b
     place(fz * np.minimum(1, tt(d) / 0.3), t, -31, rng.uniform(-.3, .3))
     if rng.uniform() < 0.8: place(glass(rng.uniform(2600, 3400), 0.4), t + rng.uniform(0.6, d - 0.2), -24, rng.uniform(-.4, .4))
 # the ending: whoosh into the bridge, four ice ticks and a soft thump each, into the product, typing, the result tone
 kick = lambda: np.sin(2 * np.pi * np.cumsum(np.linspace(150, 48, int(0.25 * SR))) / SR) * env(0.25, 0.002, 0.07)
+place(glass(2650, 0.5), T['question'] + 0.02, -10, 0.1); place(whoosh(0.5, 500, 2600, 0.4), T['question'] - 0.08, -17)   # the question's cut
 place(whoosh(BEAT, 400, 3200, 0.3), T['bridge'] - 0.1, -16)
 for k, t in enumerate(flashes): place(glass(3000 + 300 * k, 0.2), t, -15, (-1) ** k * 0.3); place(kick(), t, -14)
 place(whoosh(0.5, 2600, 300, 0.25), T['product'] - 0.05, -15)
@@ -121,13 +129,17 @@ place(fx_logo, 0, -9)
 # ---------------------------------------------------------------- mix ---------------------------
 TT = np.arange(N) / SR
 ramp = lambda pts: np.interp(TT, [p[0] for p in pts], [p[1] for p in pts])
-hat = np.zeros((N, 2))                                                                          # soft hi-hat ticks on 8ths, bridge and product only
-for k in range(int((T['card'] - T['bridge']) / (BEAT / 2))):
-    tk = T['bridge'] + k * BEAT / 2; d = 0.04; s = hp(noise(d), 7000) * env(d, 0.001, 0.012) * (1.0 if k % 2 == 0 else 0.6)
-    j = int(tk * SR); hat[j:j + len(s)] += np.stack([s, s * 0.8], -1)
-music = music / np.abs(music).max() + 0.08 * hat / (np.abs(hat).max() + 1e-9)
-music = reverb(music, ir(1.6, 4500), 0.22)
-g = ramp([(0, -40), (0.6, -13), (T['question'], -13), (T['question'] + 0.5, -11), (T['bridge'] - 0.05, -11), (T['bridge'] + 0.05, -11),
+hat = np.zeros((N, 2))
+for k in range(int(T['card'] / (BEAT / 2))):
+    tk = k * BEAT / 2; d = 0.05; soft = 0.45 if tk >= T['product'] else 1.0
+    sh = bp(noise(d), 3000, 9000) * env(d, 0.004, 0.02) * (0.9 if k % 2 == 0 else 0.55) * soft           # brushed shaker, 8ths
+    j = int(tk * SR); hat[j:j + len(sh)] += np.stack([sh, sh * 0.85], -1)
+    if k % 4 == 2 and tk < T['product']:                                                               # rim click on 2 and 4
+        rc = modal([1700, 2900], [0.015, 0.01], [1, .5], 0.05) + hp(noise(0.05), 2500) * env(0.05, 0.0005, 0.004)
+        hat[j:j + len(rc)] += 0.9 * np.stack([rc, rc], -1)
+music = music / np.abs(music).max() + 0.16 * hat / (np.abs(hat).max() + 1e-9)
+music = reverb(music, ir(1.1, 5000), 0.16)
+g = ramp([(0, -30), (0.15, -11), (T['question'], -11), (T['question'] + 0.5, -10), (T['bridge'] - 0.05, -10), (T['bridge'] + 0.05, -10),
           (T['product'] - 0.05, -11), (T['product'] + 0.2, -15), (T['card'] - 0.05, -15), (T['card'] + 0.1, -12), (L0 + 0.3, -14), (DUR, -14)])
 duck = np.zeros(N)
 for t0 in cuts + flashes + [T['result'], L0]:

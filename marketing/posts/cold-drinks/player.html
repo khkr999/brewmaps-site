@@ -17,7 +17,7 @@ const ctx = document.getElementById('c').getContext('2d');
 let A = {};
 window.DURATION = T.end;
 window.ready = (async () => {
-  await Promise.all([document.fonts.load('400 76px "Tajawal"', 'آيس'), document.fonts.load('800 92px "Tajawal"', 'ذوقك'), document.fonts.load('500 40px "Tajawal"', 'درهم'), document.fonts.load('500 28px "Playfair Display"', 'ICED'), document.fonts.load('600 36px "DM Sans"', 'Ask')]);
+  await Promise.all([document.fonts.load('500 86px "Tajawal"', 'آيس'), document.fonts.load('800 92px "Tajawal"', 'ذوقك'), document.fonts.load('500 40px "Tajawal"', 'درهم'), document.fonts.load('600 38px "Playfair Display"', 'ICED'), document.fonts.load('600 36px "DM Sans"', 'Ask'), document.fonts.load('600 72px "DM Sans"', 'BrewMaps')]);
   A.plates = await Promise.all(SHOTS.map(s => img(s.plate)));
   A.byKey = {}; for (const k in PLATES) A.byKey[k] = await img(PLATES[k]);
   A.mark = await img('../find-rate-earn-carousel/img/mark-cream.png');
@@ -42,11 +42,12 @@ function name(i, a) {                                       // centred: the Arab
   if (a <= 0) return;
   const s = SHOTS[i];
   ctx.save(); ctx.globalAlpha = a; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-  ctx.shadowColor = 'rgba(0,0,0,0.35)'; ctx.shadowBlur = 16;
-  ctx.direction = 'rtl'; ctx.fillStyle = CREAM; ctx.font = '400 78px "Tajawal"'; ctx.fillText(s.ar, 540, 948);
-  ctx.direction = 'ltr'; ctx.fillStyle = 'rgba(244,239,230,0.78)'; ctx.font = '500 28px "Playfair Display"';
-  const sp = 0.42 * 28, w = ctx.measureText(s.en).width + sp * (s.en.length - 1); let x = 540 - w / 2;
-  ctx.textAlign = 'left'; for (const ch of s.en) { ctx.fillText(ch, x, 1012); x += ctx.measureText(ch).width + sp; }
+  scrim(975, 520, 0.38);
+  ctx.shadowColor = 'rgba(0,0,0,0.4)'; ctx.shadowBlur = 18;
+  ctx.direction = 'rtl'; ctx.fillStyle = CREAM; ctx.font = '500 88px "Tajawal"'; ctx.fillText(s.ar, 540, 944);
+  ctx.direction = 'ltr'; ctx.fillStyle = CREAM; ctx.font = '600 38px "Playfair Display"';
+  const sp = 0.34 * 38, w = ctx.measureText(s.en).width + sp * (s.en.length - 1); let x = 540 - w / 2;
+  ctx.textAlign = 'left'; for (const ch of s.en) { ctx.fillText(ch, x, 1022); x += ctx.measureText(ch).width + sp; }
   ctx.restore();
 }
 
@@ -111,19 +112,21 @@ function drawPhone(t) {                                    // Ask BrewMaps: the 
 
 window.frame = t => {
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 1080, 1920);
-  if (t < T.bridge) {                                      // the opening: five slow shots, then the question over the last one
+  if (t < T.question) {                                    // the opening: five slow shots, names centred
     const { i, u } = shotAt(t);
     drawPlate(i, u);
-    const inShot = t - i * SHOT;
-    if (t < T.question) name(i, seg(inShot, 0.06, 0.28));
-    else name(i, 1 - seg(t, T.question, T.question + 0.3));
-    const q = seg(t, T.question + 0.3, T.question + 0.7);
-    if (q > 0) { ctx.save(); ctx.shadowColor = 'rgba(0,0,0,0.45)'; ctx.shadowBlur = 20; arabic('أي واحد على ذوقك؟', 540, 985, 92, '800', 'center', q); ctx.restore(); }
-  } else if (t < T.product) {                              // the bridge: four flashes, one line
-    const k = Math.min(3, Math.floor((t - T.bridge) / (BEAT / 4))), [key, z, c] = BRIDGE.flashes[k];
-    plate(key, z, c, (t - T.bridge) / BEAT, [0, 0]);
-    scrim(960, 420, 0.4);
-    arabic(BRIDGE.text, 540, 995, 104, '800', 'center', seg(t, T.bridge, T.bridge + 0.1));
+    name(i, seg(t - i * SHOT, 0.06, 0.28));
+  } else if (t < T.bridge) {                               // the question, on its own shot
+    plate(QUESTION.plate, QUESTION.z, QUESTION.c, (t - T.question) / (2 * BEAT), [0.5, -0.5]);
+    scrim(960, 520, 0.42);
+    arabic(QUESTION.text, 540, 990, 100, '800', 'center', seg(t, T.question + 0.05, T.question + 0.3));
+  } else if (t < T.product) {                              // the bridge: four flashes, two lines
+    const k = Math.min(3, Math.floor((t - T.bridge) / (BEAT / 2))), [key, z, c] = BRIDGE.flashes[k];
+    plate(key, z, c, (t - T.bridge) / (2 * BEAT), [0, 0]);
+    scrim(960, 560, 0.45);
+    const a = seg(t, T.bridge, T.bridge + 0.12);
+    ctx.save(); ctx.globalAlpha = a; ctx.textAlign = 'center'; ctx.direction = 'ltr'; ctx.fillStyle = CREAM; ctx.font = '600 72px "DM Sans"'; ctx.fillText(BRIDGE.lines[0], 540, 930); ctx.restore();
+    arabic(BRIDGE.lines[1], 540, 1042, 74, '800', 'center', a, PALE);
   } else if (t < T.card) {                                 // the product moment, calmer
     plate('spanish', 1.3, [0.5, 0.5], 1, [0, 0]);
     ctx.fillStyle = 'rgba(8,10,8,0.62)'; ctx.fillRect(0, 0, 1080, 1920);
