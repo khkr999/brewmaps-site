@@ -28,5 +28,5 @@ cuts (each shot starts where the last left off) and each cut dissolves over 4 fr
 
 ## Caption
 أي واحد على ذوقك؟ 🧊
-مهما كان مزاجك، BrewMaps يلقى لك الكوفي اللي يناسبك.
+BrewMaps يختارلك مشروبك المفضل ويلقى لك كوفيك.
 مجاني على الآب ستور وجوجل بلاي. الرابط في البايو.
