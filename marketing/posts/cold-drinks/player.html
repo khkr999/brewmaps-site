@@ -116,29 +116,28 @@ window.frame = t => {
     const { i, u } = shotAt(t);
     drawPlate(i, u);
     name(i, seg(t - i * SHOT, 0.06, 0.28));
-  } else if (t < T.bridge) {                               // the question, on its own shot
-    plate(QUESTION.plate, QUESTION.z, QUESTION.c, (t - T.question) / (2 * BEAT), [0.5, -0.5]);
-    scrim(960, 520, 0.42);
-    arabic(QUESTION.text, 540, 990, 100, '800', 'center', seg(t, T.question + 0.05, T.question + 0.3));
+  } else if (t < T.bridge) {                               // the question, on the brand green
+    ctx.fillStyle = 'rgb(16,36,18)'; ctx.fillRect(0, 0, 1080, 1920);
+    const qa = seg(t, T.question + 0.05, T.question + 0.3);
+    arabic(QUESTION.text, 540, 990 + (1 - easeOut(qa)) * 16, 104, '800', 'center', qa);
   } else if (t < T.product) {                              // the bridge: four flashes, two lines
     const k = Math.min(3, Math.floor((t - T.bridge) / (BEAT / 2))), [key, z, c] = BRIDGE.flashes[k];
     plate(key, z, c, (t - T.bridge) / (2 * BEAT), [0, 0]);
     scrim(960, 560, 0.45);
     const a = seg(t, T.bridge, T.bridge + 0.12);
-    ctx.save(); ctx.globalAlpha = a; ctx.textAlign = 'center'; ctx.direction = 'ltr'; ctx.fillStyle = CREAM; ctx.font = '600 72px "DM Sans"'; ctx.fillText(BRIDGE.lines[0], 540, 930); ctx.restore();
-    arabic(BRIDGE.lines[1], 540, 1042, 74, '800', 'center', a, PALE);
+    const L = A.lockup, lw = 400, lh = lw * L.height / L.width;
+    ctx.save(); ctx.globalAlpha = a; ctx.drawImage(L, (1080 - lw) / 2, 860, lw, lh); ctx.restore();
+    arabic(BRIDGE.lines[1], 540, 1050, 74, '800', 'center', a, PALE);
   } else if (t < T.card) {                                 // the product moment, calmer
-    plate('spanish', 1.3, [0.5, 0.5], 1, [0, 0]);
-    ctx.fillStyle = 'rgba(8,10,8,0.62)'; ctx.fillRect(0, 0, 1080, 1920);
+    ctx.fillStyle = 'rgb(16,36,18)'; ctx.fillRect(0, 0, 1080, 1920);
     const mv = seg(t, T.message, T.message + 0.5);
     if (mv > 0) { arabic(APP.message[0], 540, 215, 70, '800', 'center', mv); arabic(APP.message[1], 540, 305, 70, '800', 'center', mv, PALE); }
     drawPhone(t);
   } else {                                                 // the card: one second, minimal
     ctx.fillStyle = 'rgb(16,36,18)'; ctx.fillRect(0, 0, 1080, 1920);
     const e = easeOut(seg(t, T.card, T.card + 0.5)), c2 = easeOut(seg(t, T.card + 0.35, T.card + 0.85));
-    const L = A.lockup, lw = 460, lh = lw * L.height / L.width;
-    ctx.save(); ctx.globalAlpha = e; ctx.drawImage(L, (1080 - lw) / 2, 790 + (1 - e) * 20, lw, lh); ctx.restore();
-    arabic('يلقى لك كوفيك المفضل', 540, 1060 + (1 - c2) * 20, 88, '800', 'center', c2);
+    const L = A.lockup, lw = 500, lh = lw * L.height / L.width;
+    ctx.save(); ctx.globalAlpha = e; ctx.drawImage(L, (1080 - lw) / 2, 960 - lh / 2 + (1 - e) * 20, lw, lh); ctx.restore();
   }
   return document.getElementById('c').toDataURL('image/png');
 };

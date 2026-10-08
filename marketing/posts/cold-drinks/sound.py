@@ -114,9 +114,21 @@ for i, t in enumerate(cuts):
     if rng.uniform() < 0.8: place(glass(rng.uniform(2600, 3400), 0.4), t + rng.uniform(0.6, d - 0.2), -24, rng.uniform(-.4, .4))
 # the ending: whoosh into the bridge, four ice ticks and a soft thump each, into the product, typing, the result tone
 kick = lambda: np.sin(2 * np.pi * np.cumsum(np.linspace(150, 48, int(0.25 * SR))) / SR) * env(0.25, 0.002, 0.07)
-place(glass(2650, 0.5), T['question'] + 0.02, -10, 0.1); place(whoosh(0.5, 500, 2600, 0.4), T['question'] - 0.08, -17)   # the question's cut
+# the question: an ice cube dropped into a glass (plunk, two knocks, a settle), then a soft whoosh
+def icedrop(t0):
+    place(bubble(260, 0.1, 1.3), t0, -11, 0.0); place(glass(2400, 0.4), t0 + 0.012, -10, -0.1)
+    place(glass(1900, 0.5), t0 + 0.09, -13, 0.15); place(glass(2900, 0.3), t0 + 0.16, -16, -0.2)
+    st = lp(noise(0.5), 3000) * env(0.5, 0.02, 0.12)
+    for _ in range(6): b = bubble(rng.uniform(900, 2000), 0.03, 2.0); o = int(rng.uniform(0.05, 0.4) * SR); st[o:o + len(b)] += 2.0 * b
+    place(st, t0 + 0.05, -21, 0.1)
+icedrop(T['question'] + 0.02); place(whoosh(0.5, 500, 2600, 0.4), T['question'] - 0.08, -17)
 place(whoosh(BEAT, 400, 3200, 0.3), T['bridge'] - 0.1, -16)
 for k, t in enumerate(flashes): place(glass(3000 + 300 * k, 0.2), t, -15, (-1) ** k * 0.3); place(kick(), t, -14)
+crack = hp(noise(0.14), 2200) * env(0.14, 0.0005, 0.014) + 0.6 * modal([3600, 5900], [0.035, 0.02], [1, .5], 0.14)   # ice cracking on the second flash
+place(crack, flashes[1] + 0.05, -14, 0.2)
+icedrop(T['product'] + 0.15)                                                                                          # a cube into the glass as the phone rises
+for k in range(5):                                                                                                    # ice settling, faintly, while he types and reads
+    place(glass(rng.uniform(2200, 3400), 0.45), T['product'] + 1.0 + k * 0.9 + rng.uniform(0, 0.3), -24 - rng.uniform(0, 3), rng.uniform(-.4, .4))
 place(whoosh(0.5, 2600, 300, 0.25), T['product'] - 0.05, -15)
 nchar = len(APP['query'])
 for k in range(nchar):
