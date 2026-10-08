@@ -1,4 +1,8 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 16.3s, 9:16, with sound (v16)
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 16.3s, 9:16, with sound (v17)
+
+v17: the search-bar typing uses the supplied simple click (`sfx/simple-click.wav`), the same click on every character,
+on the frame the character appears (27 for 27, within 2ms), same level as before. Everything else as v16, which is kept
+as `export/cold-drinks-v16.mp4`.
 
 v16: v15 with the ripple switch removed. The drinks cut hard on the note again, as in v14, with the splash on each cut. Four
 drinks, Spanish latte label and the louder ice are kept. v15 (with the ripple) is kept as `export/cold-drinks-v15.mp4`

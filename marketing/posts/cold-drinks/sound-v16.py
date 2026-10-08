@@ -175,10 +175,9 @@ thud = lp(noise(0.12), 900) * env(0.12, 0.002, 0.03); place(thud, T['phoneIn'] +
 # the phone: the supplied clicks (sfx/). A single soft click as the field is tapped, the four halves of the two mouse
 # clicks (press and release of each) rotating as keystrokes, and the press-and-release click on send
 SCLICK, CLICK, M1, M2 = load('simple-click.wav'), load('click.wav'), load('mouse-clicks-v1.wav'), load('mouse-clicks-v2.wav')
-TAP = cut(SCLICK, 0.0, 0.11, fin=0.0005, fout=0.04)                                      # the supplied simple click, one per character
 KEYS = [cut(M1, 0.645, 0.08, 0.001, 0.03), cut(M2, 0.415, 0.09, 0.001, 0.03), cut(M1, 0.735, 0.07, 0.001, 0.03), cut(M2, 0.575, 0.05, 0.001, 0.02)]   # trimmed: this half had a second tick at 65ms
 for k, tk in enumerate(T['keys']):                                                           # every keystroke, on the frame it appears
-    on_frame(TAP, tk, -25, 0.0)                                                          # v17: the simple click on every character, on its frame
+    on_frame(KEYS[(k * 3 + k // 4) % 4], tk, -27 - rng.uniform(0, 1.5), rng.uniform(-.1, .1))   # tk is an exact frame time
 
 
 
