@@ -204,11 +204,8 @@ SFXL = np.stack([lp(SFX[:, c], 6500) for c in range(2)], -1)                  # 
 sfx = reverb(SFXL, ir(1.0, 5000), 0.24) * db(-4)
 sf.write(os.path.join(WORK, 'sfx-stem.wav'), (SFX / np.abs(SFX).max() * 0.8).astype(np.float32), SR)   # dry effects, for checking sync                             # and the whole effects bus 4 dB down, a touch more room
 SILENT = DUR - 0.05
-fade = (0.5 + 0.5 * np.cos(np.pi * np.clip((TT - (T['end'] - 0.6)) / 0.58, 0, 1)))[:, None]   # an even 0.6s audio fade to silence on the last frame
-SFX_LEVEL = 0.95                                                   # v20: every effect at 95% of v19's level; the music is untouched
-ref = (music + sfx) * fade                                         # the overall gain is set from the v19 balance, so only the effects move
-mix = (music + sfx * SFX_LEVEL) * fade
-meter = pyloudnorm.Meter(SR); lufs = meter.integrated_loudness(ref)
+mix = (music + sfx) * (0.5 + 0.5 * np.cos(np.pi * np.clip((TT - (T['end'] - 0.6)) / 0.58, 0, 1)))[:, None]   # an even 0.6s audio fade to silence on the last frame
+meter = pyloudnorm.Meter(SR); lufs = meter.integrated_loudness(mix)
 mix = mix * db(-17.0 - lufs)
 thr = db(-1.2); a = np.abs(mix).max(axis=1); need = np.minimum(1, thr / np.maximum(a, 1e-9))
 la = int(0.004 * SR); need = np.minimum.reduce([np.roll(need, -k) for k in range(0, la, 8)]); gr = np.copy(need)

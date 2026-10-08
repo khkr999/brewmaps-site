@@ -1,4 +1,7 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 16.3s, 9:16, with sound (v19)
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 16.3s, 9:16, with sound (v20)
+
+v20: every sound effect at 95% of its v19 level (`SFX_LEVEL` in `sound.py`). The overall gain is fixed to v19's so the music
+doesn't move. v19 is kept as `export/cold-drinks-v19.mp4`.
 
 v19: the woosh only on the four drink changes and into the question. The montage (from about 0:08) has no woosh,
 only a light ice knock on each quick cut. v18 is kept as `export/cold-drinks-v18.mp4`.
