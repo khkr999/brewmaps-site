@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="../../assets/fonts/dmsans.css">
 <style>html,body{margin:0;background:#000}</style>
 <canvas id="c" width="1080" height="1920"></canvas>
-<script src="timing.js"></script>
+<script src="timing-v20.js"></script>
 <script>
 // v5: the v4 cut, polished. Five near-still macro shots on a carried push with clean cuts on the downbeat and a centred
 // name; the karkadeh pulls focus into the green and the question rises in word by word; the first crop comes back into
@@ -83,8 +83,8 @@ function drawPhone(t, res = 0) {                           // Ask BrewMaps: phon
   const u = seg(t, T.phoneIn, T.phoneIn + 1.0), e = easeOut(u), lift = (1 - e) * 1560 + res * 70;   // rises from below the frame, fully opaque
   const sc = 0.985 + 0.015 * settle(u);
   const zoom = 1.12 - 0.12 * easeInOut(seg(t, T.submit + 0.05, T.result + 0.45));   // close on the field while typing, back out for the results
-  const W = 760, H = 1640, x = 540 - W / 2, y = 460, r = 86, AX = 540, AY = y + 252;   // v21: 20px lower and 95% size, to make room for the line above
-  ctx.save(); ctx.translate(0, lift); ctx.translate(540, y); ctx.scale(0.95, 0.95); ctx.translate(-540, -y);
+  const W = 760, H = 1640, x = 540 - W / 2, y = 440, r = 86, AX = 540, AY = y + 252;
+  ctx.save(); ctx.translate(0, lift);
   ctx.translate(AX, AY); ctx.scale(zoom * sc, zoom * sc); ctx.translate(-AX, -AY);
   ctx.shadowColor = 'rgba(0,0,0,0.45)'; ctx.shadowBlur = 60; ctx.shadowOffsetY = 20;
   ctx.fillStyle = '#111'; ctx.beginPath(); ctx.roundRect(x - 14, y - 14, W + 28, H + 28, r + 14); ctx.fill();
@@ -214,7 +214,7 @@ window.frame = t => {
     if (pullOut(t) < 1) lastFlash(t);
     const mv = easeOut(seg(t, T.message, T.message + 0.6)), mdy = 18 * (1 - mv);
     const res = 0, ma = mv;                                // v6: no resolve in picture. It ends on the held final frame, so a loop never flashes
-    if (ma > 0) { arabic(APP.message[0], 540, 310 + mdy - 20 * res, 70, '800', 'center', ma); arabic(APP.message[1], 540, 395 + mdy - 20 * res, 70, '800', 'center', ma, PALE); }   // v21: below Instagram's top bar
+    if (ma > 0) { arabic(APP.message[0], 540, 215 + mdy - 20 * res, 70, '800', 'center', ma); arabic(APP.message[1], 540, 305 + mdy - 20 * res, 70, '800', 'center', ma, PALE); }
     drawPhone(t, res);
   }
   return document.getElementById('c').toDataURL('image/png');

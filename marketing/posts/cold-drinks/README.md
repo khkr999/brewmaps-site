@@ -1,4 +1,8 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 16.3s, 9:16, with sound (v20)
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 16.3s, 9:16, with sound (v21)
+
+v21: the closing line (BrewMaps يلقى لك الكوفي / اللي على ذوقك) moved down about 95px, below Instagram's top bar. The
+phone is 20px lower and at 95% size to make room, which also keeps the result cards above the caption area. Sound as
+v20; v20 is kept as `export/cold-drinks-v20.mp4`.
 
 v20: every sound effect at 95% of its v19 level (`SFX_LEVEL` in `sound.py`). The overall gain is fixed to v19's so the music
 doesn't move. v19 is kept as `export/cold-drinks-v19.mp4`.
