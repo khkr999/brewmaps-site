@@ -116,28 +116,30 @@ window.frame = t => {
     const { i, u } = shotAt(t);
     drawPlate(i, u);
     name(i, seg(t - i * SHOT, 0.06, 0.28));
-  } else if (t < T.bridge) {                               // the question, on the brand green
-    ctx.fillStyle = 'rgb(16,36,18)'; ctx.fillRect(0, 0, 1080, 1920);
-    const qa = seg(t, T.question + 0.05, T.question + 0.3);
-    arabic(QUESTION.text, 540, 990 + (1 - easeOut(qa)) * 16, 104, '800', 'center', qa);
+  } else if (t < T.bridge) {                               // the question: the last drink dissolves into the green, the line eases in
+    const d = ease(seg(t, T.question, T.question + 0.5));
+    drawPlate(SHOTS.length - 1, 1 + (t - T.question) / SHOT);
+    ctx.fillStyle = `rgba(16,36,18,${d})`; ctx.fillRect(0, 0, 1080, 1920);
+    const qa = ease(seg(t, T.question + 0.2, T.question + 0.65));
+    arabic(QUESTION.text, 540, 990 + (1 - qa) * 24, 104, '800', 'center', qa);
   } else if (t < T.product) {                              // the bridge: four flashes, two lines
     const k = Math.min(3, Math.floor((t - T.bridge) / (BEAT / 2))), [key, z, c] = BRIDGE.flashes[k];
     plate(key, z, c, (t - T.bridge) / (2 * BEAT), [0, 0]);
     scrim(960, 560, 0.45);
-    const a = seg(t, T.bridge, T.bridge + 0.12);
+    const a = ease(seg(t, T.bridge, T.bridge + 0.3));
     const L = A.lockup, lw = 400, lh = lw * L.height / L.width;
-    ctx.save(); ctx.globalAlpha = a; ctx.drawImage(L, (1080 - lw) / 2, 860, lw, lh); ctx.restore();
-    arabic(BRIDGE.lines[1], 540, 1050, 74, '800', 'center', a, PALE);
+    ctx.save(); ctx.globalAlpha = a; ctx.drawImage(L, (1080 - lw) / 2, 860 + (1 - a) * 16, lw, lh); ctx.restore();
+    arabic(BRIDGE.lines[1], 540, 1050 + (1 - a) * 16, 74, '800', 'center', a, PALE);
   } else if (t < T.card) {                                 // the product moment, calmer
     ctx.fillStyle = 'rgb(16,36,18)'; ctx.fillRect(0, 0, 1080, 1920);
     const mv = seg(t, T.message, T.message + 0.5);
     if (mv > 0) { arabic(APP.message[0], 540, 215, 70, '800', 'center', mv); arabic(APP.message[1], 540, 305, 70, '800', 'center', mv, PALE); }
     drawPhone(t);
-  } else {                                                 // the card: one second, minimal
+  } else {                                                 // the end: the phone holds, then everything fades out
     ctx.fillStyle = 'rgb(16,36,18)'; ctx.fillRect(0, 0, 1080, 1920);
-    const e = easeOut(seg(t, T.card, T.card + 0.5)), c2 = easeOut(seg(t, T.card + 0.35, T.card + 0.85));
-    const L = A.lockup, lw = 500, lh = lw * L.height / L.width;
-    ctx.save(); ctx.globalAlpha = e; ctx.drawImage(L, (1080 - lw) / 2, 960 - lh / 2 + (1 - e) * 20, lw, lh); ctx.restore();
+    arabic(APP.message[0], 540, 215, 70, '800', 'center', 1); arabic(APP.message[1], 540, 305, 70, '800', 'center', 1, PALE);
+    drawPhone(t);
+    ctx.fillStyle = `rgba(0,0,0,${ease(seg(t, T.card, T.end - 0.05))})`; ctx.fillRect(0, 0, 1080, 1920);
   }
   return document.getElementById('c').toDataURL('image/png');
 };

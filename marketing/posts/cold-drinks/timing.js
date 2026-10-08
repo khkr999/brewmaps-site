@@ -18,6 +18,6 @@ var T = { question: SHOTS.length * SHOT };                  // 7.75: cut to the 
 T.bridge = T.question + 2 * BEAT;                           // 9.3: four flashes, one line
 T.product = T.bridge + 2 * BEAT;                            // 10.85: the phone rises
 T.typeStart = T.product + 0.6; T.typeEnd = T.product + 1.9; T.result = T.product + 2.3; T.message = T.product + 2.7;
-T.card = T.product + 6 * BEAT;                              // 15.5
-T.end = T.card + 2 * BEAT;                                  // 17.05
+T.card = T.product + 7.5 * BEAT;                            // 16.66: the fade-out begins (no logo card)
+T.end = T.card + 0.75;                                      // 17.4
 if (typeof module !== 'undefined') module.exports = { SHOT, SHOTS, PLATES, QUESTION, BRIDGE, APP, BEAT, T };
