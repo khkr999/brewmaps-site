@@ -3,13 +3,13 @@
 // so both always agree.
 var SHOT = 1.55;
 var SHOTS = [                                                // v14: real moving footage (clips/, see prep_clips.py)
-  { clip: 'latte',    ar: 'سبانيش لاتيه',  en: 'SPANISH LATTE',  drift: [0, 0] },
+  { clip: 'latte',    ar: 'آيس لاتيه',     en: 'ICED LATTE',     drift: [0, 0] },
   { clip: 'matcha',   ar: 'ماتشا لاتيه',   en: 'MATCHA LATTE',   drift: [0, 0] },
   { clip: 'brew',     ar: 'كولد برو',      en: 'COLD BREW',      drift: [0, 0] },
+  { clip: 'lemonade', ar: 'ليموناضة',      en: 'LEMONADE',       drift: [0, 0] },
   { clip: 'karkadeh', ar: 'كركديه مثلج',   en: 'ICED KARKADEH',  drift: [0, 0] },
 ];
-var CLIPS = ['latte', 'matcha', 'brew', 'karkadeh', 'unicorn'];
-var RIPPLE = 0.33;                                           // v15: each drink opens out of the last as a ripple from the centre, starting on the cut
+var CLIPS = ['latte', 'matcha', 'brew', 'lemonade', 'karkadeh', 'unicorn'];
 var QUESTION = { text: 'أي واحد على ذوقك؟' };
 var BRIDGE = { lines: ['BrewMaps', 'يختارلك مشروبك المفضل'], flashes: [['latte', 1.18, [0.46, 0.44]], ['matcha', 1.18, [0.5, 0.56]], ['unicorn', 1.18, [0.55, 0.47]], ['brew', 1.18, [0.5, 0.44]]], offset: 0.55 };   // montage: crops of the same clips, a later moment
 var APP = { query: 'سبانيش لاتيه أقل من ٢٠ درهم', message: ['BrewMaps يلقى لك الكوفي', 'اللي على ذوقك'], results: '٣ كوفيهات قريبة', top: 'سبانيش لاتيه · ١٨ درهم · ٦ دقايق', match: '٩٢٪ على ذوقك' };

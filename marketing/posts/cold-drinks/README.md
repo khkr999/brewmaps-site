@@ -1,4 +1,11 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v14)
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 16.3s, 9:16, with sound (v15)
+
+v15: four drinks (lemonade removed): سبانيش لاتيه (the first clip, relabelled), ماتشا لاتيه, كولد برو, كركديه مثلج.
+Each drink switch is now a transition: the next drink opens out of the last one from the centre like an ice cube
+dropped in. A soft ring grows fast then slows, the image refracts slightly at the ring, and both clips keep playing
+(0.33s, WebGL, starting on the cut frame together with the splash, which is measured at 0ms). The montage keeps its
+hard cuts. The ice sounds are about 3 dB louder (the knock in the switch sound and the ice bed). The music drops one
+opening phrase so every cut is still on a note. v14 is kept as `export/cold-drinks-v14.mp4`.
 
 v14: the drinks are real moving footage, from the drink video the client supplied (their call to use it; client
 confirmed they want it used). `prep_clips.py` takes that video and, for each of its six shots, inpaints out the

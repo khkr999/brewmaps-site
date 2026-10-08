@@ -10,7 +10,7 @@ import numpy as np, soundfile as sf, pyloudnorm
 from scipy.signal import butter, sosfilt, fftconvolve
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TM = json.loads(subprocess.run(['node', '-e', "const m=require(process.argv[1]);console.log(JSON.stringify(m))", os.path.join(HERE, 'timing.js')], check=True, capture_output=True, text=True).stdout)
+TM = json.loads(subprocess.run(['node', '-e', "const m=require(process.argv[1]);console.log(JSON.stringify(m))", os.path.join(HERE, 'timing-v14.js')], check=True, capture_output=True, text=True).stdout)
 SHOT, N_SHOTS, T, APP, BEAT = TM['SHOT'], len(TM['SHOTS']), TM['T'], TM['APP'], TM['BEAT']
 SR = 48000; DUR = T['end']; N = int(DUR * SR)
 WORK, OUT = sys.argv[1], sys.argv[2]; os.makedirs(WORK, exist_ok=True)
@@ -98,7 +98,7 @@ B = [('D#6', 'D#5'), ('F#5', 'F#4'), ('C#5', 'C#6')]
 C = [('F5', 'F4'), ('F#5', 'F#4'), ('G#4', 'G#5')]
 PH = [  # (phrase notes, bass root) — one phrase per shot: two figures and a turn into the next cut
     (A + A + [('G#4', 'G#5')], 'F#2'), (A + A + [('D#5', 'D#6')], 'B1'), (B + B + [('F5', 'F4')], 'D#2'),
-    (A + C + [('C#6', 'C#5')], 'C#2'),                              # v15: four drinks, so four opening phrases
+    (B + B + [('G#4', 'G#5')], 'G#1'), (A + C + [('C#6', 'C#5')], 'C#2'),
     (B + B + [('F5', 'F4'), ('F#5', 'F#4')], 'B1'),                 # the question: 8 notes, rising into the bridge
     (A + A + [('F5', 'F4'), ('G#4', 'G#5')], 'C#2'),                # the montage: 8 notes
     (A + A + [('G#4', 'G#5')], 'F#2'), (A + A + [('D#5', 'D#6')], 'B1'), (B + B + [('G#4', 'G#5')], 'D#2'), (C + [('C#6', 'C#5')], 'C#2'),   # the demo: 25 notes, then the chord
@@ -107,7 +107,7 @@ k0 = 0; seq = []
 for notes, root in PH:
     for j, nn in enumerate(notes): seq.append((k0 + j, nn, j == 0))
     put(bass(root), OFF + k0 * NOTE, 0.05); k0 += len(notes)
-kq = 7 * N_SHOTS; kb = kq + 8; kp = kb + 8                       # the question, the montage and the phone, on the note grid
+kq, kb, kp = 35, 43, 51
 for k, (n, p), first in seq:
     t = OFF + k * NOTE; v = 1.0 if first else 0.82
     if k < kq: v *= 0.95
@@ -152,13 +152,13 @@ def mixed(*parts):
     return out
 SPLASH = cut(POUR, 1.57, 0.42, fin=0.002, fout=0.22)
 def align(x): return np.roll(np.pad(x, (int(0.05 * SR), 0)), -onset(np.pad(x, (int(0.05 * SR), 0))) + int(0.05 * SR))   # attack at a fixed 50ms point
-DROP = mixed((align(SPLASH), 0), (align(SWITCH), -1))          # v15: the ice in it a little louder
-for i, t in enumerate(cuts[1:]): on_frame(DROP, t, -11, [0.1, -0.1, 0.06, -0.06][i])
+DROP = mixed((align(SPLASH), 0), (align(SWITCH), -5))
+for i, t in enumerate(cuts[1:]): on_frame(DROP, t, -12, [0.1, -0.1, 0.06, -0.06][i])
 on_frame(DROP, FR(T['question']), -14, 0.0)                                                  # into the question
 # v12: the ice bed is a smooth texture now: its loudness is evened out so no stray knock sounds between the cuts
 bed = lp(ICE[int(2.0 * SR):int(2.0 * SR) + N].copy(), 5000)
 ev = np.sqrt(np.maximum(lp(bed ** 2, 4), 0)); bed = bed / (ev + 0.15 * ev.mean())
-benv = np.interp(np.arange(N) / SR, [0, 0.35, T['product'], T['typeStart'], DUR], [-60, -33, -33, -43, -43])                                         # the ice bed, 3 dB up
+benv = np.interp(np.arange(N) / SR, [0, 0.35, T['product'], T['typeStart'], DUR], [-60, -36, -36, -46, -46])
 bed = bed / np.abs(bed).max() * db(benv) * REF; SFX[:, 0] += bed * np.cos(np.pi / 4); SFX[:, 1] += bed * np.sin(np.pi / 4)
 kick = lambda: np.sin(2 * np.pi * np.cumsum(np.linspace(150, 48, int(0.25 * SR))) / SR) * env(0.25, 0.002, 0.07)
 # the question: coffee poured over ice as the karkadeh pulls into the green, its fullest moment on the words; the fizz stays under
@@ -167,7 +167,7 @@ c = np.sqrt(np.mean(pour ** 2)) * db(10); pour = c * np.tanh(pour / c)          
 place_rms(pour[int((T['question'] - (tq - 0.68)) * SR):] * np.minimum(1, np.arange(len(pour) - int((T['question'] - (tq - 0.68)) * SR)) / (0.06 * SR)), T['question'], -31, 0.0)   # starts on the cut into the question, its fullest moment on the words
 fizz = cut(POUR, 5.0, T['bridge'] - T['question'] - 0.7, fin=0.3, fout=0.4); place_rms(fizz, T['question'] + 0.7, -43, 0.0)   # under the question only; gone before the montage
 on_frame(DROP, FR(T['bridge']), -14, 0.0)                                                     # the first crop surfacing, on the downbeat
-DROP_S = mixed((align(cut(POUR, 1.57, 0.26, fin=0.002, fout=0.14)), 0), (align(LIGHT), -1))
+DROP_S = mixed((align(cut(POUR, 1.57, 0.26, fin=0.002, fout=0.14)), 0), (align(LIGHT), -5))
 for k, t in enumerate(flashes[1:]): on_frame(DROP_S, t, -16, (-1) ** k * 0.2)   # the quick montage cuts: a shorter, lighter drop
 for k, t in enumerate(flashes): on_frame(kick(), t, -23)
 place(whoosh(0.75, 280, 1500, 0.5), T['phoneIn'] - 0.02, -18)                                # the phone rising from below
