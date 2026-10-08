@@ -66,7 +66,7 @@ function arabic(text, x, y, size, weight, align, a = 1, color = CREAM) {
   ctx.font = `${weight} ${size}px "Tajawal"`; ctx.fillText(text, x, y); ctx.restore();
 }
 function drawPhone(t) {                                    // Ask BrewMaps: the query typed, then results over the real map
-  const u = seg(t, T.product, T.product + 0.35), lift = (1 - easeOut(u)) * 90;
+  const u = seg(t, T.product, T.product + 0.7), lift = (1 - easeOut(u)) * 110;
   const W = 760, H = 1640, x = 540 - W / 2, y = 440 + lift, r = 86;
   ctx.save(); ctx.globalAlpha = easeOut(u);
   ctx.shadowColor = 'rgba(0,0,0,0.45)'; ctx.shadowBlur = 60; ctx.shadowOffsetY = 20;
@@ -84,7 +84,7 @@ function drawPhone(t) {                                    // Ask BrewMaps: the 
   const typed = APP.query.slice(0, n), caret = t < T.result && Math.floor(t * 6) % 2 === 0;
   arabic(typed + (caret ? '|' : ''), px + pw - 36, py + 68, 40, '500', 'right', 1, INK);
   if (n === 0) arabic('اسأل عن أي كوفي…', px + pw - 36, py + 68, 40, '400', 'right', 0.5, '#777');
-  const rv = seg(t, T.result, T.result + 0.3), ry = py + ph + 36 + (1 - easeOut(rv)) * 40;
+  const rv = seg(t, T.result, T.result + 0.5), ry = py + ph + 36 + (1 - easeOut(rv)) * 40;
   if (rv > 0) {
     ctx.save(); ctx.globalAlpha = rv;
     arabic(APP.results, px + pw, ry + 36, 34, '500', 'right', 1, '#6b6b6b');
@@ -95,7 +95,7 @@ function drawPhone(t) {                                    // Ask BrewMaps: the 
     ctx.strokeStyle = '#E6E6E6'; ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect(px, cy, pw, ch, 34); ctx.stroke();
     const rows = [[APP.top, APP.match, FOREST, PALE, 1], ['سبانيش لاتيه · ١٩ درهم · ٩ دقايق', '٨٥٪ على ذوقك', '#E7EFE2', FOREST, 0.85], ['سبانيش لاتيه · ١٧ درهم · ١٢ دقيقة', '٧٨٪ على ذوقك', '#EFEFEF', '#555', 0.7]];
     rows.forEach(([line, match, bg, fg, al], k) => {
-      const by = cy + ch + 30 + k * 172, rk = seg(rv, 0.3 * k, 0.3 * k + 0.7);
+      const by = cy + ch + 30 + k * 172, rk = seg(rv, 0.25 * k, 0.25 * k + 0.5);
       ctx.save(); ctx.globalAlpha = rv * al * rk;
       ctx.fillStyle = k === 0 ? '#F7F7F7' : '#FAFAFA'; ctx.beginPath(); ctx.roundRect(px, by, pw, 150, 30); ctx.fill();
       if (k === 0) { ctx.strokeStyle = '#DCE8D5'; ctx.lineWidth = 2; ctx.stroke(); }
@@ -127,12 +127,12 @@ window.frame = t => {
   } else if (t < T.card) {                                 // the product moment, calmer
     plate('spanish', 1.3, [0.5, 0.5], 1, [0, 0]);
     ctx.fillStyle = 'rgba(8,10,8,0.62)'; ctx.fillRect(0, 0, 1080, 1920);
-    const mv = seg(t, T.message, T.message + 0.3);
+    const mv = seg(t, T.message, T.message + 0.5);
     if (mv > 0) { arabic(APP.message[0], 540, 215, 70, '800', 'center', mv); arabic(APP.message[1], 540, 305, 70, '800', 'center', mv, PALE); }
     drawPhone(t);
   } else {                                                 // the card: one second, minimal
     ctx.fillStyle = 'rgb(16,36,18)'; ctx.fillRect(0, 0, 1080, 1920);
-    const e = easeOut(seg(t, T.card, T.card + 0.25)), c2 = easeOut(seg(t, T.card + 0.15, T.card + 0.45));
+    const e = easeOut(seg(t, T.card, T.card + 0.5)), c2 = easeOut(seg(t, T.card + 0.35, T.card + 0.85));
     const L = A.lockup, lw = 460, lh = lw * L.height / L.width;
     ctx.save(); ctx.globalAlpha = e; ctx.drawImage(L, (1080 - lw) / 2, 790 + (1 - e) * 20, lw, lh); ctx.restore();
     arabic('اكتشف كوفيك', 540, 1060 + (1 - c2) * 20, 96, '800', 'center', c2);

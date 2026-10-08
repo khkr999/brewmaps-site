@@ -14,9 +14,9 @@ var BRIDGE = { text: 'مهما كان مزاجك…', flashes: [['latte', 1.6, [
 var APP = { query: 'سبانيش لاتيه تحت ٢٠ درهم', message: ['BrewMaps يلقى لك الكوفي', 'اللي على ذوقك'], results: '٣ كوفيهات قريبة', top: 'سبانيش لاتيه · ١٨ درهم · ٦ دقايق', match: '٩٢٪ على ذوقك' };
 var BEAT = 0.8;
 var T = { question: SHOTS.length * SHOT };                  // 7.75: the last name gives way to the question, the shot holds
-T.bridge = T.question + 1.45;                               // 9.2
-T.product = T.bridge + BEAT;                                 // 10.0
-T.typeStart = T.product + 0.25; T.typeEnd = T.product + 1.05; T.result = T.product + 1.2; T.message = T.product + 1.45;
-T.card = T.product + 2.5;                                    // 12.5
-T.end = T.card + 1.1;                                        // 13.6
+T.bridge = T.question + 1.6;                                // 9.35
+T.product = T.bridge + BEAT;                                 // 10.15: the phone rises (slower now)
+T.typeStart = T.product + 0.6; T.typeEnd = T.product + 1.9; T.result = T.product + 2.3; T.message = T.product + 2.7;
+T.card = T.product + 4.6;                                    // 14.75: the message has had ~2s
+T.end = T.card + 1.8;                                        // 16.55
 if (typeof module !== 'undefined') module.exports = { SHOT, SHOTS, PLATES, BRIDGE, APP, BEAT, T };

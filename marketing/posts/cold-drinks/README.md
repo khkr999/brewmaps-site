@@ -1,4 +1,4 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 13.6s, 9:16, with sound
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 16.6s, 9:16, with sound
 
 v3 = the calm v1 opening + the v2 ending. Five near-still macro shots on a slow push, hard cuts every 1.55s, a centred
 name (Arabic over small letter-spaced serif caps); the last shot holds while its name gives way to the question. Then
@@ -7,10 +7,10 @@ the bridge, BrewMaps doing something, and a one-second card.
 | Time | What | On screen |
 |---|---|---|
 | 0.0–7.75 | Five drinks, 1.55s each, names centred | **آيس لاتيه** · **ماتشا لاتيه** · **كولد برو** · **سبانيش لاتيه** · **كركديه مثلج** (with small ICED LATTE… caps) |
-| 7.75–9.2 | The karkadeh holds; the name fades, the question comes in | **أي واحد على ذوقك؟** |
-| 9.2–10.0 | The bridge: four 0.2s flashes of tight drink crops | **مهما كان مزاجك…** |
-| 10.0–12.5 | The product, calmer: the drink dimmed behind, a phone rises; Ask BrewMaps; the query types itself, then results over the real app map (drink · price · distance · match, no café names) | query **سبانيش لاتيه تحت ٢٠ درهم** · **٣ كوفيهات قريبة** · **سبانيش لاتيه · ١٨ درهم · ٦ دقايق · ٩٢٪ على ذوقك** · above the phone: **BrewMaps يلقى لك الكوفي / اللي على ذوقك** |
-| 12.5–13.6 | The card, minimal | Brew Maps lockup · **اكتشف كوفيك** |
+| 7.75–9.35 | The karkadeh holds; the name fades, the question comes in | **أي واحد على ذوقك؟** |
+| 9.35–10.15 | The bridge: four 0.2s flashes of tight drink crops | **مهما كان مزاجك…** |
+| 10.15–14.75 | The product, unhurried: the phone rises over 0.7s, the query types over 1.3s, a beat, the results settle in, the message holds ~2s: the drink dimmed behind, a phone rises; Ask BrewMaps; the query types itself, then results over the real app map (drink · price · distance · match, no café names) | query **سبانيش لاتيه تحت ٢٠ درهم** · **٣ كوفيهات قريبة** · **سبانيش لاتيه · ١٨ درهم · ٦ دقايق · ٩٢٪ على ذوقك** · above the phone: **BrewMaps يلقى لك الكوفي / اللي على ذوقك** |
+| 14.75–16.55 | The card, minimal, ~1.8s | Brew Maps lockup · **اكتشف كوفيك** |
 
 - Plates: AI-generated macro photographs (`plates/*.png` → `plates/*.jpg` at 1080×1920). No glass, rim, café or brand.
   The map inside the phone is the real app map crop (`../coffee-routine-update/img/appmap.png`).

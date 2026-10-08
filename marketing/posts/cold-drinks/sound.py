@@ -53,17 +53,17 @@ keys += chord(t0 + 0.01, 0.78, ['A3', 'D4', 'E4', 'G4'], 64); pad2 += chord(t0, 
 bass += [(t0 + k * BEAT / 4, 0.16, 'A1', 76 - 6 * k) for k in range(4)]
 tp = T['product']
 pad2 += chord(tp, T['card'] - tp + 0.1, ['D4', 'F#4', 'A4', 'E5'], 44)
-keys += [(tp + 0.01, 1.2, 'A4', 44), (tp + BEAT, 1.2, 'F#4', 40), (tp + 2 * BEAT, 1.4, 'E4', 40)]
-bass += [(tp, 1.4, 'D2', 66), (tp + 2 * BEAT, 1.2, 'D2', 56)]
+keys += [(tp + 0.01, 1.2, 'A4', 44), (tp + BEAT, 1.2, 'F#4', 40), (tp + 2 * BEAT, 1.4, 'E4', 40), (tp + 3 * BEAT, 1.2, 'D4', 38), (tp + 4 * BEAT, 1.4, 'F#4', 40), (tp + 5 * BEAT, 1.2, 'A4', 36)]
+bass += [(tp, 1.4, 'D2', 66), (tp + 2 * BEAT, 1.2, 'D2', 56), (tp + 4 * BEAT, 1.2, 'D2', 52)]
 pad2_cc = [(T['end'] - 0.9 + i * 0.045, mido.Message('control_change', control=11, value=int(127 * (1 - i / 19) ** 1.4))) for i in range(20)]
 pad2 += chord(T['card'], T['end'] - T['card'], ['D4', 'F#4', 'A4'], 48)
-L0 = T['card'] + 0.12; logo_t = [L0, L0 + 4 / 24, L0 + 8 / 24]
+L0 = T['card'] + 0.4; logo_t = [L0, L0 + 5 / 24, L0 + 10 / 24]
 music = (render('m_pad', [(0, STR, pad, pad_cc)]) * 0.9 + render('m_cel', [(1, CELESTA, cel, [])]) * 0.55
          + render('m_keys', [(2, EP2, keys, [])]) * 0.8 + render('m_pad2', [(3, PAD, pad2, pad2_cc)]) * 0.5 + render('m_bass', [(4, SYNBASS, bass, [])]) * 0.9)
 fx_logo = render('fx_logo', [(0, CELESTA, [(logo_t[0], .5, 'A4', 96), (logo_t[1], .5, 'D5', 100), (logo_t[2], 1.1, 'F#5', 106)], []),
                              (1, VIBES, [(logo_t[0], .5, 'A4', 70), (logo_t[1], .5, 'D5', 74), (logo_t[2], 1.1, 'F#5', 80)], []),
                              (2, PIZZ, [(logo_t[0], .2, 'A3', 54), (logo_t[1], .2, 'D4', 56), (logo_t[2], .3, 'F#4', 58)], [])])
-fx_result = render('fx_result', [(0, CELESTA, [(T['result'], .5, 'D6', 70), (T['result'] + 0.07, .7, 'A6', 76)], [])])
+fx_result = render('fx_result', [(0, CELESTA, [(T['result'], .6, 'D6', 70), (T['result'] + 0.1, .9, 'A6', 76)], [])])
 
 # ---------------------------------------------------------------- DSP ---------------------------
 def lp(x, f): return sosfilt(butter(2, f, 'lowpass', fs=SR, output='sos'), x)
@@ -115,7 +115,7 @@ for k in range(nchar):
     tk = T['typeStart'] + (T['typeEnd'] - T['typeStart']) * (k + 0.5) / nchar
     place(hp(noise(0.03), 3000) * env(0.03, 0.0004, 0.004), tk, -23 - rng.uniform(0, 3), rng.uniform(-.1, .1))
 place(fx_result, 0, -14)
-place(whoosh(0.4, 300, 2200, 0.5), T['card'] - 0.18, -13)
+place(whoosh(0.7, 300, 2200, 0.5), T['card'] - 0.3, -13)
 place(fx_logo, 0, -9)
 
 # ---------------------------------------------------------------- mix ---------------------------
