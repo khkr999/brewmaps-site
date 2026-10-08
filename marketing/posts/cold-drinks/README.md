@@ -1,4 +1,9 @@
-# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v9)
+# على ذوقك · Cold drinks — `export/cold-drinks.mp4`, 17.0s, 9:16, with sound (v10)
+
+v10: the drink sounds are now the two supplied recordings in `sfx/` (ice moving in water; coffee poured over ice,
+fizzy). A short ice-in-water knock on each cut over a quiet bed of ice moving in water; the pour as the karkadeh pulls
+into the green, its fullest moment on the question's words, its fizz under the montage; lighter knocks on the montage
+cuts and two faint ones in the demo. Kept low; the pour's splashes are softened. v9 is kept as `export/cold-drinks-v9.mp4`.
 
 v9: the glassy ice clinks (and the ice crack) replaced by a soft ice-into-water sound: a low plop, a short soft
 splash and a few droplets, kept quiet under the music. Everything else as v8, which is kept as

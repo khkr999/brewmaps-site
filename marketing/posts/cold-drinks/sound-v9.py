@@ -124,35 +124,28 @@ put(pluck('A#5', 'A#6', 0.6, 1.2), T['message'] + 0.01, 0.4, 0.15)              
 music = lp(MUS[:, 0], 9000)[:, None] * [1, 0] + lp(MUS[:, 1], 9000)[:, None] * [0, 1]
 sf.write(os.path.join(WORK, 'music-stem.wav'), (music / np.abs(music).max() * 0.8).astype(np.float32), SR)
 
-# v10: the drink sounds are real recordings supplied for the reel (sfx/): ice moving in water, and coffee poured over ice
-# with its fizz. Short slices are cut at a natural knock, given a 4ms fade-in and a soft tail, and kept low.
-from scipy.signal import resample_poly
-def load(name):
-    x, sr = sf.read(os.path.join(HERE, 'sfx', name)); x = x.mean(1) if x.ndim > 1 else x
-    return resample_poly(x, SR, sr) if sr != SR else x
-ICE, POUR = load('ice-water-movement.wav'), load('coffee-pour-on-ice-fizzy.wav')
-def cut(src, a, d, fin=0.004, fout=0.15):
-    x = src[int(a * SR):int((a + d) * SR)].copy(); n = len(x); t = np.arange(n) / SR
-    return x * np.minimum(1, t / fin) * np.clip((d - t) / fout, 0, 1)
-def place_rms(sig, t0, rel_db, pan=0.0):                   # long textures: set by their average level, not their loudest spike
-    r = np.sqrt(np.mean(sig ** 2))
-    s = sig / max(r, 1e-9) * REF * db(rel_db); s = np.stack([s * np.cos((pan + 1) * np.pi / 4), s * np.sin((pan + 1) * np.pi / 4)], -1)
-    i = int(round(t0 * SR)); k = min(len(s), N - i)
-    if k > 0: SFX[i:i + k] += s[:k]
-# the opening: an ice-in-water knock on every cut, over a quiet bed of ice moving in water
-for i, (t, (a, d)) in enumerate(zip(cuts, [(5.30, 0.7), (21.18, 0.7), (7.34, 0.75), (20.90, 0.6), (12.61, 0.6)])):
-    place(cut(ICE, a - 0.01, d), t, -20, [-0.15, 0.15, -0.1, 0.1, 0][i])
-bed = cut(ICE, 22.2, 6.3, fin=0.6, fout=0.8); place_rms(bed, 1.4, -38, 0.0)
+# the opening: an ice clink on every cut, faint fizz and ice-settle underneath
+for i, t in enumerate(cuts):
+    f = [2300, 2700, 1900, 2500, 2100][i]
+    place(splash(1.0), t + 0.01, -18, rng.uniform(-.2, .2))
+for i, t in enumerate(cuts):
+    d = SHOT
+    fz = hp(noise(d), 5000) * (0.5 + 0.5 * rng.uniform(0, 1, int(d * SR)) ** 6)
+    for _ in range(int(14 * d)): b = bubble(rng.uniform(1800, 4200), 0.02, 2.2); o = int(rng.uniform(0, d - 0.05) * SR); fz[o:o + len(b)] += 2.5 * b
+    place(fz * np.minimum(1, tt(d) / 0.3), t, -31, rng.uniform(-.3, .3))
+    if rng.uniform() < 0.5: place(splash(0.45), t + rng.uniform(0.6, d - 0.2), -30, rng.uniform(-.4, .4))
+# the ending: whoosh into the bridge, four ice ticks and a soft thump each, into the product, typing, the result tone
 kick = lambda: np.sin(2 * np.pi * np.cumsum(np.linspace(150, 48, int(0.25 * SR))) / SR) * env(0.25, 0.002, 0.07)
-# the question: coffee poured over ice as the karkadeh pulls into the green, its fullest moment on the words; the fizz stays under
-pour = cut(POUR, 0.9, 2.3, fin=0.25, fout=0.7)
-c = np.sqrt(np.mean(pour ** 2)) * db(10); pour = c * np.tanh(pour / c)               # tame the pour's splashes: no spike above the texture
-place_rms(pour, tq - 0.68, -31, 0.0)
-fizz = cut(POUR, 5.0, 4.0, fin=0.4, fout=1.2); place_rms(fizz, T['question'] + 1.4, -41, 0.0)
-place(whoosh(0.62, 400, 3000, 0.55), T['bridge'] - 0.34, -20)                                # rising as the first crop surfaces, peaking on the downbeat
-for k, t in enumerate(flashes[1:]): place(cut(ICE, [5.39, 19.28, 21.50][k] - 0.01, 0.42, fout=0.12), t, -24, (-1) ** k * 0.25)
-for k, t in enumerate(flashes): place(kick(), t, -21 if k else -22)
-place(whoosh(0.75, 280, 1500, 0.5), T['phoneIn'] - 0.02, -18)                                # the phone rising from below
+# the question: an ice cube dropped into a glass (plunk, two knocks, a settle), then a soft whoosh
+def icedrop(t0):
+    place(splash(1.4, 0.6), t0, -15, 0.0)
+    st = lp(noise(0.5), 3000) * env(0.5, 0.02, 0.12)
+    for _ in range(6): b = bubble(rng.uniform(900, 2000), 0.03, 2.0); o = int(rng.uniform(0.05, 0.4) * SR); st[o:o + len(b)] += 2.0 * b
+    place(st, t0 + 0.05, -24, 0.1)
+icedrop(tq - 0.03); place(whoosh(0.6, 300, 1500, 0.55), T['question'] - 0.04, -22)   # a soft swell under the focus pull; the cube lands with the words
+place(whoosh(0.62, 400, 3000, 0.55), T['bridge'] - 0.34, -17)                                # rising as the first crop surfaces, peaking on the downbeat
+for k, t in enumerate(flashes): place(splash(0.7), t, -22, (-1) ** k * 0.3); place(kick(), t, -18 if k else -19)
+place(whoosh(0.75, 280, 1500, 0.5), T['phoneIn'] - 0.02, -16)                                # the phone rising from below
 thud = lp(noise(0.12), 900) * env(0.12, 0.002, 0.03); place(thud, T['phoneIn'] + 0.6, -24)   # and settling
 click = lambda f: hp(noise(0.02), 2500) * env(0.02, 0.0003, 0.003) + 0.4 * modal([f], [0.012], [1], 0.02)
 place(click(1800), T['tap'], -18)                                                            # the tap into the field
@@ -160,7 +153,7 @@ for k, tk in enumerate(T['keys']):                                              
     place(hp(noise(0.03), 3000) * env(0.03, 0.0004, 0.004), FR(tk), -24 - rng.uniform(0, 2), rng.uniform(-.1, .1))
 place(click(1300), T['submit'], -17); place(bubble(700, 0.06, 1.6), T['submit'] + 0.01, -23)  # send
 for k, tg in enumerate([T['result'] + 1.0, T['card'] + 0.35]):           # ice settling, faintly, between the actions
-    place(cut(ICE, [0.96, 1.28][k] - 0.01, 0.5), tg, -30, rng.uniform(-.4, .4))
+    place(splash(0.5), tg, -30, rng.uniform(-.4, .4))
 
 
 
@@ -171,7 +164,7 @@ music = music / np.abs(music).max()
 music = reverb(music, ir(1.6, 4500), 0.22)
 g = ramp([(0, -30), (0.08, -11), (T['question'], -11), (tq, -10), (T['product'], -11), (T['typeStart'], -12), (T['submit'], -11.5), (DUR, -11.5)])
 duck = np.zeros(N)
-for t0 in [T['result']]:
+for t0 in cuts + flashes + [T['result']]:
     a = np.clip((TT - t0) / 0.004, 0, 1) * np.where(TT < t0 + 0.1, 1, np.exp(-(TT - t0 - 0.1) / 0.25)); duck = np.maximum(duck, 1.2 * a)
 music = music / np.abs(music).max() * REF * db(g - duck)[:, None]
 SFXL = np.stack([lp(SFX[:, c], 6500) for c in range(2)], -1)                  # v8: softer edges on every effect
