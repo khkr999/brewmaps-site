@@ -1,0 +1,57 @@
+<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="../../assets/fonts/dmsans.css">
+<style>html,body{margin:0;background:#000}</style>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// "Every path leads to coffee": a flowchart story after the reference, in BrewMaps style and mirrored for Arabic (reads
+// right to left). Cream ground, hand-drawn forest-green arrows, Tajawal, an unbranded iced latte in the centre (cut out of
+// our own generated two-cup plate), the BrewMaps logo small at the foot. Safe zone y 250–1600. No emojis.
+const BG = '#F4EFE6', INK = '#1B2A1D', G = '#163514';
+const img = s => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = s; });
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+window.ready = (async () => {
+  await Promise.all([document.fonts.load('600 60px "DM Sans"', 'Is there a problem? YES NO Can you solve it?')]);
+  const cup = await img('img/glass-cutout.png'), logo = await img('../../assets/logos/logo-green.png');
+  const c = document.getElementById('c').getContext('2d');
+  c.fillStyle = BG; c.fillRect(0, 0, 1080, 1920);
+  const v = c.createRadialGradient(540, 960, 500, 540, 960, 1250); v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(60,45,20,0.08)');
+  c.fillStyle = v; c.fillRect(0, 0, 1080, 1920);
+  // a hand-drawn stroke: the path is resampled and nudged a little, so it reads drawn, not plotted
+  const hand = pts => {
+    const P = []; for (let i = 0; i < pts.length - 1; i++) { const [x0, y0] = pts[i], [x1, y1] = pts[i + 1], n = Math.max(2, Math.round(Math.hypot(x1 - x0, y1 - y0) / 40));
+      for (let k = 0; k < n; k++) { const u = k / n; P.push([x0 + (x1 - x0) * u + (k ? (rnd() - 0.5) * 2.4 : 0), y0 + (y1 - y0) * u + (k ? (rnd() - 0.5) * 2.4 : 0)]); } }
+    P.push(pts[pts.length - 1]);
+    c.beginPath(); c.moveTo(P[0][0], P[0][1]); for (let i = 1; i < P.length - 1; i++) { const mx = (P[i][0] + P[i + 1][0]) / 2, my = (P[i][1] + P[i + 1][1]) / 2; c.quadraticCurveTo(P[i][0], P[i][1], mx, my); }
+    c.lineTo(P[P.length - 1][0], P[P.length - 1][1]); c.stroke();
+  };
+  const head = (x, y, ang) => { const L = 34, a = 0.62; hand([[x - L * Math.cos(ang - a), y - L * Math.sin(ang - a)], [x, y]]); hand([[x - L * Math.cos(ang + a), y - L * Math.sin(ang + a)], [x, y]]); };
+  const arrow = pts => { hand(pts); const [x0, y0] = pts[pts.length - 2], [x1, y1] = pts[pts.length - 1]; head(x1, y1, Math.atan2(y1 - y0, x1 - x0)); };
+  const ar = (t, x, y, size = 62, align = 'center', col = INK) => { c.direction = 'rtl'; c.textAlign = align; c.fillStyle = col; c.font = `700 ${size}px "Tajawal"`; c.fillText(t, x, y); };
+  c.strokeStyle = G; c.lineWidth = 10; c.lineCap = 'round'; c.lineJoin = 'round';
+  // English version: the Arabic v6 layout mirrored to read left to right (x → 1080 − x), DM Sans
+  const en = (t, x, y, size = 60) => { c.direction = 'ltr'; c.textAlign = 'center'; c.fillStyle = INK; c.font = `600 ${size}px "DM Sans"`; c.fillText(t, x, y); };
+  c.font = '600 60px "DM Sans"'; const qw = c.measureText('Is there a problem?').width;
+  en('Is there a problem?', 540, 352, 60);
+  // left: YES, down to "Can you solve it?"
+  hand([[540 - qw / 2 - 26, 330], [175, 330]]); arrow([[175, 330], [175, 690]]);
+  en('YES', 175, 780, 58);
+  arrow([[175, 830], [175, 1390]]);
+  en('Can you', 205, 1476, 50); en('solve it?', 205, 1540, 50);
+  // right: NO, straight into the coffee
+  hand([[540 + qw / 2 + 26, 330], [905, 330]]); hand([[905, 330], [905, 600]]);
+  en('NO', 905, 690, 58);
+  hand([[905, 740], [905, 960]]); arrow([[905, 960], [708, 960]]);
+  // the coffee, centred
+  const cw = 320, ch = cw * cup.height / cup.width, cx = 540 - cw / 2, cy = 1272 - ch;
+  const sh = c.createRadialGradient(540, 1268, 10, 540, 1268, 185); sh.addColorStop(0, 'rgba(40,30,15,0.3)'); sh.addColorStop(1, 'rgba(40,30,15,0)');
+  c.save(); c.translate(540, 1268); c.scale(1, 0.16); c.translate(-540, -1268); c.fillStyle = sh; c.fillRect(300, 1048, 480, 440); c.restore();
+  c.drawImage(cup, cx, cy, cw, ch);
+  // from "Can you solve it?": two arrows into the centred column NO / YES
+  arrow([[330, 1456], [470, 1456]]); arrow([[330, 1530], [470, 1530]]);
+  en('NO', 540, 1478, 58); en('YES', 540, 1552, 58);
+  arrow([[540, 1412], [540, 1300]]);                                   // NO → straight up into the middle of the glass
+  hand([[614, 1530], [905, 1530]]); arrow([[905, 1530], [905, 1150], [708, 1150]]);   // YES → the long way round, still into the coffee
+  // v2: no logo at the foot; the line at the top says it
+})();
+window.png = () => document.getElementById('c').toDataURL('image/png');
+</script>
