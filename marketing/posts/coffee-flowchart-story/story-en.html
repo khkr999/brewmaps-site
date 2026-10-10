@@ -31,20 +31,20 @@ window.ready = (async () => {
   // English version: the Arabic v6 layout mirrored to read left to right (x → 1080 − x), DM Sans
   const en = (t, x, y, size = 60) => { c.direction = 'ltr'; c.textAlign = 'center'; c.fillStyle = INK; c.font = `600 ${size}px "DM Sans"`; c.fillText(t, x, y); };
   c.font = '600 60px "DM Sans"'; const qw = c.measureText('Is there a problem?').width;
-  en('Is there a problem?', 540, 352, 60);
+  en('Is there a problem?', 540, 305, 60);
   // left: YES, down to "Can you solve it?"
-  hand([[540 - qw / 2 - 26, 330], [175, 330]]); arrow([[175, 330], [175, 690]]);
-  en('YES', 175, 780, 58);
-  arrow([[175, 830], [175, 1390]]);
-  en('Can you', 205, 1476, 50); en('solve it?', 205, 1540, 50);
+  hand([[540 - qw / 2 - 26, 281], [175, 281]]); arrow([[175, 281], [175, 676]]);
+  en('YES', 175, 775, 58);
+  arrow([[175, 830], [175, 1444]]);
+  en('Can you', 205, 1539, 50); en('solve it?', 205, 1609, 50);
   // right: NO, straight into the coffee
-  hand([[540 + qw / 2 + 26, 330], [905, 330]]); hand([[905, 330], [905, 600]]);
-  en('NO', 905, 690, 58);
-  hand([[905, 740], [905, 960]]); arrow([[905, 960], [708, 960]]);
-  // the coffee, centred
-  const cw = 320, ch = cw * cup.height / cup.width, cx = 540 - cw / 2, cy = 1272 - ch;
-  const sh = c.createRadialGradient(540, 1268, 10, 540, 1268, 185); sh.addColorStop(0, 'rgba(40,30,15,0.3)'); sh.addColorStop(1, 'rgba(40,30,15,0)');
-  c.save(); c.translate(540, 1268); c.scale(1, 0.16); c.translate(-540, -1268); c.fillStyle = sh; c.fillRect(300, 1048, 480, 440); c.restore();
+  hand([[540 + qw / 2 + 26, 281], [905, 281]]); hand([[905, 281], [905, 577]]);
+  en('NO', 905, 676, 58);
+  hand([[905, 731], [905, 972]]); arrow([[905, 972], [728, 972]]);
+  // the coffee, centred, a little larger
+  const cw = 350, ch = cw * cup.height / cup.width, cx = 540 - cw / 2, cy = 1315 - ch;
+  const sh = c.createRadialGradient(540, 1310, 10, 540, 1310, 200); sh.addColorStop(0, 'rgba(40,30,15,0.3)'); sh.addColorStop(1, 'rgba(40,30,15,0)');
+  c.save(); c.translate(540, 1310); c.scale(1, 0.16); c.translate(-540, -1310); c.fillStyle = sh; c.fillRect(290, 1070, 500, 480); c.restore();
   c.drawImage(cup, cx, cy, cw, ch);
   // the BrewMaps flag on the straw: a small pennant in brand green with the cream mark, hung from the straw's tip
   // (the straw leans ~5° right as it rises), with a gentle wave in the cloth
@@ -62,10 +62,10 @@ window.ready = (async () => {
     c.fillStyle = '#2a1d16'; c.beginPath(); c.arc(tx, ty + 2, 8, 0, Math.PI * 2); c.fill();                       // the straw's tip over the hoist
   }
   // from "Can you solve it?": two arrows into the centred column NO / YES
-  arrow([[330, 1456], [470, 1456]]); arrow([[330, 1530], [470, 1530]]);
-  en('NO', 540, 1478, 58); en('YES', 540, 1552, 58);
-  arrow([[540, 1412], [540, 1300]]);                                   // NO → straight up into the middle of the glass
-  hand([[614, 1530], [905, 1530]]); arrow([[905, 1530], [905, 1150], [708, 1150]]);   // YES → the long way round, still into the coffee
+  arrow([[330, 1517], [470, 1517]]); arrow([[330, 1598], [470, 1598]]);
+  en('NO', 540, 1541, 58); en('YES', 540, 1622, 58);
+  arrow([[540, 1468], [540, 1345]]);                                   // NO → straight up into the middle of the glass
+  hand([[614, 1598], [905, 1598]]); arrow([[905, 1598], [905, 1181], [728, 1181]]);   // YES → the long way round, still into the coffee
   // v2: no logo at the foot; the line at the top says it
 })();
 window.png = () => document.getElementById('c').toDataURL('image/png');

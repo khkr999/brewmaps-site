@@ -28,22 +28,22 @@ window.ready = (async () => {
   const arrow = pts => { hand(pts); const [x0, y0] = pts[pts.length - 2], [x1, y1] = pts[pts.length - 1]; head(x1, y1, Math.atan2(y1 - y0, x1 - x0)); };
   const ar = (t, x, y, size = 62, align = 'center', col = INK) => { c.direction = 'rtl'; c.textAlign = align; c.fillStyle = col; c.font = `700 ${size}px "Tajawal"`; c.fillText(t, x, y); };
   c.strokeStyle = G; c.lineWidth = 10; c.lineCap = 'round'; c.lineJoin = 'round';
-  // v6: a tall layout for the 9:16 frame (content ~310–1580, side margins ~150); the bottom لا/إيه column is centred
+  // v7: the tall layout stretched to the full story safe area (content ~255–1640, side margins ~150); the bottom لا/إيه column is centred
   // under the cup so the up arrow lands in the middle of the glass
-  ar('عندك مشكلة؟', 540, 352, 68);
+  ar('عندك مشكلة؟', 540, 305, 68);
   // right: إيه, down to "تقدر تحلها؟"
-  hand([[778, 330], [905, 330]]); arrow([[905, 330], [905, 690]]);
-  ar('إيه', 905, 780, 64);
-  arrow([[905, 830], [905, 1390]]);
-  ar('تقدر', 880, 1478, 58); ar('تحلها؟', 880, 1546, 58);
+  hand([[778, 281], [905, 281]]); arrow([[905, 281], [905, 676]]);
+  ar('إيه', 905, 775, 64);
+  arrow([[905, 830], [905, 1444]]);
+  ar('تقدر', 880, 1541, 58); ar('تحلها؟', 880, 1615, 58);
   // left: لا, straight into the coffee
-  hand([[302, 330], [175, 330]]); hand([[175, 330], [175, 600]]);
-  ar('لا', 175, 690, 64);
-  hand([[175, 740], [175, 960]]); arrow([[175, 960], [372, 960]]);
-  // the coffee, centred
-  const cw = 320, ch = cw * cup.height / cup.width, cx = 540 - cw / 2, cy = 1272 - ch;
-  const sh = c.createRadialGradient(540, 1268, 10, 540, 1268, 185); sh.addColorStop(0, 'rgba(40,30,15,0.3)'); sh.addColorStop(1, 'rgba(40,30,15,0)');
-  c.save(); c.translate(540, 1268); c.scale(1, 0.16); c.translate(-540, -1268); c.fillStyle = sh; c.fillRect(300, 1048, 480, 440); c.restore();
+  hand([[302, 281], [175, 281]]); hand([[175, 281], [175, 577]]);
+  ar('لا', 175, 676, 64);
+  hand([[175, 731], [175, 972]]); arrow([[175, 972], [352, 972]]);
+  // the coffee, centred, a little larger
+  const cw = 350, ch = cw * cup.height / cup.width, cx = 540 - cw / 2, cy = 1315 - ch;
+  const sh = c.createRadialGradient(540, 1310, 10, 540, 1310, 200); sh.addColorStop(0, 'rgba(40,30,15,0.3)'); sh.addColorStop(1, 'rgba(40,30,15,0)');
+  c.save(); c.translate(540, 1310); c.scale(1, 0.16); c.translate(-540, -1310); c.fillStyle = sh; c.fillRect(290, 1070, 500, 480); c.restore();
   c.drawImage(cup, cx, cy, cw, ch);
   // the BrewMaps flag on the straw: a small pennant in brand green with the cream mark, hung from the straw's tip
   // (the straw leans ~5° right as it rises), with a gentle wave in the cloth
@@ -61,10 +61,10 @@ window.ready = (async () => {
     c.fillStyle = '#2a1d16'; c.beginPath(); c.arc(tx, ty + 2, 8, 0, Math.PI * 2); c.fill();                       // the straw's tip over the hoist
   }
   // from "تقدر تحلها؟": two arrows into the centred column لا / إيه
-  arrow([[762, 1456], [605, 1456]]); arrow([[762, 1530], [605, 1530]]);
-  ar('لا', 540, 1478, 64); ar('إيه', 540, 1552, 64);
-  arrow([[540, 1412], [540, 1300]]);                                   // لا → straight up into the middle of the glass
-  hand([[482, 1530], [175, 1530]]); arrow([[175, 1530], [175, 1150], [372, 1150]]);   // إيه → the long way round, still into the coffee
+  arrow([[762, 1517], [605, 1517]]); arrow([[762, 1598], [605, 1598]]);
+  ar('لا', 540, 1541, 64); ar('إيه', 540, 1622, 64);
+  arrow([[540, 1468], [540, 1345]]);                                   // لا → straight up into the middle of the glass
+  hand([[482, 1598], [175, 1598]]); arrow([[175, 1598], [175, 1181], [352, 1181]]);   // إيه → the long way round, still into the coffee
   // v2: no logo at the foot; the line at the top says it
 })();
 window.png = () => document.getElementById('c').toDataURL('image/png');
