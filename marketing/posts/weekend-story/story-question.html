@@ -1,0 +1,30 @@
+<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="../../assets/fonts/tajawal.css">
+<style>html,body{margin:0;background:#000}</style>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// Question-box story: "وش الكوفي اللي ما تمل منه؟" over the cold-brew macro (generated, no café). A clear band in the
+// middle for Instagram's Question sticker. Text inside the safe zone (below y=250, above y=1600).
+const CREAM = '#F4EFE6', PALE = '#A9D19A';
+const img = s => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = s; });
+window.ready = (async () => {
+  await Promise.all([document.fonts.load('800 104px "Tajawal"', 'الكوفي'), document.fonts.load('500 40px "Tajawal"', 'شاركنا')]);
+  const bg = await img('../cold-drinks/plates/cold-brew.jpg'), lock = await img('../find-rate-earn-carousel/img/lockup-cream.png');
+  const c = document.getElementById('c').getContext('2d');
+  c.drawImage(bg, 0, 0, 1080, 1920);
+  c.fillStyle = 'rgba(8,18,9,0.35)'; c.fillRect(0, 0, 1080, 1920);                       // a green-black wash over the whole image
+  let g = c.createLinearGradient(0, 0, 0, 900); g.addColorStop(0, 'rgba(8,18,9,0.85)'); g.addColorStop(0.75, 'rgba(8,18,9,0.55)'); g.addColorStop(1, 'rgba(8,18,9,0)');
+  c.fillStyle = g; c.fillRect(0, 0, 1080, 900);
+  g = c.createRadialGradient(540, 1250, 60, 540, 1250, 520); g.addColorStop(0, 'rgba(8,18,9,0.55)'); g.addColorStop(1, 'rgba(8,18,9,0)');
+  c.fillStyle = g; c.fillRect(0, 700, 1080, 1100);                                          // a soft dark pool where the sticker sits
+  const lw = 300, lh = lw * lock.height / lock.width; c.drawImage(lock, (1080 - lw) / 2, 300, lw, lh);
+  const ar = (t, y, size, w, col) => { c.direction = 'rtl'; c.textAlign = 'center'; c.fillStyle = col; c.font = `${w} ${size}px "Tajawal"`; c.fillText(t, 540, y); };
+  c.shadowColor = 'rgba(0,0,0,0.4)'; c.shadowBlur = 22;
+  ar('وش الكوفي', 520, 104, 800, CREAM);
+  ar('اللي ما تمل منه؟', 646, 104, 800, PALE);
+  c.shadowBlur = 0;
+  ar('شاركنا اسمه، يمكن يصير المفضل عند غيرك', 740, 40, 500, 'rgba(244,239,230,0.82)');
+  ar('اكتب اسمه تحت', 1105, 34, 500, 'rgba(244,239,230,0.7)');   // the Question sticker goes just below this line
+})();
+window.png = () => document.getElementById('c').toDataURL('image/png');
+</script>

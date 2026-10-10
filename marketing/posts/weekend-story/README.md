@@ -8,3 +8,9 @@ under the cups for Instagram's poll sticker. Text stays inside the story safe zo
 headline asks it). Options: left **بارد**, right **حار**, matching the cups. No caption needed.
 
 `story.html` draws it; `node render.js export/weekend-hot-or-iced.png` re-renders.
+
+## Story 2 · وش الكوفي اللي ما تمل منه؟ — `export/weekend-your-regular-cafe.png`
+
+A Question-box story to get replies (people type their favourite café) over the cold-brew macro
+(`../cold-drinks/plates/cold-brew.jpg`, generated). **When posting:** add the Question sticker just under "اكتب اسمه تحت"
+(middle of the screen), prompt text: **اكتب اسم الكوفي**. Re-render: `node render.js export/weekend-your-regular-cafe.png story-question.html`.
