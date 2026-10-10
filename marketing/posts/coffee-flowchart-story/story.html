@@ -38,17 +38,17 @@ window.ready = (async () => {
   // left: لا, straight into the coffee
   hand([[305, 425], [175, 425]]); hand([[175, 425], [175, 690]]);
   ar('لا', 175, 780, 62);
-  hand([[175, 830], [175, 905]]); arrow([[175, 905], [338, 905]]);
+  hand([[175, 830], [175, 905]]); arrow([[175, 905], [372, 905]]);
   // the coffee: the supplied glass, a little smaller
-  const cw = 380, ch = cw * cup.height / cup.width, cx = 540 - cw / 2, cy = 1270 - ch;
-  const sh = c.createRadialGradient(540, 1266, 10, 540, 1266, 220); sh.addColorStop(0, 'rgba(40,30,15,0.3)'); sh.addColorStop(1, 'rgba(40,30,15,0)');
-  c.save(); c.translate(540, 1266); c.scale(1, 0.16); c.translate(-540, -1266); c.fillStyle = sh; c.fillRect(310, 1046, 460, 440); c.restore();
+  const cw = 320, ch = cw * cup.height / cup.width, cx = 540 - cw / 2, cy = 1270 - ch;
+  const sh = c.createRadialGradient(540, 1266, 10, 540, 1266, 185); sh.addColorStop(0, 'rgba(40,30,15,0.3)'); sh.addColorStop(1, 'rgba(40,30,15,0)');
+  c.save(); c.translate(540, 1266); c.scale(1, 0.16); c.translate(-540, -1266); c.fillStyle = sh; c.fillRect(300, 1046, 480, 440); c.restore();
   c.drawImage(cup, cx, cy, cw, ch);
   // from "تقدر تحلها؟": two arrows, to لا and إيه
   arrow([[765, 1398], [628, 1398]]); arrow([[765, 1464], [628, 1464]]);
   ar('لا', 578, 1420, 62); ar('إيه', 578, 1486, 62);
   arrow([[578, 1356], [578, 1292]]);                                   // لا → up into the coffee
-  hand([[508, 1464], [175, 1464]]); arrow([[175, 1464], [175, 1125], [338, 1125]]);   // إيه → the long way round, still into the coffee
+  hand([[508, 1464], [175, 1464]]); arrow([[175, 1464], [175, 1125], [372, 1125]]);   // إيه → the long way round, still into the coffee
   // v2: no logo at the foot; the line at the top says it
 })();
 window.png = () => document.getElementById('c').toDataURL('image/png');
