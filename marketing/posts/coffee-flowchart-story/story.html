@@ -11,11 +11,12 @@ const img = s => new Promise(r => { const i = new Image(); i.onload = () => r(i)
 let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 window.ready = (async () => {
   await Promise.all([document.fonts.load('700 62px "Tajawal"', 'عندك مشكلة'), document.fonts.load('700 64px "Tajawal"', 'إيه لا'), document.fonts.load('800 54px "Tajawal"', 'كل الطرق BrewMaps')]);
-  const cup = await img('img/iced-latte-cutout.png'), logo = await img('../../assets/logos/logo-green.png');
+  const cup = await img('img/glass-cutout.png'), logo = await img('../../assets/logos/logo-green.png');
   const c = document.getElementById('c').getContext('2d');
   c.fillStyle = BG; c.fillRect(0, 0, 1080, 1920);
   const v = c.createRadialGradient(540, 960, 500, 540, 960, 1250); v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(60,45,20,0.08)');
   c.fillStyle = v; c.fillRect(0, 0, 1080, 1920);
+  c.translate(0, 25);                                       // balance the space above and below
   // a hand-drawn stroke: the path is resampled and nudged a little, so it reads drawn, not plotted
   const hand = pts => {
     const P = []; for (let i = 0; i < pts.length - 1; i++) { const [x0, y0] = pts[i], [x1, y1] = pts[i + 1], n = Math.max(2, Math.round(Math.hypot(x1 - x0, y1 - y0) / 40));
@@ -28,29 +29,28 @@ window.ready = (async () => {
   const arrow = pts => { hand(pts); const [x0, y0] = pts[pts.length - 2], [x1, y1] = pts[pts.length - 1]; head(x1, y1, Math.atan2(y1 - y0, x1 - x0)); };
   const ar = (t, x, y, size = 62, align = 'center', col = INK) => { c.direction = 'rtl'; c.textAlign = align; c.fillStyle = col; c.font = `700 ${size}px "Tajawal"`; c.fillText(t, x, y); };
   c.strokeStyle = G; c.lineWidth = 10; c.lineCap = 'round'; c.lineJoin = 'round';
-  // the line above the flowchart
-  c.direction = 'rtl'; c.textAlign = 'center'; c.fillStyle = G; c.font = '800 54px "Tajawal"'; c.fillText('كل الطرق تؤدي إلى BrewMaps', 540, 300);
-  // the question
-  ar('عندك مشكلة؟', 540, 440, 66);
+  // v3: the layout fills the story top to bottom (title 330 → last arrow ~1600)
+  c.direction = 'rtl'; c.textAlign = 'center'; c.fillStyle = G; c.font = '800 54px "Tajawal"'; c.fillText('كل الطرق تؤدي إلى BrewMaps', 540, 330);
+  ar('عندك مشكلة؟', 540, 500, 66);
   // right: إيه, down to "تقدر تحلها؟"
-  hand([[800, 420], [905, 420]]); arrow([[905, 420], [905, 690]]);
-  ar('إيه', 905, 780, 64);
-  arrow([[905, 830], [905, 1250]]);
-  ar('تقدر', 905, 1340, 58); ar('تحلها؟', 905, 1408, 58);
+  hand([[800, 480], [905, 480]]); arrow([[905, 480], [905, 790]]);
+  ar('إيه', 905, 880, 64);
+  arrow([[905, 930], [905, 1400]]);
+  ar('تقدر', 905, 1490, 58); ar('تحلها؟', 905, 1558, 58);
   // left: لا, straight into the coffee
-  hand([[280, 420], [172, 420]]); hand([[172, 420], [172, 640]]);
-  ar('لا', 172, 730, 64);
-  hand([[172, 780], [172, 860]]); arrow([[172, 860], [320, 860]]);
-  // the coffee
-  const cw = 380, ch = cw * cup.height / cup.width, cx = 540 - cw / 2 + 10, cy = 650;
-  const sh = c.createRadialGradient(540, cy + ch - 6, 10, 540, cy + ch - 6, 230); sh.addColorStop(0, 'rgba(40,30,15,0.28)'); sh.addColorStop(1, 'rgba(40,30,15,0)');
-  c.save(); c.translate(540, cy + ch - 6); c.scale(1, 0.18); c.translate(-540, -(cy + ch - 6)); c.fillStyle = sh; c.fillRect(300, cy + ch - 240, 480, 480); c.restore();
+  hand([[280, 480], [172, 480]]); hand([[172, 480], [172, 740]]);
+  ar('لا', 172, 830, 64);
+  hand([[172, 880], [172, 960]]); arrow([[172, 960], [318, 960]]);
+  // the coffee: the supplied glass, cut out (glass and straw, no coaster)
+  const cw = 420, ch = cw * cup.height / cup.width, cx = 540 - cw / 2, cy = 1335 - ch;
+  const sh = c.createRadialGradient(540, 1330, 10, 540, 1330, 240); sh.addColorStop(0, 'rgba(40,30,15,0.3)'); sh.addColorStop(1, 'rgba(40,30,15,0)');
+  c.save(); c.translate(540, 1330); c.scale(1, 0.16); c.translate(-540, -1330); c.fillStyle = sh; c.fillRect(290, 1090, 500, 480); c.restore();
   c.drawImage(cup, cx, cy, cw, ch);
   // from "تقدر تحلها؟": two arrows, to لا and إيه
-  arrow([[790, 1318], [612, 1318]]); arrow([[790, 1392], [612, 1392]]);
-  ar('لا', 560, 1340, 64); ar('إيه', 560, 1414, 64);
-  arrow([[560, 1275], [560, 1180]]);                                   // لا → up into the coffee
-  hand([[488, 1392], [172, 1392]]); arrow([[172, 1392], [172, 1030], [325, 1030]]);   // إيه → the long way round, still into the coffee
+  arrow([[790, 1468], [612, 1468]]); arrow([[790, 1542], [612, 1542]]);
+  ar('لا', 560, 1490, 64); ar('إيه', 560, 1564, 64);
+  arrow([[560, 1425], [560, 1360]]);                                   // لا → up into the coffee
+  hand([[488, 1542], [172, 1542]]); arrow([[172, 1542], [172, 1170], [318, 1170]]);   // إيه → the long way round, still into the coffee
   // v2: no logo at the foot; the line at the top says it
 })();
 window.png = () => document.getElementById('c').toDataURL('image/png');
