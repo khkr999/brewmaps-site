@@ -1,0 +1,146 @@
+<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="../../assets/fonts/tajawal.css">
+<link rel="stylesheet" href="../../assets/fonts/playfair.css">
+<link rel="stylesheet" href="../../assets/fonts/dmsans.css">
+<style>html,body{margin:0;background:#000}</style>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script src="timing.js"></script>
+<script>
+// v3 = the v1 opening + the v2 ending. Five near-still macro shots on a slow push, hard cuts every 1.55s, a centred
+// name (Arabic over small letter-spaced serif caps); the last shot holds while its name gives way to the question.
+// Then the bridge (four flashes), BrewMaps doing something (Ask BrewMaps: a query typed, one result), and a one-second card.
+const CREAM = '#F4EFE6', PALE = '#A9D19A', FOREST = '#163514', INK = '#1a1a1a';
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+const ease = u => u * u * (3 - 2 * u), easeOut = u => 1 - (1 - u) * (1 - u), mix = (a, b, u) => a + (b - a) * u;
+const img = src => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = src; });
+const ctx = document.getElementById('c').getContext('2d');
+let A = {};
+window.DURATION = T.end;
+window.ready = (async () => {
+  await Promise.all([document.fonts.load('500 86px "Tajawal"', 'آيس'), document.fonts.load('800 92px "Tajawal"', 'ذوقك'), document.fonts.load('500 40px "Tajawal"', 'درهم'), document.fonts.load('600 38px "Playfair Display"', 'ICED'), document.fonts.load('600 36px "DM Sans"', 'Ask'), document.fonts.load('600 72px "DM Sans"', 'BrewMaps')]);
+  A.plates = await Promise.all(SHOTS.map(s => img(s.plate)));
+  A.byKey = {}; for (const k in PLATES) A.byKey[k] = await img(PLATES[k]);
+  A.mark = await img('../find-rate-earn-carousel/img/mark-cream.png');
+  A.lockup = await img('../find-rate-earn-carousel/img/lockup-cream.png');
+  A.map = await img('../coffee-routine-update/img/appmap.png');
+})();
+
+// ── the v1 opening ──────────────────────────────────────────────────────────
+function shotAt(t) {
+  const i = Math.min(SHOTS.length - 1, Math.floor(t / SHOT));
+  return { i, u: i === SHOTS.length - 1 ? (t - i * SHOT) / (T.bridge - i * SHOT) : (t - i * SHOT) / SHOT };
+}
+function drawPlate(i, u) {                                  // slow push: 1.00 → 1.07, with a little drift, never stopping
+  const s = SHOTS[i], z = 1.0 + 0.075 * u, dx = s.drift[0] * 26 * u, dy = s.drift[1] * 26 * u;
+  ctx.save(); ctx.translate(540 + dx, 960 + dy); ctx.scale(z, z); ctx.translate(-540, -960);
+  ctx.drawImage(A.plates[i], 0, 0, 1080, 1920); ctx.restore();
+  const g = ctx.createRadialGradient(540, 960, 300, 540, 960, 1150);
+  g.addColorStop(0, 'rgba(0,0,0,0.18)'); g.addColorStop(1, 'rgba(0,0,0,0.42)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, 1080, 1920);
+}
+function name(i, a) {                                       // centred: the Arabic name (a little larger than v1) over small spaced serif caps
+  if (a <= 0) return;
+  const s = SHOTS[i];
+  ctx.save(); ctx.globalAlpha = a; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  scrim(975, 520, 0.38);
+  ctx.shadowColor = 'rgba(0,0,0,0.4)'; ctx.shadowBlur = 18;
+  ctx.direction = 'rtl'; ctx.fillStyle = CREAM; ctx.font = '500 88px "Tajawal"'; ctx.fillText(s.ar, 540, 944);
+  ctx.direction = 'ltr'; ctx.fillStyle = CREAM; ctx.font = '600 38px "Playfair Display"';
+  const sp = 0.34 * 38, w = ctx.measureText(s.en).width + sp * (s.en.length - 1); let x = 540 - w / 2;
+  ctx.textAlign = 'left'; for (const ch of s.en) { ctx.fillText(ch, x, 1022); x += ctx.measureText(ch).width + sp; }
+  ctx.restore();
+}
+
+// ── the v2 ending ───────────────────────────────────────────────────────────
+function plate(key, z, c, u, drift = [0, 0]) {
+  const im = A.byKey[key], zz = z + 0.06 * u, cx = c[0] * 1080, cy = c[1] * 1920;
+  ctx.save(); ctx.translate(540 + drift[0] * 22 * u, 960 + drift[1] * 22 * u); ctx.scale(zz, zz); ctx.translate(-cx, -cy);
+  ctx.drawImage(im, 0, 0, 1080, 1920); ctx.restore();
+}
+function scrim(y, h, a) {
+  const g = ctx.createLinearGradient(0, y - h / 2, 0, y + h / 2);
+  g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(0.5, `rgba(0,0,0,${a})`); g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, y - h / 2, 1080, h);
+}
+function arabic(text, x, y, size, weight, align, a = 1, color = CREAM) {
+  ctx.save(); ctx.globalAlpha = a; ctx.direction = 'rtl'; ctx.textAlign = align; ctx.fillStyle = color;
+  ctx.font = `${weight} ${size}px "Tajawal"`; ctx.fillText(text, x, y); ctx.restore();
+}
+function drawPhone(t) {                                    // Ask BrewMaps: the query typed, then results over the real map
+  const u = seg(t, T.product, T.product + 0.7), lift = (1 - easeOut(u)) * 110;
+  const W = 760, H = 1640, x = 540 - W / 2, y = 440 + lift, r = 86;
+  ctx.save(); ctx.globalAlpha = easeOut(u);
+  ctx.shadowColor = 'rgba(0,0,0,0.45)'; ctx.shadowBlur = 60; ctx.shadowOffsetY = 20;
+  ctx.fillStyle = '#111'; ctx.beginPath(); ctx.roundRect(x - 14, y - 14, W + 28, H + 28, r + 14); ctx.fill();
+  ctx.shadowColor = 'transparent';
+  ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.roundRect(x, y, W, H, r); ctx.fill();
+  ctx.save(); ctx.beginPath(); ctx.roundRect(x, y, W, H, r); ctx.clip();
+  ctx.fillStyle = '#111'; ctx.beginPath(); ctx.roundRect(540 - 70, y + 22, 140, 38, 19); ctx.fill();
+  const m = A.mark, mw = 46, mh = mw * m.height / m.width;
+  ctx.save(); ctx.filter = 'brightness(0.18)'; ctx.drawImage(m, x + 54, y + 112, mw, mh); ctx.restore();
+  ctx.fillStyle = INK; ctx.font = '600 36px "DM Sans"'; ctx.textAlign = 'left'; ctx.direction = 'ltr'; ctx.fillText('Ask BrewMaps', x + 118, y + 146);
+  const px = x + 44, py = y + 200, pw = W - 88, ph = 104;
+  ctx.fillStyle = '#F1F1F1'; ctx.beginPath(); ctx.roundRect(px, py, pw, ph, 52); ctx.fill();
+  const n = Math.round(APP.query.length * ease(seg(t, T.typeStart, T.typeEnd)));
+  const typed = APP.query.slice(0, n), caret = t < T.result && Math.floor(t * 6) % 2 === 0;
+  arabic(typed + (caret ? '|' : ''), px + pw - 36, py + 68, 40, '500', 'right', 1, INK);
+  if (n === 0) arabic('اسأل عن أي كوفي…', px + pw - 36, py + 68, 40, '400', 'right', 0.5, '#777');
+  const rv = seg(t, T.result, T.result + 0.5), ry = py + ph + 36 + (1 - easeOut(rv)) * 40;
+  if (rv > 0) {
+    ctx.save(); ctx.globalAlpha = rv;
+    arabic(APP.results, px + pw, ry + 36, 34, '500', 'right', 1, '#6b6b6b');
+    const cy = ry + 64, ch = 380;
+    ctx.beginPath(); ctx.roundRect(px, cy, pw, ch, 34); ctx.clip();
+    const mp = A.map, s = pw / mp.width; ctx.drawImage(mp, px, cy, pw, mp.height * s);
+    ctx.restore(); ctx.save(); ctx.globalAlpha = rv;
+    ctx.strokeStyle = '#E6E6E6'; ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect(px, cy, pw, ch, 34); ctx.stroke();
+    const rows = [[APP.top, APP.match, FOREST, PALE, 1], ['سبانيش لاتيه · ١٩ درهم · ٩ دقايق', '٨٥٪ على ذوقك', '#E7EFE2', FOREST, 0.85], ['سبانيش لاتيه · ١٧ درهم · ١٢ دقيقة', '٧٨٪ على ذوقك', '#EFEFEF', '#555', 0.7]];
+    rows.forEach(([line, match, bg, fg, al], k) => {
+      const by = cy + ch + 30 + k * 172, rk = seg(rv, 0.25 * k, 0.25 * k + 0.5);
+      ctx.save(); ctx.globalAlpha = rv * al * rk;
+      ctx.fillStyle = k === 0 ? '#F7F7F7' : '#FAFAFA'; ctx.beginPath(); ctx.roundRect(px, by, pw, 150, 30); ctx.fill();
+      if (k === 0) { ctx.strokeStyle = '#DCE8D5'; ctx.lineWidth = 2; ctx.stroke(); }
+      arabic(line, px + pw - 32, by + 62, 36, '700', 'right', 1, INK);
+      ctx.fillStyle = bg; ctx.beginPath(); ctx.roundRect(px + pw - 32 - 250, by + 86, 250, 46, 23); ctx.fill();
+      arabic(match, px + pw - 32 - 125, by + 118, 28, '700', 'center', 1, fg);
+      ctx.restore();
+    });
+    ctx.restore();
+  }
+  ctx.restore(); ctx.restore();
+}
+
+window.frame = t => {
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 1080, 1920);
+  if (t < T.question) {                                    // the opening: five slow shots, names centred
+    const { i, u } = shotAt(t);
+    drawPlate(i, u);
+    name(i, seg(t - i * SHOT, 0.06, 0.28));
+  } else if (t < T.bridge) {                               // the question: the last drink dissolves into the green, the line eases in
+    const d = ease(seg(t, T.question, T.question + 0.5));
+    drawPlate(SHOTS.length - 1, 1 + (t - T.question) / SHOT);
+    ctx.fillStyle = `rgba(16,36,18,${d})`; ctx.fillRect(0, 0, 1080, 1920);
+    const qa = ease(seg(t, T.question + 0.2, T.question + 0.65));
+    arabic(QUESTION.text, 540, 990 + (1 - qa) * 24, 104, '800', 'center', qa);
+  } else if (t < T.product) {                              // the bridge: four flashes, two lines
+    const k = Math.min(3, Math.floor((t - T.bridge) / (BEAT / 2))), [key, z, c] = BRIDGE.flashes[k];
+    plate(key, z, c, (t - T.bridge) / (2 * BEAT), [0, 0]);
+    scrim(960, 560, 0.45);
+    const a = ease(seg(t, T.bridge, T.bridge + 0.3));
+    const L = A.lockup, lw = 400, lh = lw * L.height / L.width;
+    ctx.save(); ctx.globalAlpha = a; ctx.drawImage(L, (1080 - lw) / 2, 860 + (1 - a) * 16, lw, lh); ctx.restore();
+    arabic(BRIDGE.lines[1], 540, 1050 + (1 - a) * 16, 74, '800', 'center', a, PALE);
+  } else if (t < T.card) {                                 // the product moment, calmer
+    ctx.fillStyle = 'rgb(16,36,18)'; ctx.fillRect(0, 0, 1080, 1920);
+    const mv = seg(t, T.message, T.message + 0.5);
+    if (mv > 0) { arabic(APP.message[0], 540, 215, 70, '800', 'center', mv); arabic(APP.message[1], 540, 305, 70, '800', 'center', mv, PALE); }
+    drawPhone(t);
+  } else {                                                 // the end: the phone holds, then everything fades out
+    ctx.fillStyle = 'rgb(16,36,18)'; ctx.fillRect(0, 0, 1080, 1920);
+    arabic(APP.message[0], 540, 215, 70, '800', 'center', 1); arabic(APP.message[1], 540, 305, 70, '800', 'center', 1, PALE);
+    drawPhone(t);
+    ctx.fillStyle = `rgba(0,0,0,${ease(seg(t, T.card, T.end - 0.05))})`; ctx.fillRect(0, 0, 1080, 1920);
+  }
+  return document.getElementById('c').toDataURL('image/png');
+};
+</script>

@@ -1,0 +1,35 @@
+<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="../../assets/fonts/tajawal.css">
+<style>html,body{margin:0;background:#000}</style>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+// Weekend story: "قهوة الويكند · حار ولا بارد؟" over the two-cup image (iced latte, hot cappuccino), labels over each cup,
+// and a clear, darkened band under the cups for Instagram's poll sticker (left: بارد, right: حار). Safe zones respected:
+// nothing important above y=250 or below y=1600.
+const CREAM = '#F4EFE6', PALE = '#A9D19A';
+const img = s => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = s; });
+window.ready = (async () => {
+  await Promise.all([document.fonts.load('800 100px "Tajawal"', 'قهوة'), document.fonts.load('700 44px "Tajawal"', 'حار'), document.fonts.load('500 34px "Tajawal"', 'صوّت')]);
+  const bg = await img('../found-my-coffee/plates/iced-hot-v2.jpg'), lock = await img('../find-rate-earn-carousel/img/lockup-cream.png');
+  const c = document.getElementById('c').getContext('2d');
+  c.drawImage(bg, 0, 0, 1080, 1920);
+  let g = c.createLinearGradient(0, 0, 0, 760); g.addColorStop(0, 'rgba(8,18,9,0.82)'); g.addColorStop(0.7, 'rgba(8,18,9,0.45)'); g.addColorStop(1, 'rgba(8,18,9,0)');
+  c.fillStyle = g; c.fillRect(0, 0, 1080, 760);
+  g = c.createLinearGradient(0, 1300, 0, 1920); g.addColorStop(0, 'rgba(8,18,9,0)'); g.addColorStop(0.35, 'rgba(8,18,9,0.62)'); g.addColorStop(1, 'rgba(8,18,9,0.85)');
+  c.fillStyle = g; c.fillRect(0, 1300, 1080, 620);
+  const lw = 300, lh = lw * lock.height / lock.width; c.drawImage(lock, (1080 - lw) / 2, 300, lw, lh);
+  const ar = (t, x, y, size, w, col, align = 'center') => { c.direction = 'rtl'; c.textAlign = align; c.fillStyle = col; c.font = `${w} ${size}px "Tajawal"`; c.fillText(t, x, y); };
+  c.shadowColor = 'rgba(0,0,0,0.35)'; c.shadowBlur = 20;
+  ar('قهوة الويكند', 540, 500, 100, 800, CREAM);
+  ar('حار ولا بارد؟', 540, 618, 100, 800, PALE);
+  c.shadowBlur = 0;
+  const pill = (t, x, y) => { c.font = '700 44px "Tajawal"'; const w = c.measureText(t).width + 64;
+    c.fillStyle = 'rgba(244,239,230,0.94)'; c.beginPath(); c.roundRect(x - w / 2, y - 44, w, 70, 35); c.fill();
+    c.beginPath(); c.moveTo(x - 12, y + 26); c.lineTo(x + 12, y + 26); c.lineTo(x, y + 42); c.closePath(); c.fill();
+    ar(t, x, y + 6, 44, 700, '#163514'); };
+  pill('بارد', 262, 880);                                   // over the iced latte (left)
+  pill('حار', 828, 908);                                    // over the hot cappuccino (right)
+  ar('صوّت تحت', 540, 1395, 34, 500, 'rgba(244,239,230,0.75)');   // the poll sticker goes just below this line
+})();
+window.png = () => document.getElementById('c').toDataURL('image/png');
+</script>

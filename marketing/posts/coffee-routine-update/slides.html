@@ -1,0 +1,169 @@
+<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8">
+<!-- روتين قهوتك يحتاج تحديث — 5-slide Arabic carousel, 1080×1350. slides.html?n=1..5
+     System: green bookends (1, 5), off-white middle; faint map grid under everything; a progress bar that
+     "installs the update" across the swipe (20 → 100%). Hairline map drawings, no photos, no café names. -->
+<link rel="stylesheet" href="../../assets/fonts/tajawal.css">
+<link rel="stylesheet" href="../../assets/fonts/dmsans.css">
+<style>
+:root { --g:#173D20; --g2:#2B6235; --sage:#DCE8D3; --paper:#F7F6F1; --ink:#101D0D; --mute:#7B8277; --line:#E2E0D8; --cream:#F4EFE4; --M:88px; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1350px; overflow:hidden; }
+body { font-family:'Tajawal'; position:relative; background:var(--paper); color:var(--ink); }
+body.dark { background:var(--g); color:var(--cream); }
+.latin { font-family:'DM Sans'; direction:ltr; unicode-bidi:isolate; }
+.grid { position:absolute; inset:0; }
+.logo { position:absolute; top:76px; left:var(--M); height:44px; }
+.idx { position:absolute; top:84px; right:var(--M); font-weight:700; font-size:28px; letter-spacing:2px; opacity:.55; }
+.h { position:absolute; right:var(--M); left:var(--M); font-weight:800; line-height:1.12; letter-spacing:-.5px; }
+.sub { position:absolute; right:var(--M); left:var(--M); font-weight:500; font-size:44px; line-height:1.4; }
+.dark .sub { color:#B9CDB2; }
+.em { color:var(--g2); } .dark .em { color:#A9D19A; }
+/* the update bar */
+.bar { position:absolute; bottom:96px; right:var(--M); left:var(--M); }
+.bar .lbl { display:flex; justify-content:space-between; font-size:26px; font-weight:700; margin-bottom:14px; opacity:.75; }
+.bar .track { height:6px; border-radius:3px; background:rgba(16,29,13,.10); overflow:hidden; }
+.dark .bar .track { background:rgba(244,239,228,.16); }
+.bar .fill { height:100%; border-radius:3px; background:var(--g2); margin-right:0; }
+.dark .bar .fill { background:#A9D19A; }
+svg text { font-family:'Tajawal'; }
+</style>
+<body>
+<svg class="grid" id="grid" width="1080" height="1350"></svg>
+<img class="logo" id="logo">
+<div class="idx" id="idx"></div>
+<div id="s"></div>
+<div class="bar"><div class="lbl"><span id="bl"></span><span id="bp"></span></div><div class="track"><div class="fill" id="bf"></div></div></div>
+<script>
+const n = +(new URLSearchParams(location.search).get('n') || 1);
+const dark = n === 1 || n === 5;
+document.body.className = dark ? 'dark' : '';
+document.getElementById('logo').src = `img/lockup-${dark ? 'cream' : 'green'}.png`;
+const AR = d => String(d).replace(/\d/g, c => '٠١٢٣٤٥٦٧٨٩'[c]);
+document.getElementById('idx').textContent = `${AR('0' + n)} / ${AR('05')}`;
+const pct = n * 20;
+document.getElementById('bf').style.width = pct + '%';
+document.getElementById('bl').innerHTML = n < 5 ? 'جاري التحديث…' : 'تم التحديث <svg width="26" height="20" viewBox="0 0 26 20" style="vertical-align:-2px;margin-right:6px"><path d="M2 10 L9 17 L24 2" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+document.getElementById('bp').textContent = AR(pct) + '٪';
+
+// the map grid under everything: a few hairline streets, very faint
+const NS = 'http://www.w3.org/2000/svg', el = (p, t, a) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); p.append(e); return e; };
+const Gr = document.getElementById('grid'), gl = dark ? 'rgba(244,239,228,.06)' : 'rgba(23,61,32,.055)';
+const gg = el(Gr, 'g', { transform:`rotate(-16 540 675) translate(${-n * 40} 0)`, stroke:gl, fill:'none' });
+for (let x = -800; x < 1900; x += 120) el(gg, 'line', { x1:x, y1:-600, x2:x, y2:2000, 'stroke-width': x % 360 ? 2 : 6 });
+for (let y = -600; y < 2000; y += 104) el(gg, 'line', { x1:-800, y1:y, x2:1900, y2:y, 'stroke-width': y % 312 ? 2 : 6 });
+
+const CUP = c => `<path d="M-22 -14 H22 C21 12 11 18 0 18 C-11 18 -21 12 -22 -14Z" fill="none" stroke="${c}" stroke-width="5.5" stroke-linejoin="round"/><path d="M22 -9 a9 9 0 0 1 0 17" fill="none" stroke="${c}" stroke-width="5.5" stroke-linecap="round"/>`;
+const PIN = (x, y, s, fill, stroke = 'none', cup = '#fff') => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 0 C-9 -16 -26 -30 -26 -50 A26 26 0 1 1 26 -50 C26 -30 9 -16 0 0Z" fill="${fill}" stroke="${stroke}" stroke-width="2.5"/>${cup ? `<g transform="translate(-1 -49) scale(.42)">${CUP(cup)}</g>` : ''}</g>`;
+
+// the app's own map marks: white teardrop pins with a cup, dark-green clusters with a count, the blue you-dot
+const MUG = `<path d="M-13 -6 H11 V4 C11 11 6 15 -1 15 C-8 15 -13 11 -13 4Z" fill="#fff" stroke="#3A3A3A" stroke-width="2.4" stroke-linejoin="round"/><ellipse cx="-1" cy="-6" rx="12" ry="3.6" fill="#6B4026" stroke="#3A3A3A" stroke-width="2"/><path d="M11 -2 a6 6 0 0 1 0 11" fill="none" stroke="#3A3A3A" stroke-width="2.4"/><ellipse cx="-1" cy="17" rx="17" ry="3.2" fill="#fff" stroke="#3A3A3A" stroke-width="2"/>`;
+const APIN = (x, y, s = 1, o = 1) => `<g transform="translate(${x} ${y}) scale(${s})" opacity="${o}" filter="url(#psh)"><path d="M0 0 L-9 -14 A30 30 0 1 1 9 -14 Z" fill="#fff"/><g transform="translate(0 -40) scale(.9)">${MUG}</g></g>`;
+const CLU = (x, y, k, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})" filter="url(#psh)"><circle r="34" fill="#25461C" stroke="#fff" stroke-width="4"/><g transform="translate(0 -12) scale(.55)">${MUG}</g><text y="22" text-anchor="middle" font-family="DM Sans" font-weight="700" font-size="26" fill="#fff">${k}</text></g>`;
+const YOU = (x, y) => `<circle cx="${x}" cy="${y}" r="34" fill="#1E88FF" opacity=".16"/><circle cx="${x}" cy="${y}" r="17" fill="#1E88FF" stroke="#fff" stroke-width="6" filter="url(#psh)"/>`;
+const PSH = `<filter id="psh" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000" flood-opacity=".22"/></filter>`;
+const S = {
+  // 1 · HOOK
+  1: `<div style="position:absolute; top:300px; right:var(--M); display:flex; align-items:center; gap:14px; font-size:30px; font-weight:700; color:#A9D19A;">
+        <span style="width:14px; height:14px; border-radius:50%; background:#A9D19A; box-shadow:0 0 0 8px rgba(169,209,154,.18)"></span>تحديث جديد</div>
+      <div class="h" style="top:380px; font-size:150px;">روتين قهوتك<br>يحتاج <span class="em">تحديث.</span></div>
+      <div class="sub" style="top:780px; font-size:48px;">مو كل يوم نفس الكوفي.</div>`,
+
+  // 2 · PROBLEM: the same loop, again and again
+  2: `<div class="h" style="top:190px; font-size:84px;">كل مرة تفتح الماب…<br>وترجع لنفس <span class="em">الأماكن؟</span></div>
+      <svg style="position:absolute; top:470px; left:var(--M);" width="904" height="501" viewBox="0 0 736 408">
+        <defs><clipPath id="c2"><rect width="736" height="408" rx="29"/></clipPath></defs>
+        <g clip-path="url(#c2)">
+          <image href="img/appmap.png" width="736" height="408"/>
+          <path d="M399 180 C 450 205, 430 268, 372 270 C 300 272, 232 196, 246 150 C 262 100, 350 118, 399 180" fill="none" stroke="#1E88FF" stroke-width="4" stroke-linecap="round" stroke-dasharray="0.1 11"/>
+          <path d="M405 172 C 466 200, 446 284, 370 284 C 286 286, 214 196, 232 142 C 252 84, 356 104, 405 172" fill="none" stroke="#1E88FF" stroke-width="4" stroke-linecap="round" stroke-dasharray="0.1 11" opacity=".45"/>
+        </g>
+      </svg>
+      <div class="sub" style="top:1010px; font-size:40px;">فيه كوفيات حولك <span class="em" style="font-weight:800">يمكن ما قد جرّبتها.</span></div>`,
+
+  // 3 · SOLUTION: browse by area
+  3: `<div class="h" style="top:180px; font-size:76px; line-height:1.18;">افتح <span class="latin em" style="font-weight:700">BrewMaps</span>.<br>اختَر المنطقة.<br>وشوف وش <span class="em">حولك.</span></div>
+      <div style="position:absolute; top:560px; right:var(--M); left:var(--M); height:500px; background:#fff; border:1.5px solid var(--line); border-radius:36px; padding:30px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:22px;">
+          <span style="font-weight:800; font-size:34px;">تصفّح حسب المنطقة</span>
+          <span style="font-size:24px; font-weight:600; color:var(--mute)">دبي</span>
+        </div>
+        <div id="tiles" style="display:grid; grid-template-columns:1fr 1fr; gap:18px;"></div>
+      </div>`,
+
+  // 4 · PAYOFF: closer than you think
+  4: `<div class="h" style="top:190px; font-size:84px; white-space:nowrap;">يمكن كوفيك المفضل…<br><span class="em">أقرب مما تتوقع.</span></div>
+      <div class="sub" style="top:398px; font-size:40px;"><span class="latin" style="font-weight:700">BrewMaps</span> يلقى لك الكوفي اللي <span class="em" style="font-weight:800">يناسب ذوقك.</span></div>
+      <svg style="position:absolute; top:510px; left:var(--M);" width="904" height="501" viewBox="0 0 736 408">
+        <defs><clipPath id="c4"><rect width="736" height="408" rx="29"/></clipPath></defs>
+        <g clip-path="url(#c4)">
+          <image href="img/appmap.png" width="736" height="408"/>
+          <g fill="none" stroke="#1E88FF" stroke-width="2" stroke-dasharray="6 7" opacity=".55"><circle cx="399" cy="180" r="95"/><circle cx="399" cy="180" r="185"/></g>
+          <g font-family="Tajawal" font-weight="800" font-size="17" text-anchor="middle">
+            ${[[515,138,'٨٥٪'],[576,265,'٧٨٪'],[165,385,'٦٤٪']].map(([x,y,t]) => `<rect x="${x+26}" y="${y-48}" width="50" height="26" rx="13" fill="#E6F0DF"/><text x="${x+51}" y="${y-29}" fill="#2B6235">${t}</text>`).join('')}
+          </g>
+          <circle cx="373" cy="238" r="38" fill="none" stroke="#25461C" stroke-width="5"/>
+        </g>
+      </svg>
+      <div style="position:absolute; top:640px; left:96px; width:380px; background:#fff; border:1.5px solid var(--line); border-radius:26px; padding:20px 22px 18px;">
+      <div style="display:flex; gap:18px; align-items:center; direction:ltr; font-family:'DM Sans';">
+        <span style="width:74px; height:74px; border-radius:18px; background:var(--sage); display:grid; place-items:center; flex:none;">
+          <svg width="44" height="44" viewBox="-32 -32 64 64"><path d="M-24 -18 H24 L6 10 H-6 Z" fill="none" stroke="#173D20" stroke-width="4.5" stroke-linejoin="round"/><path d="M-16 20 H16" stroke="#173D20" stroke-width="4.5" stroke-linecap="round"/><path d="M-6 10 V20 M6 10 V20" stroke="#173D20" stroke-width="4.5"/></svg></span>
+        <span><div style="font-weight:700; font-size:34px;">V60</div><div style="margin-top:4px; font-size:24px; color:var(--mute); font-weight:500;"><span style="color:#C9A35A">★</span> <b style="color:var(--ink)">4.9</b> · 600 m</div></span>
+      </div>
+      <div style="margin-top:16px; display:flex; align-items:center; justify-content:space-between; background:#173D20; color:#F4EFE4; border-radius:16px; padding:12px 16px 8px; font-weight:700; font-size:26px;">
+        <span>يناسب ذوقك</span><span style="font-weight:800; color:#A9D19A">٩٢٪</span></div>
+      </div>`,
+
+  // 5 · CTA
+  5: `<div style="position:absolute; top:300px; left:0; right:0; display:flex; justify-content:center;">
+        <span style="width:220px; height:220px; border-radius:54px; background:var(--cream); display:grid; place-items:center;"><img src="img/mark-green.png" style="width:150px"></span></div>
+      <div class="h" style="top:580px; text-align:center; font-size:100px; white-space:nowrap;">حدّث روتين <span class="em">قهوتك.</span></div>
+      <div class="sub" style="top:730px; text-align:center; font-size:44px;">اكتشف الكوفي اللي يناسبك على <span class="latin" style="font-weight:700; color:var(--cream)">BrewMaps</span>.</div>
+      <div style="position:absolute; top:880px; left:0; right:0; display:flex; justify-content:center; gap:20px; direction:ltr; font-family:'DM Sans'; font-weight:600; font-size:28px;">
+        <span style="border:2px solid rgba(244,239,228,.5); border-radius:999px; padding:16px 34px;">App Store</span>
+        <span style="border:2px solid rgba(244,239,228,.5); border-radius:999px; padding:16px 34px;">Google Play</span></div>`,
+};
+document.getElementById('s').innerHTML = S[n];
+
+document.querySelectorAll('.mb').forEach(M => {      // the app's map palette: cream land, blue water, green park, white streets, grey highway
+  const w = +M.dataset.w, h = +M.dataset.h;
+  let sd = 5 + n; const r = () => (sd = (sd * 1664525 + 1013904223) >>> 0) / 4294967296;
+  el(M, 'rect', { width:w, height:h, fill:'#F4F1E8' });
+  const B = el(M, 'g', { transform:`rotate(-28 ${w / 2} ${h / 2})` });
+  for (let x = -300; x < w + 300; x += 96) for (let y = -300; y < h + 300; y += 78)
+    el(B, 'rect', { x:x + 9, y:y + 9, width:78 - (r() < .3 ? 30 : 0), height:60, rx:6, fill:'#ECE8DD' });
+  for (let x = -300; x < w + 300; x += 96) el(B, 'line', { x1:x, y1:-300, x2:x, y2:h + 300, stroke:'#fff', 'stroke-width':7 });
+  for (let y = -300; y < h + 300; y += 78) el(B, 'line', { x1:-300, y1:y, x2:w + 300, y2:y, stroke:'#fff', 'stroke-width':7 });
+  // the sea and a marina-style canal
+  el(M, 'path', { d:`M-10 -10 H${w * .48} C ${w * .4} ${h * .12}, ${w * .22} ${h * .2}, ${w * .14} ${h * .42} C ${w * .08} ${h * .58}, ${w * .02} ${h * .62}, -10 ${h * .66} Z`, fill:'#8ECDF2' });
+  el(M, 'path', { d:`M${w * .14} ${h * .44} C ${w * .26} ${h * .56}, ${w * .32} ${h * .5}, ${w * .36} ${h * .62} S ${w * .3} ${h * .86}, ${w * .2} ${h + 10}`, fill:'none', stroke:'#8ECDF2', 'stroke-width':34, 'stroke-linecap':'round' });
+  // a big park with a pond
+  el(M, 'path', { d:`M${w * .66} ${h * .3} L ${w + 10} ${h * .08} L ${w + 10} ${h * .62} L ${w * .8} ${h * .74} Z`, fill:'#AEDB8C' });
+  el(M, 'ellipse', { cx:w * .88, cy:h * .36, rx:26, ry:14, fill:'#8ECDF2' });
+  // the highway: grey band with white edges, running across
+  const hw = `M-20 ${h * 1.02} L ${w + 20} ${h * .02}`;
+  el(M, 'path', { d:hw, fill:'none', stroke:'#FFFFFF', 'stroke-width':44 });
+  el(M, 'path', { d:hw, fill:'none', stroke:'#C9C9C9', 'stroke-width':34 });
+  el(M, 'path', { d:hw, fill:'none', stroke:'#DADADA', 'stroke-width':3, 'stroke-dasharray':'16 14' });
+});
+if (n === 2) {   // caramel pins: the cafés nearby you've never opened
+  const F = document.getElementById('faint');
+  [[90,90],[200,170],[330,90],[640,80],[780,140],[860,260],[720,300],[150,350],[230,480],[420,470],[620,500],[760,440],[860,520],[60,520],[700,220]]
+    .forEach(([x, y], i) => F.insertAdjacentHTML('beforeend', i % 3 === 0 ? CLU(x, y - 20, [2, 4, 3, 5, 3][(i / 3) % 5]) : APIN(x, y, .9)));
+}
+if (n === 3) {   // area tiles: real areas and the café counts the app shows; one selected
+  const T = document.getElementById('tiles');
+  [['جميرا', 24], ['القوز', 29, 1], ['سيتي ووك', 12], ['جي بي آر', 8]].forEach(([name, c, on], i) => {
+    const d = document.createElement('div');
+    d.style.cssText = `height:184px; border-radius:24px; position:relative; overflow:hidden; padding:22px 26px; display:flex; flex-direction:column; justify-content:flex-end; ${on ? 'background:#173D20; color:#F4EFE4;' : 'background:#F1F0EA; color:#101D0D;'}`;
+    const st = on ? 'rgba(244,239,228,.14)' : 'rgba(23,61,32,.08)';
+    d.innerHTML = `<svg style="position:absolute; inset:0" width="100%" height="100%" viewBox="0 0 400 184" preserveAspectRatio="none"><g fill="none" stroke="${st}" stroke-width="10" stroke-linecap="round"><path d="M-10 ${50 + i * 9} C 120 ${30 + i * 7}, 260 ${90 - i * 6}, 410 ${60 + i * 5}"/><path d="M${140 + i * 30} -10 C ${120 + i * 30} 80, ${170 + i * 25} 120, ${150 + i * 30} 194"/><path d="M-10 ${130 - i * 4} L 410 ${120 + i * 3}" stroke-width="5"/></g></svg>
+      ${on ? `<span style="position:absolute; top:20px; left:22px; width:40px; height:40px; border-radius:50%; background:#A9D19A; display:grid; place-items:center;"><svg width="20" height="16" viewBox="0 0 26 20"><path d="M2 10 L9 17 L24 2" fill="none" stroke="#173D20" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>` : ''}
+      <div style="position:relative; font-weight:800; font-size:38px;">${name}</div>
+      <div style="position:relative; font-weight:500; font-size:26px; opacity:.7">${AR(c)} ${c <= 10 ? 'كوفيات' : 'كوفي'}</div>`;
+    T.append(d);
+  });
+}
+window.ready = Promise.all([document.fonts.ready, ...[...document.images].map(i => i.complete ? 0 : new Promise(r => i.onload = i.onerror = r))]);
+</script>
+</body></html>

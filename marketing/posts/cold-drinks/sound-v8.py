@@ -1,0 +1,175 @@
+"""على ذوقك · "Cold drinks" v7: the mix. A soft pluck arpeggio after the reference sound (see the music section), with
+an ice clink on every cut; a swell under the focus pull into the question, the lift and an ice cube as its words rise;
+a rising swell as the first crop surfaces, ice ticks on the montage cuts; the phone rising, the tap, every keystroke,
+the send, the result tone, the line; then the resolve. Every accent is placed on the frame where its picture lands
+(cut times quantised to 24 fps), all read from timing.js, so picture and sound always agree.
+Usage: python3 sound.py <workdir> <out.wav>
+"""
+import json, os, subprocess, sys
+import numpy as np, soundfile as sf, pyloudnorm
+from scipy.signal import butter, sosfilt, fftconvolve
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+TM = json.loads(subprocess.run(['node', '-e', "const m=require(process.argv[1]);console.log(JSON.stringify(m))", os.path.join(HERE, 'timing.js')], check=True, capture_output=True, text=True).stdout)
+SHOT, N_SHOTS, T, APP, BEAT = TM['SHOT'], len(TM['SHOTS']), TM['T'], TM['APP'], TM['BEAT']
+SR = 48000; DUR = T['end']; N = int(DUR * SR)
+WORK, OUT = sys.argv[1], sys.argv[2]; os.makedirs(WORK, exist_ok=True)
+rng = np.random.default_rng(11)
+db = lambda d: 10 ** (d / 20); REF = db(-1)
+FR = lambda t: np.ceil(t * 24 - 1e-6) / 24                 # the first frame on which a cut is visible
+cuts = [FR(i * SHOT) for i in range(N_SHOTS)]
+flashes = [T['bridge']] + [FR(T['bridge'] + i * T['flash']) for i in range(1, 4)]   # the first crop surfaces on the downbeat; the rest are cuts
+tq = T['question'] + 2 * TM['NOTE']                        # the question's first words are up: the lift lands here, on a note
+
+# ---------------------------------------------------------------- DSP ---------------------------
+def lp(x, f): return sosfilt(butter(2, f, 'lowpass', fs=SR, output='sos'), x)
+def hp(x, f): return sosfilt(butter(2, f, 'highpass', fs=SR, output='sos'), x)
+def bp(x, lo, hi): return sosfilt(butter(2, [lo, hi], 'bandpass', fs=SR, output='sos'), x)
+def tt(d): return np.arange(int(d * SR)) / SR
+def env(d, a, dec): t = tt(d); return np.minimum(1, t / a) * np.exp(-np.maximum(0, t - a) / dec)
+def norm(x): p = np.abs(x).max(); return x / p if p > 0 else x
+def noise(d): return rng.standard_normal(int(d * SR))
+def modal(freqs, decays, amps, d, jit=0.02):
+    t = tt(d); return sum(a * np.sin(2 * np.pi * f * (1 + jit * rng.uniform(-1, 1)) * t + rng.uniform(0, 6)) * np.exp(-t / dc) for f, dc, a in zip(freqs, decays, amps))
+def glass(f, d=0.5): return modal([f, f * 1.47, f * 2.13, f * 2.9], [0.14, 0.09, 0.06, 0.04], [1, .6, .35, .2], d)
+def bubble(f0, d=0.03, rise=2.5):
+    t = tt(d); f = f0 * (1 + rise * t / d); return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t / (d / 3)) * np.minimum(1, t / 0.0015)
+def whoosh(d, f0, f1, peak=0.5):
+    t = tt(d); x = noise(d); y = np.zeros_like(x); blk = 256
+    for s in range(0, len(x), blk):
+        fc = f0 * (f1 / f0) ** min(1, s / len(x)); y[s:s + blk] = bp(x[s:s + blk], fc / 1.6, min(fc * 1.6, 20000))
+    e = np.where(t < peak * d, (t / (peak * d)) ** 2, np.exp(-(t - peak * d) / (0.3 * d))); return y * e
+def ir(rt, damp):
+    n = int(rt * SR); t = np.arange(n) / SR; out = []
+    for _ in range(2): r = lp(rng.standard_normal(n) * np.exp(-6.9 * t / rt), damp); r[:int(0.008 * SR)] *= np.linspace(0, 1, int(0.008 * SR)); out.append(r / np.sqrt(np.sum(r ** 2)))
+    return np.stack(out, -1)
+def reverb(x, h, wet): return x + wet * np.stack([fftconvolve(x[:, c], h[:, c])[:len(x)] for c in range(2)], -1)
+SFX = np.zeros((N, 2))
+def place(sig, t0, rel_db, pan=0.0):
+    s = norm(sig) * REF * db(rel_db)
+    s = s * np.minimum(1, np.arange(len(s)) / (0.003 * SR)).reshape((-1,) + (1,) * (s.ndim - 1))   # a 3ms fade-in: no hard clicks
+    if s.ndim == 1: th = (pan + 1) * np.pi / 4; s = np.stack([s * np.cos(th), s * np.sin(th)], -1)
+    i = int(round(t0 * SR)); k = min(len(s), N - i)
+    if k > 0: SFX[i:i + k] += s[:k]
+
+# ---------------------------------------------------------------- music -------------------------
+# After the reference sound: a soft sine pluck (fundamental plus its octave, 30ms attack, short decay) playing a
+# hypnotic three-note figure in F# (C#–E#–F#, with D# and G# turns), one note every NOTE = SHOT/7 seconds, so
+# every cut and every montage flash lands on a note. A soft sine bass marks each phrase (each cut), a warm pad lifts
+# the question, the result and the line get a high sparkle, and the
+# figure lands on an F# major chord under the final hold.
+NAMES = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A': 9, 'B': 11}
+def midi(n): return 12 * (int(n[-1]) + 1) + NAMES[n[0]] + (1 if '#' in n else -1 if n[1] == 'b' else 0)
+def hz(n): return 440 * 2 ** ((midi(n) - 69) / 12)
+NOTE = TM['NOTE']; OFF = 0.02                          # the grid sits 20ms late so a note never leads its frame
+MUS = np.zeros((N, 2))
+def put(sig, t0, gain=1.0, pan=0.0):
+    i = int(round(t0 * SR)); k = min(len(sig), N - i)
+    if k <= 0: return
+    if sig.ndim == 1: th = (pan + 1) * np.pi / 4; sig = np.stack([sig * np.cos(th), sig * np.sin(th)], -1)
+    MUS[i:i + k] += gain * sig[:k]
+def pluck(n, partner, vel=1.0, dur=1.0):
+    t = tt(dur); f, p = hz(n), hz(partner)
+    e = np.minimum(1, t / 0.028) ** 1.6 * (0.7 * np.exp(-t / 0.10) + 0.3 * np.exp(-t / 0.5))
+    out = []
+    for det in (-0.0016, 0.0016):                        # two voices a few cents apart: width without chorus wobble
+        x = (np.sin(2 * np.pi * f * (1 + det) * t) + 0.85 * np.sin(2 * np.pi * p * (1 - det) * t + 0.4)
+             + np.exp(-t / 0.07) * (0.12 * np.sin(2 * np.pi * 3 * f * t) + 0.04 * np.sin(2 * np.pi * 4 * f * t + 1) + 0.02 * np.sin(2 * np.pi * 5 * f * t + 2)))   # a little tine on the attack, like the reference
+        out.append(x * e * vel)
+    return np.stack(out, -1)
+def bass(n, vel=1.0, dur=1.4):
+    t = tt(dur); f = hz(n); return (np.sin(2 * np.pi * f * t) + 0.22 * np.sin(4 * np.pi * f * t)) * np.minimum(1, t / 0.012) * np.exp(-t / 0.55) * vel
+def pad(notes, dur, att=0.35, rel=0.5, vel=1.0):
+    t = tt(dur); e = np.minimum(1, t / att) * np.clip((dur - t) / rel, 0, 1)
+    x = sum(np.sin(2 * np.pi * hz(n) * (1 + d) * t + k) for k, n in enumerate(notes) for d in (-0.002, 0.002)) / (2 * len(notes))
+    return lp(x * e * vel, 2500)
+def thump(): t = tt(0.3); return np.sin(2 * np.pi * np.cumsum(np.linspace(110, 45, len(t))) / SR) * np.minimum(1, t / 0.004) * np.exp(-t / 0.09)
+A = [('C#5', 'C#6'), ('F5', 'F4'), ('F#5', 'F#4')]
+B = [('D#6', 'D#5'), ('F#5', 'F#4'), ('C#5', 'C#6')]
+C = [('F5', 'F4'), ('F#5', 'F#4'), ('G#4', 'G#5')]
+PH = [  # (phrase notes, bass root) — one phrase per shot: two figures and a turn into the next cut
+    (A + A + [('G#4', 'G#5')], 'F#2'), (A + A + [('D#5', 'D#6')], 'B1'), (B + B + [('F5', 'F4')], 'D#2'),
+    (B + B + [('G#4', 'G#5')], 'G#1'), (A + C + [('C#6', 'C#5')], 'C#2'),
+    (B + B + [('F5', 'F4'), ('F#5', 'F#4')], 'B1'),                 # the question: 8 notes, rising into the bridge
+    (A + A + [('F5', 'F4'), ('G#4', 'G#5')], 'C#2'),                # the montage: 8 notes
+    (A + A + [('G#4', 'G#5')], 'F#2'), (A + A + [('D#5', 'D#6')], 'B1'), (B + B + [('G#4', 'G#5')], 'D#2'),   # the demo: 21 notes, then the chord
+]
+k0 = 0; seq = []
+for notes, root in PH:
+    for j, nn in enumerate(notes): seq.append((k0 + j, nn, j == 0))
+    put(bass(root), OFF + k0 * NOTE, 0.05); k0 += len(notes)
+kq, kb, kp = 35, 43, 51
+for k, (n, p), first in seq:
+    t = OFF + k * NOTE; v = 1.0 if first else 0.82
+    if k < kq: v *= 0.95
+    if kp + 4 <= k < kp + 12: v *= 0.72                # quieter under the typing, so the keys read
+    put(pluck(n, p, v), t, 0.5, 0.12 * ((k % 3) - 1))
+kc = kp + 21                                         # the last chord: F# major, rolled, ringing under the hold
+for j, (n, p) in enumerate([('F#4', 'F#5'), ('A#4', 'A#5'), ('C#5', 'C#6'), ('F#5', 'F#4')]):
+    put(pluck(n, p, 0.8, 1.6), OFF + kc * NOTE + 0.035 * j, 0.5, -0.15 + 0.1 * j)
+put(bass('F#2', 1.0, 1.4), OFF + kc * NOTE, 0.1)
+put(pad(['B3', 'D#4', 'F#4', 'A#4'], 8 * NOTE + 0.4), OFF + kq * NOTE, 0.22)          # the question's lift
+put(pad(['C#4', 'F4', 'G#4', 'B4'], 8 * NOTE + 0.3, att=0.2), OFF + kb * NOTE, 0.14)  # under the montage
+put(pluck('C#6', 'C#7', 0.7, 1.2), T['result'] + 0.01, 0.45, 0.2); put(pluck('F#6', 'F#5', 0.7, 1.2), T['result'] + 0.09, 0.45, -0.2)   # the results
+put(pluck('A#5', 'A#6', 0.6, 1.2), T['message'] + 0.01, 0.4, 0.15)                                                                       # the line
+music = lp(MUS[:, 0], 9000)[:, None] * [1, 0] + lp(MUS[:, 1], 9000)[:, None] * [0, 1]
+sf.write(os.path.join(WORK, 'music-stem.wav'), (music / np.abs(music).max() * 0.8).astype(np.float32), SR)
+
+# the opening: an ice clink on every cut, faint fizz and ice-settle underneath
+for i, t in enumerate(cuts):
+    f = [2300, 2700, 1900, 2500, 2100][i]
+    place(glass(f, 0.5), t + 0.02, -11, rng.uniform(-.2, .2)); place(glass(f * 1.19, 0.35), t + 0.07, -14, rng.uniform(-.2, .2))
+for i, t in enumerate(cuts):
+    d = SHOT
+    fz = hp(noise(d), 5000) * (0.5 + 0.5 * rng.uniform(0, 1, int(d * SR)) ** 6)
+    for _ in range(int(14 * d)): b = bubble(rng.uniform(1800, 4200), 0.02, 2.2); o = int(rng.uniform(0, d - 0.05) * SR); fz[o:o + len(b)] += 2.5 * b
+    place(fz * np.minimum(1, tt(d) / 0.3), t, -31, rng.uniform(-.3, .3))
+    if rng.uniform() < 0.8: place(glass(rng.uniform(2600, 3400), 0.4), t + rng.uniform(0.6, d - 0.2), -24, rng.uniform(-.4, .4))
+# the ending: whoosh into the bridge, four ice ticks and a soft thump each, into the product, typing, the result tone
+kick = lambda: np.sin(2 * np.pi * np.cumsum(np.linspace(150, 48, int(0.25 * SR))) / SR) * env(0.25, 0.002, 0.07)
+# the question: an ice cube dropped into a glass (plunk, two knocks, a settle), then a soft whoosh
+def icedrop(t0):
+    place(bubble(260, 0.1, 1.3), t0, -11, 0.0); place(glass(2400, 0.4), t0 + 0.012, -10, -0.1)
+    place(glass(1900, 0.5), t0 + 0.09, -13, 0.15); place(glass(2900, 0.3), t0 + 0.16, -16, -0.2)
+    st = lp(noise(0.5), 3000) * env(0.5, 0.02, 0.12)
+    for _ in range(6): b = bubble(rng.uniform(900, 2000), 0.03, 2.0); o = int(rng.uniform(0.05, 0.4) * SR); st[o:o + len(b)] += 2.0 * b
+    place(st, t0 + 0.05, -21, 0.1)
+icedrop(tq - 0.03); place(whoosh(0.6, 300, 1500, 0.55), T['question'] - 0.04, -22)   # a soft swell under the focus pull; the cube lands with the words
+place(whoosh(0.62, 400, 3000, 0.55), T['bridge'] - 0.34, -17)                                # rising as the first crop surfaces, peaking on the downbeat
+for k, t in enumerate(flashes): place(glass(3000 + 300 * k, 0.2), t, -18, (-1) ** k * 0.3); place(kick(), t, -18 if k else -19)
+crack = hp(noise(0.14), 2200) * env(0.14, 0.0005, 0.014) + 0.6 * modal([3600, 5900], [0.035, 0.02], [1, .5], 0.14)   # ice cracking on the second crop
+place(crack, flashes[1] + 0.04, -21, 0.2)
+place(whoosh(0.75, 280, 1500, 0.5), T['phoneIn'] - 0.02, -16)                                # the phone rising from below
+thud = lp(noise(0.12), 900) * env(0.12, 0.002, 0.03); place(thud, T['phoneIn'] + 0.6, -24)   # and settling
+click = lambda f: hp(noise(0.02), 2500) * env(0.02, 0.0003, 0.003) + 0.4 * modal([f], [0.012], [1], 0.02)
+place(click(1800), T['tap'], -18)                                                            # the tap into the field
+for k, tk in enumerate(T['keys']):                                                           # every keystroke, on the frame it appears
+    place(hp(noise(0.03), 3000) * env(0.03, 0.0004, 0.004), FR(tk), -24 - rng.uniform(0, 2), rng.uniform(-.1, .1))
+place(click(1300), T['submit'], -17); place(bubble(700, 0.06, 1.6), T['submit'] + 0.01, -23)  # send
+for k, tg in enumerate([T['result'] + 1.0, T['card'] + 0.35]):           # ice settling, faintly, between the actions
+    place(glass(rng.uniform(2200, 3400), 0.45), tg, -25 - rng.uniform(0, 2), rng.uniform(-.4, .4))
+
+
+
+# ---------------------------------------------------------------- mix ---------------------------
+TT = np.arange(N) / SR
+ramp = lambda pts: np.interp(TT, [p[0] for p in pts], [p[1] for p in pts])
+music = music / np.abs(music).max()
+music = reverb(music, ir(1.6, 4500), 0.22)
+g = ramp([(0, -30), (0.08, -11), (T['question'], -11), (tq, -10), (T['product'], -11), (T['typeStart'], -12), (T['submit'], -11.5), (DUR, -11.5)])
+duck = np.zeros(N)
+for t0 in cuts + flashes + [T['result']]:
+    a = np.clip((TT - t0) / 0.004, 0, 1) * np.where(TT < t0 + 0.1, 1, np.exp(-(TT - t0 - 0.1) / 0.25)); duck = np.maximum(duck, 1.2 * a)
+music = music / np.abs(music).max() * REF * db(g - duck)[:, None]
+SFXL = np.stack([lp(SFX[:, c], 6500) for c in range(2)], -1)                  # v8: softer edges on every effect
+sfx = reverb(SFXL, ir(1.0, 5000), 0.24) * db(-4)                             # and the whole effects bus 4 dB down, a touch more room
+SILENT = DUR - 0.05
+mix = (music + sfx) * (0.5 + 0.5 * np.cos(np.pi * np.clip((TT - (T['end'] - 0.6)) / 0.58, 0, 1)))[:, None]   # an even 0.6s audio fade to silence on the last frame
+meter = pyloudnorm.Meter(SR); lufs = meter.integrated_loudness(mix)
+mix = mix * db(-17.0 - lufs)
+thr = db(-1.2); a = np.abs(mix).max(axis=1); need = np.minimum(1, thr / np.maximum(a, 1e-9))
+la = int(0.004 * SR); need = np.minimum.reduce([np.roll(need, -k) for k in range(0, la, 8)]); gr = np.copy(need)
+for i in range(1, N): gr[i] = min(need[i], gr[i - 1] + (1 - gr[i - 1]) * (1 / (0.08 * SR)))
+mix = mix * gr[:, None]; mix[int(SILENT * SR):] = 0
+sf.write(OUT, mix.astype(np.float32), SR, subtype='PCM_24')
+print(f'LUFS in {lufs:.1f} → out {meter.integrated_loudness(mix):.1f}, peak {20*np.log10(np.abs(mix).max()):.1f} dBFS, GR {20*np.log10(gr.min()):.1f} dB')

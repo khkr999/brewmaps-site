@@ -1,0 +1,130 @@
+<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8">
+<!-- "جوالك يحتاج تحديث قهوة" — 7-slide Arabic carousel, 1080×1350. slides.html?n=1..7
+     Each slide: one unbranded drink (img/dN.jpg, AI-generated) + one familiar phone screen, redrawn in BrewMaps colours. -->
+<link rel="stylesheet" href="../../assets/fonts/tajawal.css">
+<link rel="stylesheet" href="../../assets/fonts/dmsans.css">
+<style>
+:root { --ink:#13230F; --green:#1D4526; --green2:#2E6338; --cream:#F3EDE2; --gold:#C9A35A; --muted:#6F7A6A; --red:#D9534A; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1350px; overflow:hidden; }
+body { font-family:'Tajawal'; color:var(--ink); position:relative; background:var(--cream); }
+.bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.logo { position:absolute; top:62px; left:72px; height:46px; z-index:5; }
+.latin { font-family:'DM Sans'; direction:ltr; unicode-bidi:isolate; }
+.h1 { position:absolute; top:150px; right:72px; left:72px; text-align:center; font-weight:800; font-size:84px; line-height:1.15; color:var(--green); z-index:4; }
+.cap { position:absolute; left:80px; right:80px; text-align:center; font-weight:700; font-size:42px; line-height:1.4; color:var(--green); z-index:4; }
+.swipe { position:absolute; bottom:56px; left:0; right:0; text-align:center; font-weight:700; font-size:32px; color:var(--green); opacity:.7; z-index:4; }
+
+/* iOS-style surfaces, in BrewMaps colours */
+.glass { position:absolute; left:50%; transform:translateX(-50%); background:rgba(255,255,255,.74); backdrop-filter:blur(24px) saturate(1.2);
+  border-radius:44px; box-shadow:0 30px 70px rgba(60,45,25,.18), 0 6px 18px rgba(60,45,25,.10), inset 0 1px 0 rgba(255,255,255,.9); z-index:3; }
+.icon { width:116px; height:116px; border-radius:28px; background:linear-gradient(160deg,#2F6339,var(--green)); display:grid; place-items:center; box-shadow:0 8px 18px rgba(29,69,38,.3); flex:none; }
+.icon img { width:76px; }
+.alert { width:660px; text-align:center; overflow:hidden; }
+.alert .body { padding:44px 48px 36px; }
+.alert h2 { font-weight:800; font-size:50px; line-height:1.2; }
+.alert p { margin-top:12px; font-weight:500; font-size:38px; line-height:1.45; color:#3A4636; }
+.alert .btns { display:flex; border-top:1.5px solid rgba(19,35,15,.12); }
+.alert .btns span { flex:1; padding:28px 0 24px; font-size:38px; font-weight:500; color:var(--muted); }
+.alert .btns span + span { border-right:1.5px solid rgba(19,35,15,.12); }
+.alert .btns span.go { color:var(--green2); font-weight:800; }
+.toggle { width:116px; height:68px; border-radius:34px; background:#D9D5CC; position:relative; flex:none; direction:ltr; }
+.toggle::after { content:''; position:absolute; top:5px; left:5px; width:58px; height:58px; border-radius:50%; background:#fff; box-shadow:0 3px 8px rgba(0,0,0,.22); }
+.toggle.on { background:var(--green2); } .toggle.on::after { left:53px; }
+</style>
+<body>
+<img class="bg" id="bg">
+<img class="logo" src="img/lockup-green.png">
+<div id="s"></div>
+<script>
+const n = +(new URLSearchParams(location.search).get('n') || 1);
+const BG = { 1:'d1', 2:'d2', 3:'d3', 4:'d6', 5:'d4', 6:'d5', 7:'d1' };
+document.getElementById('bg').src = `img/${BG[n]}.jpg`;
+const S = document.getElementById('s');
+const ICON = '<span class="icon"><img src="img/mark-cream.png"></span>';
+const SLIDES = {
+  // 1 · the hook: a software update
+  1: `<div class="h1">جوالك يحتاج تحديث.</div>
+      <div class="glass" style="top:300px; width:760px; padding:40px 44px; display:flex; gap:34px; align-items:center;">
+        ${ICON}
+        <div style="flex:1">
+          <div style="font-weight:800; font-size:44px;">تحديث القهوة</div>
+          <div style="margin-top:6px; font-size:30px; color:var(--muted); font-weight:500;"><span class="latin" style="font-weight:600">BrewMaps</span> · جاهز للتثبيت</div>
+          <div style="margin-top:22px; display:inline-block; background:var(--green2); color:#fff; font-weight:800; font-size:32px; padding:14px 36px 10px; border-radius:30px;">حدّث الحين</div>
+        </div>
+      </div>
+      <div class="swipe">اسحب ←</div>`,
+  // 2 · find: low battery
+  2: `<div class="glass alert" style="top:170px;">
+        <div class="body">
+          <svg width="96" height="46" viewBox="0 0 96 46" style="direction:ltr"><rect x="2" y="2" width="82" height="42" rx="11" fill="none" stroke="#13230F" stroke-width="4" opacity=".55"/><rect x="88" y="15" width="6" height="16" rx="3" fill="#13230F" opacity=".55"/><rect x="9" y="9" width="9" height="28" rx="4" fill="#D9534A"/></svg>
+          <h2 style="margin-top:14px">طاقتك ٤٪</h2>
+          <p>نلقى لك كوفي قريب؟</p>
+        </div>
+        <div class="btns"><span class="go">دوّر</span><span>مو الحين</span></div>
+      </div>
+      <div class="cap" style="top:560px">BrewMaps يلقى لك أقرب كوفي يستاهل.</div>`,
+  // 3 · discover: a nearby share
+  3: `<div class="glass alert" style="top:150px;">
+        <div class="body">
+          <svg width="120" height="120" viewBox="-60 -60 120 120"><circle r="56" fill="none" stroke="#2E6338" stroke-width="3" opacity=".25"/><circle r="42" fill="none" stroke="#2E6338" stroke-width="3" opacity=".45"/><circle r="28" fill="#2E6338"/><g transform="translate(-1 1) scale(.55)"><path d="M-22 -14 H22 C21 12 11 18 0 18 C-11 18 -21 12 -22 -14Z" fill="none" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M22 -9 a9 9 0 0 1 0 17" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/></g></svg>
+          <h2 style="margin-top:10px">قريب منك</h2>
+          <p>كوفي قريب منك يبي يشاركك<br>فلات وايت.</p>
+        </div>
+        <div class="btns"><span class="go">قبول</span><span>رفض</span></div>
+      </div>
+      <div class="cap" style="top:1215px">اكتشف كوفيهات حولك ما كنت تدري عنها.</div>`,
+  // 4 · mood: focus switches
+  4: `<div class="glass" style="top:170px; width:760px; padding:18px 44px;">
+        <div style="font-size:28px; font-weight:700; color:var(--muted); padding:16px 0 8px;">المود</div>
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:26px 0; border-bottom:1.5px solid rgba(19,35,15,.10);">
+          <span style="font-size:42px; font-weight:700; color:#8A8F86">التفكير الزايد</span><span class="toggle"></span></div>
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:26px 0 30px;">
+          <span style="font-size:42px; font-weight:800;">مود القهوة</span><span class="toggle on"></span></div>
+      </div>
+      <div class="cap" style="top:530px">دوّر على كوفي حسب مزاجك.</div>`,
+  // 5 · rate: now playing
+  5: `<div class="cap" style="top:140px">قيّم المشروب نفسه، مو بس الكوفي.</div>
+      <div class="glass" style="top:240px; width:780px; padding:36px 40px 34px; background:rgba(19,35,15,.86); color:#F6F0E4;">
+        <div style="display:flex; gap:30px; align-items:center;">
+          <span style="width:150px; height:150px; border-radius:26px; background:url(img/d4.jpg) 50% 72%/420px auto; flex:none; box-shadow:0 8px 20px rgba(0,0,0,.35);"></span>
+          <div style="flex:1">
+            <div class="latin" style="text-align:right; font-family:'DM Sans'; font-weight:700; font-size:46px; direction:ltr;">Spanish Latte</div>
+            <div style="margin-top:8px; font-size:40px; letter-spacing:6px; color:var(--gold); direction:ltr; text-align:right;">★★★★★</div>
+          </div>
+        </div>
+        <div style="margin-top:30px; height:8px; border-radius:4px; background:rgba(246,240,228,.22); direction:rtl;"><div style="height:100%; width:62%; border-radius:4px; background:#F6F0E4;"></div></div>
+        <div style="margin-top:26px; display:flex; justify-content:center; gap:90px; align-items:center; direction:ltr;">
+          <svg width="56" height="40" viewBox="0 0 56 40"><path d="M26 2 L4 20 L26 38Z M52 2 L30 20 L52 38Z" fill="#F6F0E4"/></svg>
+          <svg width="48" height="56" viewBox="0 0 48 56"><rect x="4" y="2" width="14" height="52" rx="4" fill="#F6F0E4"/><rect x="30" y="2" width="14" height="52" rx="4" fill="#F6F0E4"/></svg>
+          <svg width="56" height="40" viewBox="0 0 56 40"><path d="M4 2 L26 20 L4 38Z M30 2 L52 20 L30 38Z" fill="#F6F0E4"/></svg>
+        </div>
+      </div>`,
+  // 6 · earn: lock-screen notification
+  6: `<div style="position:absolute; top:170px; left:0; right:0; text-align:center; color:var(--green); z-index:4;">
+        <div class="latin" style="font-weight:600; font-size:150px; line-height:1.05; letter-spacing:-3px">9:41</div>
+      </div>
+      <div class="glass" style="top:400px; width:820px; padding:30px 34px; display:flex; gap:26px; align-items:center; border-radius:40px;">
+        <span class="icon" style="width:96px; height:96px; border-radius:24px"><img src="img/mark-cream.png" style="width:62px"></span>
+        <div style="flex:1">
+          <div style="display:flex; justify-content:space-between; font-size:28px; color:var(--muted); font-weight:600;"><span class="latin">BrewMaps</span><span>الحين</span></div>
+          <div style="margin-top:4px; font-weight:800; font-size:42px;"><bdi dir="ltr">+٢٥</bdi> نقطة</div>
+          <div style="margin-top:2px; font-size:34px; font-weight:500; color:#3A4636">باقي قهوة وحدة على مكافأتك.</div>
+        </div>
+      </div>
+      <div class="cap" style="top:1230px">كل قهوة تقرّبك من اللي بعدها.</div>`,
+  // 7 · the download
+  7: `<div class="h1" style="font-size:78px">التحديث اللي<br>جوالك يحتاجه.</div>
+      <div style="position:absolute; top:400px; left:0; right:0; display:flex; flex-direction:column; align-items:center; gap:18px; z-index:4;">
+        <span class="icon" style="width:150px; height:150px; border-radius:36px"><img src="img/mark-cream.png" style="width:100px"></span>
+        <span class="latin" style="font-weight:700; font-size:34px; color:var(--ink)">BrewMaps</span>
+      </div>
+      <div style="position:absolute; bottom:70px; left:0; right:0; text-align:center; z-index:4;">
+        <span style="display:inline-block; background:var(--green); color:#F6F0E4; font-weight:800; font-size:46px; padding:26px 64px 20px; border-radius:60px; box-shadow:0 18px 40px rgba(29,69,38,.35);">حمّل <span class="latin">BrewMaps</span> مجاناً</span>
+        <div style="margin-top:16px; font-size:28px; font-weight:600; color:var(--muted)">الآب ستور · جوجل بلاي</div>
+      </div>`,
+};
+S.innerHTML = SLIDES[n];
+window.ready = Promise.all([document.fonts.ready, ...[...document.images].map(i => i.complete ? 0 : new Promise(r => i.onload = i.onerror = r))]);
+</script>
+</body></html>

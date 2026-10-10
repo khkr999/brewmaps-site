@@ -1,0 +1,78 @@
+<!doctype html><meta charset="utf-8">
+<!-- The printed BrewMaps map that goes on the board in the photo. 896×1447 = the board's footprint in the 1080×1920 story.
+     Occluders in the photo (board-local): cup+hand x0–370 y640–1100, shoes x300–625 y1020–1447. Keep key content clear of them. -->
+<link rel="stylesheet" href="../../assets/fonts/dmsans.css">
+<style>html,body{margin:0;width:896px;height:1447px;overflow:hidden;background:#F6F2EA}</style>
+<svg id="m" width="896" height="1447" viewBox="0 0 896 1447" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <path id="rTop" d="M -40 196 L 940 150"/>
+  <path id="rMain" d="M -40 560 C 240 548, 420 520, 600 476 S 840 392, 940 372"/>
+  <path id="rRight" d="M 668 -40 L 664 470 C 662 600, 720 700, 940 762"/>
+  <path id="rLeft" d="M 222 -40 L 236 560"/>
+  <path id="rBridge" d="M 940 880 C 780 870, 712 990, 760 1140 S 900 1300, 940 1310"/>
+  <path id="rLow" d="M -40 1260 C 120 1250, 220 1240, 300 1230"/>
+  <filter id="sh" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#13230F" flood-opacity=".25"/></filter>
+</defs>
+<rect width="896" height="1447" fill="#F6F2EA"/>
+<!-- water and park -->
+<path d="M 760 -10 L 906 -10 L 906 300 C 860 280, 820 230, 800 170 C 780 110, 760 60, 760 -10 Z" fill="#BFD7C9"/>
+<path d="M -10 1360 C 200 1340, 500 1330, 906 1350 L 906 1457 L -10 1457 Z" fill="#D3E4C4"/>
+<g id="blocks"></g>
+<!-- roads: casing, fill -->
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <use href="#rTop" stroke="#E6DED1" stroke-width="58"/><use href="#rTop" stroke="#C9C1B4" stroke-width="46"/>
+  <use href="#rLeft" stroke="#E6DED1" stroke-width="50"/><use href="#rLeft" stroke="#C9C1B4" stroke-width="38"/>
+  <use href="#rLow" stroke="#C9C1B4" stroke-width="38"/>
+  <use href="#rRight" stroke="#E6DED1" stroke-width="66"/><use href="#rRight" stroke="#C3BBAD" stroke-width="54"/>
+  <use href="#rMain" stroke="#E6DED1" stroke-width="80"/><use href="#rMain" stroke="#C3BBAD" stroke-width="68"/>
+  <use href="#rBridge" stroke="#E6DED1" stroke-width="58"/><use href="#rBridge" stroke="#C9C1B4" stroke-width="46"/>
+  <use href="#rMain" stroke="#F6F2EA" stroke-width="3" stroke-dasharray="18 22"/>
+  <use href="#rRight" stroke="#F6F2EA" stroke-width="3" stroke-dasharray="18 22"/>
+</g>
+<!-- one-way arrows, like a real printed map -->
+<g fill="#6E675C">
+  <path d="M 0 -9 L 18 0 L 0 9 Z" transform="translate(760 425) rotate(-14)"/>
+  <path d="M 0 -9 L 18 0 L 0 9 Z" transform="translate(690 640) rotate(55)"/>
+  <path d="M 0 -9 L 18 0 L 0 9 Z" transform="translate(400 528) rotate(-6)"/>
+</g>
+<!-- street names -->
+<g font-family="DM Sans" font-weight="700" font-size="25" fill="#6E675C" letter-spacing="1">
+  <text dy="9"><textPath href="#rTop" startOffset="38%">JUMEIRAH ST</textPath></text>
+  <text dy="9"><textPath href="#rMain" startOffset="6%">AL WASL RD</textPath></text>
+  <text dy="9" transform="rotate(0)"><textPath href="#rRight" startOffset="12%">AL SAFA ST</textPath></text>
+  <text dy="9"><textPath href="#rBridge" startOffset="26%">CREEK BRIDGE</textPath></text>
+</g>
+<g id="pins"></g>
+<!-- the BrewMaps pin and its label -->
+<g transform="translate(560 935)" filter="url(#sh)">
+  <ellipse cx="0" cy="2" rx="22" ry="7" fill="#13230F" opacity=".25"/>
+  <path d="M0 0 C-17 -30 -52 -60 -52 -100 A52 52 0 1 1 52 -100 C52 -60 17 -30 0 0Z" fill="#C9A35A"/>
+  <circle cy="-100" r="36" fill="#FBF7EF"/>
+  <image href="img/mark-green.png" x="-27" y="-118" width="54" height="36"/>
+</g>
+<g font-family="DM Sans" font-weight="800" font-size="42" fill="#13230F" letter-spacing=".5">
+  <text x="626" y="838">YOUR NEXT</text><text x="626" y="886">COFFEE</text>
+</g>
+<!-- the map's own brand, top-left like a printed sign -->
+<rect x="30" y="30" width="250" height="78" rx="20" fill="#FBF7EF" opacity=".92"/>
+<image href="img/lockup-green.png" x="48" y="45" height="48" width="214" preserveAspectRatio="xMinYMid meet"/>
+</svg>
+<script>
+const NS='http://www.w3.org/2000/svg', el=(p,t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.append(e);return e;};
+const B=document.getElementById('blocks');
+// buildings: sand, a few in pale gold (cafés), the chosen one gold-outlined
+[[30,240,170,130],[30,390,90,140],[130,400,80,120],[280,230,140,120],[430,240,190,120],[280,380,120,120],[420,380,170,90],
+ [30,30,170,140],[280,40,160,100],[460,40,170,80],[720,200,150,150],[720,560,150,110],
+ [30,620,180,200],[250,620,160,180],[440,580,150,160],[480,770,170,190],[30,860,170,180],[250,840,190,170],
+ [30,1080,200,140],[300,1080,180,120],[520,1010,170,190],[860,960,30,100],[560,1240,160,90],[30,1290,120,40]]
+ .forEach(([x,y,w,h],i)=>el(B,'rect',{x,y,width:w,height:h,rx:10,fill:[3,6,10,15].includes(i)?'#EFDDB3':'#E4DACA'}));
+el(B,'rect',{x:480,y:770,width:170,height:190,rx:10,fill:'#EFDDB3',stroke:'#C9A35A','stroke-width':4});
+const P=document.getElementById('pins');
+const cup='<path d="M-22 -14 H22 C21 12 11 18 0 18 C-11 18 -21 12 -22 -14Z" fill="none" stroke="#FBF7EF" stroke-width="6" stroke-linejoin="round"/><path d="M22 -9 a9 9 0 0 1 0 17" fill="none" stroke="#FBF7EF" stroke-width="6" stroke-linecap="round"/>';
+[[340,330],[540,320],[790,300],[120,470],[810,640],[120,980],[820,1200]].forEach(([x,y])=>{
+  const g=el(P,'g',{transform:`translate(${x} ${y})`});
+  el(g,'path',{d:'M0 0 C-9 -16 -26 -30 -26 -50 A26 26 0 1 1 26 -50 C26 -30 9 -16 0 0Z',fill:'#1D4526',stroke:'#FBF7EF','stroke-width':3});
+  const c=el(g,'g',{transform:'translate(-1 -49) scale(.42)'}); c.innerHTML=cup;
+});
+window.ready=Promise.all([document.fonts.ready,...[...document.querySelectorAll('image')].map(i=>new Promise(r=>{const im=new Image();im.onload=im.onerror=r;im.src=i.getAttribute('href');}))]);
+</script>
