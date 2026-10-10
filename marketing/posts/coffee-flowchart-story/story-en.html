@@ -43,25 +43,29 @@ window.ready = (async () => {
   hand([[905, 740], [905, 960]]); arrow([[905, 960], [708, 960]]);
   // the coffee, centred
   const cw = 320, ch = cw * cup.height / cup.width, cx = 540 - cw / 2, cy = 1272 - ch;
-  // the BrewMaps coaster: brand green, in the photo's perspective (ellipse ≈ 0.55 of its width), the cream mark printed
-  // on the front band; the glass stands on it
-  const bx = 540, by = 1209, rx = 200, ry = 110;
-  let sh = c.createRadialGradient(bx, by + 18, 20, bx, by + 18, 230); sh.addColorStop(0, 'rgba(30,22,10,0.30)'); sh.addColorStop(1, 'rgba(30,22,10,0)');
-  c.save(); c.translate(bx, by + 18); c.scale(1, 0.58); c.translate(-bx, -(by + 18)); c.fillStyle = sh; c.fillRect(bx - 240, by - 222, 480, 480); c.restore();
-  c.fillStyle = '#0E260F'; c.beginPath(); c.ellipse(bx, by + 8, rx, ry, 0, 0, Math.PI * 2); c.fill();          // the coaster's edge
-  let cg = c.createLinearGradient(0, by - ry, 0, by + ry); cg.addColorStop(0, '#1E4A1F'); cg.addColorStop(1, '#163514');
-  c.fillStyle = cg; c.beginPath(); c.ellipse(bx, by, rx, ry, 0, 0, Math.PI * 2); c.fill();                     // its top
-  c.save(); c.strokeStyle = 'rgba(244,239,230,0.10)'; c.lineWidth = 2; c.beginPath(); c.ellipse(bx, by, rx - 10, ry - 6, 0, 0, Math.PI * 2); c.stroke(); c.restore();
-  const mw = 92, mh = mw * mark.height / mark.width;
-  c.save(); c.translate(bx, by + 76); c.scale(1, 0.55); c.globalAlpha = 0.92; c.drawImage(mark, -mw / 2, -mh / 2, mw, mh); c.restore();   // the mark, lying flat on the front
-  const cs = c.createRadialGradient(bx, 1240, 5, bx, 1240, 125); cs.addColorStop(0, 'rgba(0,0,0,0.35)'); cs.addColorStop(1, 'rgba(0,0,0,0)');   // where the glass meets the coaster
-  c.save(); c.translate(bx, 1240); c.scale(1, 0.4); c.translate(-bx, -1240); c.fillStyle = cs; c.fillRect(bx - 130, 1110, 260, 260); c.restore();
+  const sh = c.createRadialGradient(540, 1268, 10, 540, 1268, 185); sh.addColorStop(0, 'rgba(40,30,15,0.3)'); sh.addColorStop(1, 'rgba(40,30,15,0)');
+  c.save(); c.translate(540, 1268); c.scale(1, 0.16); c.translate(-540, -1268); c.fillStyle = sh; c.fillRect(300, 1048, 480, 440); c.restore();
   c.drawImage(cup, cx, cy, cw, ch);
+  // the BrewMaps flag on the straw: a small pennant in brand green with the cream mark, hung from the straw's tip
+  // (the straw leans ~5° right as it rises), with a gentle wave in the cloth
+  { const s = cw / cup.width, tx = cx + 522 * s, ty = cy + 10 * s, ux = 0.091, L = 92, F = 150;   // tip, lean, hoist, fly
+    const p0 = [tx + 4, ty + 4], p1 = [tx + 4 - ux * L, ty + 4 + L];
+    const fg = c.createLinearGradient(p0[0], 0, p0[0] + F, 0); fg.addColorStop(0, '#1E4A1F'); fg.addColorStop(0.55, '#163514'); fg.addColorStop(1, '#1B421C');
+    c.save(); c.shadowColor = 'rgba(0,0,0,0.18)'; c.shadowBlur = 10; c.shadowOffsetY = 4; c.fillStyle = fg; c.beginPath();
+    c.moveTo(p0[0], p0[1]);
+    c.bezierCurveTo(p0[0] + F * 0.35, p0[1] - 14, p0[0] + F * 0.65, p0[1] + 14, p0[0] + F, p0[1] + 4);          // top edge, waving
+    c.lineTo(p1[0] + F, p1[1] + 4);
+    c.bezierCurveTo(p1[0] + F * 0.65, p1[1] + 14, p1[0] + F * 0.35, p1[1] - 14, p1[0], p1[1]);                  // bottom edge
+    c.closePath(); c.fill(); c.restore();
+    const mw = 64, mh = mw * mark.height / mark.width, mx = (p0[0] + p1[0]) / 2 + F * 0.5, my = (p0[1] + p1[1]) / 2 + 2;
+    c.save(); c.translate(mx, my); c.rotate(Math.atan2(4, F) * 0.5); c.drawImage(mark, -mw / 2, -mh / 2, mw, mh); c.restore();
+    c.fillStyle = '#2a1d16'; c.beginPath(); c.arc(tx, ty + 2, 8, 0, Math.PI * 2); c.fill();                       // the straw's tip over the hoist
+  }
   // from "Can you solve it?": two arrows into the centred column NO / YES
   arrow([[330, 1456], [470, 1456]]); arrow([[330, 1530], [470, 1530]]);
   en('NO', 540, 1478, 58); en('YES', 540, 1552, 58);
-  arrow([[540, 1412], [540, 1342]]);                                   // NO → straight up into the middle of the glass
-  hand([[614, 1530], [905, 1530]]); arrow([[905, 1530], [905, 1110], [708, 1110]]);   // YES → the long way round, still into the coffee
+  arrow([[540, 1412], [540, 1300]]);                                   // NO → straight up into the middle of the glass
+  hand([[614, 1530], [905, 1530]]); arrow([[905, 1530], [905, 1150], [708, 1150]]);   // YES → the long way round, still into the coffee
   // v2: no logo at the foot; the line at the top says it
 })();
 window.png = () => document.getElementById('c').toDataURL('image/png');

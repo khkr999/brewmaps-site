@@ -14,4 +14,4 @@ Re-render: `node render.js export/story-coffee-flowchart.png story.html`.
 
 ## BrewMaps touch
 
-The glass stands on a BrewMaps coaster: brand green, drawn in the photo's perspective, the cream cup-and-pin mark printed flat on its front band (both versions).
+A small BrewMaps flag hangs from the straw's tip: brand green, gently waving, the cream cup-and-pin mark on it (both versions).
