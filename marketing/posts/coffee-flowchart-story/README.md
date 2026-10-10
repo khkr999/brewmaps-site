@@ -11,3 +11,7 @@ Re-render: `node render.js export/story-coffee-flowchart.png story.html`.
 ## English version — `export/story-coffee-flowchart-en.png`
 
 `story-en.html`: the same layout mirrored to read left to right (Is there a problem? → YES → Can you solve it? → NO / YES; NO → the coffee), in DM Sans. Re-render: `node render.js export/story-coffee-flowchart-en.png story-en.html`.
+
+## BrewMaps touch
+
+The glass stands on a BrewMaps coaster: brand green, drawn in the photo's perspective, the cream cup-and-pin mark printed flat on its front band (both versions).

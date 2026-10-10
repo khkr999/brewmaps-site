@@ -11,7 +11,7 @@ const img = s => new Promise(r => { const i = new Image(); i.onload = () => r(i)
 let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 window.ready = (async () => {
   await Promise.all([document.fonts.load('600 60px "DM Sans"', 'Is there a problem? YES NO Can you solve it?')]);
-  const cup = await img('img/glass-cutout.png'), logo = await img('../../assets/logos/logo-green.png');
+  const mark = await img('../../assets/logos/mark-cream.png'), cup = await img('img/glass-cutout.png'), logo = await img('../../assets/logos/logo-green.png');
   const c = document.getElementById('c').getContext('2d');
   c.fillStyle = BG; c.fillRect(0, 0, 1080, 1920);
   const v = c.createRadialGradient(540, 960, 500, 540, 960, 1250); v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(60,45,20,0.08)');
@@ -43,14 +43,25 @@ window.ready = (async () => {
   hand([[905, 740], [905, 960]]); arrow([[905, 960], [708, 960]]);
   // the coffee, centred
   const cw = 320, ch = cw * cup.height / cup.width, cx = 540 - cw / 2, cy = 1272 - ch;
-  const sh = c.createRadialGradient(540, 1268, 10, 540, 1268, 185); sh.addColorStop(0, 'rgba(40,30,15,0.3)'); sh.addColorStop(1, 'rgba(40,30,15,0)');
-  c.save(); c.translate(540, 1268); c.scale(1, 0.16); c.translate(-540, -1268); c.fillStyle = sh; c.fillRect(300, 1048, 480, 440); c.restore();
+  // the BrewMaps coaster: brand green, in the photo's perspective (ellipse ≈ 0.55 of its width), the cream mark printed
+  // on the front band; the glass stands on it
+  const bx = 540, by = 1209, rx = 200, ry = 110;
+  let sh = c.createRadialGradient(bx, by + 18, 20, bx, by + 18, 230); sh.addColorStop(0, 'rgba(30,22,10,0.30)'); sh.addColorStop(1, 'rgba(30,22,10,0)');
+  c.save(); c.translate(bx, by + 18); c.scale(1, 0.58); c.translate(-bx, -(by + 18)); c.fillStyle = sh; c.fillRect(bx - 240, by - 222, 480, 480); c.restore();
+  c.fillStyle = '#0E260F'; c.beginPath(); c.ellipse(bx, by + 8, rx, ry, 0, 0, Math.PI * 2); c.fill();          // the coaster's edge
+  let cg = c.createLinearGradient(0, by - ry, 0, by + ry); cg.addColorStop(0, '#1E4A1F'); cg.addColorStop(1, '#163514');
+  c.fillStyle = cg; c.beginPath(); c.ellipse(bx, by, rx, ry, 0, 0, Math.PI * 2); c.fill();                     // its top
+  c.save(); c.strokeStyle = 'rgba(244,239,230,0.10)'; c.lineWidth = 2; c.beginPath(); c.ellipse(bx, by, rx - 10, ry - 6, 0, 0, Math.PI * 2); c.stroke(); c.restore();
+  const mw = 92, mh = mw * mark.height / mark.width;
+  c.save(); c.translate(bx, by + 76); c.scale(1, 0.55); c.globalAlpha = 0.92; c.drawImage(mark, -mw / 2, -mh / 2, mw, mh); c.restore();   // the mark, lying flat on the front
+  const cs = c.createRadialGradient(bx, 1240, 5, bx, 1240, 125); cs.addColorStop(0, 'rgba(0,0,0,0.35)'); cs.addColorStop(1, 'rgba(0,0,0,0)');   // where the glass meets the coaster
+  c.save(); c.translate(bx, 1240); c.scale(1, 0.4); c.translate(-bx, -1240); c.fillStyle = cs; c.fillRect(bx - 130, 1110, 260, 260); c.restore();
   c.drawImage(cup, cx, cy, cw, ch);
   // from "Can you solve it?": two arrows into the centred column NO / YES
   arrow([[330, 1456], [470, 1456]]); arrow([[330, 1530], [470, 1530]]);
   en('NO', 540, 1478, 58); en('YES', 540, 1552, 58);
-  arrow([[540, 1412], [540, 1300]]);                                   // NO → straight up into the middle of the glass
-  hand([[614, 1530], [905, 1530]]); arrow([[905, 1530], [905, 1150], [708, 1150]]);   // YES → the long way round, still into the coffee
+  arrow([[540, 1412], [540, 1342]]);                                   // NO → straight up into the middle of the glass
+  hand([[614, 1530], [905, 1530]]); arrow([[905, 1530], [905, 1110], [708, 1110]]);   // YES → the long way round, still into the coffee
   // v2: no logo at the foot; the line at the top says it
 })();
 window.png = () => document.getElementById('c').toDataURL('image/png');
