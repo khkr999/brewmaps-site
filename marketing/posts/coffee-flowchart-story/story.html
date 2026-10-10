@@ -10,7 +10,7 @@ const BG = '#F4EFE6', INK = '#1B2A1D', G = '#163514';
 const img = s => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = s; });
 let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 window.ready = (async () => {
-  await Promise.all([document.fonts.load('700 62px "Tajawal"', 'عندك مشكلة'), document.fonts.load('700 64px "Tajawal"', 'إيه لا')]);
+  await Promise.all([document.fonts.load('700 62px "Tajawal"', 'عندك مشكلة'), document.fonts.load('700 64px "Tajawal"', 'إيه لا'), document.fonts.load('800 54px "Tajawal"', 'كل الطرق BrewMaps')]);
   const cup = await img('img/iced-latte-cutout.png'), logo = await img('../../assets/logos/logo-green.png');
   const c = document.getElementById('c').getContext('2d');
   c.fillStyle = BG; c.fillRect(0, 0, 1080, 1920);
@@ -28,6 +28,8 @@ window.ready = (async () => {
   const arrow = pts => { hand(pts); const [x0, y0] = pts[pts.length - 2], [x1, y1] = pts[pts.length - 1]; head(x1, y1, Math.atan2(y1 - y0, x1 - x0)); };
   const ar = (t, x, y, size = 62, align = 'center', col = INK) => { c.direction = 'rtl'; c.textAlign = align; c.fillStyle = col; c.font = `700 ${size}px "Tajawal"`; c.fillText(t, x, y); };
   c.strokeStyle = G; c.lineWidth = 10; c.lineCap = 'round'; c.lineJoin = 'round';
+  // the line above the flowchart
+  c.direction = 'rtl'; c.textAlign = 'center'; c.fillStyle = G; c.font = '800 54px "Tajawal"'; c.fillText('كل الطرق تؤدي إلى BrewMaps', 540, 300);
   // the question
   ar('عندك مشكلة؟', 540, 440, 66);
   // right: إيه, down to "تقدر تحلها؟"
@@ -49,8 +51,7 @@ window.ready = (async () => {
   ar('لا', 560, 1340, 64); ar('إيه', 560, 1414, 64);
   arrow([[560, 1275], [560, 1180]]);                                   // لا → up into the coffee
   hand([[488, 1392], [172, 1392]]); arrow([[172, 1392], [172, 1030], [325, 1030]]);   // إيه → the long way round, still into the coffee
-  // the logo, small
-  const lw = 170, lh = lw * logo.height / logo.width; c.drawImage(logo, (1080 - lw) / 2, 1475, lw, lh);   // small, inside the safe zone
+  // v2: no logo at the foot; the line at the top says it
 })();
 window.png = () => document.getElementById('c').toDataURL('image/png');
 </script>
