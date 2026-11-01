@@ -3,7 +3,11 @@
     {
       "source": "/download",
       "has": [
-        { "type": "header", "key": "user-agent", "value": ".*(A|a)ndroid.*" }
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(A|a)ndroid.*"
+        }
       ],
       "destination": "https://play.google.com/store/apps/details?id=com.brewmaps.app",
       "permanent": false
@@ -22,6 +26,10 @@
     {
       "source": "/list/:slug",
       "destination": "/list/index.html"
+    },
+    {
+      "source": "/i/:code",
+      "destination": "/i/index.html"
     },
     {
       "source": "/privacy",
