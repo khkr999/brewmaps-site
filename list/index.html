@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="robots" content="index, follow" />
   <title>BrewMaps Collection</title>
 
@@ -15,161 +15,53 @@
   <meta property="og:url" id="og-url" content="https://brewmaps.app" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="apple-itunes-app" content="app-id=6775899450" />
+  <meta name="theme-color" content="#FFFFFF" />
 
   <link rel="icon" type="image/png" href="/logo.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/bm.css" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    html, body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #FAF6F0;
-      color: #1F1A14;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-    .container { max-width: 520px; margin: 0 auto; padding: 0 0 100px; }
-
-    .nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 20px; background: rgba(250, 246, 240, 0.9);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      position: sticky; top: 0; z-index: 10;
-    }
-    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #2B4D1F; }
-    .nav-logo img { width: 28px; height: 28px; border-radius: 6px; }
-
-    /* Hero — collage of up to 4 photos */
-    .hero {
-      position: relative; width: 100%; aspect-ratio: 16 / 10;
-      background: #2B4D1F;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 2px;
-      overflow: hidden;
-    }
-    .hero img { width: 100%; height: 100%; object-fit: cover; }
-    .hero.single img { grid-column: 1 / 3; grid-row: 1 / 3; }
-    .hero.two img:nth-child(2) { display: none; }
-    .hero.two img:first-child { grid-column: 1 / 3; grid-row: 1 / 3; }
-    .hero.three img:first-child { grid-row: 1 / 3; }
-
-    .hero-overlay {
-      position: absolute; inset: auto 0 0 0;
-      padding: 30px 20px 16px;
-      background: linear-gradient(transparent, rgba(0,0,0,0.55));
-    }
-
-    .body { padding: 20px; }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 32px; line-height: 1.05; color: #1F1A14;
-      margin-bottom: 8px;
-    }
-    .meta {
-      display: flex; align-items: center; gap: 10px;
-      color: #6B6357; font-size: 14px;
-      margin-bottom: 22px;
-    }
-    .avatar {
-      width: 28px; height: 28px; border-radius: 14px;
-      background: #2B4D1F; color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 600; font-size: 13px;
-      object-fit: cover;
-    }
-
-    .section-label {
-      font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
-      color: #6B6357; font-weight: 600; margin-bottom: 10px;
-    }
-
-    .cafe-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
-    .cafe-card {
-      background: #fff; border-radius: 14px; overflow: hidden;
-      display: flex; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-    .cafe-card img {
-      width: 96px; height: 96px; object-fit: cover; flex-shrink: 0;
-      background: #2B4D1F1A;
-    }
-    .cafe-info { flex: 1; padding: 12px 14px; min-width: 0; }
-    .cafe-name {
-      font-weight: 600; font-size: 16px; color: #1F1A14;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      margin-bottom: 2px;
-    }
-    .cafe-area { color: #6B6357; font-size: 13px; margin-bottom: 8px; }
-    .cafe-chips { display: flex; gap: 4px; flex-wrap: wrap; }
-    .cafe-chip {
-      background: #2B4D1F1A; color: #2B4D1F;
-      padding: 3px 8px; border-radius: 999px;
-      font-size: 11px; font-weight: 500;
-    }
-    .cafe-rating { color: #C4956A; font-weight: 600; font-size: 13px; margin-left: 8px; }
-
-    .cta-stack { display: flex; flex-direction: column; gap: 10px; }
-    .cta-primary {
-      background: #2B4D1F; color: #fff;
-      padding: 16px; border-radius: 14px;
-      text-decoration: none; text-align: center;
-      font-weight: 600; font-size: 16px;
-      box-shadow: 0 4px 12px rgba(43,77,31,0.25);
-    }
-    .cta-secondary {
-      background: transparent; color: #2B4D1F;
-      padding: 14px; border-radius: 14px;
-      text-decoration: none; text-align: center;
-      font-weight: 600; font-size: 15px;
-      border: 1.5px solid #2B4D1F33;
-    }
-
-    .loader { display: flex; align-items: center; justify-content: center; padding: 80px 20px; color: #6B6357; }
-    .err { padding: 40px 20px; text-align: center; color: #6B6357; }
-    .err h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: #1F1A14; margin-bottom: 8px; }
-
-    .install-banner {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      background: #fff; padding: 14px 20px;
-      box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
-      display: flex; align-items: center; gap: 12px;
-      max-width: 520px; margin: 0 auto;
-    }
-    .install-banner img { width: 36px; height: 36px; border-radius: 8px; }
-    .install-banner-text { flex: 1; }
-    .install-banner-text .t { font-weight: 600; font-size: 14px; color: #1F1A14; }
-    .install-banner-text .s { font-size: 12px; color: #6B6357; margin-top: 1px; }
-    .install-banner a {
-      background: #2B4D1F; color: #fff;
-      padding: 10px 16px; border-radius: 10px;
-      text-decoration: none; font-size: 14px; font-weight: 600;
-    }
+    /* list page only: owner line, empty list, Open button, sticky open bar */
+    .photos{margin-top:4px}
+    .by{display:flex;align-items:center;gap:10px;margin-top:14px;color:var(--ink-2);font-size:16px}
+    .avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;flex:none;background:var(--black);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px}
+    .loading{padding-block:80px;text-align:center;color:var(--ink-3)}
+    .empty{padding:28px 0;color:var(--ink-3)}
+    .cta p{color:#BDBDBD}
+    .err .store{background:var(--black);color:#fff}
+    @media (prefers-color-scheme: dark){.err .store{background:#fff;color:#111}}
+    .open{display:flex;justify-content:center;align-items:center;height:50px;border-radius:999px;background:var(--lime);color:#111;font-weight:800;text-decoration:none}
+    .open:active,.openbar a:active{transform:scale(.97)}
+    .openbar{position:fixed;z-index:60;left:0;right:0;bottom:0;padding:0 12px calc(12px + env(safe-area-inset-bottom,0px))}
+    .openbar .in{flex:1;max-width:640px;margin:0 auto;display:flex;align-items:center;gap:12px;background:var(--black);color:#fff;border-radius:22px;padding:12px 12px 12px 18px;box-shadow:0 18px 40px -16px rgba(0,0,0,.5)}
+    @media (prefers-color-scheme: dark){.openbar .in{background:#1C1C1C}}
+    .openbar .t{flex:1;min-width:0}
+    .openbar b{display:block;font-weight:800;font-size:15px;line-height:1.2}
+    .openbar small{display:block;color:#BDBDBD;font-size:13px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .openbar a{flex:none;display:inline-flex;align-items:center;height:42px;padding:0 20px;border-radius:999px;background:var(--lime);color:#111;font-weight:800;text-decoration:none}
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="nav">
-      <a href="/" class="nav-logo">
-        <img src="/logo.png" alt="BrewMaps" />
-        <span>BrewMaps</span>
-      </a>
-      <a href="/download" style="font-size: 14px; color: #2B4D1F; font-weight: 600; text-decoration: none;">Get the app</a>
-    </div>
+  <header class="bar"><div class="col">
+    <a class="brand" href="/" aria-label="BrewMaps home"><svg viewBox="375.82 301.87 328.37 478.45" aria-hidden="true"><path fill="currentColor" d="M 580.496094 506.21875 C 580.496094 522.027344 572.066406 536.652344 558.363281 544.566406 L 444.292969 610.421875 C 438.738281 613.609375 435.65625 619.417969 435.65625 625.378906 C 435.65625 628.3125 436.402344 631.265625 437.96875 633.992188 C 442.75 642.242188 453.289062 645.070312 461.566406 640.3125 L 529.78125 600.9375 L 571.191406 650.234375 C 577.230469 657.382812 580.496094 666.429688 580.496094 675.761719 L 580.496094 719.945312 C 580.496094 736.1875 564.328125 747.472656 549.113281 741.84375 L 413.421875 691.925781 C 404.246094 688.535156 398.128906 679.792969 398.128906 669.976562 L 398.128906 415.894531 C 398.128906 399.648438 414.246094 388.390625 429.488281 393.945312 L 565.152344 443.476562 C 574.378906 446.84375 580.496094 455.605469 580.496094 465.425781 Z M 704.183594 464.398438 L 704.183594 417.078125 C 704.183594 394.382812 689.890625 373.894531 668.582031 366.054688 L 503.359375 305.214844 C 497.269531 302.980469 490.894531 301.871094 484.570312 301.871094 C 475.214844 301.871094 465.933594 304.265625 457.605469 309.019531 L 403.269531 340.042969 C 386.328125 349.707031 375.816406 367.804688 375.816406 387.285156 L 375.816406 666.324219 C 375.816406 689.023438 390.132812 709.535156 411.441406 717.375 L 567.414062 774.769531 C 582.527344 780.320312 599.183594 778.933594 613.140625 770.992188 L 676.757812 734.699219 C 693.667969 725.058594 704.183594 706.964844 704.183594 687.453125 L 704.183594 619.984375 C 704.183594 607.183594 699.65625 594.765625 691.457031 585.027344 L 645.988281 530.894531 L 678.605469 510.5625 C 694.621094 500.5625 704.183594 483.316406 704.183594 464.398438"/><path class="face" d="M 568.730469 555.835938 L 516.8125 585.488281 L 530.875 602.238281 L 571.199219 650.246094 C 577.238281 657.390625 580.507812 666.4375 580.507812 675.765625 L 580.507812 719.941406 C 580.507812 736.191406 564.339844 747.464844 549.109375 741.847656 L 413.433594 691.9375 C 404.246094 688.546875 398.128906 679.796875 398.128906 669.988281 L 398.128906 415.886719 C 398.128906 399.65625 414.257812 388.382812 429.484375 393.9375 L 565.160156 443.472656 C 574.367188 446.84375 580.507812 455.609375 580.507812 465.417969 L 580.507812 535.554688 C 580.507812 543.960938 576.035156 551.683594 568.730469 555.835938"/><circle cx="441.88" cy="451.98" r="14.26" fill="currentColor"/><circle cx="540" cy="688.12" r="14.26" fill="currentColor"/></svg>brewmaps</a>
+    <span class="sp"></span><a class="get" data-store href="/download">Get the app</a>
+  </div></header>
 
-    <div id="content">
-      <div class="loader">Loading collection…</div>
+  <main class="col" id="content">
+    <p class="loading">Loading the list</p>
+  </main>
+  <footer><div class="col"><span>© 2026 BrewMaps</span><span class="sp"></span><a href="https://wa.me/971529763232">For cafés</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div></footer>
+
+  <div class="openbar" id="install-banner" style="display: none;">
+    <div class="in">
+      <div class="t"><b>Open in BrewMaps</b><small>Save these cafés to your library</small></div>
+      <a id="banner-open" href="/download">Open</a>
     </div>
   </div>
 
-  <div class="install-banner" id="install-banner" style="display: none;">
-    <img src="/logo.png" alt="BrewMaps" />
-    <div class="install-banner-text">
-      <div class="t">Open in BrewMaps</div>
-      <div class="s">Save these cafés to your library</div>
-    </div>
-    <a id="banner-open" href="/download">Open</a>
-  </div>
-
+  <script src="/assets/bm.js"></script>
   <script>
     const SUPABASE_URL = 'https://qgzyywxizlhtuwuaonxy.supabase.co';
     const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFnenl5d3hpemxodHV3dWFvbnh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMDI0NDMsImV4cCI6MjA5NDU3ODQ0M30.auFn0Nz_PTziNezXMQKXzd5jmlre3CZUR47emeXpHz8';
@@ -214,54 +106,43 @@
 
     function renderCollection(c) {
       const photos = (c.cafes || []).map(x => x.photo_url).filter(Boolean).slice(0, 4);
-      const heroClass = photos.length === 1 ? 'single' : photos.length === 2 ? 'two' : photos.length === 3 ? 'three' : '';
       const ownerName = c.owner?.username ? `@${c.owner.username}` : (c.owner?.display_name || 'a brewer');
       const ownerInitial = (c.owner?.display_name || c.owner?.username || '?').charAt(0).toUpperCase();
 
       // Update OG meta
-      document.getElementById('og-title').setAttribute('content', `${c.emoji || ''} ${c.name} — BrewMaps`);
+      document.getElementById('og-title').setAttribute('content', `${c.emoji || ''} ${c.name} | BrewMaps`);
       document.getElementById('og-desc').setAttribute('content', `${(c.cafes || []).length} cafés curated by ${ownerName}`);
       if (photos[0]) document.getElementById('og-image').setAttribute('content', photos[0]);
       document.getElementById('og-url').setAttribute('content', `https://brewmaps.app/list/${c.slug}`);
-      document.title = `${c.name} — BrewMaps`;
+      document.title = `${c.name} | BrewMaps`;
 
-      const heroHTML = photos.length
-        ? `<div class="hero ${heroClass}">${photos.map(p => `<img src="${p}" alt="" />`).join('')}</div>`
-        : `<div class="hero"></div>`;
+      const n = (c.cafes || []).length;
+      const shown = photos.length >= 3 ? photos.slice(0, 3) : photos.slice(0, 1);
+      const heroHTML = shown.length
+        ? `<div class="photos${shown.length < 3 ? ' one' : ''}">${shown.map(p => `<img src="${escapeHtml(p)}" alt="" />`).join('')}</div>`
+        : '';
 
-      const cafesHTML = (c.cafes || []).map(cf => `
-        <a href="/c/${cf.id}" class="cafe-card" style="text-decoration: none; color: inherit;">
-          ${cf.photo_url ? `<img src="${cf.photo_url}" alt="" />` : `<div style="width:96px;height:96px;background:#2B4D1F1A"></div>`}
-          <div class="cafe-info">
-            <div class="cafe-name">${escapeHtml(cf.name)}${cf.google_rating ? `<span class="cafe-rating">★ ${Number(cf.google_rating).toFixed(1)}</span>` : ''}</div>
-            <div class="cafe-area">${escapeHtml(cf.area || '')}</div>
-            <div class="cafe-chips">
-              ${(cf.vibe_tags || []).slice(0, 2).map(v => `<div class="cafe-chip">${escapeHtml(v)}</div>`).join('')}
-            </div>
-          </div>
-        </a>
-      `).join('');
+      const cafesHTML = (c.cafes || []).map(cf => {
+        const top = [cf.google_rating ? `★ ${Number(cf.google_rating).toFixed(1)}` : '', cf.area || ''].filter(Boolean).join(' · ');
+        const tags = (cf.vibe_tags || []).slice(0, 2).join(' · ');
+        return `<a class="row" href="/c/${cf.id}">${cf.photo_url ? `<img src="${escapeHtml(cf.photo_url)}" alt="" loading="lazy" />` : `<img alt="" />`}<div><b>${escapeHtml(cf.name)}</b>${top ? `<small>${escapeHtml(top)}</small>` : ''}${tags ? `<small>${escapeHtml(tags)}</small>` : ''}</div></a>`;
+      }).join('');
 
       document.getElementById('content').innerHTML = `
+        <div class="crumb"><a href="/">BrewMaps</a> › List</div>
         ${heroHTML}
-        <div class="body">
-          <h1>${c.emoji || ''} ${escapeHtml(c.name)}</h1>
-          <div class="meta">
-            ${c.owner?.avatar_url
-              ? `<img class="avatar" src="${c.owner.avatar_url}" alt="" />`
-              : `<div class="avatar">${ownerInitial}</div>`}
-            <span>by ${escapeHtml(ownerName)} · ${(c.cafes || []).length} café${(c.cafes || []).length !== 1 ? 's' : ''}</span>
-          </div>
-
-          <div class="section-label">The list</div>
-          <div class="cafe-list">${cafesHTML || '<div style="color:#6B6357;padding:24px;text-align:center">No cafés in this collection yet.</div>'}</div>
-
-          <div class="cta-stack">
-            <a href="brewmaps://list/${c.slug}" class="cta-primary">Open in BrewMaps</a>
-            <a href="/download" class="cta-secondary">Don't have the app? Get it</a>
-          </div>
+        <h1>${escapeHtml(c.name)}</h1>
+        <div class="by">
+          ${c.owner?.avatar_url
+            ? `<img class="avatar" src="${escapeHtml(c.owner.avatar_url)}" alt="" />`
+            : `<span class="avatar">${escapeHtml(ownerInitial)}</span>`}
+          <span>by ${escapeHtml(ownerName)} · ${n} café${n !== 1 ? 's' : ''}</span>
         </div>
+        ${cafesHTML ? `<div class="list">${cafesHTML}</div>` : '<p class="empty">No cafés in this list yet.</p>'}
+        <div class="cta"><span data-dots="56"></span><h3>Save this list in BrewMaps</h3><p>Open it in the app, or get the app free.</p><a class="open" href="brewmaps://list/${c.slug}">Open in BrewMaps</a><div class="stores" data-stores></div></div>
       `;
+      window.BMFill && BMFill();
+      document.querySelectorAll('[data-dots]').forEach((el) => window.BMDots && BMDots(el, { size: 56, color: '#DFF903', interactive: true }));
       document.getElementById('install-banner').style.display = 'flex';
 
       // Sticky "Open" button: try to open the app via its deep link; if the app
@@ -289,12 +170,11 @@
       document.getElementById('content').innerHTML = `
         <div class="err">
           <h2>${escapeHtml(msg)}</h2>
-          <p style="margin-top: 16px">Browse <span data-live="total-rounded">800+</span> cafés across the UAE on BrewMaps.</p>
-          <div class="cta-stack" style="max-width: 280px; margin: 24px auto 0">
-            <a href="/download" class="cta-primary">Get BrewMaps</a>
-          </div>
+          <p style="margin-top:12px;color:var(--ink-2)">Browse <span data-live="total-rounded">800+</span> cafés across the UAE on BrewMaps.</p>
+          <div class="stores" data-stores style="justify-content:center;margin-top:20px"></div>
         </div>
       `;
+      window.BMFill && BMFill();
     }
 
     function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
