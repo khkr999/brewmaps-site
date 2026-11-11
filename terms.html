@@ -2,43 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Terms of Service – BrewMaps</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/bm.css" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #FAF6F0;
-      color: #1A1A1A;
-      line-height: 1.7;
-      padding: 40px 24px 80px;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-    header { margin-bottom: 40px; }
-    .logo { font-size: 22px; font-weight: 700; color: #2B4D1F; letter-spacing: -0.3px; }
-    .logo span { color: #C8914A; }
-    h1 { font-size: 28px; font-weight: 700; margin-top: 16px; letter-spacing: -0.4px; }
-    .updated { font-size: 13px; color: #888; margin-top: 6px; }
-    h2 { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
-         color: #2B4D1F; margin: 36px 0 10px; }
-    p { font-size: 15px; color: #444; margin-bottom: 12px; }
-    ul { padding-left: 20px; margin-bottom: 12px; }
-    ul li { font-size: 15px; color: #444; margin-bottom: 6px; }
-    a { color: #2B4D1F; }
-    footer { margin-top: 60px; font-size: 13px; color: #999; text-align: center; }
-    .nav { display: flex; gap: 16px; margin-top: 12px; }
-    .nav a { font-size: 14px; color: #2B4D1F; font-weight: 600; }
+    /* legal pages: same site style, long-form reading */
+    .doc{padding-bottom:20px}
+    .docnav{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 26px}
+    .docnav a{background:var(--soft);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600;text-decoration:none}
+    .docnav a.on{background:var(--black);color:#fff}
+    .doc h1{font-size:clamp(36px,6vw,56px);margin-top:4px}
+    .doc .updated{color:var(--ink-3);font-size:14px;margin-top:10px}
+    .doc h2{font-size:20px;margin-top:36px}
+    .doc h3{font:700 17px/1.3 var(--display);margin-top:20px}
+    .doc p,.doc li{font-size:17px;line-height:1.65;color:var(--ink-2);margin-top:10px}
+    .doc ul,.doc ol{padding-inline-start:22px;margin:0}
+    .doc a{font-weight:600}
+    .doc strong,.doc b{color:var(--ink)}
+    .doc .box{background:var(--soft);border-radius:20px;padding:6px 20px 18px;margin-top:14px}
+    .docfoot{margin-top:40px;font-size:13px;color:var(--ink-3)}
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">Brew<span>Maps</span></div>
-    <div class="nav">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
-    </div>
-  </header>
+  <header class="bar"><div class="col">
+    <a class="brand" href="/" aria-label="BrewMaps home"><svg viewBox="375.82 301.87 328.37 478.45" aria-hidden="true"><path fill="currentColor" d="M 580.496094 506.21875 C 580.496094 522.027344 572.066406 536.652344 558.363281 544.566406 L 444.292969 610.421875 C 438.738281 613.609375 435.65625 619.417969 435.65625 625.378906 C 435.65625 628.3125 436.402344 631.265625 437.96875 633.992188 C 442.75 642.242188 453.289062 645.070312 461.566406 640.3125 L 529.78125 600.9375 L 571.191406 650.234375 C 577.230469 657.382812 580.496094 666.429688 580.496094 675.761719 L 580.496094 719.945312 C 580.496094 736.1875 564.328125 747.472656 549.113281 741.84375 L 413.421875 691.925781 C 404.246094 688.535156 398.128906 679.792969 398.128906 669.976562 L 398.128906 415.894531 C 398.128906 399.648438 414.246094 388.390625 429.488281 393.945312 L 565.152344 443.476562 C 574.378906 446.84375 580.496094 455.605469 580.496094 465.425781 Z M 704.183594 464.398438 L 704.183594 417.078125 C 704.183594 394.382812 689.890625 373.894531 668.582031 366.054688 L 503.359375 305.214844 C 497.269531 302.980469 490.894531 301.871094 484.570312 301.871094 C 475.214844 301.871094 465.933594 304.265625 457.605469 309.019531 L 403.269531 340.042969 C 386.328125 349.707031 375.816406 367.804688 375.816406 387.285156 L 375.816406 666.324219 C 375.816406 689.023438 390.132812 709.535156 411.441406 717.375 L 567.414062 774.769531 C 582.527344 780.320312 599.183594 778.933594 613.140625 770.992188 L 676.757812 734.699219 C 693.667969 725.058594 704.183594 706.964844 704.183594 687.453125 L 704.183594 619.984375 C 704.183594 607.183594 699.65625 594.765625 691.457031 585.027344 L 645.988281 530.894531 L 678.605469 510.5625 C 694.621094 500.5625 704.183594 483.316406 704.183594 464.398438"/><path class="face" d="M 568.730469 555.835938 L 516.8125 585.488281 L 530.875 602.238281 L 571.199219 650.246094 C 577.238281 657.390625 580.507812 666.4375 580.507812 675.765625 L 580.507812 719.941406 C 580.507812 736.191406 564.339844 747.464844 549.109375 741.847656 L 413.433594 691.9375 C 404.246094 688.546875 398.128906 679.796875 398.128906 669.988281 L 398.128906 415.886719 C 398.128906 399.65625 414.257812 388.382812 429.484375 393.9375 L 565.160156 443.472656 C 574.367188 446.84375 580.507812 455.609375 580.507812 465.417969 L 580.507812 535.554688 C 580.507812 543.960938 576.035156 551.683594 568.730469 555.835938"/><circle cx="441.88" cy="451.98" r="14.26" fill="currentColor"/><circle cx="540" cy="688.12" r="14.26" fill="currentColor"/></svg>brewmaps</a>
+    <span class="sp"></span><a class="get" data-store href="/download">Get the app</a>
+  </div></header>
+  <main class="col doc">
+    <nav class="docnav"><a href="/privacy">Privacy</a><a href="/terms" class="on">Terms</a><a href="/delete-account">Delete account</a></nav>
 
   <h1>Terms of Service</h1>
   <p class="updated">Last updated: July 2026</p>
@@ -95,6 +89,9 @@
   <h2>12. Contact</h2>
   <p>Questions? Email us at <a href="mailto:legal@brewmaps.app">legal@brewmaps.app</a></p>
 
-  <footer>© 2026 BrewMaps. All rights reserved.</footer>
+  <p class="docfoot">© 2026 BrewMaps. All rights reserved.</p>
+  </main>
+  <footer><div class="col"><span>© 2026 BrewMaps</span><span class="sp"></span><a href="https://wa.me/971529763232">For cafés</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div></footer>
+  <script src="/assets/bm.js" defer></script>
 </body>
 </html>
