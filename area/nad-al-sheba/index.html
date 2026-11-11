@@ -2,223 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="robots" content="index, follow" />
-  <title>Cafés in Nad Al Sheba, Dubai — 3 Specialty Coffee Shops | BrewMaps</title>
-  <meta name="description" content="3 cafés in Nad Al Sheba, Dubai, with menus and real prices for 3 of them. Ratings, wifi, noise levels and opening hours. Zero Four Specialty Coffee, CALLA Cafe, PDL Coffee Co. - Nad Al Sheba and more." />
+  <title>Cafés in Nad Al Sheba, Dubai: 16 coffee shops with prices | BrewMaps</title>
+  <meta name="description" content="16 cafés in Nad Al Sheba, Dubai, with menu prices for 13 of them. Ratings, Wi-Fi, noise and opening hours. Roasters Specialty Coffee House Sobha Hartland, Rationed, Zero Four Specialty Coffee, CALLA Cafe and more." />
   <link rel="canonical" href="https://www.brewmaps.app/area/nad-al-sheba" />
-
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="BrewMaps" />
-  <meta property="og:title" content="Cafés in Nad Al Sheba, Dubai — 3 Specialty Coffee Shops | BrewMaps" />
-  <meta property="og:description" content="3 cafés in Nad Al Sheba, Dubai, with menus and real prices for 3 of them. Ratings, wifi, noise levels and opening hours. Zero Four Specialty Coffee, CALLA Cafe, PDL Coffee Co. - Nad Al Sheba and more." />
-  <meta property="og:image" content="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJjbp6zi1kXz4RRW5XJu_fjsE/0.jpg" />
+  <meta property="og:title" content="Cafés in Nad Al Sheba, Dubai: 16 coffee shops with prices | BrewMaps" />
+  <meta property="og:description" content="16 cafés in Nad Al Sheba, Dubai, with menu prices for 13 of them. Ratings, Wi-Fi, noise and opening hours. Roasters Specialty Coffee House Sobha Hartland, Rationed, Zero Four Specialty Coffee, CALLA Cafe and more." />
+  <meta property="og:image" content="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJQ0kMtYtpXz4RxRv5SxYMMZw/0.jpg" />
   <meta property="og:url" content="https://www.brewmaps.app/area/nad-al-sheba" />
   <meta name="twitter:card" content="summary_large_image" />
-
   <meta name="apple-itunes-app" content="app-id=6775899450" />
+  <meta name="theme-color" content="#FFFFFF" />
   <link rel="icon" type="image/png" href="/logo.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    html, body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #FAF6F0;
-      color: #1F1A14;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-    .container { max-width: 520px; margin: 0 auto; padding: 0 0 100px; }
-
-    /* Nav */
-    .nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 20px; background: rgba(250, 246, 240, 0.9);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      position: sticky; top: 0; z-index: 10;
-    }
-    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #2B4D1F; }
-    .nav-logo img { width: 28px; height: 28px; border-radius: 6px; }
-
-    /* Hero photo */
-    .hero {
-      width: 100%; aspect-ratio: 4 / 3;
-      background: #2B4D1F; object-fit: cover;
-      display: block;
-    }
-
-    /* Card */
-    .body { padding: 20px; }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 30px; line-height: 1.1; color: #1F1A14;
-      margin-bottom: 6px;
-    }
-    .area { color: #6B6357; font-size: 15px; margin-bottom: 16px; }
-
-    .stats {
-      display: flex; gap: 12px; margin-bottom: 20px;
-    }
-    .stat {
-      flex: 1; background: #fff; border-radius: 14px;
-      padding: 12px; text-align: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-    .stat-val { font-weight: 700; font-size: 17px; color: #1F1A14; }
-    .stat-label { font-size: 11px; color: #6B6357; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
-
-    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
-    .chip {
-      background: #2B4D1F1A; color: #2B4D1F;
-      padding: 6px 12px; border-radius: 999px;
-      font-size: 13px; font-weight: 500;
-    }
-
-    .section-label {
-      font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
-      color: #6B6357; font-weight: 600; margin-bottom: 8px;
-    }
-    .summary {
-      background: #fff; border-radius: 14px; padding: 16px;
-      line-height: 1.55; color: #3D362E; margin-bottom: 24px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-
-    /* Rate panel — shown when a café's table QR is scanned (?rate=1).
-       A scan from inside the café is the one moment we get, so the page has to
-       say what to do next instead of showing a profile and hoping. */
-    .rate-panel {
-      background: #2B4D1F; color: #FFFDF9;
-      border-radius: 16px; padding: 20px; margin: 4px 0 22px;
-    }
-    /* Shorter hero on a rate scan so the panel is visible without scrolling —
-       at 4/3 the ask started below the fold. */
-    .rate-mode .hero { aspect-ratio: 16 / 9; }
-    .rate-mode .container { padding-bottom: 40px; }
-    .rate-panel h2 {
-      font-size: 21px; font-weight: 700; margin-bottom: 5px; letter-spacing: -0.01em;
-    }
-    .rate-panel p { font-size: 13.5px; opacity: 0.82; line-height: 1.5; }
-    .rate-btn {
-      display: block; margin-top: 15px; background: #C4956A; color: #2B4D1F;
-      padding: 15px; border-radius: 12px; text-align: center;
-      font-weight: 700; font-size: 16px; text-decoration: none;
-    }
-    .rate-btn:active { transform: scale(0.98); }
-    /* The two-step is the whole point: iOS cannot carry the café through an App
-       Store install, so a fresh install lands on onboarding, not here. Telling
-       people to scan again is unglamorous and it is what makes the loop close. */
-    .rate-steps {
-      margin-top: 14px; padding-top: 14px;
-      border-top: 1px solid rgba(255,255,255,0.18);
-      font-size: 12.5px; line-height: 1.65; opacity: 0.8;
-    }
-    .rate-steps b { opacity: 1; font-weight: 700; }
-
-    /* CTAs */
-    .cta-stack { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
-    .cta-primary {
-      background: #2B4D1F; color: #fff;
-      padding: 16px; border-radius: 14px;
-      text-decoration: none; text-align: center;
-      font-weight: 600; font-size: 16px;
-      box-shadow: 0 4px 12px rgba(43,77,31,0.25);
-      transition: transform 0.15s;
-    }
-    .cta-primary:active { transform: scale(0.98); }
-    .cta-secondary {
-      background: transparent; color: #2B4D1F;
-      padding: 14px; border-radius: 14px;
-      text-decoration: none; text-align: center;
-      font-weight: 600; font-size: 15px;
-      border: 1.5px solid #2B4D1F33;
-    }
-
-    /* Loading / error */
-    .loader {
-      display: flex; align-items: center; justify-content: center;
-      padding: 80px 20px; color: #6B6357;
-    }
-    .err { padding: 40px 20px; text-align: center; color: #6B6357; }
-    .err h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: #1F1A14; margin-bottom: 8px; }
-
-    /* Bottom install banner — sticky on mobile */
-    .install-banner {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      background: #fff; padding: 14px 20px;
-      box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
-      display: flex; align-items: center; gap: 12px;
-      max-width: 520px; margin: 0 auto;
-    }
-    .install-banner img { width: 36px; height: 36px; border-radius: 8px; }
-    .install-banner-text { flex: 1; }
-    .install-banner-text .t { font-weight: 600; font-size: 14px; color: #1F1A14; }
-    .install-banner-text .s { font-size: 12px; color: #6B6357; margin-top: 1px; }
-    .install-banner a {
-      background: #2B4D1F; color: #fff;
-      padding: 10px 16px; border-radius: 10px;
-      text-decoration: none; font-size: 14px; font-weight: 600;
-    }
-  
-    .menu { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
-    .menu-row { display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-bottom:1px solid #F0EBE3; font-size:14.5px; }
-    .menu-row:last-child { border-bottom:none; }
-    .menu-name { color:#3D362E; }
-    .menu-price { color:#2B4D1F; font-weight:600; white-space:nowrap; }
-    .menu-cat { font-size:11px; text-transform:uppercase; letter-spacing:0.8px; color:#6B6357; font-weight:600; padding:14px 0 4px; }
-    .amen { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
-    .amen-item { background:#fff; border-radius:10px; padding:9px 12px; font-size:13px; color:#3D362E; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
-    .cards-row { display:flex; gap:6px; margin-bottom:18px; }
-    .card-pill { display:flex; align-items:center; gap:6px; padding:6px 11px; border-radius:999px; font-size:12.5px; font-weight:600; }
-    .hours { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
-    .hours-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid #F0EBE3; font-size:14px; }
-    .hours-row:last-child { border-bottom:none; }
-    .hours-day { color:#6B6357; }
-    .nearby { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
-    .nearby a { background:#fff; border:1px solid #E8E1D7; color:#2B4D1F; padding:7px 12px; border-radius:999px; font-size:13px; text-decoration:none; font-weight:500; }
-    .crumb { font-size:12.5px; color:#6B6357; padding:0 20px 4px; }
-    .crumb a { color:#2B4D1F; text-decoration:none; }
-</style>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Cafés in Nad Al Sheba, Dubai","numberOfItems":3,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.brewmaps.app/c/4b4afc6e-25f6-4165-9fcc-e37a95511bd9","name":"Zero Four Specialty Coffee"},{"@type":"ListItem","position":2,"url":"https://www.brewmaps.app/c/9d88860c-9362-48dd-8efc-c0f1e342c509","name":"CALLA Cafe"},{"@type":"ListItem","position":3,"url":"https://www.brewmaps.app/c/022775c6-07f0-4e4e-b1b2-1a86afe183da","name":"PDL Coffee Co. - Nad Al Sheba"}]}</script>
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/bm.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Cafés in Nad Al Sheba, Dubai","numberOfItems":16,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.brewmaps.app/c/58052d30-01ac-4685-960b-f265fcb7c27e","name":"Roasters Specialty Coffee House Sobha Hartland"},{"@type":"ListItem","position":2,"url":"https://www.brewmaps.app/c/20b373f0-b366-43d6-8bb0-f3c3555899d6","name":"Rationed"},{"@type":"ListItem","position":3,"url":"https://www.brewmaps.app/c/4b4afc6e-25f6-4165-9fcc-e37a95511bd9","name":"Zero Four Specialty Coffee"},{"@type":"ListItem","position":4,"url":"https://www.brewmaps.app/c/9d88860c-9362-48dd-8efc-c0f1e342c509","name":"CALLA Cafe"},{"@type":"ListItem","position":5,"url":"https://www.brewmaps.app/c/761f7c39-6b53-4ee3-8524-a66fcbb7dcfd","name":"NOSTALGIA"},{"@type":"ListItem","position":6,"url":"https://www.brewmaps.app/c/7e1cb9a3-c005-468c-a930-1d11329a34ff","name":"VASO COFFEE HOUSE"},{"@type":"ListItem","position":7,"url":"https://www.brewmaps.app/c/634e6c06-3733-40f7-8bf4-c56b73af8307","name":"SAYA BIANCA"},{"@type":"ListItem","position":8,"url":"https://www.brewmaps.app/c/022775c6-07f0-4e4e-b1b2-1a86afe183da","name":"PDL Coffee Co. - Nad Al Sheba"},{"@type":"ListItem","position":9,"url":"https://www.brewmaps.app/c/ee5f9ab1-f7bc-4494-ac46-f0761877c77c","name":"ESPRSO"},{"@type":"ListItem","position":10,"url":"https://www.brewmaps.app/c/9454463c-ea8c-415f-a947-fe0e02cc5e49","name":"Shams Café"},{"@type":"ListItem","position":11,"url":"https://www.brewmaps.app/c/957c34b4-9126-4c96-9699-1050ba8c068c","name":"Joud Coffee Nad Al Sheba"},{"@type":"ListItem","position":12,"url":"https://www.brewmaps.app/c/e16fa8d7-6339-4661-9506-28ff4eb1ffad","name":"PRESS’D Wellness Café"},{"@type":"ListItem","position":13,"url":"https://www.brewmaps.app/c/f3dd4ad7-e5f1-46b9-be14-eb7ea2490944","name":"The Espresso Lab"},{"@type":"ListItem","position":14,"url":"https://www.brewmaps.app/c/7fe4bd7e-3d0b-4e62-851d-05ec53e287d6","name":"Common Lab - Brew & Bake"},{"@type":"ListItem","position":15,"url":"https://www.brewmaps.app/c/1b48a6a1-5458-4fcc-9c50-e4a129be723a","name":"Homebrew Coffee - Speciality Coffee in Azizi"},{"@type":"ListItem","position":16,"url":"https://www.brewmaps.app/c/06562f6c-3dbe-4441-8b02-9fc803641c85","name":"PITCHER speciality coffee"}]}</script>
 </head>
 <body>
-  <div class="container">
-    <div class="nav">
-      <a href="/" class="nav-logo"><img src="/logo.png" alt="BrewMaps" /><span>BrewMaps</span></a>
-      <a href="/download" style="font-size:14px;color:#2B4D1F;font-weight:600;text-decoration:none">Get the app</a>
-    </div>
+  <header class="bar"><div class="col">
+    <a class="brand" href="/" aria-label="BrewMaps home"><svg viewBox="375.82 301.87 328.37 478.45" aria-hidden="true"><path fill="currentColor" d="M 580.496094 506.21875 C 580.496094 522.027344 572.066406 536.652344 558.363281 544.566406 L 444.292969 610.421875 C 438.738281 613.609375 435.65625 619.417969 435.65625 625.378906 C 435.65625 628.3125 436.402344 631.265625 437.96875 633.992188 C 442.75 642.242188 453.289062 645.070312 461.566406 640.3125 L 529.78125 600.9375 L 571.191406 650.234375 C 577.230469 657.382812 580.496094 666.429688 580.496094 675.761719 L 580.496094 719.945312 C 580.496094 736.1875 564.328125 747.472656 549.113281 741.84375 L 413.421875 691.925781 C 404.246094 688.535156 398.128906 679.792969 398.128906 669.976562 L 398.128906 415.894531 C 398.128906 399.648438 414.246094 388.390625 429.488281 393.945312 L 565.152344 443.476562 C 574.378906 446.84375 580.496094 455.605469 580.496094 465.425781 Z M 704.183594 464.398438 L 704.183594 417.078125 C 704.183594 394.382812 689.890625 373.894531 668.582031 366.054688 L 503.359375 305.214844 C 497.269531 302.980469 490.894531 301.871094 484.570312 301.871094 C 475.214844 301.871094 465.933594 304.265625 457.605469 309.019531 L 403.269531 340.042969 C 386.328125 349.707031 375.816406 367.804688 375.816406 387.285156 L 375.816406 666.324219 C 375.816406 689.023438 390.132812 709.535156 411.441406 717.375 L 567.414062 774.769531 C 582.527344 780.320312 599.183594 778.933594 613.140625 770.992188 L 676.757812 734.699219 C 693.667969 725.058594 704.183594 706.964844 704.183594 687.453125 L 704.183594 619.984375 C 704.183594 607.183594 699.65625 594.765625 691.457031 585.027344 L 645.988281 530.894531 L 678.605469 510.5625 C 694.621094 500.5625 704.183594 483.316406 704.183594 464.398438"/><path class="face" d="M 568.730469 555.835938 L 516.8125 585.488281 L 530.875 602.238281 L 571.199219 650.246094 C 577.238281 657.390625 580.507812 666.4375 580.507812 675.765625 L 580.507812 719.941406 C 580.507812 736.191406 564.339844 747.464844 549.109375 741.847656 L 413.433594 691.9375 C 404.246094 688.546875 398.128906 679.796875 398.128906 669.988281 L 398.128906 415.886719 C 398.128906 399.65625 414.257812 388.382812 429.484375 393.9375 L 565.160156 443.472656 C 574.367188 446.84375 580.507812 455.609375 580.507812 465.417969 L 580.507812 535.554688 C 580.507812 543.960938 576.035156 551.683594 568.730469 555.835938"/><circle cx="441.88" cy="451.98" r="14.26" fill="currentColor"/><circle cx="540" cy="688.12" r="14.26" fill="currentColor"/></svg>brewmaps</a>
+    <span class="sp"></span><a class="get" data-store href="/download">Get the app</a>
+  </div></header>
 
+  <main class="col">
     <div class="crumb"><a href="/">BrewMaps</a> › Nad Al Sheba</div>
-    <div class="body">
-      <h1>Cafés in Nad Al Sheba, Dubai</h1>
-      <div class="area">3 cafés · 3 with full menus and prices</div>
-      <a href="/c/4b4afc6e-25f6-4165-9fcc-e37a95511bd9/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJjbp6zi1kXz4RRW5XJu_fjsE/0.jpg" alt="Zero Four Specialty Coffee" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">Zero Four Specialty Coffee</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.4 · 337 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Specialty Coffee · Cozy · Study Friendly</div>
-        <div style="font-size:12.5px;color:#2B4D1F;font-weight:600;margin-top:4px">Still 5 AED</div>
-      </div></a><a href="/c/9d88860c-9362-48dd-8efc-c0f1e342c509/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJSUqjMrFpXz4RcQAEdz68EyE/0.jpg" alt="CALLA Cafe" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">CALLA Cafe</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.6 · 316 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Specialty Coffee · Aesthetic · Quiet</div>
-        <div style="font-size:12.5px;color:#2B4D1F;font-weight:600;margin-top:4px">Espresso 18 AED</div>
-      </div></a><a href="/c/022775c6-07f0-4e4e-b1b2-1a86afe183da/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJYcVYYABnXz4RztleacB3x5A/0.jpg" alt="PDL Coffee Co. - Nad Al Sheba" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">PDL Coffee Co. - Nad Al Sheba</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.6 · 245 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Specialty Coffee · Cozy · Family Friendly</div>
-        <div style="font-size:12.5px;color:#2B4D1F;font-weight:600;margin-top:4px">Espresso 12 AED</div>
-      </div></a>
-      <div class="cta-stack" style="margin-top:18px">
-        <a href="/download" class="cta-primary">Find your café — get BrewMaps free</a>
-      </div>
-    </div>
-  </div>
+    <h1>Cafés in Nad Al Sheba, Dubai</h1>
+    <p class="lead">16 cafés, 13 with menu prices.</p>
+    <div class="list"><a class="row" href="/c/58052d30-01ac-4685-960b-f265fcb7c27e/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJQ0kMtYtpXz4RxRv5SxYMMZw/0.jpg" alt="" loading="lazy"><div><b>Roasters Specialty Coffee House Sobha Hartland</b><small>★ 4.7 · Specialty Coffee · Aesthetic</small><small>Flat White</small></div><span class="price">AED 37</span></a><a class="row" href="/c/20b373f0-b366-43d6-8bb0-f3c3555899d6/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJwccvGABnXz4RQ6Vf8IOIpk4/0.jpg" alt="" loading="lazy"><div><b>Rationed</b><small>★ 4.2 · Specialty Coffee · Cozy</small></div><span></span></a><a class="row" href="/c/4b4afc6e-25f6-4165-9fcc-e37a95511bd9/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJjbp6zi1kXz4RRW5XJu_fjsE/0.jpg" alt="" loading="lazy"><div><b>Zero Four Specialty Coffee</b><small>★ 4.4 · Specialty Coffee · Cozy</small><small>Cappuccino</small></div><span class="price">AED 28</span></a><a class="row" href="/c/9d88860c-9362-48dd-8efc-c0f1e342c509/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJSUqjMrFpXz4RcQAEdz68EyE/0.jpg" alt="" loading="lazy"><div><b>CALLA Cafe</b><small>★ 4.6 · Specialty Coffee · Aesthetic</small><small>Cappuccino</small></div><span class="price">AED 25</span></a><a class="row" href="/c/761f7c39-6b53-4ee3-8524-a66fcbb7dcfd/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJ3a5BtjtnXz4RglHSQKhDqBo/0.jpg" alt="" loading="lazy"><div><b>NOSTALGIA</b><small>★ 4.4 · Specialty Coffee · Cozy</small><small>Flat White</small></div><span class="price">AED 28</span></a><a class="row" href="/c/7e1cb9a3-c005-468c-a930-1d11329a34ff/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJA8tScGxnXz4R4UJcJJ4lJ9s/0.jpg" alt="" loading="lazy"><div><b>VASO COFFEE HOUSE</b><small>★ 4.8 · Specialty Coffee · Aesthetic</small><small>Cappuccino</small></div><span class="price">AED 24</span></a><a class="row" href="/c/634e6c06-3733-40f7-8bf4-c56b73af8307/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJH8llc_VnXz4R3Oq6gzpV6JE/0.jpg" alt="" loading="lazy"><div><b>SAYA BIANCA</b><small>★ 4.6 · Aesthetic · Cozy</small><small>Cappuccino</small></div><span class="price">AED 32</span></a><a class="row" href="/c/022775c6-07f0-4e4e-b1b2-1a86afe183da/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJYcVYYABnXz4RztleacB3x5A/0.jpg" alt="" loading="lazy"><div><b>PDL Coffee Co. - Nad Al Sheba</b><small>★ 4.6 · Specialty Coffee · Cozy</small><small>Iced Latte</small></div><span class="price">AED 29</span></a><a class="row" href="/c/ee5f9ab1-f7bc-4494-ac46-f0761877c77c/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJm-5ILABnXz4Rn7aexDwfN1A/0.jpg" alt="" loading="lazy"><div><b>ESPRSO</b><small>★ 4.5 · Specialty Coffee · Cozy</small></div><span></span></a><a class="row" href="/c/9454463c-ea8c-415f-a947-fe0e02cc5e49/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJcXeIFQBpXz4RAJyaGFtVCB8/0.jpg" alt="" loading="lazy"><div><b>Shams Café</b><small>★ 4.7 · Specialty Coffee · Cozy</small><small>Cappuccino (Single)</small></div><span class="price">AED 23</span></a><a class="row" href="/c/957c34b4-9126-4c96-9699-1050ba8c068c/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJIx89qBlnXz4RApyKWztcyW0/0.jpg" alt="" loading="lazy"><div><b>Joud Coffee Nad Al Sheba</b><small>★ 4.5 · Specialty Coffee · Aesthetic</small><small>Flat White</small></div><span class="price">AED 24</span></a><a class="row" href="/c/e16fa8d7-6339-4661-9506-28ff4eb1ffad/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJofqsK7FpXz4RPPutSrPtBfc/0.jpg" alt="" loading="lazy"><div><b>PRESS’D Wellness Café</b><small>★ 4.9 · Specialty Coffee · Cozy</small><small>Cappuccino</small></div><span class="price">AED 24</span></a><a class="row" href="/c/f3dd4ad7-e5f1-46b9-be14-eb7ea2490944/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJm2YmKzpnXz4RgB6vukDAGD8/0.jpg" alt="" loading="lazy"><div><b>The Espresso Lab</b><small>★ 4.5 · Specialty Coffee · Aesthetic</small></div><span></span></a><a class="row" href="/c/7fe4bd7e-3d0b-4e62-851d-05ec53e287d6/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJ6cvPNmBpXz4RlDrLFmnty-E/0.jpg" alt="" loading="lazy"><div><b>Common Lab - Brew &amp; Bake</b><small>★ 5.0 · Specialty Coffee · Aesthetic</small><small>Flat White (hot)</small></div><span class="price">AED 26</span></a><a class="row" href="/c/1b48a6a1-5458-4fcc-9c50-e4a129be723a/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJw9azzItpXz4RwxDij7HF8m8/0.jpg" alt="" loading="lazy"><div><b>Homebrew Coffee - Speciality Coffee in Azizi</b><small>★ 4.8 · Specialty Coffee · Aesthetic</small><small>Cappuccino</small></div><span class="price">AED 24</span></a><a class="row" href="/c/06562f6c-3dbe-4441-8b02-9fc803641c85/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJY0VotoRvXz4RT7F41B_5dO8/0.jpg" alt="" loading="lazy"><div><b>PITCHER speciality coffee</b><small>★ 4.8 · Specialty Coffee · Aesthetic</small></div><span></span></a></div>
+    <div class="cta"><span data-dots="56"></span><h3>Find the one that fits you</h3><p style="color:#BDBDBD">Ask for a drink, a price or a mood. Free in the app.</p><div class="stores" data-stores></div></div>
+  </main>
+  <footer><div class="col"><span>© 2026 BrewMaps</span><span class="sp"></span><a href="https://wa.me/971529763232">For cafés</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div></footer>
+  <script>window.BM_CHAT={"label":"Ask about Nad Al Sheba","hello":"Ask me about cafés in Nad Al Sheba.","questions":[{"q":"Cheapest latte in Nad Al Sheba?","a":"\u003cdiv class=\"mini\">\u003cspan>\u003ca href=\"/c/9454463c-ea8c-415f-a947-fe0e02cc5e49/\">Shams Café\u003c/a> · Cappuccino (Single)\u003c/span>\u003cb>AED 23\u003c/b>\u003c/div>\u003cdiv class=\"mini\">\u003cspan>\u003ca href=\"/c/7e1cb9a3-c005-468c-a930-1d11329a34ff/\">VASO COFFEE HOUSE\u003c/a> · Cappuccino\u003c/span>\u003cb>AED 24\u003c/b>\u003c/div>\u003cdiv class=\"mini\">\u003cspan>\u003ca href=\"/c/957c34b4-9126-4c96-9699-1050ba8c068c/\">Joud Coffee Nad Al Sheba\u003c/a> · Flat White\u003c/span>\u003cb>AED 24\u003c/b>\u003c/div>"},{"q":"Quiet café in Nad Al Sheba?","a":"Quiet ones: \u003ca href=\"/c/58052d30-01ac-4685-960b-f265fcb7c27e/\">Roasters Specialty Coffee House Sobha Hartland\u003c/a>, \u003ca href=\"/c/4b4afc6e-25f6-4165-9fcc-e37a95511bd9/\">Zero Four Specialty Coffee\u003c/a>, \u003ca href=\"/c/9d88860c-9362-48dd-8efc-c0f1e342c509/\">CALLA Cafe\u003c/a>."},{"q":"Best rated in Nad Al Sheba?","a":"Top rated: \u003ca href=\"/c/7fe4bd7e-3d0b-4e62-851d-05ec53e287d6/\">Common Lab - Brew &amp; Bake\u003c/a> (★ 5.0), \u003ca href=\"/c/e16fa8d7-6339-4661-9506-28ff4eb1ffad/\">PRESS’D Wellness Café\u003c/a> (★ 4.9), \u003ca href=\"/c/7e1cb9a3-c005-468c-a930-1d11329a34ff/\">VASO COFFEE HOUSE\u003c/a> (★ 4.8)."}]};</script>
+  <script src="/assets/bm.js" defer></script>
 </body>
 </html>

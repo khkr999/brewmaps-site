@@ -2,263 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="robots" content="index, follow" />
-  <title>Matter by iCoffee - Dubai Hills Mall — Café in Dubai Hills, Dubai | BrewMaps</title>
-  <meta name="description" content="Matter by iCoffee - Dubai Hills Mall in Dubai Hills, Dubai. ★4.7 (522 reviews). Specialty Coffee, Aesthetic, Social. Menu with prices — Karak Tea 13 AED, Royal Breakfast 18 AED, Early Grey Flora 18 AED." />
+  <title>Matter by iCoffee - Dubai Hills Mall, café in Dubai Hills, Dubai | BrewMaps</title>
+  <meta name="description" content="Matter by iCoffee - Dubai Hills Mall in Dubai Hills, Dubai. Rated 4.7 from 522 reviews. Prices: Cold Brew AED 30, Flat White AED 26, Cortado AED 23." />
   <link rel="canonical" href="https://www.brewmaps.app/c/9d51cb77-1652-4927-8415-803550b18fab" />
-
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="BrewMaps" />
-  <meta property="og:title" content="Matter by iCoffee - Dubai Hills Mall — Café in Dubai Hills, Dubai | BrewMaps" />
-  <meta property="og:description" content="Matter by iCoffee - Dubai Hills Mall in Dubai Hills, Dubai. ★4.7 (522 reviews). Specialty Coffee, Aesthetic, Social. Menu with prices — Karak Tea 13 AED, Royal Breakfast 18 AED, Early Grey Flora 18 AED." />
+  <meta property="og:title" content="Matter by iCoffee - Dubai Hills Mall, café in Dubai Hills, Dubai | BrewMaps" />
+  <meta property="og:description" content="Matter by iCoffee - Dubai Hills Mall in Dubai Hills, Dubai. Rated 4.7 from 522 reviews. Prices: Cold Brew AED 30, Flat White AED 26, Cortado AED 23." />
   <meta property="og:image" content="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJuSMFk8JvXz4R-oBPxSvoqqY/0.jpg" />
   <meta property="og:url" content="https://www.brewmaps.app/c/9d51cb77-1652-4927-8415-803550b18fab" />
   <meta name="twitter:card" content="summary_large_image" />
-
   <meta name="apple-itunes-app" content="app-id=6775899450" />
+  <meta name="theme-color" content="#FFFFFF" />
   <link rel="icon" type="image/png" href="/logo.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    html, body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #FAF6F0;
-      color: #1F1A14;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-    .container { max-width: 520px; margin: 0 auto; padding: 0 0 100px; }
-
-    /* Nav */
-    .nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 20px; background: rgba(250, 246, 240, 0.9);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      position: sticky; top: 0; z-index: 10;
-    }
-    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #2B4D1F; }
-    .nav-logo img { width: 28px; height: 28px; border-radius: 6px; }
-
-    /* Hero photo */
-    .hero {
-      width: 100%; aspect-ratio: 4 / 3;
-      background: #2B4D1F; object-fit: cover;
-      display: block;
-    }
-
-    /* Card */
-    .body { padding: 20px; }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 30px; line-height: 1.1; color: #1F1A14;
-      margin-bottom: 6px;
-    }
-    .area { color: #6B6357; font-size: 15px; margin-bottom: 16px; }
-
-    .stats {
-      display: flex; gap: 12px; margin-bottom: 20px;
-    }
-    .stat {
-      flex: 1; background: #fff; border-radius: 14px;
-      padding: 12px; text-align: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-    .stat-val { font-weight: 700; font-size: 17px; color: #1F1A14; }
-    .stat-label { font-size: 11px; color: #6B6357; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
-
-    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
-    .chip {
-      background: #2B4D1F1A; color: #2B4D1F;
-      padding: 6px 12px; border-radius: 999px;
-      font-size: 13px; font-weight: 500;
-    }
-
-    .section-label {
-      font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
-      color: #6B6357; font-weight: 600; margin-bottom: 8px;
-    }
-    .summary {
-      background: #fff; border-radius: 14px; padding: 16px;
-      line-height: 1.55; color: #3D362E; margin-bottom: 24px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-
-    /* Rate panel — shown when a café's table QR is scanned (?rate=1).
-       A scan from inside the café is the one moment we get, so the page has to
-       say what to do next instead of showing a profile and hoping. */
-    .rate-panel {
-      background: #2B4D1F; color: #FFFDF9;
-      border-radius: 16px; padding: 20px; margin: 4px 0 22px;
-    }
-    /* Shorter hero on a rate scan so the panel is visible without scrolling —
-       at 4/3 the ask started below the fold. */
-    .rate-mode .hero { aspect-ratio: 16 / 9; }
-    .rate-mode .container { padding-bottom: 40px; }
-    .rate-panel h2 {
-      font-size: 21px; font-weight: 700; margin-bottom: 5px; letter-spacing: -0.01em;
-    }
-    .rate-panel p { font-size: 13.5px; opacity: 0.82; line-height: 1.5; }
-    .rate-btn {
-      display: block; margin-top: 15px; background: #C4956A; color: #2B4D1F;
-      padding: 15px; border-radius: 12px; text-align: center;
-      font-weight: 700; font-size: 16px; text-decoration: none;
-    }
-    .rate-btn:active { transform: scale(0.98); }
-    /* The two-step is the whole point: iOS cannot carry the café through an App
-       Store install, so a fresh install lands on onboarding, not here. Telling
-       people to scan again is unglamorous and it is what makes the loop close. */
-    .rate-steps {
-      margin-top: 14px; padding-top: 14px;
-      border-top: 1px solid rgba(255,255,255,0.18);
-      font-size: 12.5px; line-height: 1.65; opacity: 0.8;
-    }
-    .rate-steps b { opacity: 1; font-weight: 700; }
-
-    /* CTAs */
-    .cta-stack { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
-    .cta-primary {
-      background: #2B4D1F; color: #fff;
-      padding: 16px; border-radius: 14px;
-      text-decoration: none; text-align: center;
-      font-weight: 600; font-size: 16px;
-      box-shadow: 0 4px 12px rgba(43,77,31,0.25);
-      transition: transform 0.15s;
-    }
-    .cta-primary:active { transform: scale(0.98); }
-    .cta-secondary {
-      background: transparent; color: #2B4D1F;
-      padding: 14px; border-radius: 14px;
-      text-decoration: none; text-align: center;
-      font-weight: 600; font-size: 15px;
-      border: 1.5px solid #2B4D1F33;
-    }
-
-    /* Loading / error */
-    .loader {
-      display: flex; align-items: center; justify-content: center;
-      padding: 80px 20px; color: #6B6357;
-    }
-    .err { padding: 40px 20px; text-align: center; color: #6B6357; }
-    .err h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: #1F1A14; margin-bottom: 8px; }
-
-    /* Bottom install banner — sticky on mobile */
-    .install-banner {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      background: #fff; padding: 14px 20px;
-      box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
-      display: flex; align-items: center; gap: 12px;
-      max-width: 520px; margin: 0 auto;
-    }
-    .install-banner img { width: 36px; height: 36px; border-radius: 8px; }
-    .install-banner-text { flex: 1; }
-    .install-banner-text .t { font-weight: 600; font-size: 14px; color: #1F1A14; }
-    .install-banner-text .s { font-size: 12px; color: #6B6357; margin-top: 1px; }
-    .install-banner a {
-      background: #2B4D1F; color: #fff;
-      padding: 10px 16px; border-radius: 10px;
-      text-decoration: none; font-size: 14px; font-weight: 600;
-    }
-  
-    .menu { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
-    .menu-row { display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-bottom:1px solid #F0EBE3; font-size:14.5px; }
-    .menu-row:last-child { border-bottom:none; }
-    .menu-name { color:#3D362E; }
-    .menu-price { color:#2B4D1F; font-weight:600; white-space:nowrap; }
-    .menu-cat { font-size:11px; text-transform:uppercase; letter-spacing:0.8px; color:#6B6357; font-weight:600; padding:14px 0 4px; }
-    .amen { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
-    .amen-item { background:#fff; border-radius:10px; padding:9px 12px; font-size:13px; color:#3D362E; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
-    .cards-row { display:flex; gap:6px; margin-bottom:18px; }
-    .card-pill { display:flex; align-items:center; gap:6px; padding:6px 11px; border-radius:999px; font-size:12.5px; font-weight:600; }
-    .hours { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
-    .hours-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid #F0EBE3; font-size:14px; }
-    .hours-row:last-child { border-bottom:none; }
-    .hours-day { color:#6B6357; }
-    .nearby { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
-    .nearby a { background:#fff; border:1px solid #E8E1D7; color:#2B4D1F; padding:7px 12px; border-radius:999px; font-size:13px; text-decoration:none; font-weight:500; }
-    .crumb { font-size:12.5px; color:#6B6357; padding:0 20px 4px; }
-    .crumb a { color:#2B4D1F; text-decoration:none; }
-</style>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CafeOrCoffeeShop","name":"Matter by iCoffee - Dubai Hills Mall","address":{"@type":"PostalAddress","streetAddress":"Al Khail Rd - Hadaeq Sheikh Mohammed Bin Rashid - Dubai - United Arab Emirates","addressLocality":"Dubai Hills","addressRegion":"Dubai","addressCountry":"AE"},"geo":{"@type":"GeoCoordinates","latitude":25.1021537,"longitude":55.2379182},"image":"https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJuSMFk8JvXz4R-oBPxSvoqqY/0.jpg","url":"https://www.brewmaps.app/c/9d51cb77-1652-4927-8415-803550b18fab","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.7","reviewCount":522},"servesCuisine":"Coffee","priceRange":"$$","hasMenu":{"@type":"Menu","hasMenuSection":[{"@type":"MenuSection","name":"Other","hasMenuItem":[{"@type":"MenuItem","name":"Royal Breakfast","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Early Grey Flora","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"1001 Nights","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Rosa","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Happy Forest","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Ginger Zest","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Lemonada","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Melody Melon","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Tea","hasMenuItem":[{"@type":"MenuItem","name":"Black Tea with Sage","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Moroccan Nights","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Green Tea Curls","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Peppermint","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Chamomile Breeze","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Masala Chai","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Rooibos Orange","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Green Tea with Lemon & Ginger","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Karak Tea","offers":{"@type":"Offer","price":13,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Hibiscus Breeze","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Cascara","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}},{"@type":"MenuItem","name":"Fruity Cascara","offers":{"@type":"Offer","price":28,"priceCurrency":"AED"}}]},{"@type":"MenuSection","name":"Hot Coffee","hasMenuItem":[{"@type":"MenuItem","name":"Cinnamon Black","offers":{"@type":"Offer","price":18,"priceCurrency":"AED"}}]}]}}</script>
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/bm.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CafeOrCoffeeShop","name":"Matter by iCoffee - Dubai Hills Mall","address":{"@type":"PostalAddress","streetAddress":"Al Khail Rd - Hadaeq Sheikh Mohammed Bin Rashid - Dubai - United Arab Emirates","addressLocality":"Dubai Hills","addressRegion":"Dubai","addressCountry":"AE"},"geo":{"@type":"GeoCoordinates","latitude":25.1021537,"longitude":55.2379182},"image":"https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJuSMFk8JvXz4R-oBPxSvoqqY/0.jpg","url":"https://www.brewmaps.app/c/9d51cb77-1652-4927-8415-803550b18fab","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.7","reviewCount":522},"servesCuisine":"Coffee","priceRange":"$$"}</script>
 </head>
 <body>
-  <div class="container">
-    <div class="nav">
-      <a href="/" class="nav-logo"><img src="/logo.png" alt="BrewMaps" /><span>BrewMaps</span></a>
-      <a href="/download" style="font-size:14px;color:#2B4D1F;font-weight:600;text-decoration:none">Get the app</a>
-    </div>
+  <header class="bar"><div class="col">
+    <a class="brand" href="/" aria-label="BrewMaps home"><svg viewBox="375.82 301.87 328.37 478.45" aria-hidden="true"><path fill="currentColor" d="M 580.496094 506.21875 C 580.496094 522.027344 572.066406 536.652344 558.363281 544.566406 L 444.292969 610.421875 C 438.738281 613.609375 435.65625 619.417969 435.65625 625.378906 C 435.65625 628.3125 436.402344 631.265625 437.96875 633.992188 C 442.75 642.242188 453.289062 645.070312 461.566406 640.3125 L 529.78125 600.9375 L 571.191406 650.234375 C 577.230469 657.382812 580.496094 666.429688 580.496094 675.761719 L 580.496094 719.945312 C 580.496094 736.1875 564.328125 747.472656 549.113281 741.84375 L 413.421875 691.925781 C 404.246094 688.535156 398.128906 679.792969 398.128906 669.976562 L 398.128906 415.894531 C 398.128906 399.648438 414.246094 388.390625 429.488281 393.945312 L 565.152344 443.476562 C 574.378906 446.84375 580.496094 455.605469 580.496094 465.425781 Z M 704.183594 464.398438 L 704.183594 417.078125 C 704.183594 394.382812 689.890625 373.894531 668.582031 366.054688 L 503.359375 305.214844 C 497.269531 302.980469 490.894531 301.871094 484.570312 301.871094 C 475.214844 301.871094 465.933594 304.265625 457.605469 309.019531 L 403.269531 340.042969 C 386.328125 349.707031 375.816406 367.804688 375.816406 387.285156 L 375.816406 666.324219 C 375.816406 689.023438 390.132812 709.535156 411.441406 717.375 L 567.414062 774.769531 C 582.527344 780.320312 599.183594 778.933594 613.140625 770.992188 L 676.757812 734.699219 C 693.667969 725.058594 704.183594 706.964844 704.183594 687.453125 L 704.183594 619.984375 C 704.183594 607.183594 699.65625 594.765625 691.457031 585.027344 L 645.988281 530.894531 L 678.605469 510.5625 C 694.621094 500.5625 704.183594 483.316406 704.183594 464.398438"/><path class="face" d="M 568.730469 555.835938 L 516.8125 585.488281 L 530.875 602.238281 L 571.199219 650.246094 C 577.238281 657.390625 580.507812 666.4375 580.507812 675.765625 L 580.507812 719.941406 C 580.507812 736.191406 564.339844 747.464844 549.109375 741.847656 L 413.433594 691.9375 C 404.246094 688.546875 398.128906 679.796875 398.128906 669.988281 L 398.128906 415.886719 C 398.128906 399.65625 414.257812 388.382812 429.484375 393.9375 L 565.160156 443.472656 C 574.367188 446.84375 580.507812 455.609375 580.507812 465.417969 L 580.507812 535.554688 C 580.507812 543.960938 576.035156 551.683594 568.730469 555.835938"/><circle cx="441.88" cy="451.98" r="14.26" fill="currentColor"/><circle cx="540" cy="688.12" r="14.26" fill="currentColor"/></svg>brewmaps</a>
+    <span class="sp"></span><a class="get" data-store href="/download">Get the app</a>
+  </div></header>
 
-    <div class="crumb"><a href="/">BrewMaps</a> › <a href="/area/dubai-hills/">Dubai Hills</a> › Matter by iCoffee - Dubai Hills Mall</div>
-    <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJuSMFk8JvXz4R-oBPxSvoqqY/0.jpg" class="hero" alt="Matter by iCoffee - Dubai Hills Mall" />
-    <div class="body">
-      <h1>Matter by iCoffee - Dubai Hills Mall</h1>
-      <div class="area">Dubai Hills, Dubai · $$</div>
-
-      
-
-      <div class="stats">
-        <div class="stat"><div class="stat-val">★ 4.7</div><div class="stat-label">522 reviews</div></div>
-        <div class="stat"><div class="stat-val">Good</div><div class="stat-label">WiFi</div></div>
-        <div class="stat"><div class="stat-val">Moderate</div><div class="stat-label">Vibe</div></div>
-      </div>
-
-      <div class="chips"><div class="chip">Specialty Coffee</div><div class="chip">Aesthetic</div><div class="chip">Social</div><div class="chip">Family Friendly</div></div>
-      <div class="section-label">About</div><div class="summary">Matter by iCoffee at Dubai Hills Mall is a specialty coffee shop known for exceptional specialty drinks like piccolo and pistachio lattes, paired with quality breakfast options like shakshuka and French toast. Staff are attentive and welcoming, creating a genuinely hospitable experience that keeps customers coming back.</div>
-
-      <div class="section-label">Menu &amp; prices</div><div class="menu">
-        
-          <div class="menu-cat">Other</div>
-          <div class="menu-row"><span class="menu-name">Royal Breakfast</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Early Grey Flora</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">1001 Nights</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Rosa</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Happy Forest</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Ginger Zest</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Lemonada</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Melody Melon</span><span class="menu-price">18 AED</span></div>
-        
-          <div class="menu-cat">Tea</div>
-          <div class="menu-row"><span class="menu-name">Black Tea with Sage</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Moroccan Nights</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Green Tea Curls</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Peppermint</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Chamomile Breeze</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Masala Chai</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Rooibos Orange</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Green Tea with Lemon &amp; Ginger</span><span class="menu-price">18 AED</span></div><div class="menu-row"><span class="menu-name">Karak Tea</span><span class="menu-price">13 AED</span></div><div class="menu-row"><span class="menu-name">Hibiscus Breeze</span><span class="menu-price">28 AED</span></div><div class="menu-row"><span class="menu-name">Cascara</span><span class="menu-price">28 AED</span></div><div class="menu-row"><span class="menu-name">Fruity Cascara</span><span class="menu-price">28 AED</span></div>
-        
-          <div class="menu-cat">Hot Coffee</div>
-          <div class="menu-row"><span class="menu-name">Cinnamon Black</span><span class="menu-price">18 AED</span></div>
-        
-      </div>
-
-      <div class="section-label">Amenities</div><div class="amen"><div class="amen-item">📶 Good WiFi</div><div class="amen-item">🔊 Moderate</div><div class="amen-item">🔌 Power outlets</div><div class="amen-item">🅿️ True</div><div class="amen-item">🪑 Indoor</div></div>
-
-      <div class="section-label">Opening hours</div><div class="hours">
-        <div class="hours-row"><span class="hours-day">Monday</span><span>7:30am-12am</span></div><div class="hours-row"><span class="hours-day">Tuesday</span><span>7:30am-12am</span></div><div class="hours-row"><span class="hours-day">Wednesday</span><span>7:30am-12am</span></div><div class="hours-row"><span class="hours-day">Thursday</span><span>7:30am-12am</span></div><div class="hours-row"><span class="hours-day">Friday</span><span>7:30am-1am</span></div><div class="hours-row"><span class="hours-day">Saturday</span><span>7:30am-1am</span></div><div class="hours-row"><span class="hours-day">Sunday</span><span>7:30am-12am</span></div>
-      </div>
-
-      <div class="section-label">More cafés in Dubai Hills</div><div class="nearby">
-        <a href="/c/092fb65b-04f6-4a7e-94ed-cedf06b114b1/">L&#39;ETO</a><a href="/c/2160187d-1747-441f-9f24-437222d55a90/">Common Grounds - Dubai Hills Mall</a><a href="/c/2dea425c-06dd-45cf-a7fb-2629fff42c9d/">Cafe Gray Brasserie</a><a href="/c/2757c545-d569-4566-8e63-5664b1e0563f/">Roasters Specialty Coffee House Dubai Hills</a><a href="/c/645395c0-8c66-4909-87ae-0e6e93bce718/">ABC Coffee Roasters - Dubai Hills Mall</a><a href="/c/e55c11b0-a59d-4fd6-8552-d633eee18edc/">Backyard</a><a href="/c/f949521d-76a2-4d5c-a973-522afabbd9da/">Coffee Planet - Dubai Hills Estate</a><a href="/c/fa6c97a3-a754-4414-82b8-35ff43d14d00/">Boon Coffee Roasters Dubai Hills</a>
-      </div><div style="margin:6px 0 24px"><a href="/area/dubai-hills/" style="font-size:13px;color:#2B4D1F;font-weight:600;text-decoration:none">See all cafés in Dubai Hills →</a></div>
-
-      <div class="cta-stack">
-        <a href="brewmaps://c/9d51cb77-1652-4927-8415-803550b18fab" class="cta-primary" id="open-app">Open in BrewMaps</a>
-        <a href="/download" class="cta-secondary">Don't have the app? Get it</a>
-      </div>
-    </div>
-
-  <div class="install-banner" id="install-banner">
-    <img src="/logo.png" alt="BrewMaps" />
-    <div class="install-banner-text"><div class="t">Open in BrewMaps</div><div class="s">For check-ins, photos &amp; more</div></div>
-    <a href="/download">Get app</a>
-  </div>
-
+  <main class="col">
+    <div class="crumb"><a href="/">BrewMaps</a> › <a href="/area/dubai-hills/">Dubai Hills</a></div>
+    <div class="photos"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJuSMFk8JvXz4R-oBPxSvoqqY/0.jpg" alt="Matter by iCoffee - Dubai Hills Mall"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJuSMFk8JvXz4R-oBPxSvoqqY/1.jpg" alt="" loading="lazy"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJuSMFk8JvXz4R-oBPxSvoqqY/2.jpg" alt="" loading="lazy"></div>
+    <h1>Matter by iCoffee - Dubai Hills Mall</h1>
+    <p class="where">Dubai Hills, Dubai · $$</p>
+    <div class="line"><span class="rate">★ 4.7 <small>522 reviews</small></span><span class="pill">Good Wi-Fi</span><span class="pill">Some chatter</span><span class="pill">A few plugs</span><span class="pill">Parking</span><span class="pill">Indoor seats</span></div>
+    <div id="rate-slot"></div>
+    <p class="about">Matter by iCoffee at Dubai Hills Mall is a specialty coffee shop known for exceptional specialty drinks like piccolo and pistachio lattes, paired with quality breakfast options like shakshuka and French toast. Staff are attentive and welcoming, creating a genuinely hospitable experience that keeps customers coming back.</p>
+    <section>
+      <h2>From the menu</h2>
+      <div class="drinks"><div class="drink"><span>Cold Brew</span><b>AED 30</b></div><div class="drink"><span>Flat White</span><b>AED 26</b></div><div class="drink"><span>Cortado</span><b>AED 23</b></div><div class="drink"><span>V60</span><b>AED 30</b></div></div>
+      <div class="full"><span data-dots="56"></span><div><h3>See the full menu in the app</h3><p>All 121 drinks with their prices, free in the app.</p></div><div class="stores" data-stores></div></div>
+    </section>
+    <section>
+      <h2>Opening hours</h2>
+      <div class="today"><span>Today</span><b id="today-hours"></b></div>
+      <details><summary>See the whole week</summary><div class="week"><div><span>Monday</span><span>7:30am-12am</span></div><div><span>Tuesday</span><span>7:30am-12am</span></div><div><span>Wednesday</span><span>7:30am-12am</span></div><div><span>Thursday</span><span>7:30am-12am</span></div><div><span>Friday</span><span>7:30am-1am</span></div><div><span>Saturday</span><span>7:30am-1am</span></div><div><span>Sunday</span><span>7:30am-12am</span></div></div></details>
+      <script type="application/json" id="hours-data">{"fri":"7:30am-1am","mon":"7:30am-12am","sat":"7:30am-1am","sun":"7:30am-12am","thu":"7:30am-12am","tue":"7:30am-12am","wed":"7:30am-12am"}</script>
+      <a class="btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=25.1021537,55.2379182">Get directions <span aria-hidden="true">→</span></a>
+    </section>
+    <section>
+      <h2>More cafés in Dubai Hills</h2>
+      <div class="near"><a href="/c/fca1a055-53ac-4b21-8e59-187a2d9f028b/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJ6dr9R5pvXz4Rg96AI2jt7zc/0.jpg" alt="" loading="lazy"><b>Peet&#39;s Coffee</b><small>★ 4.9 · 3580 reviews</small></a><a href="/c/7fef7f26-2c66-4bde-8891-22c755841eef/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJR9kbHW9vXz4Rkd825vtj6gA/0.jpg" alt="" loading="lazy"><b>Café Bateel - Dubai Hills Mall</b><small>★ 4.7 · 2092 reviews</small></a><a href="/c/487b79be-aa07-4b17-8acb-0362b61724ff/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJbwc2BrJvXz4RiMeMoCgLfuI/0.jpg" alt="" loading="lazy"><b>La Brioche Dubai Hills Mall</b><small>★ 4.6 · 1959 reviews</small></a></div>
+      <a class="more" href="/area/dubai-hills/">All 23 cafés in Dubai Hills →</a>
+    </section>
+  </main>
   <script>
-    // ?rate=1 = scanned from the café's own table card. Keeps the behaviour the
-    // old JS page had; everything else on this page is now static HTML.
+    // ?rate=1 = scanned from the café's own table card: lead with "How was your coffee?"
     if (new URLSearchParams(location.search).get('rate') === '1') {
-      document.documentElement.classList.add('rate-mode');
-      var b = document.getElementById('install-banner'); if (b) b.style.display = 'none';
+      document.getElementById('rate-slot').innerHTML = '<div class="ratep"><h2>How was your coffee?</h2><p>Rate what you ordered. It takes a few seconds, and it helps Matter by iCoffee - Dubai Hills Mall see what people love.</p><a href="#" class="go" id="rate-open" data-deep="brewmaps://c/9d51cb77-1652-4927-8415-803550b18fab">Rate it in BrewMaps</a><ol><li>No app yet? Tap above to get BrewMaps (it\'s free).</li><li>Then <b>scan this code again</b>. It opens straight here.</li></ol></div>';
     }
-    document.getElementById('open-app').addEventListener('click', function (e) {
-      e.preventDefault();
-      var bailed = false, onHide = function () { bailed = true; };
-      document.addEventListener('visibilitychange', onHide, { once: true });
-      setTimeout(function () {
-        document.removeEventListener('visibilitychange', onHide);
-        if (!bailed && !document.hidden) location.href = '/download';
-      }, 1400);
-      window.location.href = 'brewmaps://c/9d51cb77-1652-4927-8415-803550b18fab';
-    });
   </script>
-  </div>
+  <footer><div class="col"><span>© 2026 BrewMaps</span><span class="sp"></span><a href="https://wa.me/971529763232">For cafés</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div></footer>
+  <script>window.BM_CHAT={"label":"Ask about this café","hello":"Ask me about Matter by iCoffee - Dubai Hills Mall.","questions":[{"q":"What's the cheapest here?","a":"The cheapest at Matter by iCoffee - Dubai Hills Mall:\u003cdiv class=\"mini\">\u003cspan>Still Water (Small)\u003c/span>\u003cb>AED 12\u003c/b>\u003c/div>\u003cdiv class=\"mini\">\u003cspan>Karak\u003c/span>\u003cb>AED 13\u003c/b>\u003c/div>\u003cdiv class=\"mini\">\u003cspan>Sparkling Water (Small)\u003c/span>\u003cb>AED 14\u003c/b>\u003c/div>"},{"q":"Is it good for work?","a":"Some chatter, good wi-fi, a few plugs. Better for a coffee than a long work session."},{"q":"Something similar nearby?","a":"Close by: \u003ca href=\"/c/fca1a055-53ac-4b21-8e59-187a2d9f028b/\">Peet&#39;s Coffee\u003c/a> (★ 4.9), \u003ca href=\"/c/7fef7f26-2c66-4bde-8891-22c755841eef/\">Café Bateel - Dubai Hills Mall\u003c/a> (★ 4.7), \u003ca href=\"/c/487b79be-aa07-4b17-8acb-0362b61724ff/\">La Brioche Dubai Hills Mall\u003c/a> (★ 4.6)."}]};</script>
+  <script src="/assets/bm.js" defer></script>
 </body>
 </html>

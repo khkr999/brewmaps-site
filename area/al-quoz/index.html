@@ -2,293 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="robots" content="index, follow" />
-  <title>Cafés in Al Quoz, Dubai — 13 Specialty Coffee Shops | BrewMaps</title>
-  <meta name="description" content="13 cafés in Al Quoz, Dubai, with menus and real prices for 12 of them. Ratings, wifi, noise levels and opening hours. RAW Coffee Company, CASSETTE, Cafe Rider Custom, La Nena and more." />
+  <title>Cafés in Al Quoz, Dubai: 30 coffee shops with prices | BrewMaps</title>
+  <meta name="description" content="30 cafés in Al Quoz, Dubai, with menu prices for 23 of them. Ratings, Wi-Fi, noise and opening hours. Harvest &amp; Co, RAW Coffee Company, CASSETTE, Cafe Rider Custom and more." />
   <link rel="canonical" href="https://www.brewmaps.app/area/al-quoz" />
-
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="BrewMaps" />
-  <meta property="og:title" content="Cafés in Al Quoz, Dubai — 13 Specialty Coffee Shops | BrewMaps" />
-  <meta property="og:description" content="13 cafés in Al Quoz, Dubai, with menus and real prices for 12 of them. Ratings, wifi, noise levels and opening hours. RAW Coffee Company, CASSETTE, Cafe Rider Custom, La Nena and more." />
-  <meta property="og:image" content="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJbSAmv89rXz4ROS45tG_g-t4/0.jpg" />
+  <meta property="og:title" content="Cafés in Al Quoz, Dubai: 30 coffee shops with prices | BrewMaps" />
+  <meta property="og:description" content="30 cafés in Al Quoz, Dubai, with menu prices for 23 of them. Ratings, Wi-Fi, noise and opening hours. Harvest &amp; Co, RAW Coffee Company, CASSETTE, Cafe Rider Custom and more." />
+  <meta property="og:image" content="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJiwLd0lxrXz4RrByC2zfzx3I/0.jpg" />
   <meta property="og:url" content="https://www.brewmaps.app/area/al-quoz" />
   <meta name="twitter:card" content="summary_large_image" />
-
   <meta name="apple-itunes-app" content="app-id=6775899450" />
+  <meta name="theme-color" content="#FFFFFF" />
   <link rel="icon" type="image/png" href="/logo.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    html, body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #FAF6F0;
-      color: #1F1A14;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-    .container { max-width: 520px; margin: 0 auto; padding: 0 0 100px; }
-
-    /* Nav */
-    .nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 20px; background: rgba(250, 246, 240, 0.9);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      position: sticky; top: 0; z-index: 10;
-    }
-    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 700; color: #2B4D1F; }
-    .nav-logo img { width: 28px; height: 28px; border-radius: 6px; }
-
-    /* Hero photo */
-    .hero {
-      width: 100%; aspect-ratio: 4 / 3;
-      background: #2B4D1F; object-fit: cover;
-      display: block;
-    }
-
-    /* Card */
-    .body { padding: 20px; }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 30px; line-height: 1.1; color: #1F1A14;
-      margin-bottom: 6px;
-    }
-    .area { color: #6B6357; font-size: 15px; margin-bottom: 16px; }
-
-    .stats {
-      display: flex; gap: 12px; margin-bottom: 20px;
-    }
-    .stat {
-      flex: 1; background: #fff; border-radius: 14px;
-      padding: 12px; text-align: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-    .stat-val { font-weight: 700; font-size: 17px; color: #1F1A14; }
-    .stat-label { font-size: 11px; color: #6B6357; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 2px; }
-
-    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
-    .chip {
-      background: #2B4D1F1A; color: #2B4D1F;
-      padding: 6px 12px; border-radius: 999px;
-      font-size: 13px; font-weight: 500;
-    }
-
-    .section-label {
-      font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
-      color: #6B6357; font-weight: 600; margin-bottom: 8px;
-    }
-    .summary {
-      background: #fff; border-radius: 14px; padding: 16px;
-      line-height: 1.55; color: #3D362E; margin-bottom: 24px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-
-    /* Rate panel — shown when a café's table QR is scanned (?rate=1).
-       A scan from inside the café is the one moment we get, so the page has to
-       say what to do next instead of showing a profile and hoping. */
-    .rate-panel {
-      background: #2B4D1F; color: #FFFDF9;
-      border-radius: 16px; padding: 20px; margin: 4px 0 22px;
-    }
-    /* Shorter hero on a rate scan so the panel is visible without scrolling —
-       at 4/3 the ask started below the fold. */
-    .rate-mode .hero { aspect-ratio: 16 / 9; }
-    .rate-mode .container { padding-bottom: 40px; }
-    .rate-panel h2 {
-      font-size: 21px; font-weight: 700; margin-bottom: 5px; letter-spacing: -0.01em;
-    }
-    .rate-panel p { font-size: 13.5px; opacity: 0.82; line-height: 1.5; }
-    .rate-btn {
-      display: block; margin-top: 15px; background: #C4956A; color: #2B4D1F;
-      padding: 15px; border-radius: 12px; text-align: center;
-      font-weight: 700; font-size: 16px; text-decoration: none;
-    }
-    .rate-btn:active { transform: scale(0.98); }
-    /* The two-step is the whole point: iOS cannot carry the café through an App
-       Store install, so a fresh install lands on onboarding, not here. Telling
-       people to scan again is unglamorous and it is what makes the loop close. */
-    .rate-steps {
-      margin-top: 14px; padding-top: 14px;
-      border-top: 1px solid rgba(255,255,255,0.18);
-      font-size: 12.5px; line-height: 1.65; opacity: 0.8;
-    }
-    .rate-steps b { opacity: 1; font-weight: 700; }
-
-    /* CTAs */
-    .cta-stack { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
-    .cta-primary {
-      background: #2B4D1F; color: #fff;
-      padding: 16px; border-radius: 14px;
-      text-decoration: none; text-align: center;
-      font-weight: 600; font-size: 16px;
-      box-shadow: 0 4px 12px rgba(43,77,31,0.25);
-      transition: transform 0.15s;
-    }
-    .cta-primary:active { transform: scale(0.98); }
-    .cta-secondary {
-      background: transparent; color: #2B4D1F;
-      padding: 14px; border-radius: 14px;
-      text-decoration: none; text-align: center;
-      font-weight: 600; font-size: 15px;
-      border: 1.5px solid #2B4D1F33;
-    }
-
-    /* Loading / error */
-    .loader {
-      display: flex; align-items: center; justify-content: center;
-      padding: 80px 20px; color: #6B6357;
-    }
-    .err { padding: 40px 20px; text-align: center; color: #6B6357; }
-    .err h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: #1F1A14; margin-bottom: 8px; }
-
-    /* Bottom install banner — sticky on mobile */
-    .install-banner {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      background: #fff; padding: 14px 20px;
-      box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
-      display: flex; align-items: center; gap: 12px;
-      max-width: 520px; margin: 0 auto;
-    }
-    .install-banner img { width: 36px; height: 36px; border-radius: 8px; }
-    .install-banner-text { flex: 1; }
-    .install-banner-text .t { font-weight: 600; font-size: 14px; color: #1F1A14; }
-    .install-banner-text .s { font-size: 12px; color: #6B6357; margin-top: 1px; }
-    .install-banner a {
-      background: #2B4D1F; color: #fff;
-      padding: 10px 16px; border-radius: 10px;
-      text-decoration: none; font-size: 14px; font-weight: 600;
-    }
-  
-    .menu { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
-    .menu-row { display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-bottom:1px solid #F0EBE3; font-size:14.5px; }
-    .menu-row:last-child { border-bottom:none; }
-    .menu-name { color:#3D362E; }
-    .menu-price { color:#2B4D1F; font-weight:600; white-space:nowrap; }
-    .menu-cat { font-size:11px; text-transform:uppercase; letter-spacing:0.8px; color:#6B6357; font-weight:600; padding:14px 0 4px; }
-    .amen { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
-    .amen-item { background:#fff; border-radius:10px; padding:9px 12px; font-size:13px; color:#3D362E; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
-    .cards-row { display:flex; gap:6px; margin-bottom:18px; }
-    .card-pill { display:flex; align-items:center; gap:6px; padding:6px 11px; border-radius:999px; font-size:12.5px; font-weight:600; }
-    .hours { background:#fff; border-radius:14px; padding:6px 16px; margin-bottom:24px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
-    .hours-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid #F0EBE3; font-size:14px; }
-    .hours-row:last-child { border-bottom:none; }
-    .hours-day { color:#6B6357; }
-    .nearby { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
-    .nearby a { background:#fff; border:1px solid #E8E1D7; color:#2B4D1F; padding:7px 12px; border-radius:999px; font-size:13px; text-decoration:none; font-weight:500; }
-    .crumb { font-size:12.5px; color:#6B6357; padding:0 20px 4px; }
-    .crumb a { color:#2B4D1F; text-decoration:none; }
-</style>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Cafés in Al Quoz, Dubai","numberOfItems":13,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.brewmaps.app/c/3c308539-a20a-4f39-a0aa-813e6cf02d37","name":"RAW Coffee Company"},{"@type":"ListItem","position":2,"url":"https://www.brewmaps.app/c/1f2a3821-4d19-420b-b2e0-87b09b78e21f","name":"CASSETTE"},{"@type":"ListItem","position":3,"url":"https://www.brewmaps.app/c/52832d29-c341-4470-ae77-deea11ef1f7d","name":"Cafe Rider Custom"},{"@type":"ListItem","position":4,"url":"https://www.brewmaps.app/c/75fc71d1-112d-4f78-b113-36f49b9c33e7","name":"La Nena"},{"@type":"ListItem","position":5,"url":"https://www.brewmaps.app/c/ddb19d6d-939c-44d6-b03c-1018206aabd6","name":"Nightjar Coffee Roasters"},{"@type":"ListItem","position":6,"url":"https://www.brewmaps.app/c/9b281331-292c-42f1-ae77-d34f5d5a0cbc","name":"Julith Coffee & Roastery"},{"@type":"ListItem","position":7,"url":"https://www.brewmaps.app/c/3edbdb91-a27e-47ee-9b58-d2f281322e3e","name":"Ivy's secret garden"},{"@type":"ListItem","position":8,"url":"https://www.brewmaps.app/c/5c74917d-840e-4ec2-9749-eadd6b6d73a4","name":"colo coffee"},{"@type":"ListItem","position":9,"url":"https://www.brewmaps.app/c/64e63c15-6a5c-4e11-b0a1-a33f479fb491","name":"EARTH ROASTERY"},{"@type":"ListItem","position":10,"url":"https://www.brewmaps.app/c/c04cd35b-ddff-4a1b-82ee-9aa6bc170eb7","name":"East West Atelier"},{"@type":"ListItem","position":11,"url":"https://www.brewmaps.app/c/f4a63e84-5092-4e1b-ad47-9f55335ce3a2","name":"Subko Specialty Coffee Roasters and Bakehouse"},{"@type":"ListItem","position":12,"url":"https://www.brewmaps.app/c/55456891-a19e-442f-8f7c-6a627462e874","name":"Coffee Matters"},{"@type":"ListItem","position":13,"url":"https://www.brewmaps.app/c/73cf91ea-5089-41ae-8f69-f060fecdaea9","name":"IDMI Coffee Roasters"}]}</script>
-  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/bm.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"Cafés in Al Quoz, Dubai","numberOfItems":30,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.brewmaps.app/c/70d06ffc-3b34-43ba-bee0-26ba5a98f016","name":"Harvest & Co"},{"@type":"ListItem","position":2,"url":"https://www.brewmaps.app/c/3c308539-a20a-4f39-a0aa-813e6cf02d37","name":"RAW Coffee Company"},{"@type":"ListItem","position":3,"url":"https://www.brewmaps.app/c/1f2a3821-4d19-420b-b2e0-87b09b78e21f","name":"CASSETTE"},{"@type":"ListItem","position":4,"url":"https://www.brewmaps.app/c/52832d29-c341-4470-ae77-deea11ef1f7d","name":"Cafe Rider Custom"},{"@type":"ListItem","position":5,"url":"https://www.brewmaps.app/c/75fc71d1-112d-4f78-b113-36f49b9c33e7","name":"La Nena"},{"@type":"ListItem","position":6,"url":"https://www.brewmaps.app/c/6b94b0cf-b205-4349-b9a5-7eab7e226283","name":"Boston Lane"},{"@type":"ListItem","position":7,"url":"https://www.brewmaps.app/c/ddb19d6d-939c-44d6-b03c-1018206aabd6","name":"Nightjar Coffee Roasters"},{"@type":"ListItem","position":8,"url":"https://www.brewmaps.app/c/9b281331-292c-42f1-ae77-d34f5d5a0cbc","name":"Julith Coffee & Roastery"},{"@type":"ListItem","position":9,"url":"https://www.brewmaps.app/c/3edbdb91-a27e-47ee-9b58-d2f281322e3e","name":"Ivy's secret garden"},{"@type":"ListItem","position":10,"url":"https://www.brewmaps.app/c/5c74917d-840e-4ec2-9749-eadd6b6d73a4","name":"colo coffee"},{"@type":"ListItem","position":11,"url":"https://www.brewmaps.app/c/64e63c15-6a5c-4e11-b0a1-a33f479fb491","name":"EARTH ROASTERY"},{"@type":"ListItem","position":12,"url":"https://www.brewmaps.app/c/c04cd35b-ddff-4a1b-82ee-9aa6bc170eb7","name":"East West Atelier"},{"@type":"ListItem","position":13,"url":"https://www.brewmaps.app/c/f4a63e84-5092-4e1b-ad47-9f55335ce3a2","name":"Subko Specialty Coffee Roasters and Bakehouse"},{"@type":"ListItem","position":14,"url":"https://www.brewmaps.app/c/5d08f745-4521-47cc-b4e6-fbec7805fbbf","name":"Dlish Cafe"},{"@type":"ListItem","position":15,"url":"https://www.brewmaps.app/c/4e9d52a2-5ca6-4acf-a9d8-596f044f9f5a","name":"Ferment journey"},{"@type":"ListItem","position":16,"url":"https://www.brewmaps.app/c/5f3ed77f-748d-4bb3-b6b2-878db7b2568c","name":"Seven Fortunes Coffee Roasters"},{"@type":"ListItem","position":17,"url":"https://www.brewmaps.app/c/7146b897-97f9-418e-b6e1-527a0b5ef803","name":"Cypher Urban Roastery"},{"@type":"ListItem","position":18,"url":"https://www.brewmaps.app/c/d3ffb7a5-edbd-42b6-acb4-c06fb0f09f4b","name":"Crack Coffee Roasters & Cafe"},{"@type":"ListItem","position":19,"url":"https://www.brewmaps.app/c/40b74ab2-9eeb-4866-9bd1-f5ccf2d347ac","name":"Fairouz Coffee and Roastery"},{"@type":"ListItem","position":20,"url":"https://www.brewmaps.app/c/6d8d452f-8aad-4675-bb3f-c83588e7e704","name":"Grandmother Coffee Roastery"},{"@type":"ListItem","position":21,"url":"https://www.brewmaps.app/c/d4b1ee06-391d-4cea-8e82-506653731818","name":"ROR Coffee Solutions"},{"@type":"ListItem","position":22,"url":"https://www.brewmaps.app/c/de772158-50ad-4912-97cc-de84da3ccd89","name":"The Mark"},{"@type":"ListItem","position":23,"url":"https://www.brewmaps.app/c/5f635ee4-bc51-4036-8868-c0fb95b06c1f","name":"Cup. Coffee House"},{"@type":"ListItem","position":24,"url":"https://www.brewmaps.app/c/59cf10f0-5ce5-46fc-ac8a-ed8e7f7670a3","name":"The Espresso Lab"},{"@type":"ListItem","position":25,"url":"https://www.brewmaps.app/c/d5e64eed-798f-493c-8bee-22862af1e533","name":"Blacksmith Coffee Company, Al Quoz, Dubai"},{"@type":"ListItem","position":26,"url":"https://www.brewmaps.app/c/55456891-a19e-442f-8f7c-6a627462e874","name":"Coffee Matters"},{"@type":"ListItem","position":27,"url":"https://www.brewmaps.app/c/d17eaa10-c10b-4cec-87d4-e7870ea15d23","name":"On The Road Speciality Café & Bistro"},{"@type":"ListItem","position":28,"url":"https://www.brewmaps.app/c/73cf91ea-5089-41ae-8f69-f060fecdaea9","name":"IDMI Coffee Roasters"},{"@type":"ListItem","position":29,"url":"https://www.brewmaps.app/c/92b2b025-eb84-44c7-8240-333c09d0f44f","name":"Smash Speciality Coffee"},{"@type":"ListItem","position":30,"url":"https://www.brewmaps.app/c/8103bf75-10df-47f7-ac68-3e4d2c0ff99d","name":"Brew Rush Specialty Coffee LLC"}]}</script>
 </head>
 <body>
-  <div class="container">
-    <div class="nav">
-      <a href="/" class="nav-logo"><img src="/logo.png" alt="BrewMaps" /><span>BrewMaps</span></a>
-      <a href="/download" style="font-size:14px;color:#2B4D1F;font-weight:600;text-decoration:none">Get the app</a>
-    </div>
+  <header class="bar"><div class="col">
+    <a class="brand" href="/" aria-label="BrewMaps home"><svg viewBox="375.82 301.87 328.37 478.45" aria-hidden="true"><path fill="currentColor" d="M 580.496094 506.21875 C 580.496094 522.027344 572.066406 536.652344 558.363281 544.566406 L 444.292969 610.421875 C 438.738281 613.609375 435.65625 619.417969 435.65625 625.378906 C 435.65625 628.3125 436.402344 631.265625 437.96875 633.992188 C 442.75 642.242188 453.289062 645.070312 461.566406 640.3125 L 529.78125 600.9375 L 571.191406 650.234375 C 577.230469 657.382812 580.496094 666.429688 580.496094 675.761719 L 580.496094 719.945312 C 580.496094 736.1875 564.328125 747.472656 549.113281 741.84375 L 413.421875 691.925781 C 404.246094 688.535156 398.128906 679.792969 398.128906 669.976562 L 398.128906 415.894531 C 398.128906 399.648438 414.246094 388.390625 429.488281 393.945312 L 565.152344 443.476562 C 574.378906 446.84375 580.496094 455.605469 580.496094 465.425781 Z M 704.183594 464.398438 L 704.183594 417.078125 C 704.183594 394.382812 689.890625 373.894531 668.582031 366.054688 L 503.359375 305.214844 C 497.269531 302.980469 490.894531 301.871094 484.570312 301.871094 C 475.214844 301.871094 465.933594 304.265625 457.605469 309.019531 L 403.269531 340.042969 C 386.328125 349.707031 375.816406 367.804688 375.816406 387.285156 L 375.816406 666.324219 C 375.816406 689.023438 390.132812 709.535156 411.441406 717.375 L 567.414062 774.769531 C 582.527344 780.320312 599.183594 778.933594 613.140625 770.992188 L 676.757812 734.699219 C 693.667969 725.058594 704.183594 706.964844 704.183594 687.453125 L 704.183594 619.984375 C 704.183594 607.183594 699.65625 594.765625 691.457031 585.027344 L 645.988281 530.894531 L 678.605469 510.5625 C 694.621094 500.5625 704.183594 483.316406 704.183594 464.398438"/><path class="face" d="M 568.730469 555.835938 L 516.8125 585.488281 L 530.875 602.238281 L 571.199219 650.246094 C 577.238281 657.390625 580.507812 666.4375 580.507812 675.765625 L 580.507812 719.941406 C 580.507812 736.191406 564.339844 747.464844 549.109375 741.847656 L 413.433594 691.9375 C 404.246094 688.546875 398.128906 679.796875 398.128906 669.988281 L 398.128906 415.886719 C 398.128906 399.65625 414.257812 388.382812 429.484375 393.9375 L 565.160156 443.472656 C 574.367188 446.84375 580.507812 455.609375 580.507812 465.417969 L 580.507812 535.554688 C 580.507812 543.960938 576.035156 551.683594 568.730469 555.835938"/><circle cx="441.88" cy="451.98" r="14.26" fill="currentColor"/><circle cx="540" cy="688.12" r="14.26" fill="currentColor"/></svg>brewmaps</a>
+    <span class="sp"></span><a class="get" data-store href="/download">Get the app</a>
+  </div></header>
 
+  <main class="col">
     <div class="crumb"><a href="/">BrewMaps</a> › Al Quoz</div>
-    <div class="body">
-      <h1>Cafés in Al Quoz, Dubai</h1>
-      <div class="area">13 cafés · 12 with full menus and prices</div>
-      <a href="/c/3c308539-a20a-4f39-a0aa-813e6cf02d37/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJbSAmv89rXz4ROS45tG_g-t4/0.jpg" alt="RAW Coffee Company" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">RAW Coffee Company</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.6 · 2701 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Specialty Coffee · Study Friendly · Aesthetic</div>
-        <div style="font-size:12.5px;color:#2B4D1F;font-weight:600;margin-top:4px">Premium Espresso 5 AED</div>
-      </div></a><a href="/c/1f2a3821-4d19-420b-b2e0-87b09b78e21f/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJIxxfH1lrXz4RM6r4cMrnzZs/0.jpg" alt="CASSETTE" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">CASSETTE</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.5 · 2498 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Aesthetic · Hidden Gem · Family Friendly</div>
-        <div style="font-size:12.5px;color:#2B4D1F;font-weight:600;margin-top:4px">Espresso 14 AED</div>
-      </div></a><a href="/c/52832d29-c341-4470-ae77-deea11ef1f7d/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJnQlwMuhrXz4RXTM4mVxo5_U/0.jpg" alt="Cafe Rider Custom" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">Cafe Rider Custom</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.6 · 2320 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Specialty Coffee · Hidden Gem · Social</div>
-        <div style="font-size:12.5px;color:#2B4D1F;font-weight:600;margin-top:4px">COLD BREW / DRIP 18 AED</div>
-      </div></a><a href="/c/75fc71d1-112d-4f78-b113-36f49b9c33e7/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJs4GBEyVpXz4RWvvrqtB6vBU/0.jpg" alt="La Nena" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">La Nena</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.0 · 1102 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Aesthetic · Hidden Gem · Cozy</div>
-        <div style="font-size:12.5px;color:#2B4D1F;font-weight:600;margin-top:4px">Batido de Chocolate 5 AED</div>
-      </div></a><a href="/c/ddb19d6d-939c-44d6-b03c-1018206aabd6/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJiaD_uypqXz4Rq8M0P7SozKQ/0.jpg" alt="Nightjar Coffee Roasters" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">Nightjar Coffee Roasters</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.3 · 943 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Specialty Coffee · Aesthetic · Social</div>
-        <div style="font-size:12.5px;color:#2B4D1F;font-weight:600;margin-top:4px">Babyccino 5 AED</div>
-      </div></a><a href="/c/9b281331-292c-42f1-ae77-d34f5d5a0cbc/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJnfUlL_5pXz4Rkgu58TlA-n8/0.jpg" alt="Julith Coffee &amp; Roastery" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">Julith Coffee &amp; Roastery</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.6 · 880 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Specialty Coffee · Aesthetic · Social</div>
-        <div style="font-size:12.5px;color:#2B4D1F;font-weight:600;margin-top:4px">ORANGE JUICE 18 AED</div>
-      </div></a><a href="/c/3edbdb91-a27e-47ee-9b58-d2f281322e3e/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJDYmNUX9pXz4Rw-p3iZAsIks/0.jpg" alt="Ivy&#39;s secret garden" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">Ivy&#39;s secret garden</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.8 · 806 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Aesthetic · Cozy · Family Friendly</div>
-        <div style="font-size:12.5px;color:#2B4D1F;font-weight:600;margin-top:4px">Espresso 18 AED</div>
-      </div></a><a href="/c/5c74917d-840e-4ec2-9749-eadd6b6d73a4/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJa8cgyWBpXz4R_LRQlCgbT-o/0.jpg" alt="colo coffee" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">colo coffee</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.7 · 705 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Specialty Coffee · Cozy · Aesthetic</div>
-        <div style="font-size:12.5px;color:#2B4D1F;font-weight:600;margin-top:4px">Espresso 7 AED</div>
-      </div></a><a href="/c/64e63c15-6a5c-4e11-b0a1-a33f479fb491/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJlzR0Np9pXz4R01tmn763c8g/0.jpg" alt="EARTH ROASTERY" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">EARTH ROASTERY</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.4 · 485 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Specialty Coffee · Cozy · Aesthetic</div>
-        <div style="font-size:12.5px;color:#2B4D1F;font-weight:600;margin-top:4px">BABYCCINO 20 AED</div>
-      </div></a><a href="/c/c04cd35b-ddff-4a1b-82ee-9aa6bc170eb7/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJp1KH9XxrXz4RNTPdJV7KxBI/0.jpg" alt="East West Atelier" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">East West Atelier</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.4 · 368 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Aesthetic · Quiet · Study Friendly</div>
-        <div style="font-size:12.5px;color:#2B4D1F;font-weight:600;margin-top:4px">Small Water 5 AED</div>
-      </div></a><a href="/c/f4a63e84-5092-4e1b-ad47-9f55335ce3a2/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJr-KQtqBpXz4Rwxlgdzbh-4g/0.jpg" alt="Subko Specialty Coffee Roasters and Bakehouse" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">Subko Specialty Coffee Roasters and Bakehouse</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.5 · 367 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Specialty Coffee · Aesthetic · Social</div>
-        <div style="font-size:12.5px;color:#2B4D1F;font-weight:600;margin-top:4px">SUBKO BACCHA-CCINO Hot/Iced 9 AED</div>
-      </div></a><a href="/c/55456891-a19e-442f-8f7c-6a627462e874/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJ2a5BuVtpXz4RVVX0hdWTSak/0.jpg" alt="Coffee Matters" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">Coffee Matters</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.8 · 96 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Specialty Coffee · Hidden Gem · Quiet</div>
-        <div style="font-size:12.5px;color:#2B4D1F;font-weight:600;margin-top:4px">Iced Espresso Shot 5 AED</div>
-      </div></a><a href="/c/73cf91ea-5089-41ae-8f69-f060fecdaea9/" style="display:flex;gap:12px;background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-      <img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJsSrrg5VrXz4RXzBXVSBo7QQ/0.jpg" alt="IDMI Coffee Roasters" style="width:72px;height:72px;border-radius:10px;object-fit:cover;flex-shrink:0" />
-      <div style="flex:1;min-width:0">
-        <div style="font-weight:600;color:#1F1A14;font-size:15px">IDMI Coffee Roasters</div>
-        <div style="font-size:13px;color:#6B6357;margin-top:2px">★ 4.7 · 75 reviews</div>
-        <div style="font-size:12.5px;color:#3D362E;margin-top:4px">Specialty Coffee · Quiet · Study Friendly</div>
-        
-      </div></a>
-      <div class="cta-stack" style="margin-top:18px">
-        <a href="/download" class="cta-primary">Find your café — get BrewMaps free</a>
-      </div>
-    </div>
-  </div>
+    <h1>Cafés in Al Quoz, Dubai</h1>
+    <p class="lead">30 cafés, 23 with menu prices.</p>
+    <div class="list"><a class="row" href="/c/70d06ffc-3b34-43ba-bee0-26ba5a98f016/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJiwLd0lxrXz4RrByC2zfzx3I/0.jpg" alt="" loading="lazy"><div><b>Harvest &amp; Co</b><small>★ 4.9 · Specialty Coffee · Family Friendly</small><small>Flat White</small></div><span class="price">AED 22</span></a><a class="row" href="/c/3c308539-a20a-4f39-a0aa-813e6cf02d37/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJbSAmv89rXz4ROS45tG_g-t4/0.jpg" alt="" loading="lazy"><div><b>RAW Coffee Company</b><small>★ 4.6 · Specialty Coffee · Study Friendly</small><small>Cappuccino</small></div><span class="price">AED 25</span></a><a class="row" href="/c/1f2a3821-4d19-420b-b2e0-87b09b78e21f/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJIxxfH1lrXz4RM6r4cMrnzZs/0.jpg" alt="" loading="lazy"><div><b>CASSETTE</b><small>★ 4.5 · Aesthetic · Hidden Gem</small><small>Flat White</small></div><span class="price">AED 23</span></a><a class="row" href="/c/52832d29-c341-4470-ae77-deea11ef1f7d/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJnQlwMuhrXz4RXTM4mVxo5_U/0.jpg" alt="" loading="lazy"><div><b>Cafe Rider Custom</b><small>★ 4.6 · Specialty Coffee · Hidden Gem</small><small>Cappuccino</small></div><span class="price">AED 23</span></a><a class="row" href="/c/75fc71d1-112d-4f78-b113-36f49b9c33e7/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJs4GBEyVpXz4RWvvrqtB6vBU/0.jpg" alt="" loading="lazy"><div><b>La Nena</b><small>★ 4.0 · Aesthetic · Hidden Gem</small><small>Cappuccino</small></div><span class="price">AED 25</span></a><a class="row" href="/c/6b94b0cf-b205-4349-b9a5-7eab7e226283/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJ41Ed_SpqXz4Rjugp_6PLflw/0.jpg" alt="" loading="lazy"><div><b>Boston Lane</b><small>★ 4.1 · Specialty Coffee · Aesthetic</small><small>Latte</small></div><span class="price">AED 28</span></a><a class="row" href="/c/ddb19d6d-939c-44d6-b03c-1018206aabd6/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJiaD_uypqXz4Rq8M0P7SozKQ/0.jpg" alt="" loading="lazy"><div><b>Nightjar Coffee Roasters</b><small>★ 4.3 · Specialty Coffee · Aesthetic</small><small>Cappuccino</small></div><span class="price">AED 22</span></a><a class="row" href="/c/9b281331-292c-42f1-ae77-d34f5d5a0cbc/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJnfUlL_5pXz4Rkgu58TlA-n8/0.jpg" alt="" loading="lazy"><div><b>Julith Coffee &amp; Roastery</b><small>★ 4.6 · Specialty Coffee · Aesthetic</small><small>Matcha Latte</small></div><span class="price">AED 27</span></a><a class="row" href="/c/3edbdb91-a27e-47ee-9b58-d2f281322e3e/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJDYmNUX9pXz4Rw-p3iZAsIks/0.jpg" alt="" loading="lazy"><div><b>Ivy&#39;s secret garden</b><small>★ 4.8 · Aesthetic · Cozy</small><small>Cappuccino (Hot)</small></div><span class="price">AED 25</span></a><a class="row" href="/c/5c74917d-840e-4ec2-9749-eadd6b6d73a4/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJa8cgyWBpXz4R_LRQlCgbT-o/0.jpg" alt="" loading="lazy"><div><b>colo coffee</b><small>★ 4.7 · Specialty Coffee · Cozy</small><small>Spanish latte</small></div><span class="price">AED 12</span></a><a class="row" href="/c/64e63c15-6a5c-4e11-b0a1-a33f479fb491/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJlzR0Np9pXz4R01tmn763c8g/0.jpg" alt="" loading="lazy"><div><b>EARTH ROASTERY</b><small>★ 4.4 · Specialty Coffee · Cozy</small><small>Cappuccino</small></div><span class="price">AED 27</span></a><a class="row" href="/c/c04cd35b-ddff-4a1b-82ee-9aa6bc170eb7/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJp1KH9XxrXz4RNTPdJV7KxBI/0.jpg" alt="" loading="lazy"><div><b>East West Atelier</b><small>★ 4.4 · Aesthetic · Quiet</small><small>Iced Latte</small></div><span class="price">AED 25</span></a><a class="row" href="/c/f4a63e84-5092-4e1b-ad47-9f55335ce3a2/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJr-KQtqBpXz4Rwxlgdzbh-4g/0.jpg" alt="" loading="lazy"><div><b>Subko Specialty Coffee Roasters and Bakehouse</b><small>★ 4.5 · Specialty Coffee · Aesthetic</small><small>Hot Cappuccino</small></div><span class="price">AED 28</span></a><a class="row" href="/c/5d08f745-4521-47cc-b4e6-fbec7805fbbf/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJ80ObpJBpXz4R_pENUw1pBjY/0.jpg" alt="" loading="lazy"><div><b>Dlish Cafe</b><small>★ 4.5 · Cozy · Aesthetic</small><small>CAPPUCCINO</small></div><span class="price">AED 29</span></a><a class="row" href="/c/4e9d52a2-5ca6-4acf-a9d8-596f044f9f5a/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJdfQ7TQ9pXz4RhyZMoyDtc1c/0.jpg" alt="" loading="lazy"><div><b>Ferment journey</b><small>★ 4.9 · Hidden Gem · Aesthetic</small><small>Flat White</small></div><span class="price">AED 24</span></a><a class="row" href="/c/5f3ed77f-748d-4bb3-b6b2-878db7b2568c/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJLTzqXEVpXz4RBoAIcdx2aHQ/0.jpg" alt="" loading="lazy"><div><b>Seven Fortunes Coffee Roasters</b><small>★ 4.6 · Specialty Coffee · Hidden Gem</small><small>Latte (Hot/Iced)</small></div><span class="price">AED 24</span></a><a class="row" href="/c/7146b897-97f9-418e-b6e1-527a0b5ef803/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJgT7BrsZrXz4RQuTOVL5PY4o/0.jpg" alt="" loading="lazy"><div><b>Cypher Urban Roastery</b><small>★ 4.7 · Specialty Coffee</small></div><span></span></a><a class="row" href="/c/d3ffb7a5-edbd-42b6-acb4-c06fb0f09f4b/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJZXU1cd9pXz4REJ9f1qxXGGM/0.jpg" alt="" loading="lazy"><div><b>Crack Coffee Roasters &amp; Cafe</b><small>★ 5.0 · Specialty Coffee · Social</small></div><span></span></a><a class="row" href="/c/40b74ab2-9eeb-4866-9bd1-f5ccf2d347ac/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJma7VYYVpXz4R-Txwg8cVWRk/0.jpg" alt="" loading="lazy"><div><b>Fairouz Coffee and Roastery</b><small>★ 4.5 · Specialty Coffee · Aesthetic</small><small>Spanish Latte (On Ice)</small></div><span class="price">AED 27</span></a><a class="row" href="/c/6d8d452f-8aad-4675-bb3f-c83588e7e704/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJrZ7COX5pXz4Rg8-K7-agYGA/0.jpg" alt="" loading="lazy"><div><b>Grandmother Coffee Roastery</b><small>★ 4.6 · Specialty Coffee</small><small>Flat White</small></div><span class="price">AED 30</span></a><a class="row" href="/c/d4b1ee06-391d-4cea-8e82-506653731818/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJ3zMcthNrXz4RBonNcqVj1Go/0.jpg" alt="" loading="lazy"><div><b>ROR Coffee Solutions</b><small>★ 4.5 · Specialty Coffee · Aesthetic</small></div><span></span></a><a class="row" href="/c/de772158-50ad-4912-97cc-de84da3ccd89/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJ4x96LGVrXz4RfrSkuC1r-mE/0.jpg" alt="" loading="lazy"><div><b>The Mark</b><small>★ 4.9 · Aesthetic · Cozy</small><small>LATTE</small></div><span class="price">AED 30</span></a><a class="row" href="/c/5f635ee4-bc51-4036-8868-c0fb95b06c1f/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJXdGrtDRpXz4RsBv4e28wTAU/0.jpg" alt="" loading="lazy"><div><b>Cup. Coffee House</b><small>★ 4.9 · Specialty Coffee · Cozy</small></div><span></span></a><a class="row" href="/c/59cf10f0-5ce5-46fc-ac8a-ed8e7f7670a3/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJ67Qgfr9pXz4RfmqLrnjJUMQ/0.jpg" alt="" loading="lazy"><div><b>The Espresso Lab</b><small>★ 4.4 · Specialty Coffee · Quiet</small></div><span></span></a><a class="row" href="/c/d5e64eed-798f-493c-8bee-22862af1e533/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJmSIxvCxpXz4REAroLP4bEhU/0.jpg" alt="" loading="lazy"><div><b>Blacksmith Coffee Company, Al Quoz, Dubai</b><small>★ 4.8 · Specialty Coffee · Hidden Gem</small><small>Grey Oat Matcha Latte</small></div><span class="price">AED 35</span></a><a class="row" href="/c/55456891-a19e-442f-8f7c-6a627462e874/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJ2a5BuVtpXz4RVVX0hdWTSak/0.jpg" alt="" loading="lazy"><div><b>Coffee Matters</b><small>★ 4.8 · Specialty Coffee · Hidden Gem</small><small>Salted Caramel Latte</small></div><span class="price">AED 34</span></a><a class="row" href="/c/d17eaa10-c10b-4cec-87d4-e7870ea15d23/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJo80OBvdpXz4RNPU5D4Ha6r8/0.jpg" alt="" loading="lazy"><div><b>On The Road Speciality Café &amp; Bistro</b><small>★ 4.7 · Specialty Coffee · Hidden Gem</small><small>Flat White</small></div><span class="price">AED 20</span></a><a class="row" href="/c/73cf91ea-5089-41ae-8f69-f060fecdaea9/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJsSrrg5VrXz4RXzBXVSBo7QQ/0.jpg" alt="" loading="lazy"><div><b>IDMI Coffee Roasters</b><small>★ 4.7 · Specialty Coffee · Quiet</small></div><span></span></a><a class="row" href="/c/92b2b025-eb84-44c7-8240-333c09d0f44f/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJqXOm_zlpXz4Rje9T2Zmetlw/0.jpg" alt="" loading="lazy"><div><b>Smash Speciality Coffee</b><small>★ 4.5 · Specialty Coffee · Cozy</small></div><span></span></a><a class="row" href="/c/8103bf75-10df-47f7-ac68-3e4d2c0ff99d/"><img src="https://qgzyywxizlhtuwuaonxy.supabase.co/storage/v1/object/public/cafe-photos/ChIJgQrxORJpXz4R1Vz_-LnDCZg/0.jpg" alt="" loading="lazy"><div><b>Brew Rush Specialty Coffee LLC</b><small>★ 4.9 · Specialty Coffee · Cozy</small><small>Cappuccino</small></div><span class="price">AED 22</span></a></div>
+    <div class="cta"><span data-dots="56"></span><h3>Find the one that fits you</h3><p style="color:#BDBDBD">Ask for a drink, a price or a mood. Free in the app.</p><div class="stores" data-stores></div></div>
+  </main>
+  <footer><div class="col"><span>© 2026 BrewMaps</span><span class="sp"></span><a href="https://wa.me/971529763232">For cafés</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div></footer>
+  <script>window.BM_CHAT={"label":"Ask about Al Quoz","hello":"Ask me about cafés in Al Quoz.","questions":[{"q":"Cheapest latte in Al Quoz?","a":"\u003cdiv class=\"mini\">\u003cspan>\u003ca href=\"/c/5c74917d-840e-4ec2-9749-eadd6b6d73a4/\">colo coffee\u003c/a> · Spanish latte\u003c/span>\u003cb>AED 12\u003c/b>\u003c/div>\u003cdiv class=\"mini\">\u003cspan>\u003ca href=\"/c/d17eaa10-c10b-4cec-87d4-e7870ea15d23/\">On The Road Speciality Café &amp; Bistro\u003c/a> · Flat White\u003c/span>\u003cb>AED 20\u003c/b>\u003c/div>\u003cdiv class=\"mini\">\u003cspan>\u003ca href=\"/c/70d06ffc-3b34-43ba-bee0-26ba5a98f016/\">Harvest &amp; Co\u003c/a> · Flat White\u003c/span>\u003cb>AED 22\u003c/b>\u003c/div>"},{"q":"Quiet café in Al Quoz?","a":"Quiet ones: \u003ca href=\"/c/3c308539-a20a-4f39-a0aa-813e6cf02d37/\">RAW Coffee Company\u003c/a>, \u003ca href=\"/c/75fc71d1-112d-4f78-b113-36f49b9c33e7/\">La Nena\u003c/a>, \u003ca href=\"/c/6b94b0cf-b205-4349-b9a5-7eab7e226283/\">Boston Lane\u003c/a>."},{"q":"Best rated in Al Quoz?","a":"Top rated: \u003ca href=\"/c/d3ffb7a5-edbd-42b6-acb4-c06fb0f09f4b/\">Crack Coffee Roasters &amp; Cafe\u003c/a> (★ 5.0), \u003ca href=\"/c/70d06ffc-3b34-43ba-bee0-26ba5a98f016/\">Harvest &amp; Co\u003c/a> (★ 4.9), \u003ca href=\"/c/4e9d52a2-5ca6-4acf-a9d8-596f044f9f5a/\">Ferment journey\u003c/a> (★ 4.9)."}]};</script>
+  <script src="/assets/bm.js" defer></script>
 </body>
 </html>
