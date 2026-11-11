@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="robots" content="index, follow" />
 <title>UAE Matcha Price Index 2026 — What Matcha Costs Across 189 Cafés | BrewMaps</title>
 <meta name="description" content="189 UAE specialty cafés serve matcha. Median price AED 30, with the middle 50% between 26 and 34. Prices by emirate and area, from 137 cafés with readable prices. Collected 4 August 2026." />
@@ -14,8 +14,12 @@
 <meta property="og:url" content="https://www.brewmaps.app/matcha-index" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="apple-itunes-app" content="app-id=6775899450" />
+<meta name="theme-color" content="#FFFFFF" />
 <link rel="icon" type="image/png" href="/logo.png" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/bm.css" />
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Dataset",
 "name":"UAE Matcha Price Index 2026",
@@ -27,244 +31,279 @@
 "variableMeasured":"Matcha beverage menu price (AED)"}
 </script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#FAF6F0;color:#1F1A14;-webkit-font-smoothing:antialiased;line-height:1.6}
-.wrap{max-width:680px;margin:0 auto;padding:0 20px 80px}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;max-width:680px;margin:0 auto}
-.nav-logo{display:flex;align-items:center;gap:8px;font-weight:700;color:#2B4D1F;text-decoration:none}
-.kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#C8914A;font-weight:600;margin-bottom:14px}
-h1{font-family:'Playfair Display',Georgia,serif;font-size:38px;line-height:1.15;font-weight:700;margin-bottom:16px;letter-spacing:-.01em}
-h2{font-family:'Playfair Display',Georgia,serif;font-size:24px;font-weight:600;margin:44px 0 6px}
-.sub{color:#6B635A;font-size:15px;margin-bottom:8px}
-.lede{font-size:17px;color:#3D362E;margin:18px 0 8px}
-.stamp{font-size:13px;color:#8A8078;border-top:1px solid #E6DFD5;padding-top:14px;margin-top:24px}
-.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:28px 0 8px}
-.stat{background:#2B4D1F;color:#FFFDF9;border-radius:14px;padding:18px 14px;text-align:center}
-.stat .v{font-family:'Playfair Display',Georgia,serif;font-size:32px;font-weight:700;line-height:1}
-.stat .l{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.8;margin-top:7px}
-.card{background:#FFFDF9;border:1px solid #EDE5D9;border-radius:16px;padding:20px;margin:18px 0}
-.find{display:flex;gap:13px;padding:13px 0;border-bottom:1px solid #F0EAE1}
-.find:last-child{border-bottom:0}
-.find .dot{width:7px;height:7px;border-radius:50%;background:#C8914A;flex:0 0 7px;margin-top:9px}
-.find b{color:#2B4D1F}
-table{width:100%;border-collapse:collapse;font-size:15px;margin-top:6px}
-th{text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8A8078;font-weight:600;padding:8px 6px;border-bottom:1px solid #E6DFD5}
-td{padding:11px 6px;border-bottom:1px solid #F2ECE3}
-tr:last-child td{border-bottom:0}
-.num{text-align:right;font-variant-numeric:tabular-nums}
-.strong{font-weight:600;color:#2B4D1F}
-.muted{color:#8A8078;font-size:13px}
-.bar-row{display:flex;align-items:center;gap:10px;margin:7px 0}
-.bar-label{width:56px;font-size:13px;color:#6B635A;font-variant-numeric:tabular-nums}
-.bar-track{flex:1;height:22px;background:#F0EAE1;border-radius:6px;overflow:hidden}
-.bar-fill{display:block;height:100%;background:#2B4D1F;border-radius:6px}
-.bar-n{width:34px;text-align:right;font-size:13px;color:#6B635A;font-variant-numeric:tabular-nums}
-.cover{font-size:14.5px;color:#3D362E}
-.cover-note{margin-top:10px;padding-top:10px;border-top:1px solid #F0EAE1;color:#5A524A;font-size:13.5px}
-.supp-teaser{background:#F4EFE6;border:1px solid #E6DFD5;border-radius:12px;padding:13px 15px;font-size:14px;margin:16px 0 0}
-.supp-teaser a{color:#2B4D1F;font-weight:600;white-space:nowrap}
-.cmp td,.cmp th{font-size:14px}
-.cmp .y{color:#2B4D1F;font-weight:600}
-.cmp .n{color:#B4453C}
-.cmp .p{color:#8A8078;font-size:13px}
-.cmp .us td{background:#F4EFE6}
-.cmp td:not(:first-child){text-align:right}
-.cmp th:not(:first-child){text-align:right}
-.method{font-size:14px;color:#5A524A}
-.method li{margin:7px 0 7px 18px}
-.cta{background:#2B4D1F;color:#FFFDF9;border-radius:18px;padding:26px 22px;margin:40px 0 0}
-.cta h3{font-family:'Playfair Display',Georgia,serif;font-size:23px;margin-bottom:8px;font-weight:600}
-.cta p{font-size:15px;opacity:.9;margin-bottom:6px}
-.cta ul{margin:14px 0 18px 18px;font-size:14px;opacity:.9}
-.cta li{margin:5px 0}
-.tier{background:rgba(255,253,249,.07);border:1px solid rgba(255,253,249,.16);border-radius:14px;padding:18px;margin-bottom:12px}
-.tier-main{background:rgba(200,145,74,.14);border-color:rgba(200,145,74,.45)}
-.tier-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:6px}
-.tier-head h3{margin:0;font-size:20px}
-.tier-price{font-family:'Playfair Display',Georgia,serif;font-size:21px;font-weight:700;color:#E5B87A;white-space:nowrap}
-.per{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;opacity:.75}
-.tier-note{font-size:13px;opacity:.85;margin-top:10px;border-top:1px solid rgba(255,253,249,.14);padding-top:10px}
-.tier-foot{font-size:12.5px;opacity:.75;margin-top:12px}
-.price-pill{display:inline-block;background:#C8914A;color:#1F1A14;font-weight:700;padding:11px 22px;border-radius:999px;text-decoration:none;font-size:16px}
-.foot{margin-top:44px;padding-top:20px;border-top:1px solid #E6DFD5;font-size:13px;color:#8A8078}
-.foot a{color:#2B4D1F}
-@media(max-width:520px){h1{font-size:30px}.hero-stats{grid-template-columns:1fr;gap:8px}.stat{display:flex;align-items:baseline;justify-content:space-between;text-align:left;padding:14px 18px}.stat .l{margin-top:0}}
+/* Matcha Price Index: page-only styles, built from bm.css tokens. */
+.kicker{font-size:13px;font-weight:700;color:var(--ink-3);margin:18px 0 0}
+.kicker + h1{margin-top:12px}
+.sub{margin-top:8px;color:var(--ink-3);font-size:15px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:30px}
+.stat .v{font:900 clamp(40px,8vw,60px)/1 var(--display);letter-spacing:-.04em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.stat .l{margin-top:8px;font-size:14px;font-weight:600;color:var(--ink-3)}
+.stat.key .v{display:inline-block;background:var(--lime);color:#111;border-radius:16px;padding:4px 12px 6px;margin-left:-4px}
+.cover{margin-top:30px;font-size:16px;color:var(--ink-2)}
+.cover b{color:var(--ink)}
+.cover-note{margin-top:12px;font-size:15px;color:var(--ink-3)}
+.cover-note b{color:var(--ink-2)}
+.stamp{margin-top:16px;font-size:14px;color:var(--ink-3)}
+.teaser{margin-top:20px;background:var(--soft);border-radius:18px;padding:16px 18px;font-size:15px;color:var(--ink-2)}
+.teaser b{color:var(--ink)}
+.teaser a{font-weight:700;color:var(--ink);text-underline-offset:3px}
+.finds{margin-top:16px;display:grid;gap:18px}
+.find{display:grid;grid-template-columns:10px 1fr;gap:14px;font-size:16px;color:var(--ink-2)}
+.find .dot{width:10px;height:10px;border-radius:50%;background:var(--ink);margin-top:7px}
+.find b{color:var(--ink)}
+/* distribution: lime bars on a black card */
+.hist{margin-top:16px;background:var(--black);color:#fff;border-radius:24px;padding:20px 20px 18px;display:grid;gap:10px}
+@media (prefers-color-scheme: dark){.hist{background:var(--card)}}
+.hrow{display:grid;grid-template-columns:48px 1fr 30px;gap:12px;align-items:center;font-size:14px;font-variant-numeric:tabular-nums}
+.hl{color:#BDBDBD;font-weight:600}
+.ht{height:24px;background:#262626;border-radius:8px;overflow:hidden;display:block}
+.hf{display:block;height:100%;background:var(--lime);border-radius:8px}
+.hn{text-align:right;font-weight:800}
+/* tables */
+.tbl{margin-top:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl table{width:100%;border-collapse:collapse;font-size:16px}
+.tbl th{text-align:left;font-size:13px;font-weight:600;color:var(--ink-3);padding:0 8px 10px 0;white-space:nowrap}
+.tbl td{padding:11px 8px 11px 0;border-top:1px solid var(--line);vertical-align:middle}
+.tbl th:last-child,.tbl td:last-child{padding-right:0}
+.tbl td:first-child{font-weight:600}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.muted{color:var(--ink-3);font-size:14px}
+td .price{display:inline-block}
+.price.lo{background:var(--lime);color:#111}
+/* "what you would otherwise assemble" comparison */
+.cmp th:not(:first-child){padding-left:8px}
+.cmp td{vertical-align:top;font-size:15px}
+.cmp td:not(:first-child){padding-left:8px}
+.cmp .p{color:var(--ink-3)}
+.cmp .y{font-weight:700}
+@media (max-width:560px){
+  .cmp thead{display:none}
+  .cmp tr{display:block;padding:14px 0;border-top:1px solid var(--line)}
+  .cmp td{display:block;border:0;padding:0}
+  .cmp td:not(:first-child){padding-left:0;margin-top:6px}
+  .cmp td:first-child{font-size:17px}
+  .cmp td[data-l]::before{content:attr(data-l);display:block;font-size:12.5px;font-weight:600;color:var(--ink-3)}
+  .cmp td.p{color:var(--ink-2)}
+}
+.method ul{margin:14px 0 0;padding-left:18px;color:var(--ink-2);font-size:15px}
+.method li{margin:9px 0;padding-left:4px}
+.method li::marker{color:var(--ink-3)}
+.method b{color:var(--ink)}
+/* supplier offer: black card */
+.sup{margin-top:16px;background:var(--black);color:#fff;border-radius:24px;padding:12px;display:grid;gap:12px}
+@media (prefers-color-scheme: dark){.sup{background:var(--card)}}
+.tier{background:#1D1D1D;border-radius:18px;padding:20px}
+@media (prefers-color-scheme: dark){.tier{background:#222}}
+.tier-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px}
+.tier-head h3{font:800 21px/1.15 var(--display);letter-spacing:-.02em}
+.tier-price{font:800 16px/1 var(--display);background:#fff;color:#111;border-radius:10px;padding:8px 10px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tier-main .tier-price{background:var(--lime)}
+.per{font-size:12px;font-weight:600;opacity:.7}
+.tier p{color:#BDBDBD;font-size:15px}
+.tier ul{margin:12px 0 0;padding-left:18px;color:#D6D6D6;font-size:14.5px}
+.tier li{margin:7px 0}
+.tier li b{color:#fff}
+.tier li::marker{color:#6E6E6E}
+.tier-note{margin-top:14px;font-size:14px}
+.sup-go{display:flex;justify-content:center;align-items:center;text-align:center;min-height:52px;padding:12px 20px;border-radius:999px;background:var(--lime);color:#111;font-weight:800;text-decoration:none;margin:4px 8px 0}
+.sup-go:active{transform:scale(.97)}
+.tier-foot{color:#9A9A9A;font-size:13.5px;text-align:center;margin:0 8px 8px}
+#suppliers{scroll-margin-top:84px}
+.pub{margin-top:44px;font-size:14px;color:var(--ink-3)}
+.pub p + p{margin-top:6px}
+.pub a{color:var(--ink);font-weight:600;text-underline-offset:3px}
+@media (max-width:520px){
+  .stats{grid-template-columns:1fr;gap:16px}
+  .stat{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  .stat .l{margin-top:0;text-align:right}
+  .hist{padding:18px 16px 16px}
+  .hrow{grid-template-columns:44px 1fr 26px;gap:10px}
+  .tier{padding:18px 16px}
+}
 </style>
 </head>
 <body>
-<nav class="nav"><a class="nav-logo" href="/">☕ BrewMaps</a><span class="muted">UAE</span></nav>
-<div class="wrap">
+  <header class="bar"><div class="col">
+    <a class="brand" href="/" aria-label="BrewMaps home"><svg viewBox="375.82 301.87 328.37 478.45" aria-hidden="true"><path fill="currentColor" d="M 580.496094 506.21875 C 580.496094 522.027344 572.066406 536.652344 558.363281 544.566406 L 444.292969 610.421875 C 438.738281 613.609375 435.65625 619.417969 435.65625 625.378906 C 435.65625 628.3125 436.402344 631.265625 437.96875 633.992188 C 442.75 642.242188 453.289062 645.070312 461.566406 640.3125 L 529.78125 600.9375 L 571.191406 650.234375 C 577.230469 657.382812 580.496094 666.429688 580.496094 675.761719 L 580.496094 719.945312 C 580.496094 736.1875 564.328125 747.472656 549.113281 741.84375 L 413.421875 691.925781 C 404.246094 688.535156 398.128906 679.792969 398.128906 669.976562 L 398.128906 415.894531 C 398.128906 399.648438 414.246094 388.390625 429.488281 393.945312 L 565.152344 443.476562 C 574.378906 446.84375 580.496094 455.605469 580.496094 465.425781 Z M 704.183594 464.398438 L 704.183594 417.078125 C 704.183594 394.382812 689.890625 373.894531 668.582031 366.054688 L 503.359375 305.214844 C 497.269531 302.980469 490.894531 301.871094 484.570312 301.871094 C 475.214844 301.871094 465.933594 304.265625 457.605469 309.019531 L 403.269531 340.042969 C 386.328125 349.707031 375.816406 367.804688 375.816406 387.285156 L 375.816406 666.324219 C 375.816406 689.023438 390.132812 709.535156 411.441406 717.375 L 567.414062 774.769531 C 582.527344 780.320312 599.183594 778.933594 613.140625 770.992188 L 676.757812 734.699219 C 693.667969 725.058594 704.183594 706.964844 704.183594 687.453125 L 704.183594 619.984375 C 704.183594 607.183594 699.65625 594.765625 691.457031 585.027344 L 645.988281 530.894531 L 678.605469 510.5625 C 694.621094 500.5625 704.183594 483.316406 704.183594 464.398438"/><path class="face" d="M 568.730469 555.835938 L 516.8125 585.488281 L 530.875 602.238281 L 571.199219 650.246094 C 577.238281 657.390625 580.507812 666.4375 580.507812 675.765625 L 580.507812 719.941406 C 580.507812 736.191406 564.339844 747.464844 549.109375 741.847656 L 413.433594 691.9375 C 404.246094 688.546875 398.128906 679.796875 398.128906 669.988281 L 398.128906 415.886719 C 398.128906 399.65625 414.257812 388.382812 429.484375 393.9375 L 565.160156 443.472656 C 574.367188 446.84375 580.507812 455.609375 580.507812 465.417969 L 580.507812 535.554688 C 580.507812 543.960938 576.035156 551.683594 568.730469 555.835938"/><circle cx="441.88" cy="451.98" r="14.26" fill="currentColor"/><circle cx="540" cy="688.12" r="14.26" fill="currentColor"/></svg>brewmaps</a>
+    <span class="sp"></span><a class="get" data-store href="/download">Get the app</a>
+  </div></header>
 
-<div class="kicker">BrewMaps Price Index · 4 August 2026</div>
-<h1>What matcha actually costs in the UAE</h1>
-<p class="lede">We read the menus of every specialty café in our catalogue. <b>189 of them serve matcha</b> — here is what they charge, by emirate, by area, and by variant.</p>
+  <main class="col">
+    <p class="kicker">BrewMaps Price Index · 4 August 2026</p>
+    <h1>What matcha actually costs in the UAE</h1>
+    <p class="lead">We read the menus of every specialty café in our catalogue. <b>189 of them serve matcha</b> — here is what they charge, by emirate, by area, and by variant.</p>
 
-<div class="hero-stats">
-  <div class="stat"><div class="v">189</div><div class="l">Cafés serving</div></div>
-  <div class="stat"><div class="v">30</div><div class="l">Median AED</div></div>
-  <div class="stat"><div class="v">26–34</div><div class="l">Middle 50%</div></div>
-</div>
-<div class="card cover">
-  <b>How to read the coverage.</b> 189 cafés list matcha on their menu.
-  <b>137</b> of those publish a price we could read — every price figure on this page uses
-  those 137, and no other number. The remaining 52 list it
-  without a readable price.
-  <div class="cover-note">Separately, the supplier file covers <b>283 cafés</b> with a
-  substantial drinks menu (8+ items) — 171 that list matcha, 127 of those with a
-  readable price, and 112 that don't list it. It counts 10 fewer priced cafés than
-  this index because cafés with very short menus don't meet that threshold.</div>
-</div>
-<p class="stamp">345 priced listings collected 4 August 2026. Prices are a point-in-time snapshot.</p>
-<p class="supp-teaser"><b>For suppliers:</b> see which cafés already sell matcha, what they charge, and which comparable cafés don't list it yet — <a href="#suppliers">the café-level file →</a></p>
+    <div class="stats">
+      <div class="stat"><div class="v">189</div><div class="l">Cafés serving</div></div>
+      <div class="stat key"><div class="v">30</div><div class="l">Median AED</div></div>
+      <div class="stat"><div class="v">26–34</div><div class="l">Middle 50%</div></div>
+    </div>
+    <div class="cover">
+      <b>How to read the coverage.</b> 189 cafés list matcha on their menu.
+      <b>137</b> of those publish a price we could read — every price figure on this page uses
+      those 137, and no other number. The remaining 52 list it
+      without a readable price.
+      <div class="cover-note">Separately, the supplier file covers <b>283 cafés</b> with a
+      substantial drinks menu (8+ items) — 171 that list matcha, 127 of those with a
+      readable price, and 112 that don't list it. It counts 10 fewer priced cafés than
+      this index because cafés with very short menus don't meet that threshold.</div>
+    </div>
+    <p class="stamp">345 priced listings collected 4 August 2026. Prices are a point-in-time snapshot.</p>
+    <p class="teaser"><b>For suppliers:</b> see which cafés already sell matcha, what they charge, and which comparable cafés don't list it yet — <a href="#suppliers">the café-level file →</a></p>
 
-<h2>What stands out</h2>
-<div class="card">
-  <div class="find"><span class="dot"></span><div><b>Ajman records the lowest median at AED 25</b>, about 17% below the AED 30 shared by Dubai, Abu Dhabi and Sharjah — though that figure rests on only 5 priced cafés. The more solid finding is that Dubai, Abu Dhabi and Sharjah land on the same AED 30 median, on much larger samples.</div></div>
-  <div class="find"><span class="dot"></span><div><b>Khalifa City is the priciest area we measured</b> (AED 35), while <b>Downtown is the cheapest</b> (AED 24) — a difference of AED 11 in median listed price. Both figures come from 4 and 4 cafés respectively — small samples, so read them as indicative.</div></div>
-  <div class="find"><span class="dot"></span><div><b>Flavoured variants list higher.</b> strawberry matcha at AED 32, coco matcha at AED 35, against AED 28 for a plain matcha latte — on 5 and 5 listings respectively, so read it as a signal rather than a rate.</div></div>
-  <div class="find"><span class="dot"></span><div><b>Matcha is no longer a niche order.</b> It appears on the menu of 189 cafés — and the single most common listing, <i>matcha latte</i>, appears 81 times.</div></div>
-</div>
+    <section>
+      <h2>What stands out</h2>
+      <div class="finds">
+        <div class="find"><span class="dot"></span><div><b>Ajman records the lowest median at AED 25</b>, about 17% below the AED 30 shared by Dubai, Abu Dhabi and Sharjah — though that figure rests on only 5 priced cafés. The more solid finding is that Dubai, Abu Dhabi and Sharjah land on the same AED 30 median, on much larger samples.</div></div>
+        <div class="find"><span class="dot"></span><div><b>Khalifa City is the priciest area we measured</b> (AED 35), while <b>Downtown is the cheapest</b> (AED 24) — a difference of AED 11 in median listed price. Both figures come from 4 and 4 cafés respectively — small samples, so read them as indicative.</div></div>
+        <div class="find"><span class="dot"></span><div><b>Flavoured variants list higher.</b> strawberry matcha at AED 32, coco matcha at AED 35, against AED 28 for a plain matcha latte — on 5 and 5 listings respectively, so read it as a signal rather than a rate.</div></div>
+        <div class="find"><span class="dot"></span><div><b>Matcha is no longer a niche order.</b> It appears on the menu of 189 cafés — and the single most common listing, <i>matcha latte</i>, appears 81 times.</div></div>
+      </div>
+    </section>
 
-<h2>Price distribution</h2>
-<p class="sub">137 café-level median prices, AED</p>
-<div class="card"><div class="bar-row"><span class="bar-label">12-19</span>
-      <span class="bar-track"><span class="bar-fill" style="width:9%"></span></span>
-      <span class="bar-n">4</span></div>
-<div class="bar-row"><span class="bar-label">20-24</span>
-      <span class="bar-track"><span class="bar-fill" style="width:36%"></span></span>
-      <span class="bar-n">16</span></div>
-<div class="bar-row"><span class="bar-label">25-29</span>
-      <span class="bar-track"><span class="bar-fill" style="width:100%"></span></span>
-      <span class="bar-n">45</span></div>
-<div class="bar-row"><span class="bar-label">30-34</span>
-      <span class="bar-track"><span class="bar-fill" style="width:91%"></span></span>
-      <span class="bar-n">41</span></div>
-<div class="bar-row"><span class="bar-label">35-39</span>
-      <span class="bar-track"><span class="bar-fill" style="width:51%"></span></span>
-      <span class="bar-n">23</span></div>
-<div class="bar-row"><span class="bar-label">40-60</span>
-      <span class="bar-track"><span class="bar-fill" style="width:18%"></span></span>
-      <span class="bar-n">8</span></div></div>
+    <section>
+      <h2>Price distribution</h2>
+      <p class="sub">137 café-level median prices, AED</p>
+      <div class="hist">
+        <div class="hrow"><span class="hl">12-19</span><span class="ht"><span class="hf" style="width:9%"></span></span><span class="hn">4</span></div>
+        <div class="hrow"><span class="hl">20-24</span><span class="ht"><span class="hf" style="width:36%"></span></span><span class="hn">16</span></div>
+        <div class="hrow"><span class="hl">25-29</span><span class="ht"><span class="hf" style="width:100%"></span></span><span class="hn">45</span></div>
+        <div class="hrow"><span class="hl">30-34</span><span class="ht"><span class="hf" style="width:91%"></span></span><span class="hn">41</span></div>
+        <div class="hrow"><span class="hl">35-39</span><span class="ht"><span class="hf" style="width:51%"></span></span><span class="hn">23</span></div>
+        <div class="hrow"><span class="hl">40-60</span><span class="ht"><span class="hf" style="width:18%"></span></span><span class="hn">8</span></div>
+      </div>
+    </section>
 
-<h2>By emirate</h2>
-<div class="card"><table>
-<thead><tr><th>Emirate</th><th class="num">Cafés</th><th class="num">Median</th><th class="num">Typical</th></tr></thead>
-<tbody><tr><td>Dubai</td><td class="num">62</td>
-      <td class="num strong">30</td><td class="num muted">26.3–34.9</td></tr>
-<tr><td>Abu Dhabi</td><td class="num">50</td>
-      <td class="num strong">30</td><td class="num muted">27.3–34</td></tr>
-<tr><td>Sharjah</td><td class="num">14</td>
-      <td class="num strong">30</td><td class="num muted">24–32.3</td></tr>
-<tr><td>Ajman</td><td class="num">5</td>
-      <td class="num strong">25</td><td class="num muted">24–28</td></tr>
-<tr><td>Fujairah</td><td class="num">3</td>
-      <td class="num strong">28</td><td class="num muted">26.5–29</td></tr>
-<tr><td>Ras Al Khaimah</td><td class="num">3</td>
-      <td class="num strong">28.4</td><td class="num muted">25.2–31.7</td></tr></tbody></table></div>
+    <section>
+      <h2>By emirate</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Emirate</th><th class="num">Cafés</th><th class="num">Median</th><th class="num">Typical</th></tr></thead>
+        <tbody>
+          <tr><td>Dubai</td><td class="num">62</td><td class="num"><span class="price">30</span></td><td class="num muted">26.3–34.9</td></tr>
+          <tr><td>Abu Dhabi</td><td class="num">50</td><td class="num"><span class="price">30</span></td><td class="num muted">27.3–34</td></tr>
+          <tr><td>Sharjah</td><td class="num">14</td><td class="num"><span class="price">30</span></td><td class="num muted">24–32.3</td></tr>
+          <tr><td>Ajman</td><td class="num">5</td><td class="num"><span class="price lo">25</span></td><td class="num muted">24–28</td></tr>
+          <tr><td>Fujairah</td><td class="num">3</td><td class="num"><span class="price">28</span></td><td class="num muted">26.5–29</td></tr>
+          <tr><td>Ras Al Khaimah</td><td class="num">3</td><td class="num"><span class="price">28.4</span></td><td class="num muted">25.2–31.7</td></tr>
+        </tbody>
+      </table></div>
+    </section>
 
-<h2>By area</h2>
-<p class="sub">Areas with at least 4 priced cafés. Café counts are shown because the samples are small.</p>
-<div class="card"><table>
-<thead><tr><th>Area</th><th class="num">Cafés</th><th class="num">Median</th></tr></thead>
-<tbody><tr><td>Khalifa City</td><td class="num">4</td><td class="num strong">35</td></tr>
-<tr><td>Muwaileh Commercial</td><td class="num">4</td><td class="num strong">30.8</td></tr>
-<tr><td>Jumeirah</td><td class="num">5</td><td class="num strong">30</td></tr>
-<tr><td>Al Reem Island</td><td class="num">4</td><td class="num strong">30</td></tr>
-<tr><td>Saadiyat Island</td><td class="num">4</td><td class="num strong">28.5</td></tr>
-<tr><td>Al Bateen</td><td class="num">5</td><td class="num strong">28</td></tr>
-<tr><td>Al Quoz</td><td class="num">4</td><td class="num strong">28</td></tr>
-<tr><td>JLT</td><td class="num">4</td><td class="num strong">26.5</td></tr>
-<tr><td>Downtown</td><td class="num">4</td><td class="num strong">24</td></tr></tbody></table></div>
+    <section>
+      <h2>By area</h2>
+      <p class="sub">Areas with at least 4 priced cafés. Café counts are shown because the samples are small.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Area</th><th class="num">Cafés</th><th class="num">Median</th></tr></thead>
+        <tbody>
+          <tr><td>Khalifa City</td><td class="num">4</td><td class="num"><span class="price">35</span></td></tr>
+          <tr><td>Muwaileh Commercial</td><td class="num">4</td><td class="num"><span class="price">30.8</span></td></tr>
+          <tr><td>Jumeirah</td><td class="num">5</td><td class="num"><span class="price">30</span></td></tr>
+          <tr><td>Al Reem Island</td><td class="num">4</td><td class="num"><span class="price">30</span></td></tr>
+          <tr><td>Saadiyat Island</td><td class="num">4</td><td class="num"><span class="price">28.5</span></td></tr>
+          <tr><td>Al Bateen</td><td class="num">5</td><td class="num"><span class="price">28</span></td></tr>
+          <tr><td>Al Quoz</td><td class="num">4</td><td class="num"><span class="price">28</span></td></tr>
+          <tr><td>JLT</td><td class="num">4</td><td class="num"><span class="price">26.5</span></td></tr>
+          <tr><td>Downtown</td><td class="num">4</td><td class="num"><span class="price lo">24</span></td></tr>
+        </tbody>
+      </table></div>
+    </section>
 
-<h2>Most common variants</h2>
-<div class="card"><table>
-<thead><tr><th>Menu item</th><th class="num">Listings</th><th class="num">Median</th></tr></thead>
-<tbody><tr><td>Matcha Latte</td><td class="num">81</td><td class="num strong">28</td></tr>
-<tr><td>Iced Matcha Latte</td><td class="num">36</td><td class="num strong">27</td></tr>
-<tr><td>Matcha</td><td class="num">26</td><td class="num strong">26.5</td></tr>
-<tr><td>Iced Matcha</td><td class="num">23</td><td class="num strong">28</td></tr>
-<tr><td>Strawberry Matcha</td><td class="num">5</td><td class="num strong">32</td></tr>
-<tr><td>Coco Matcha</td><td class="num">5</td><td class="num strong">35</td></tr>
-<tr><td>Dirty Matcha</td><td class="num">4</td><td class="num strong">29</td></tr>
-<tr><td>Cloudy Matcha</td><td class="num">4</td><td class="num strong">35</td></tr></tbody></table></div>
+    <section>
+      <h2>Most common variants</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Menu item</th><th class="num">Listings</th><th class="num">Median</th></tr></thead>
+        <tbody>
+          <tr><td>Matcha Latte</td><td class="num">81</td><td class="num"><span class="price">28</span></td></tr>
+          <tr><td>Iced Matcha Latte</td><td class="num">36</td><td class="num"><span class="price">27</span></td></tr>
+          <tr><td>Matcha</td><td class="num">26</td><td class="num"><span class="price lo">26.5</span></td></tr>
+          <tr><td>Iced Matcha</td><td class="num">23</td><td class="num"><span class="price">28</span></td></tr>
+          <tr><td>Strawberry Matcha</td><td class="num">5</td><td class="num"><span class="price">32</span></td></tr>
+          <tr><td>Coco Matcha</td><td class="num">5</td><td class="num"><span class="price">35</span></td></tr>
+          <tr><td>Dirty Matcha</td><td class="num">4</td><td class="num"><span class="price">29</span></td></tr>
+          <tr><td>Cloudy Matcha</td><td class="num">4</td><td class="num"><span class="price">35</span></td></tr>
+        </tbody>
+      </table></div>
+    </section>
 
-<h2>What you would otherwise have to assemble</h2>
-<p class="sub">None of this is impossible to find. The information exists in fragments — the work is locating it, structuring it, validating it, and keeping it current.</p>
+    <section>
+      <h2>What you would otherwise have to assemble</h2>
+      <p class="sub">None of this is impossible to find. The information exists in fragments — the work is locating it, structuring it, validating it, and keeping it current.</p>
+      <div class="tbl"><table class="cmp">
+        <thead><tr><th>Work required</th><th>On your own</th><th>Here</th></tr></thead>
+        <tbody>
+          <tr><td>Build the café universe</td><td class="p" data-l="On your own">Search maps, social media and individual sites</td><td class="y" data-l="Here">505-café UAE catalogue</td></tr>
+          <tr><td>Find published menus</td><td class="p" data-l="On your own">Check websites, PDFs, images and delivery listings one by one</td><td class="y" data-l="Here">9,780 structured items</td></tr>
+          <tr><td>Compare prices</td><td class="p" data-l="On your own">Read and standardise inconsistent formats by hand</td><td class="y" data-l="Here">Comparable listed prices</td></tr>
+          <tr><td>Identify prospects</td><td class="p" data-l="On your own">Review and filter every café individually</td><td class="y" data-l="Here">283 qualified records</td></tr>
+          <tr><td>Keep it current</td><td class="p" data-l="On your own">Repeat the research periodically</td><td class="y" data-l="Here">Quarterly refresh and change tracking</td></tr>
+        </tbody>
+      </table></div>
+      <div class="finds" style="margin-top:28px">
+        <div class="find"><span class="dot"></span><div><b>At five minutes a café, checking all 505 is roughly 42 hours</b> — before any cleaning, standardising or analysis, and five minutes assumes you find the menu on the first try. Your own hourly cost decides what that is worth; we won't presume it.</div></div>
+        <div class="find"><span class="dot"></span><div><b>97 cafés (19%) publish no findable menu at all.</b> No site, no delivery listing, no legible photograph. That is a natural ceiling on any desk-based research, however much time you spend.</div></div>
+        <div class="find"><span class="dot"></span><div><b>And it doesn't hold.</b> Menus change and venues open or close, so the work repeats — which is what the quarterly refresh is for.</div></div>
+      </div>
+    </section>
 
-<div class="card">
-<table class="cmp">
-<thead><tr><th>Work required</th><th>On your own</th><th>Here</th></tr></thead>
-<tbody>
-<tr><td>Build the café universe</td><td class="p">Search maps, social media and individual sites</td><td class="y">505-café UAE catalogue</td></tr>
-<tr><td>Find published menus</td><td class="p">Check websites, PDFs, images and delivery listings one by one</td><td class="y">9,780 structured items</td></tr>
-<tr><td>Compare prices</td><td class="p">Read and standardise inconsistent formats by hand</td><td class="y">Comparable listed prices</td></tr>
-<tr><td>Identify prospects</td><td class="p">Review and filter every café individually</td><td class="y">283 qualified records</td></tr>
-<tr><td>Keep it current</td><td class="p">Repeat the research periodically</td><td class="y">Quarterly refresh and change tracking</td></tr>
-</tbody></table>
-</div>
+    <section class="method">
+      <h2>Methodology</h2>
+      <ul>
+        <li>Source: published café menus in the BrewMaps catalogue, collected through image extraction, vision transcription and manual entry. Not delivery-platform prices.</li>
+        <li><b>Coverage:</b> 189 cafés list matcha; 137 publish at least one readable price.</li>
+        <li><b>Which figure uses what:</b> the headline median, the middle 50%, and every emirate and area comparison use <b>one median price per café</b>, across those 137 cafés. The variant table is the exception — it uses the 345 underlying priced listings, because a variant is a property of the listing, not the café.</li>
+        <li><b>Exclusions:</b> 21 items across 5 cafés fell outside a plausibility band of AED 12–60 and were excluded pending verification. They are held back rather than corrected by guesswork.</li>
+        <li><b>One price per café, not per listing.</b> A café's median matcha price is computed first, then emirate and area figures are the median of those café-level prices — so a café with a long menu doesn't outweigh one with a short menu.</li>
+        <li>Medians are used throughout rather than averages, so a single mispriced listing cannot move a figure.</li>
+        <li>Variant names are normalised before ranking: "Hot Matcha Latte" and "Matcha Latte (Hot)" count as Matcha Latte. Iced is kept separate, as it is priced differently.</li>
+        <li>The supplier file is limited to cafés with a drinks menu of <b>8 or more items</b>, so a café with a stub menu isn't wrongly listed as "doesn't serve it".</li>
+        <li>Al Ain is included within Abu Dhabi, of which it is part.</li>
+        <li>Prices are a point-in-time snapshot from 4 August 2026 and change without notice. Sizes and grades vary between venues.</li>
+      </ul>
+    </section>
 
-<div class="card">
-  <div class="find"><span class="dot"></span><div><b>At five minutes a café, checking all 505 is roughly 42 hours</b> — before any cleaning, standardising or analysis, and five minutes assumes you find the menu on the first try. Your own hourly cost decides what that is worth; we won't presume it.</div></div>
-  <div class="find"><span class="dot"></span><div><b>97 cafés (19%) publish no findable menu at all.</b> No site, no delivery listing, no legible photograph. That is a natural ceiling on any desk-based research, however much time you spend.</div></div>
-  <div class="find"><span class="dot"></span><div><b>And it doesn't hold.</b> Menus change and venues open or close, so the work repeats — which is what the quarterly refresh is for.</div></div>
-</div>
+    <section>
+      <h2 id="suppliers">For suppliers</h2>
+      <p class="sub">The café-level file behind this index — for brands and distributors deciding who to sell to.</p>
 
-<h2>Methodology</h2>
-<div class="card method">
-<ul>
-<li>Source: published café menus in the BrewMaps catalogue, collected through image extraction, vision transcription and manual entry. Not delivery-platform prices.</li>
-<li><b>Coverage:</b> 189 cafés list matcha; 137 publish at least one readable price.</li>
-<li><b>Which figure uses what:</b> the headline median, the middle 50%, and every emirate and area comparison use <b>one median price per café</b>, across those 137 cafés. The variant table is the exception — it uses the 345 underlying priced listings, because a variant is a property of the listing, not the café.</li>
-<li><b>Exclusions:</b> 21 items across 5 cafés fell outside a plausibility band of AED 12–60 and were excluded pending verification. They are held back rather than corrected by guesswork.</li>
-<li><b>One price per café, not per listing.</b> A café's median matcha price is computed first, then emirate and area figures are the median of those café-level prices — so a café with a long menu doesn't outweigh one with a short menu.</li>
-<li>Medians are used throughout rather than averages, so a single mispriced listing cannot move a figure.</li>
-<li>Variant names are normalised before ranking: "Hot Matcha Latte" and "Matcha Latte (Hot)" count as Matcha Latte. Iced is kept separate, as it is priced differently.</li>
-<li>The supplier file is limited to cafés with a drinks menu of <b>8 or more items</b>, so a café with a stub menu isn't wrongly listed as "doesn't serve it".</li>
-<li>Al Ain is included within Abu Dhabi, of which it is part.</li>
-<li>Prices are a point-in-time snapshot from 4 August 2026 and change without notice. Sizes and grades vary between venues.</li>
-</ul>
-</div>
+      <div class="sup">
+        <div class="tier">
+          <div class="tier-head"><h3>Snapshot</h3><span class="tier-price">AED 750</span></div>
+          <p>Today's data, one-off. Non-exclusive.</p>
+          <ul>
+            <li><b>283 cafés</b> with a real drinks menu, each flagged <b>serves matcha: yes / no</b></li>
+            <li><b>171</b> that list matcha, with the menu item as written</li>
+            <li><b>127</b> of those publish a readable price — the rest list it without one</li>
+            <li><b>112</b> cafés whose published menus don't list matcha, with a menu-fit score</li>
+            <li>Accounts can be supplied as verified briefs — observable menu evidence, prices, verified locations, public contacts, source links and verification dates.</li>
+            <li>Or as a flat CSV: café name, area, emirate, menu depth, matcha items and listed prices, menu-fit score.</li>
+            <li class="defn"><b>Menu-fit score (0–5)</b> counts how many adjacent premium categories a café already sells: Spanish latte, pistachio drinks, a manual brew method (V60, Chemex, Aeropress), cold brew, cortado. It is derived only from the café's own menu — no ratings, no review counts, no popularity signal, because those measure consumer traffic rather than whether a café would stock a category.</li>
+          </ul>
+        </div>
 
-<h2 id="suppliers">For suppliers</h2>
-<p class="sub">The café-level file behind this index — for brands and distributors deciding who to sell to.</p>
+        <div class="tier tier-main">
+          <div class="tier-head"><h3>Quarterly Market Monitor</h3><span class="tier-price">AED 15,000<span class="per">/year</span></span></div>
+          <p>The same file, maintained — so your team is working from current menus, not a photograph.</p>
+          <ul>
+            <li>Four full refreshes a year — not four copies of the same file</li>
+            <li><b>Item-level change detection:</b> which cafés added matcha since last quarter, which dropped it, which moved price and by how much</li>
+            <li>Newly identified venues included in each quarterly refresh, with opening menu prices where available</li>
+            <li>Prospect scoring recalculated each quarter, so cafés that converted leave the list and new ones enter it</li>
+            <li>A short written summary of what moved in the category and where</li>
+          </ul>
+          <p class="tier-note">The snapshot is a point in time. This tracks which cafés add or remove matcha between quarters, so outreach is prioritised on current menu signals rather than a stale list.</p>
+        </div>
 
-<div class="cta">
-  <div class="tier">
-    <div class="tier-head"><h3>Snapshot</h3><span class="tier-price">AED 750</span></div>
-    <p>Today's data, one-off. Non-exclusive.</p>
-    <ul>
-      <li><b>283 cafés</b> with a real drinks menu, each flagged <b>serves matcha: yes / no</b></li>
-      <li><b>171</b> that list matcha, with the menu item as written</li>
-      <li><b>127</b> of those publish a readable price — the rest list it without one</li>
-      <li><b>112</b> cafés whose published menus don't list matcha, with a menu-fit score</li>
-      <li>Accounts can be supplied as verified briefs — observable menu evidence, prices, verified locations, public contacts, source links and verification dates.</li>
-      <li>Or as a flat CSV: café name, area, emirate, menu depth, matcha items and listed prices, menu-fit score.</li>
-      <li class="defn"><b>Menu-fit score (0–5)</b> counts how many adjacent premium categories a café already sells: Spanish latte, pistachio drinks, a manual brew method (V60, Chemex, Aeropress), cold brew, cortado. It is derived only from the café's own menu — no ratings, no review counts, no popularity signal, because those measure consumer traffic rather than whether a café would stock a category.</li>
-    </ul>
-  </div>
+        <a class="sup-go" href="mailto:hello@brewmaps.app?subject=Matcha%20Snapshot%20enquiry">Request the AED 750 Snapshot</a>
+        <p class="tier-foot">Category exclusivity can be arranged separately — ask.</p>
+      </div>
+    </section>
 
-  <div class="tier tier-main">
-    <div class="tier-head"><h3>Quarterly Market Monitor</h3><span class="tier-price">AED 15,000<span class="per">/year</span></span></div>
-    <p>The same file, maintained — so your team is working from current menus, not a photograph.</p>
-    <ul>
-      <li>Four full refreshes a year — not four copies of the same file</li>
-      <li><b>Item-level change detection:</b> which cafés added matcha since last quarter, which dropped it, which moved price and by how much</li>
-      <li>Newly identified venues included in each quarterly refresh, with opening menu prices where available</li>
-      <li>Prospect scoring recalculated each quarter, so cafés that converted leave the list and new ones enter it</li>
-      <li>A short written summary of what moved in the category and where</li>
-    </ul>
-    <p class="tier-note">The snapshot is a point in time. This tracks which cafés add or remove matcha between quarters, so outreach is prioritised on current menu signals rather than a stale list.</p>
-  </div>
-
-  <a class="price-pill" href="mailto:hello@brewmaps.app?subject=Matcha%20Snapshot%20enquiry">Request the AED 750 Snapshot</a>
-  <p class="tier-foot">Category exclusivity can be arranged separately — ask.</p>
-</div>
-
-<div class="foot">
-<p>Published by <a href="/">BrewMaps</a>, a UAE specialty café catalogue. We track menus and prices across 505 cafés throughout the UAE.</p>
-<p style="margin-top:8px">Questions or a correction: <a href="mailto:hello@brewmaps.app">hello@brewmaps.app</a></p>
-</div>
-
-</div>
+    <div class="pub">
+      <p>Published by <a href="/">BrewMaps</a>, a UAE specialty café catalogue. We track menus and prices across 505 cafés throughout the UAE.</p>
+      <p>Questions or a correction: <a href="mailto:hello@brewmaps.app">hello@brewmaps.app</a></p>
+    </div>
+  </main>
+  <footer><div class="col"><span>© 2026 BrewMaps</span><span class="sp"></span><a href="https://wa.me/971529763232">For cafés</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div></footer>
+  <script src="/assets/bm.js" defer></script>
 </body>
 </html>

@@ -128,5 +128,6 @@ footer a:hover{color:var(--ink)}
   .near{gap:8px}
   .panel{left:0;right:0;bottom:0;width:auto;max-width:none;border-radius:26px 26px 0 0}
   .fab .lbl{display:none}
+  .fab .b{width:48px;height:48px}
 }
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}

@@ -257,6 +257,8 @@ html[dir="rtl"] .bot .bub{border-radius:18px 4px 18px 18px}
 
 /* ---------- phones: no sticky; each topic shows its own screen ---------- */
 @media (max-width:900px){
+  .hero{min-height:0;padding-block:56px 36px}
+  .fab .btn{width:50px;height:50px}
   .stick{position:relative;top:0;--ph:min(560px,118vw)}
   .stick .tags{display:none}
   .steps{margin-top:24px}
@@ -551,7 +553,7 @@ const scrollEnd=()=>pb.scrollTo({top:pb.scrollHeight,behavior:reduce?'auto':'smo
 function botRow(html){const r=document.createElement('div');r.className='bot';r.innerHTML=`<span class="av"></span><div class="body">${html}</div>`;pb.appendChild(r);return r;}
 function presetChips(){const left=PRESETS.filter(p=>!used.has(p.id));if(!left.length)return;const w=document.createElement('div');w.className='pchips';w.innerHTML=left.map(p=>`<button type="button" class="chip" data-q="${p.id}" lang="${p.lang}">${esc(p.q)}</button>`).join('');pb.appendChild(w);}
 function start(){if(started)return;started=true;const r=botRow(`<div class="bub">${esc(t('hello'))}</div>`);Dots(r.querySelector('.av'),{size:22,color:'#111111'});presetChips();}
-function openPanel(id){panel.classList.remove('closed');panel.setAttribute('aria-hidden','false');fab.hidden=true;start();if(id)ask(id);else setTimeout(()=>document.getElementById('pin').focus({preventScroll:true}),250);}
+function openPanel(id){panel.classList.remove('closed');panel.setAttribute('aria-hidden','false');fab.hidden=true;start();if(id)ask(id);else if(matchMedia('(hover: hover) and (pointer: fine)').matches) setTimeout(()=>document.getElementById('pin').focus({preventScroll:true}),250);}
 function closePanel(){panel.classList.add('closed');panel.setAttribute('aria-hidden','true');fab.hidden=false;}
 function thinkRow(){const r=botRow('');const d=Dots(r.querySelector('.av'),{size:22,color:'#111111'});d.set('thinking');scrollEnd();return {r,d};}
 function mine(text,l){pb.querySelectorAll('.pchips').forEach(x=>x.remove());const b=document.createElement('div');b.className='bub mine';if(l)b.lang=l;b.textContent=text;pb.appendChild(b);scrollEnd();}
