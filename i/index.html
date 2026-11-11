@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>You're invited to BrewMaps</title>
   <meta name="description" content="A friend invited you to BrewMaps. Sign up with their code and get 50 points." />
   <link rel="icon" type="image/png" href="/logo.png" />
@@ -17,147 +17,35 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/bm.css" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --espresso: #1A1A1A;
-      --forest: #2B4D1F;
-      --forest-light: #3A6B29;
-      --caramel: #C8914A;
-      --caramel-light: #E5B87A;
-      --sand: #FAF6F0;
-      --cream: #FFF8F0;
-      --warm-white: #FFFDF9;
-      --stone: #7A7A7A;
-      --border: rgba(0,0,0,0.06);
-    }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--warm-white);
-      color: var(--espresso);
-      -webkit-font-smoothing: antialiased;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    .serif { font-family: 'Playfair Display', Georgia, serif; }
-
-    /* ambient warmth */
-    .bg-orb {
-      position: fixed; border-radius: 50%; filter: blur(80px);
-      opacity: 0.5; z-index: 0; pointer-events: none;
-    }
-    .orb-1 { width: 480px; height: 480px; background: radial-gradient(circle, rgba(200,145,74,0.28), transparent 70%); top: -160px; right: -140px; }
-    .orb-2 { width: 420px; height: 420px; background: radial-gradient(circle, rgba(43,77,31,0.18), transparent 70%); bottom: -160px; left: -120px; }
-
-    .wrap {
-      position: relative; z-index: 1;
-      flex: 1;
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 48px 28px 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      justify-content: center;
-    }
-
-    .brand { display: flex; align-items: center; gap: 11px; margin-bottom: 44px; }
-    .brand img { width: 40px; height: 40px; border-radius: 11px; box-shadow: 0 4px 16px rgba(43,77,31,0.16); }
-    .brand span { font-weight: 700; font-size: 20px; letter-spacing: -0.02em; color: var(--forest); }
-
-    .kicker {
-      font-size: 12.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--caramel); margin-bottom: 20px;
-    }
-
-    h1 {
-      font-size: clamp(34px, 8vw, 52px);
-      line-height: 1.08;
-      letter-spacing: -0.02em;
-      font-weight: 700;
-      color: var(--forest);
-      margin-bottom: 20px;
-    }
-    h1 em { font-style: italic; color: var(--caramel); }
-
-    .sub {
-      font-size: clamp(16px, 4.2vw, 18.5px);
-      line-height: 1.55;
-      color: var(--stone);
-      max-width: 440px;
-      margin-bottom: 40px;
-    }
-
-    /* Store buttons */
-    .store-row {
-      display: flex; align-items: center; justify-content: center;
-      flex-wrap: wrap; gap: 14px;
-    }
-    .store-btn {
-      display: inline-flex; align-items: center; gap: 13px;
-      background: var(--espresso); color: #fff;
-      padding: 16px 30px; border-radius: 16px;
-      text-decoration: none;
-      box-shadow: 0 10px 30px rgba(26,26,26,0.22);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .store-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(26,26,26,0.28); }
-    .store-btn:active { transform: translateY(0); }
-    .store-btn svg { width: 30px; height: 30px; flex-shrink: 0; }
-    .store-btn .txt { text-align: left; line-height: 1.15; }
-    .store-btn .txt small { display: block; font-size: 11px; font-weight: 400; opacity: 0.82; letter-spacing: 0.01em; }
-    .store-btn .txt b { font-size: 19px; font-weight: 600; letter-spacing: -0.01em; }
-
-    .trust {
-      margin-top: 30px;
-      display: flex; align-items: center; justify-content: center;
-      flex-wrap: wrap; gap: 10px 18px;
-    }
-    .trust .pill {
-      font-size: 13.5px; font-weight: 500; color: var(--forest);
-      background: var(--sand); border: 1px solid var(--border);
-      padding: 7px 15px; border-radius: 100px;
-    }
-
-    .emirates {
-      margin-top: 34px; font-size: 13px; color: var(--stone-light, #B0A89E);
-      letter-spacing: 0.02em;
-    }
-
-    footer {
-      position: relative; z-index: 1;
-      text-align: center; padding: 22px; font-size: 12.5px; color: #B0A89E;
-    }
-    footer a { color: var(--stone); text-decoration: none; }
-    footer a:hover { color: var(--forest); }
-    footer .dot { margin: 0 8px; opacity: 0.5; }
-
-    @media (max-width: 480px) {
-      .wrap { padding: 40px 22px 32px; }
-      .brand { margin-bottom: 34px; }
-    }
-    .codebox {
-      display: flex; align-items: center; gap: 10px;
-      background: var(--sand); border: 1.5px dashed rgba(43,77,31,0.35);
-      border-radius: 18px; padding: 14px 14px 14px 22px; margin: 4px 0 30px;
-    }
-    .codebox .code { font-size: 30px; font-weight: 700; letter-spacing: 0.14em; color: var(--forest); }
-    .copy {
-      font: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer;
-      background: var(--forest); color: #fff; border: 0; border-radius: 12px; padding: 11px 18px;
-    }
-    .steps { list-style: none; text-align: start; max-width: 420px; width: 100%; margin: 0 0 34px; }
-    .steps li { display: flex; gap: 14px; align-items: flex-start; padding: 11px 0; border-top: 1px solid var(--border); font-size: 15.5px; line-height: 1.45; color: var(--espresso); }
-    .steps li:first-child { border-top: 0; }
-    .steps .n { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--forest); color: #fff; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; }
-    .steps small { display: block; color: var(--stone); font-size: 13.5px; margin-top: 2px; }
-    [dir="rtl"] .store-btn .txt { text-align: right; }
-    [dir="rtl"] h1 em { font-style: normal; }
+    /* install + invite pages: same site style (bm.css), one white surface, lime only as a fill */
+    body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+    main{flex:1;width:100%}
+    .hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding-block:32px 8px}
+    .hero [data-dots]{color:var(--ink);margin-bottom:22px}
+    .kicker{font-weight:700;font-size:15px;color:var(--ink-3)}
+    .hero h1{font:900 clamp(44px,12vw,76px)/.94 var(--display);letter-spacing:-.03em;margin-top:12px;text-wrap:balance}
+    .hero h1 em{font-style:normal;background:linear-gradient(transparent 12%,var(--lime) 12%,var(--lime) 96%,transparent 96%);color:#111;padding:0 .08em;border-radius:.08em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+    .sub{margin-top:18px;font-size:18px;line-height:1.5;color:var(--ink-2);max-width:34ch}
+    .store-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:30px}
+    .store-btn{display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 16px;border-radius:15px;background:var(--black);color:#fff;text-decoration:none;line-height:1.05;text-align:start;transition:transform .15s}
+    @media (prefers-color-scheme: dark){.store-btn{background:#fff;color:#111}}
+    .store-btn:active{transform:scale(.97)}
+    .store-btn svg{width:24px;height:24px;flex:none}
+    .store-btn small{display:block;font-size:11px;font-weight:500;opacity:.7}
+    .store-btn b{font-size:17px;font-weight:800;letter-spacing:-.01em}
+    [dir="rtl"] .hero h1{letter-spacing:0}
+    .codebox{display:flex;align-items:center;gap:12px;width:100%;max-width:400px;margin-top:28px;background:var(--lime);color:#111;border-radius:22px;padding:12px 12px 12px 24px}
+    [dir="rtl"] .codebox{padding:12px 24px 12px 12px}
+    .codebox .code{flex:1;min-width:0;text-align:start;font:900 34px/1 var(--display);letter-spacing:.12em;direction:ltr;unicode-bidi:isolate}
+    .copy{flex:none;border:0;background:#111;color:#fff;border-radius:999px;height:46px;padding:0 20px;font-weight:700;transition:transform .15s}
+    .copy:active{transform:scale(.97)}
+    .steps{list-style:none;margin:32px 0 0;padding:0;display:grid;gap:20px;width:100%;max-width:420px;text-align:start}
+    .steps li{display:flex;gap:14px;align-items:flex-start;font-size:17px;font-weight:700;line-height:1.35}
+    .steps .n{flex:none;width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--bg);font:800 15px/32px var(--display);text-align:center}
+    .steps small{display:block;color:var(--ink-3);font-size:15px;font-weight:400;line-height:1.45;margin-top:3px}
   </style>
 
   <!-- Meta Pixel Code -->
@@ -180,57 +68,46 @@
   <!-- End Meta Pixel Code -->
 </head>
 <body>
-  <div class="bg-orb orb-1"></div>
-  <div class="bg-orb orb-2"></div>
+  <header class="bar"><div class="col">
+    <a class="brand" href="/" aria-label="BrewMaps home"><svg viewBox="375.82 301.87 328.37 478.45" aria-hidden="true"><path fill="currentColor" d="M 580.496094 506.21875 C 580.496094 522.027344 572.066406 536.652344 558.363281 544.566406 L 444.292969 610.421875 C 438.738281 613.609375 435.65625 619.417969 435.65625 625.378906 C 435.65625 628.3125 436.402344 631.265625 437.96875 633.992188 C 442.75 642.242188 453.289062 645.070312 461.566406 640.3125 L 529.78125 600.9375 L 571.191406 650.234375 C 577.230469 657.382812 580.496094 666.429688 580.496094 675.761719 L 580.496094 719.945312 C 580.496094 736.1875 564.328125 747.472656 549.113281 741.84375 L 413.421875 691.925781 C 404.246094 688.535156 398.128906 679.792969 398.128906 669.976562 L 398.128906 415.894531 C 398.128906 399.648438 414.246094 388.390625 429.488281 393.945312 L 565.152344 443.476562 C 574.378906 446.84375 580.496094 455.605469 580.496094 465.425781 Z M 704.183594 464.398438 L 704.183594 417.078125 C 704.183594 394.382812 689.890625 373.894531 668.582031 366.054688 L 503.359375 305.214844 C 497.269531 302.980469 490.894531 301.871094 484.570312 301.871094 C 475.214844 301.871094 465.933594 304.265625 457.605469 309.019531 L 403.269531 340.042969 C 386.328125 349.707031 375.816406 367.804688 375.816406 387.285156 L 375.816406 666.324219 C 375.816406 689.023438 390.132812 709.535156 411.441406 717.375 L 567.414062 774.769531 C 582.527344 780.320312 599.183594 778.933594 613.140625 770.992188 L 676.757812 734.699219 C 693.667969 725.058594 704.183594 706.964844 704.183594 687.453125 L 704.183594 619.984375 C 704.183594 607.183594 699.65625 594.765625 691.457031 585.027344 L 645.988281 530.894531 L 678.605469 510.5625 C 694.621094 500.5625 704.183594 483.316406 704.183594 464.398438"/><path class="face" d="M 568.730469 555.835938 L 516.8125 585.488281 L 530.875 602.238281 L 571.199219 650.246094 C 577.238281 657.390625 580.507812 666.4375 580.507812 675.765625 L 580.507812 719.941406 C 580.507812 736.191406 564.339844 747.464844 549.109375 741.847656 L 413.433594 691.9375 C 404.246094 688.546875 398.128906 679.796875 398.128906 669.988281 L 398.128906 415.886719 C 398.128906 399.65625 414.257812 388.382812 429.484375 393.9375 L 565.160156 443.472656 C 574.367188 446.84375 580.507812 455.609375 580.507812 465.417969 L 580.507812 535.554688 C 580.507812 543.960938 576.035156 551.683594 568.730469 555.835938"/><circle cx="441.88" cy="451.98" r="14.26" fill="currentColor"/><circle cx="540" cy="688.12" r="14.26" fill="currentColor"/></svg>brewmaps</a>
+    <span class="sp"></span>
+  </div></header>
 
-  <main class="wrap">
-    <div class="brand">
-      <img src="/logo.png" alt="BrewMaps" />
-      <span>BrewMaps</span>
-    </div>
+  <main class="col">
+    <div class="hero">
+      <span data-dots="56" data-color="currentColor" aria-hidden="true"></span>
+      <div class="kicker" data-t="kicker">You're invited</div>
+      <h1 data-t="title">Your friend saved you <em>50 points.</em></h1>
+      <p class="sub" data-t="sub">BrewMaps finds cafés across the UAE that fit your taste. Join with this code and the points are yours the moment you enter it.</p>
 
-    <div class="kicker" data-t="kicker">You're invited</div>
-    <h1 class="serif" data-t="title">Your friend saved you <em>50 points.</em></h1>
-    <p class="sub" data-t="sub">BrewMaps finds cafés across the UAE that fit your taste. Join with this code and the points are yours the moment you enter it.</p>
+      <div class="codebox" id="codebox">
+        <span class="code" id="code">——</span>
+        <button class="copy" id="copy" type="button" data-t="copy">Copy</button>
+      </div>
 
-    <div class="codebox" id="codebox">
-      <span class="code" id="code">——</span>
-      <button class="copy" id="copy" type="button" data-t="copy">Copy</button>
-    </div>
+      <ol class="steps">
+        <li><span class="n">1</span><span><span data-t="s1">Download BrewMaps</span><small data-t="s1b">Free on the App Store and Google Play.</small></span></li>
+        <li><span class="n">2</span><span><span data-t="s2">Sign up</span><small data-t="s2b">With Apple, Google or your email.</small></span></li>
+        <li><span class="n">3</span><span><span data-t="s3">Tap “Got a referral code?” and paste it</span><small data-t="s3b">It's on the first screen after you sign up. You get 50 points straight away.</small></span></li>
+      </ol>
 
-    <ol class="steps">
-      <li><span class="n">1</span><span><span data-t="s1">Download BrewMaps</span><small data-t="s1b">Free on the App Store and Google Play.</small></span></li>
-      <li><span class="n">2</span><span><span data-t="s2">Sign up</span><small data-t="s2b">With Apple, Google or your email.</small></span></li>
-      <li><span class="n">3</span><span><span data-t="s3">Tap “Got a referral code?” and paste it</span><small data-t="s3b">It's on the first screen after you sign up. You get 50 points straight away.</small></span></li>
-    </ol>
-
-    <div class="store-row">
-      <a class="store-btn" id="installBtn" data-store="app_store"
-         href="https://apps.apple.com/ae/app/brewmaps-uae-caf%C3%A9-finder/id6775899450">
-        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
-          <path d="M17.05 12.7c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.75 2.28-1.6 2.78-.41 6.89 1.15 9.14.76 1.1 1.67 2.34 2.86 2.29 1.15-.05 1.58-.74 2.97-.74 1.39 0 1.78.74 3 .72 1.24-.02 2.02-1.12 2.78-2.23.88-1.28 1.24-2.52 1.26-2.58-.03-.01-2.41-.93-2.43-3.68zM14.77 5.9c.64-.77 1.07-1.85.95-2.9-.92.04-2.03.61-2.69 1.38-.59.68-1.11 1.77-.97 2.81 1.02.08 2.07-.52 2.71-1.29z"/>
-        </svg>
-        <span class="txt">
-          <small>Download on the</small>
-          <b>App Store</b>
-        </span>
-      </a>
-      <a class="store-btn" data-store="google_play"
-         href="https://play.google.com/store/apps/details?id=com.brewmaps.app">
-        <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
-          <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 010 1.73l-2.808 1.626L15.005 12l2.693-2.491zM5.864 2.658L16.802 8.99l-2.303 2.303-8.635-8.635z"/>
-        </svg>
-        <span class="txt">
-          <small>Get it on</small>
-          <b>Google Play</b>
-        </span>
-      </a>
+      <div class="store-row">
+        <a class="store-btn" id="installBtn" data-pixel-store="app_store"
+           href="https://apps.apple.com/ae/app/brewmaps-uae-caf%C3%A9-finder/id6775899450">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.8-.8-3-.8-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6-.1 0-2.5-1-2.5-3.8zM14.1 5.8c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2.1-.5 2.7-1.3z"/></svg>
+          <span class="txt"><small>Download on the</small><b>App Store</b></span>
+        </a>
+        <a class="store-btn" data-pixel-store="google_play"
+           href="https://play.google.com/store/apps/details?id=com.brewmaps.app">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#00C3FF" d="M3.6 2.3 13.4 12l-9.8 9.7c-.4-.2-.6-.6-.6-1.1V3.4c0-.5.2-.9.6-1.1z"/><path fill="#FFCE00" d="m16.9 15.5-3.5-3.5 3.5-3.5 3.9 2.2c1.1.6 1.1 1.6 0 2.2z"/><path fill="#00E676" d="M3.6 2.3c.3-.2.8-.2 1.3.1l12 6.1-3.5 3.5z"/><path fill="#FF3A44" d="m13.4 12 3.5 3.5-12 6.1c-.5.3-1 .3-1.3.1z"/></svg>
+          <span class="txt"><small>Get it on</small><b>Google Play</b></span>
+        </a>
+      </div>
     </div>
   </main>
 
-  <footer>
-    <a href="/">brewmaps.app</a><span class="dot">·</span><a href="/privacy">Privacy</a><span class="dot">·</span><a href="/terms">Terms</a>
-  </footer>
+  <footer><div class="col"><span>© 2026 BrewMaps</span><span class="sp"></span><a href="https://wa.me/971529763232">For cafés</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div></footer>
+  <script src="/assets/bm.js" defer></script>
 
   <script>
   (function () {
@@ -278,7 +155,7 @@
 
     document.querySelectorAll('.store-btn').forEach(function (a) {
       a.addEventListener('click', function () {
-        if (window.fbq) fbq('trackCustom', 'AppStoreClick', { store: a.getAttribute('data-store'), page: 'invite' });
+        if (window.fbq) fbq('trackCustom', 'AppStoreClick', { store: a.getAttribute('data-pixel-store'), page: 'invite' });
       });
     });
   })();
