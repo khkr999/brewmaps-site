@@ -78,6 +78,11 @@ html[dir="rtl"] :is(h1,h2,h4){letter-spacing:0;font-family:var(--ar);font-weight
 .hero h1{font-size:clamp(46px,8.6vw,124px);line-height:.9;font-weight:700}
 .mark{background:linear-gradient(transparent 16%,var(--lime) 16%,var(--lime) 94%,transparent 94%);color:var(--black);padding:0 .1em;border-radius:.1em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .hero .sub{margin:22px auto 0;font-size:clamp(17px,1.5vw,20px);color:var(--ink-2);max-width:34ch}
+/* Arabic: Dubai's glyph box is much taller than Archivo's, so the English .9 line height made the lime band
+   cover the line above and the subtitle (founder screenshot 2026-11-11). Looser lines + a band trimmed to the letters. */
+html[dir="rtl"] .hero h1{line-height:1.12}
+html[dir="rtl"] .hero h1 .mark{background:linear-gradient(transparent 30%,var(--lime) 30%,var(--lime) 84%,transparent 84%)}
+html[dir="rtl"] .hero .sub{margin-top:14px}
 .stores{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;margin-top:26px}
 .store{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 18px;border-radius:14px;background:var(--black);color:#fff;text-decoration:none;font-weight:700;line-height:1.05;text-align:start}
 :root[data-theme="dark"] .store{background:#fff;color:var(--black)}
