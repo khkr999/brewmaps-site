@@ -106,6 +106,7 @@ footer a:hover{color:var(--ink)}
 .fab[hidden]{display:none}
 .panel{position:fixed;z-index:80;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));width:380px;max-width:calc(100vw - 40px);max-height:min(620px,calc(100vh - 100px));background:var(--card);color:var(--ink);border-radius:26px;box-shadow:0 30px 80px -24px rgba(0,0,0,.45);display:flex;flex-direction:column;overflow:hidden;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s;transform-origin:bottom right}
 .panel.closed{transform:translateY(16px) scale(.96);opacity:0;pointer-events:none}
+.panel.closed{visibility:hidden;transition:transform .32s cubic-bezier(.2,.8,.2,1),opacity .25s,visibility 0s .32s}
 .ph{display:flex;align-items:center;gap:10px;padding:16px 14px 8px 16px}
 .ph h3{flex:1;font:700 17px/1 var(--display)}
 .ph .x{width:36px;height:36px;border-radius:50%;border:0;background:var(--soft);font-size:18px}
