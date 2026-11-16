@@ -7,16 +7,16 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>BrewMaps Admin</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root{--forest:#2B4D1F;--forest2:#3a6429;--caramel:#C4956A;--cream:#FFFDF9;--sand:#F5F0E8;--stone:#8a7968;--border:#e8e0d4;--red:#e74c3c;--amber:#f39c12;}
+    :root{--forest:#111111;--forest2:#2a2a2a;--caramel:#111111;--cream:#FFFFFF;--sand:#F4F4F2;--stone:#6b6b6b;--border:#E6E6E3;--red:#D93025;--amber:#B26A00;--lime:#DFF903;--up:#1a7f37;}
     *{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:'Inter',sans-serif;background:var(--sand);color:#2a2218;min-height:100vh;}
 
     /* Login */
     #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--forest);}
     .login-card{background:var(--cream);border-radius:20px;padding:48px 40px;width:360px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,0.3);}
-    .login-logo{font-family:'Playfair Display',serif;font-style:italic;font-size:28px;color:var(--forest);margin-bottom:6px;}
+    .login-logo{font-family:'Archivo',sans-serif;letter-spacing:-0.02em;font-size:28px;color:var(--forest);margin-bottom:6px;}
     .login-sub{font-size:13px;color:var(--stone);margin-bottom:32px;}
     .login-input{width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:12px;font-size:15px;font-family:'Inter',sans-serif;background:var(--sand);outline:none;transition:border-color .2s;margin-bottom:12px;}
     .login-input:focus{border-color:var(--forest);}
@@ -27,7 +27,7 @@
     /* Dashboard */
     #dashboard{display:none;}
     header{background:var(--forest);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:60px;}
-    .header-logo{font-family:'Playfair Display',serif;font-style:italic;font-size:22px;color:var(--cream);}
+    .header-logo{font-family:'Archivo',sans-serif;letter-spacing:-0.02em;font-size:22px;color:var(--cream);}
     .header-right{display:flex;align-items:center;gap:12px;}
     .header-meta{font-size:12px;color:rgba(255,255,255,0.45);}
     .refresh-btn{background:rgba(255,255,255,0.12);border:none;color:white;padding:7px 14px;border-radius:8px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;}
@@ -125,6 +125,34 @@
     .last-updated{font-size:12px;color:var(--stone);text-align:right;margin-top:28px;padding-bottom:28px;}
     .live-dot{display:inline-block;width:7px;height:7px;background:#2ecc71;border-radius:50%;margin-right:5px;animation:pulse 1.5s ease-in-out infinite;}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+    /* Overview (2026-11-16 revamp) */
+    .fold{margin-top:28px;border-top:1px solid var(--border);padding-top:6px;}
+    .fold>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;font-family:'Archivo',sans-serif;font-size:18px;font-weight:700;letter-spacing:-0.01em;padding:12px 0;}
+    .fold>summary::-webkit-details-marker{display:none;}
+    .fold>summary::before{content:'+';display:inline-flex;width:22px;height:22px;border-radius:6px;background:var(--sand);align-items:center;justify-content:center;font-size:15px;}
+    .fold[open]>summary::before{content:'\2212';}
+    .fold-note{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:var(--stone);}
+    .tag-paused{font-family:'Inter',sans-serif;font-size:11px;font-weight:700;background:var(--lime);color:#111;padding:3px 8px;border-radius:999px;}
+    .delta{font-size:12px;font-weight:700;margin-top:6px;}
+    .delta.up{color:var(--up);} .delta.down{color:var(--red);} .delta.flat{color:var(--stone);}
+    .kpi-card.hero{background:#111;border-color:#111;}
+    .kpi-card.hero .kpi-label{color:rgba(255,255,255,.6);} .kpi-card.hero .kpi-value{color:#fff;}
+    .kpi-card.hero .delta.up{color:var(--lime);} .kpi-card.hero .delta.down{color:#ff8a80;} .kpi-card.hero .delta.flat{color:rgba(255,255,255,.5);}
+    .ov-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px;align-items:start;}
+    @media(max-width:820px){.ov-cols{grid-template-columns:1fr;}}
+    .spark{display:flex;align-items:flex-end;gap:3px;height:90px;}
+    .spark>div{flex:1;background:#111;border-radius:3px 3px 0 0;min-height:2px;position:relative;}
+    .spark>div.zero{background:var(--border);}
+    .spark-x{display:flex;justify-content:space-between;font-size:10px;color:var(--stone);margin-top:6px;}
+    .funnel-row{display:grid;grid-template-columns:170px 1fr 70px;gap:10px;align-items:center;margin-bottom:9px;font-size:13px;}
+    .funnel-row .bar-track{height:10px;}
+    .note{font-size:11px;color:var(--stone);margin-top:10px;line-height:1.5;}
+    .num{text-align:right;font-variant-numeric:tabular-nums;}
+    .range-input{padding:5px 8px;border:1.5px solid var(--border);border-radius:8px;font-family:'Inter',sans-serif;font-size:12px;background:#fff;}
+    .chip{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--sand);color:#111;}
+    .chip.lime{background:var(--lime);}
+    @media(max-width:600px){header{padding:0 16px;} .filters-bar{padding:10px 16px;} main{padding:20px 16px;} .funnel-row{grid-template-columns:120px 1fr 56px;} td,th{padding:8px 10px;}}
   </style>
 </head>
 <body>
@@ -153,11 +181,18 @@
   <!-- Filters -->
   <div class="filters-bar">
     <div class="filter-group">
-      <span class="filter-label">Period</span>
-      <div style="display:flex;gap:6px" id="pills-period">
-        <button class="pill" data-val="7" onclick="setPeriod(7)">7 days</button>
-        <button class="pill active" data-val="30" onclick="setPeriod(30)">30 days</button>
+      <span class="filter-label">Range</span>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center" id="pills-period">
+        <button class="pill active" data-val="7" onclick="setPeriod(7)">7 days</button>
+        <button class="pill" data-val="30" onclick="setPeriod(30)">30 days</button>
         <button class="pill" data-val="90" onclick="setPeriod(90)">90 days</button>
+        <button class="pill" data-val="custom" onclick="toggleCustom()">Custom</button>
+        <span id="custom-range" style="display:none;gap:6px;align-items:center">
+          <input type="date" id="range-from" class="range-input" />
+          <span class="filter-label">to</span>
+          <input type="date" id="range-to" class="range-input" />
+          <button class="pill" onclick="applyCustom()">Apply</button>
+        </span>
       </div>
     </div>
     <div class="filter-group">
@@ -180,7 +215,9 @@
 const ENDPOINT = 'https://qgzyywxizlhtuwuaonxy.supabase.co/functions/v1/admin-stats';
 let adminSecret = sessionStorage.getItem('bm_admin_secret') || '';
 let rawData = null;
-let period = 30;
+let period = 7;
+let rangeTo = null;   // null = now
+let rangeFrom = null; // null = rangeTo - period days
 let modFilter = 'all';
 let userSearch = '';
 let failedExpanded = false;
@@ -223,9 +260,45 @@ document.addEventListener('click', function(e) {
 
 // ── Filters ───────────────────────────────────────────────────────────────────
 function setPeriod(val) {
-  period = val;
+  period = val; rangeFrom = null; rangeTo = null;
+  document.getElementById('custom-range').style.display = 'none';
   document.querySelectorAll('#pills-period .pill').forEach(p => p.classList.toggle('active', p.dataset.val == val));
-  if (rawData) render(rawData);
+  loadOverview();
+}
+function toggleCustom() {
+  const box = document.getElementById('custom-range');
+  box.style.display = box.style.display === 'none' ? 'inline-flex' : 'none';
+  if (!document.getElementById('range-to').value) {
+    const to = new Date(); const from = new Date(to.getTime() - period * 86400000);
+    document.getElementById('range-to').value = to.toISOString().slice(0, 10);
+    document.getElementById('range-from').value = from.toISOString().slice(0, 10);
+  }
+}
+function applyCustom() {
+  const f = document.getElementById('range-from').value, t = document.getElementById('range-to').value;
+  if (!f || !t || f > t) return;
+  // Dubai days: from 00:00 of the first day to 24:00 of the last.
+  rangeFrom = new Date(f + 'T00:00:00+04:00'); rangeTo = new Date(new Date(t + 'T00:00:00+04:00').getTime() + 86400000);
+  period = Math.max(1, Math.round((rangeTo - rangeFrom) / 86400000));
+  document.querySelectorAll('#pills-period .pill').forEach(p => p.classList.toggle('active', p.dataset.val === 'custom'));
+  loadOverview();
+}
+function rangeQuery() {
+  const to = rangeTo || new Date(); const from = rangeFrom || new Date(to.getTime() - period * 86400000);
+  return 'from=' + encodeURIComponent(from.toISOString()) + '&to=' + encodeURIComponent(to.toISOString());
+}
+// Range change: only the overview is recomputed (?only=overview); moderation and users stay as loaded.
+let ovFetching = false;
+async function loadOverview() {
+  if (!rawData || ovFetching) { if (!rawData) loadStats(); return; }
+  ovFetching = true;
+  const box = document.getElementById('overview'); if (box) box.style.opacity = '0.45';
+  try {
+    const res = await fetch(ENDPOINT + '?only=overview&' + rangeQuery() + '&t=' + Date.now(), { headers: { 'x-admin-secret': adminSecret }, cache: 'no-store' });
+    if (res.ok) { const j = await res.json(); rawData.overview = j.overview; render(rawData); }
+  } catch (e) { /* keep what is on screen */ }
+  if (box) box.style.opacity = '1';
+  ovFetching = false;
 }
 function setModFilter(val) {
   modFilter = val;
@@ -244,8 +317,8 @@ async function loadStats(silent = false, fromLogin = false) {
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     try {
       const ctrl = new AbortController();
-      const t = setTimeout(() => ctrl.abort(), 12000);
-      const res = await fetch(ENDPOINT + '?t=' + Date.now(), {
+      const t = setTimeout(() => ctrl.abort(), 30000);
+      const res = await fetch(ENDPOINT + '?' + rangeQuery() + '&t=' + Date.now(), {
         headers: { 'x-admin-secret': adminSecret },
         cache: 'no-store',
         signal: ctrl.signal,
@@ -380,6 +453,153 @@ function setUserSearch(v) {
 }
 
 // ── Render ────────────────────────────────────────────────────────────────────
+
+// ── Overview (revamp 2026-11-16; get_admin_overview, migration 229) ─────────
+const SCREEN_NAMES = { DiscoveryHome: 'Discover', MapHome: 'Map', LiveHome: 'Vibes', VibesFeed: 'Vibes feed', AskHome: 'Chat',
+  AskBrewMaps: 'Chat (conversation)', Messages: 'Messages', Conversation: 'Message thread', ProfileHome: 'You', MyProfile: 'You (profile)',
+  CafeProfile: 'Café page', SavedHome: 'Saved', Library: 'Saved lists', UserProfile: 'Someone’s profile', AreaCafes: 'Area list',
+  AreaGuide: 'Area guide', MallCafes: 'Mall list', BrewPoints: 'BrewPoints', Notifications: 'Activity', Settings: 'Settings',
+  ProfileSetup: 'Sign-up: name + quiz', SignIn: 'Sign-in', SignUp: 'Sign-up', CodeSignIn: 'Code sign-in', PhoneAuth: 'Phone sign-in',
+  EditUsername: 'Edit username', VibePost: 'Vibe post', FollowersList: 'Followers', FollowingList: 'Following', Friends: 'Friends' };
+const TAB_ORDER = [['DiscoveryHome', 'Discover'], ['MapHome', 'Map'], ['LiveHome', 'Vibes'], ['AskHome', 'Chat'], ['Messages', 'Messages'], ['ProfileHome', 'You']];
+function pct(a, b) { return b ? Math.round(a / b * 1000) / 10 : 0; }
+function secs(n) { if (n == null) return '–'; return n < 90 ? n + ' s' : Math.round(n / 6) / 10 + ' min'; }
+function delta(cur, prev) {
+  if (!prev && !cur) return '<div class="delta flat">no change</div>';
+  if (cur === prev) return '<div class="delta flat">same as before</div>';
+  const dir = cur > prev ? 'up' : 'down', arrow = cur > prev ? '▲' : '▼';
+  // A percentage off a tiny base says nothing (303 cafés vs 1 read "▲ 30200%"): below 10, show the two numbers.
+  if (prev < 10) return `<div class="delta ${dir}">${arrow} ${cur > prev ? 'up' : 'down'} from ${fmt(prev)}</div>`;
+  const d = Math.round((cur - prev) / prev * 100);
+  if (d === 0) return '<div class="delta flat">about the same</div>';
+  return `<div class="delta ${dir}">${arrow} ${Math.abs(d)}% vs ${fmt(prev)}</div>`;
+}
+function kpi(label, k, sub, hero) {
+  return `<div class="kpi-card${hero ? ' hero' : ''}"><div class="kpi-label">${label}</div><div class="kpi-value">${fmt(k?.cur ?? k)}</div>${k && k.cur != null ? delta(k.cur, k.prev) : ''}${sub ? `<div class="kpi-sub">${sub}</div>` : ''}</div>`;
+}
+function spark(daily, key, label, peak) {
+  const max = Math.max(1, ...daily.map(x => x[key] || 0));
+  // People per day can't be added up (the same person is in many days): show the busiest day instead.
+  const total = peak ? max : daily.reduce((a, x) => a + (x[key] || 0), 0);
+  const bars = daily.map(x => `<div class="${x[key] ? '' : 'zero'}" style="height:${Math.max(2, Math.round((x[key] || 0) / max * 100))}%" title="${x.d}: ${x[key] || 0}"></div>`).join('');
+  const first = daily[0]?.d?.slice(5) ?? '', last = daily[daily.length - 1]?.d?.slice(5) ?? '';
+  return `<div class="bar-card"><div class="bar-card-title">${label} <span class="chip">${peak ? 'busiest day ' : ''}${fmt(total)}</span></div><div class="spark">${bars}</div><div class="spark-x"><span>${first}</span><span>${last}</span></div></div>`;
+}
+function tableCard(title, head, rows, empty) {
+  return `<div class="table-card"><div class="table-header">${title}</div><table><thead><tr>${head.map(h => `<th${h.num ? ' class="num"' : ''}>${h.t ?? h}</th>`).join('')}</tr></thead><tbody>${rows || `<tr><td colspan="${head.length}" class="empty-state">${empty || 'Nothing in this range'}</td></tr>`}</tbody></table></div>`;
+}
+function fold(title, body, open, note) {
+  return `<details class="fold"${open ? ' open' : ''}><summary>${title}${note ? ` <span class="fold-note">${note}</span>` : ''}</summary>${body}</details>`;
+}
+function overviewHtml(ov) {
+  if (!ov) return '<div class="table-card"><div class="empty-state">Overview not available yet (needs migration 229 and the admin-stats deploy).</div></div>';
+  if (ov.error) return `<div class="table-card"><div class="empty-state" style="color:var(--red)">Overview failed: ${escapeHtml(ov.error)}</div></div>`;
+  const K = ov.kpis || {}, F = ov.funnel || {}, S = ov.sessions || {}, A = ov.ask || {}, Q = ov.searches || {};
+  const from = new Date(ov.range.from), to = new Date(ov.range.to);
+  const days = Math.max(1, Math.round((to - from) / 86400000));
+  const dstr = d => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'Asia/Dubai' });
+  const rangeLabel = `${dstr(from)} – ${dstr(new Date(to.getTime() - 1000))} · compared with the ${days} days before`;
+
+  // 1. This period vs the one before
+  const kpis = `<div class="kpi-grid">
+    ${kpi('New users', K.new_users, 'accounts created', true)}
+    ${kpi('Active users', K.active_users, 'opened the app')}
+    ${kpi('First opens', K.first_opens, 'new installs, app 1.2.0+ only')}
+    ${kpi('Check-ins', K.checkins, 'verified')}
+    ${kpi('Chat messages', K.ask_messages, 'sent to BrewMaps')}
+    ${kpi('Saves', K.saves, 'cafés saved')}
+    ${kpi('Directions', K.directions, 'opened Maps to a café')}
+    ${kpi('Cafés added', K.cafes_added, fmt(K.cafes_total) + ' in total')}
+  </div>`;
+
+  // 2. Growth
+  const daily = ov.daily || [];
+  const prov = Object.entries(ov.signup_providers || {}).sort((a, b) => b[1] - a[1]);
+  const provTotal = prov.reduce((a, [, n]) => a + n, 0);
+  const provBars = prov.map(([k, n]) => `<div class="bar-row"><div class="bar-label"><span class="bar-name">${escapeHtml({ google: 'Google', apple: 'Apple', email: 'Email', phone: 'WhatsApp / phone' }[k] || k)}</span><span class="bar-count">${n} · ${pct(n, provTotal)}%</span></div><div class="bar-track"><div class="bar-fill" style="width:${pct(n, provTotal)}%"></div></div></div>`).join('') || '<div class="empty-state">No sign-ups in this range</div>';
+  const steps = [['Installed (first open)', F.installs], ['Signed in', F.signed_in], ['Finished the quiz', F.quiz_done], ['Opened a café', F.cafe_opened], ['Saved or checked in', F.saved_or_checked_in]];
+  const funnel = steps.map(([l, n]) => `<div class="funnel-row"><span>${l}</span><div class="bar-track"><div class="bar-fill" style="width:${pct(n || 0, F.installs || 1)}%"></div></div><span class="num"><strong>${fmt(n || 0)}</strong> ${F.installs ? '· ' + pct(n || 0, F.installs) + '%' : ''}</span></div>`).join('');
+  const growth = `<div class="ov-cols">${spark(daily, 'signups', 'Sign-ups per day')}${spark(daily, 'active', 'Active users per day', true)}</div>
+    <div class="ov-cols">
+      <div class="bar-card"><div class="bar-card-title">How people signed up</div>${provBars}<div class="note">Invite rewards completed: ${fmt(ov.referrals_completed || 0)}</div></div>
+      <div class="bar-card"><div class="bar-card-title">From install to first save or check-in</div>${funnel}<div class="note">Installs that first opened in this range, followed up to today. Only app 1.2.0 and later sends install ids; the store version (1.1.9) is not counted here.</div></div>
+    </div>`;
+
+  // 3. Usage
+  const tabs = ov.tabs || {};
+  const tabMax = Math.max(1, ...TAB_ORDER.map(([k]) => tabs[k] || 0));
+  const tabBars = TAB_ORDER.map(([k, l]) => `<div class="bar-row"><div class="bar-label"><span class="bar-name">${l}</span><span class="bar-count">${fmt(tabs[k] || 0)} people</span></div><div class="bar-track"><div class="bar-fill" style="width:${Math.round((tabs[k] || 0) / tabMax * 100)}%"></div></div></div>`).join('');
+  const screenRows = (ov.screens || []).map(r => `<tr><td>${escapeHtml(SCREEN_NAMES[r.screen] || r.screen)}</td><td class="num">${fmt(r.views)}</td><td class="num">${secs(r.median_secs)}</td></tr>`).join('');
+  const usage = `<div class="kpi-grid">
+      <div class="kpi-card hero"><div class="kpi-label">Typical visit</div><div class="kpi-value">${secs(S.median_secs)}</div><div class="kpi-sub" style="color:rgba(255,255,255,.55)">half of visits are shorter</div></div>
+      <div class="kpi-card"><div class="kpi-label">Longer visits</div><div class="kpi-value">${secs(S.p75_secs)}</div><div class="kpi-sub">1 in 4 visits is longer</div></div>
+      <div class="kpi-card"><div class="kpi-label">Visits measured</div><div class="kpi-value">${fmt(S.count)}</div><div class="kpi-sub">open → leave the app</div></div>
+    </div>
+    <div class="ov-cols">
+      <div class="bar-card"><div class="bar-card-title">Tabs used (people)</div>${tabBars}</div>
+      ${tableCard('Screens: views and typical time', ['Screen', { t: 'Views', num: 1 }, { t: 'Typical time', num: 1 }], screenRows)}
+    </div>
+    <div class="note">Store-version guests send no install id, so they are not in visits or screens. Time on a screen = until the next screen or leaving the app (under 30 minutes).</div>`;
+
+  // 4. Discover
+  const C = ov.ctr || {}, P = ov.picks || {};
+  const ctrCard = (k, l) => { const c = C[k] || { shown: 0, tapped: 0 }; return `<div class="kpi-card"><div class="kpi-label">${l}</div><div class="kpi-value">${pct(c.tapped, c.shown)}%</div><div class="kpi-sub">${fmt(c.tapped)} taps of ${fmt(c.shown)} cafés shown</div></div>`; };
+  const swipes = (P.right || 0) + (P.left || 0);
+  const mallRows = (ov.malls || []).map(m => `<tr><td>${escapeHtml(m.mall || 'Unknown mall')}</td><td class="num">${fmt(m.asked)}</td><td class="num">${fmt(m.yes)}</td><td class="num">${fmt(m.no)}</td><td class="num">${fmt(m.cafe_opened)}</td></tr>`).join('');
+  const discover = `<div class="kpi-grid">
+      ${ctrCard('discovery_browse', 'Click rate · browsing')}
+      ${ctrCard('discovery_search', 'Click rate · search results')}
+      <div class="kpi-card"><div class="kpi-label">Picks swiped right</div><div class="kpi-value">${pct(P.right || 0, swipes)}%</div><div class="kpi-sub">${fmt(P.right || 0)} saves · ${fmt(P.left || 0)} passes · ${fmt(P.people || 0)} people</div></div>
+    </div>
+    <div style="margin-top:12px">${tableCard('In a mall: “Looks like you’re at…”', ['Mall', { t: 'People asked', num: 1 }, { t: 'Yes', num: 1 }, { t: 'No / not now', num: 1 }, { t: 'Opened a café', num: 1 }], mallRows, 'No mall questions in this range')}</div>`;
+
+  // 5. Chat
+  const chat = `<div class="kpi-grid">
+      <div class="kpi-card hero"><div class="kpi-label">Messages</div><div class="kpi-value">${fmt(A.messages)}</div><div class="kpi-sub" style="color:rgba(255,255,255,.55)">${fmt(A.conversations)} conversations</div></div>
+      <div class="kpi-card"><div class="kpi-label">People</div><div class="kpi-value">${fmt(A.people)}</div><div class="kpi-sub">${A.people ? (Math.round(A.messages / A.people * 10) / 10) + ' messages each' : '–'}</div></div>
+      <div class="kpi-card"><div class="kpi-label">Café opened from a reply</div><div class="kpi-value">${fmt(A.cafes_opened)}</div><div class="kpi-sub">taps on a café in chat</div></div>
+      <div class="kpi-card"><div class="kpi-label">Cost</div><div class="kpi-value">$${Number(A.cost_usd || 0).toFixed(2)}</div><div class="kpi-sub">${A.messages ? '$' + (A.cost_usd / A.messages).toFixed(4) + ' a message' : '–'}</div></div>
+      <div class="kpi-card"><div class="kpi-label">Reply time</div><div class="kpi-value">${A.median_latency_ms ? (A.median_latency_ms / 1000).toFixed(1) + ' s' : '–'}</div><div class="kpi-sub">typical, full answer</div></div>
+    </div>`;
+
+  // 6. Searches
+  const topRows = (Q.top || []).map(r => `<tr><td>${escapeHtml(r.q)}</td><td class="num">${fmt(r.n)}</td><td class="num">${pct(r.opened, r.n)}%</td></tr>`).join('');
+  const noneRows = (Q.top_nothing_opened || []).map(r => `<tr><td>${escapeHtml(r.q)}</td><td class="num">${fmt(r.n)}</td></tr>`).join('');
+  const placeRows = (ov.places_not_in_catalogue || []).map(r => `<tr><td><div class="cafe-name">${escapeHtml(r.name)}</div><div class="cafe-area">${escapeHtml(r.address || '')}</div></td><td class="num">${fmt(r.asked)}</td></tr>`).join('');
+  const searches = `<div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-label">Searches</div><div class="kpi-value">${fmt(Q.total)}</div><div class="kpi-sub">typing fragments left out</div></div>
+      <div class="kpi-card${Q.total && Q.nothing_opened / Q.total > 0.4 ? ' warn' : ''}"><div class="kpi-label">Nothing opened after</div><div class="kpi-value">${pct(Q.nothing_opened, Q.total)}%</div><div class="kpi-sub">${fmt(Q.nothing_opened)} searches, no café opened within 2 min</div></div>
+    </div>
+    <div class="ov-cols">
+      ${tableCard('Top searches', ['Search', { t: 'Times', num: 1 }, { t: 'Opened a café', num: 1 }], topRows)}
+      ${tableCard('Searches where nothing was opened', ['Search', { t: 'Times', num: 1 }], noneRows)}
+    </div>
+    <div style="margin-top:12px">${tableCard('Places people asked Chat about that are not in BrewMaps', ['Place (from Google)', { t: 'Asked', num: 1 }], placeRows, 'None in this range')}</div>`;
+
+  // 7. Cafés
+  const CF = ov.cafes || {};
+  const cafeRows = (CF.top || []).map((c, i) => `<tr><td class="rank">${i + 1}</td><td><div class="cafe-name">${escapeHtml(c.name)}</div><div class="cafe-area">${escapeHtml(c.area || '')}${c.has_menu ? '' : ' · <span class="chip">no menu</span>'}</div></td><td class="num">${fmt(c.views)}</td><td class="num">${fmt(c.saves)}</td><td class="num">${fmt(c.directions)}</td><td class="num">${fmt(c.checkins)}</td></tr>`).join('');
+  const noMenuRows = (CF.viewed_no_menu || []).map(c => `<tr><td><div class="cafe-name">${escapeHtml(c.name)}</div><div class="cafe-area">${escapeHtml(c.area || '')}</div></td><td class="num">${fmt(c.views)}</td></tr>`).join('');
+  const cafes = `${tableCard('Most viewed cafés', ['#', 'Café', { t: 'Views', num: 1 }, { t: 'Saves', num: 1 }, { t: 'Directions', num: 1 }, { t: 'Check-ins', num: 1 }], cafeRows)}
+    <div style="margin-top:12px">${tableCard('Viewed but no menu yet', ['Café', { t: 'Views', num: 1 }], noMenuRows, 'Every viewed café has a menu')}</div>`;
+
+  // 8. Partners
+  const partnerRows = (ov.partners || []).map(c => `<tr><td><div class="cafe-name">${escapeHtml(c.name)}</div><div class="cafe-area">${escapeHtml(c.area || '')}</div></td><td class="num">${fmt(c.shown)}</td><td class="num">${fmt(c.views)}</td><td class="num">${fmt(c.saves)}</td><td class="num">${fmt(c.directions)}</td><td class="num"><strong>${fmt(c.checkins)}</strong></td><td class="num"><strong>${fmt(c.redemptions)}</strong></td></tr>`).join('');
+  const partners = tableCard('Partner cafés', ['Café', { t: 'Shown', num: 1 }, { t: 'Views', num: 1 }, { t: 'Saves', num: 1 }, { t: 'Directions', num: 1 }, { t: 'Check-ins', num: 1 }, { t: 'Rewards used', num: 1 }], partnerRows, 'No partner cafés');
+
+  return `<div id="overview">
+    <div class="section-title" style="margin-top:0">${rangeLabel}</div>
+    ${kpis}
+    ${fold('Growth', growth, true)}
+    ${fold('Usage', usage, true)}
+    ${fold('Discover', discover, true)}
+    ${fold('Chat with BrewMaps', chat, true)}
+    ${fold('Searches', searches, true, 'what people look for, and what we are missing')}
+    ${fold('Cafés', cafes, false)}
+    ${fold('Partners', partners, false)}
+  </div>`;
+}
+
 function render(d) {
   const retPct = d.users.total > 0 ? Math.round(d.users.activeThisWeek/d.users.total*100) : 0;
   const engPct = d.users.total > 0 ? Math.round(d.users.engaged/d.users.total*100) : 0;
@@ -725,7 +945,11 @@ function render(d) {
     </div>` : '';
 
   document.getElementById('main-content').innerHTML = `
+    ${overviewHtml(d.overview)}
 
+    ${fold('Notifications <span class="tag-paused">paused until December</span>', pushAnchorsHtml + notificationsHtml + partnerPushHtml, false)}
+
+    <details class="fold"><summary>Older panels <span class="fold-note">activity, retention, users, check-ins, Vibes (fixed ranges)</span></summary>
     <div class="section-title">📈 Product Analytics</div>
     ${hasAnalytics ? `
     <div class="kpi-grid">
@@ -752,9 +976,6 @@ function render(d) {
     </div>
     ` : `<div class="table-card"><div class="empty-state" style="padding:20px">Analytics populate once testers update to the latest build and start using the app. Check back in a day or two.</div></div>`}
 
-    ${pushAnchorsHtml}
-    ${notificationsHtml}
-    ${partnerPushHtml}
 
     <div class="section-title">👥 Users · Last ${period} days</div>
     <div class="kpi-grid">
@@ -914,6 +1135,9 @@ function render(d) {
       </div>
     </div>
 
+    </details>
+
+    <details class="fold" open><summary>Moderation and users</summary>
     <!-- Moderation -->
     ${showFlagged ? `
     <div class="section-title">🚨 Flagged Users (Comment Violations)
@@ -949,6 +1173,9 @@ function render(d) {
     </div>
     <div class="table-card">${usersRows}</div>
 
+    </details>
+
+    <details class="fold"><summary>Top cafés and emirates <span class="fold-note">last 30 days, check-ins and Vibes photos</span></summary>
     <!-- Top Cafés -->
     <div class="section-title">🏆 Top Cafés (Last 30 Days)</div>
     <div class="tables-grid">
@@ -980,6 +1207,8 @@ function render(d) {
         ).join('') || '<tr><td colspan="3" class="empty-state">No data</td></tr>'}</tbody></table>
       </div>
     </div>
+
+    </details>
 
     <div class="last-updated">
       Generated at ${new Date(d.generatedAt).toLocaleString('en-AE',{timeZone:'Asia/Dubai'})} (Dubai time)
