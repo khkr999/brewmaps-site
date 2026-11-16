@@ -347,7 +347,7 @@ async function loadStats(silent = false, fromLogin = false) {
         await new Promise(r => setTimeout(r, 1500));
         continue;
       }
-      if (!silent) document.getElementById('main-content').innerHTML = '<div class="loading" style="color:#e74c3c">Failed to load: ' + e.message + ' <button class="refresh-btn" onclick="loadStats()" style="margin-left:12px;background:var(--forest);color:white;padding:8px 16px;">Try Again</button></div>';
+      if (!silent) document.getElementById('main-content').innerHTML = '<div class="loading" style="color:#e74c3c">Failed to load: ' + escapeHtml(e.message) + ' <button class="refresh-btn" onclick="loadStats()" style="margin-left:12px;background:var(--forest);color:white;padding:8px 16px;">Try Again</button></div>';
     }
   }
   isFetching = false;
@@ -653,7 +653,7 @@ function render(d) {
       <div class="mod-info">
         <div class="mod-name">@${escapeHtml(u.username ?? 'unknown')}<span class="expand-hint">▸ click for details</span></div>
         <div class="mod-detail">${u.count} violation${u.count>1?'s':''} · Last: ${timeAgo(u.flags[0].created_at)}</div>
-        <span class="mod-reason reason-${u.flags[0].reason?.split(' ')[0] ?? 'other'}">${u.flags[0].reason ?? 'unknown'}</span>
+        <span class="mod-reason reason-${String(u.flags[0].reason?.split(' ')[0] ?? 'other').toLowerCase().replace(/[^a-z_]/g, '')}">${escapeHtml(u.flags[0].reason ?? 'unknown')}</span>
         ${u.is_banned ? '<span class="banned-badge" style="margin-left:6px">BANNED</span>' : ''}
       </div>
       <div class="mod-actions" onclick="event.stopPropagation()">
@@ -778,7 +778,7 @@ function render(d) {
   const ctr = A.ctr || {};
   const ctrLabel = (k) => k === 'discovery_search' ? 'Search results' : k === 'discovery_browse' ? 'Browse / filters' : k;
   const ctrCards = Object.entries(ctr).map(([ctx, v]) => `
-    <div class="kpi-card"><div class="kpi-label">${ctrLabel(ctx)} CTR</div><div class="kpi-value">${v.ctr}%</div><div class="kpi-sub">${v.taps} taps / ${v.impressions} seen</div></div>`).join('')
+    <div class="kpi-card"><div class="kpi-label">${escapeHtml(ctrLabel(ctx))} CTR</div><div class="kpi-value">${escapeHtml(v.ctr)}%</div><div class="kpi-sub">${escapeHtml(v.taps)} taps / ${escapeHtml(v.impressions)} seen</div></div>`).join('')
     || '<div class="kpi-card"><div class="kpi-label">Card CTR</div><div class="kpi-value">—</div><div class="kpi-sub">no data yet</div></div>';
 
   // Acquisition / Meta Ads panel removed 2026-07-15 (see note above).
@@ -862,7 +862,7 @@ function render(d) {
   const nhBars = NH ? NH.byType.map(b => `
     <div class="bar-row">
       <div class="bar-label">
-        <span class="bar-name">${b.type}</span>
+        <span class="bar-name">${escapeHtml(b.type)}</span>
         <span class="bar-count">${b.opened}/${b.pushed} · ${b.rate ?? 0}%</span>
       </div>
       <div class="bar-track">
@@ -870,7 +870,7 @@ function render(d) {
       </div>
     </div>`).join('') : '';
   const nhJobs = NH ? NH.jobs.map(j =>
-    `<span class="count-badge" style="${j.active ? '' : 'background:#eee;color:#999;text-decoration:line-through'}">${j.name.replace('enqueue-', '')}</span>`).join(' ') : '';
+    `<span class="count-badge" style="${j.active ? '' : 'background:#eee;color:#999;text-decoration:line-through'}">${escapeHtml(j.name.replace('enqueue-', ''))}</span>`).join(' ') : '';
   const nhRecent = NH ? NH.recent.map(r => `
     <tr>
       <td><div class="cafe-name">${escapeHtml(r.who)}</div><div class="cafe-area">${escapeHtml(r.type)}</div></td>
@@ -1202,7 +1202,7 @@ function render(d) {
         <div class="table-header">Breakdown</div>
         <table><thead><tr><th>Emirate</th><th>Check-ins</th><th>Share</th></tr></thead>
         <tbody>${d.checkins.byEmirate.map(([n,c]) =>
-          `<tr><td class="cafe-name">${n}</td><td>${c}</td>
+          `<tr><td class="cafe-name">${escapeHtml(n)}</td><td>${escapeHtml(c)}</td>
           <td style="color:var(--stone)">${d.checkins.total>0?Math.round(c/d.checkins.total*100):0}%</td></tr>`
         ).join('') || '<tr><td colspan="3" class="empty-state">No data</td></tr>'}</tbody></table>
       </div>
