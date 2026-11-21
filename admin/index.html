@@ -600,6 +600,39 @@ function overviewHtml(ov) {
   </div>`;
 }
 
+
+// ── Safety review (BrewMaps #112): blocked / reported messages, refused photos, comments, impossible travel, watch ──
+function reviewHtml(r) {
+  if (!r || r.error) return `<div class="section-title">🛡️ Safety review</div><div class="table-card"><div class="empty-state">${escapeHtml(r?.error ?? 'Not available')}</div></div>`;
+  const banBtn = (uid) => uid ? `<div class="mod-actions"><button id="ban-btn-${escapeHtml(uid)}" class="ban-btn red" data-ban-user="${escapeHtml(uid)}" data-ban-action="ban">Ban</button></div>` : '';
+  const row = (uid, user, title, detail, reason) => `
+    <div class="mod-row">
+      <div class="mod-avatar">${initial(user)}</div>
+      <div class="mod-info">
+        <div class="mod-name">@${escapeHtml(user ?? 'deleted account')} <span style="font-weight:400;color:var(--stone);font-size:13px">· ${escapeHtml(title)}</span></div>
+        ${detail ? `<div class="mod-detail">${detail}</div>` : ''}
+        ${reason ? `<span class="mod-reason">${escapeHtml(reason)}</span>` : ''}
+      </div>
+      ${banBtn(uid)}
+    </div>`;
+  const list = (items, fn, empty) => items?.length ? items.map(fn).join('') : `<div class="empty-state">${empty}</div>`;
+  const lv = r.levels ?? {};
+  const levels = ['trusted', 'normal', 'watch', 'banned'].map(k => `${k} <b>${lv[k] ?? 0}</b>`).join(' · ');
+  const label = { blocked: 'message blocked', flagged: 'message flagged', reported: 'message reported' };
+  return `
+    <div class="section-title">🛡️ Safety review <span class="fold-note">trust levels: ${levels}</span></div>
+    <div class="bar-card-title" style="margin:6px 0">Messages (blocked, flagged, reported · 60 days)</div>
+    <div class="table-card">${list(r.messages, m => row(m.user_id, m.username, `${label[m.kind] ?? m.kind} · ${timeAgo(m.at)}`, `"${escapeHtml((m.content ?? '').slice(0, 140))}"`, m.reason), 'Nothing to review')}</div>
+    <div class="bar-card-title" style="margin:14px 0 6px">People to watch</div>
+    <div class="table-card">${list(r.watch, w => row(w.user_id, w.username, `score ${w.score}`, escapeHtml(Object.entries(w.signals ?? {}).filter(([k, v]) => v && !['age_days','checkin_days','approved_posts','phone'].includes(k)).map(([k, v]) => `${k.replace(/_/g, ' ')} ${v}`).join(' · ')), ''), 'Nobody')}</div>
+    <div class="bar-card-title" style="margin:14px 0 6px">Impossible travel between check-ins</div>
+    <div class="table-card">${list(r.travel, t => row(t.user_id, t.username, `${t.km} km in ${t.minutes} min (${t.kmh} km/h) · ${timeAgo(t.at)}`, `${escapeHtml(t.from ?? '?')} → ${escapeHtml(t.to ?? '?')}`, ''), 'None')}</div>
+    <div class="bar-card-title" style="margin:14px 0 6px">Refused photos (60 days)</div>
+    <div class="table-card">${list(r.refused_photos, f => row(f.user_id, f.username, timeAgo(f.at), f.evidence?.length ? 'kept in evidence' : '', f.reason), 'None')}</div>
+    <div class="bar-card-title" style="margin:14px 0 6px">Refused comments (60 days)</div>
+    <div class="table-card">${list(r.comments, c => row(c.user_id, c.username, timeAgo(c.at), `"${escapeHtml((c.content ?? '').slice(0, 140))}"`, c.reason), 'None')}</div>`;
+}
+
 function render(d) {
   const retPct = d.users.total > 0 ? Math.round(d.users.activeThisWeek/d.users.total*100) : 0;
   const engPct = d.users.total > 0 ? Math.round(d.users.engaged/d.users.total*100) : 0;
@@ -1138,6 +1171,7 @@ function render(d) {
     </details>
 
     <details class="fold" open><summary>Moderation and users</summary>
+    ${reviewHtml(d.review)}
     <!-- Moderation -->
     ${showFlagged ? `
     <div class="section-title">🚨 Flagged Users (Comment Violations)
