@@ -255,6 +255,23 @@ document.addEventListener('click', function(e) {
   toggleBan(userId, action === 'ban');
 }, true);
 
+// Word list suggestions (BrewMaps #112): Approve adds the word to the block list, Reject keeps it out for good.
+document.addEventListener('click', async function(e) {
+  const btn = e.target.closest('[data-term-id]');
+  if (!btn) return;
+  const row = btn.closest('.mod-row');
+  btn.disabled = true;
+  try {
+    const res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'x-admin-secret': adminSecret, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: btn.dataset.termAction, termId: btn.dataset.termId }),
+    });
+    const j = await res.json();
+    if (j.ok && row) row.remove(); else { btn.disabled = false; alert('Could not save: ' + (j.error ?? res.status)); }
+  } catch (err) { btn.disabled = false; alert('Could not save: ' + err); }
+}, true);
+
 // ── Acquisition / Meta Ads panel REMOVED 2026-07-15 (Meta biz restriction — the
 //    automated Marketing API pull was a likely trigger; check spend in Ads Manager) ──
 
@@ -623,6 +640,18 @@ function reviewHtml(r) {
     <div class="section-title">🛡️ Safety review <span class="fold-note">trust levels: ${levels}</span></div>
     <div class="bar-card-title" style="margin:6px 0">Messages (blocked, flagged, reported · 60 days)</div>
     <div class="table-card">${list(r.messages, m => row(m.user_id, m.username, `${label[m.kind] ?? m.kind} · ${timeAgo(m.at)}`, `"${escapeHtml((m.content ?? '').slice(0, 140))}"`, m.reason), 'Nothing to review')}</div>
+    <div class="bar-card-title" style="margin:14px 0 6px">New words the AI suggests for the block list <span class="fold-note">${r.block_terms ?? 0} words blocked today</span></div>
+    <div class="table-card">${(r.suggested_terms ?? []).length ? r.suggested_terms.map(w => `
+      <div class="mod-row">
+        <div class="mod-info">
+          <div class="mod-name">"${escapeHtml(w.term)}" <span style="font-weight:400;color:var(--stone);font-size:13px">· ${escapeHtml(w.category)} · ${timeAgo(w.created_at)}</span></div>
+          ${w.example ? `<div class="mod-detail">from: "${escapeHtml(w.example)}"</div>` : ''}
+        </div>
+        <div class="mod-actions">
+          <button class="ban-btn red" data-term-id="${escapeHtml(w.id)}" data-term-action="approve_term">Block it</button>
+          <button class="ban-btn grey" data-term-id="${escapeHtml(w.id)}" data-term-action="reject_term">Not bad</button>
+        </div>
+      </div>`).join('') : '<div class="empty-state">No suggestions</div>'}</div>
     <div class="bar-card-title" style="margin:14px 0 6px">People to watch</div>
     <div class="table-card">${list(r.watch, w => row(w.user_id, w.username, `score ${w.score}`, escapeHtml(Object.entries(w.signals ?? {}).filter(([k, v]) => v && !['age_days','checkin_days','approved_posts','phone'].includes(k)).map(([k, v]) => `${k.replace(/_/g, ' ')} ${v}`).join(' · ')), ''), 'Nobody')}</div>
     <div class="bar-card-title" style="margin:14px 0 6px">Impossible travel between check-ins</div>
